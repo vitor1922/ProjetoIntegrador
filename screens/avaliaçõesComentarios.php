@@ -21,13 +21,14 @@ include_once("../constantes.php");
     <main class="container mt-3 flex-grow-1">
         <h3 class="text-center">Área do Instrutor</h3>
         <div class="text-center">
-        <hr style="border: 1px solid black; width: 100%; margin-top: ">
-            <span><i class="bi bi-chevron-compact-left"></i> Avaliações <i class="bi bi-chevron-compact-right"></i></span>
-            <hr style="border: 1px solid black; width: 100%; margin-top: 2px;">
+        <hr class="flex-grow-1">
+            <span class="mx-2"><i class="bi bi-chevron-compact-left"></i> Avaliações <i class="bi bi-chevron-compact-right"></i></span>
+            <hr class="flex-grow-1">
         </div>
 
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
             <div>
+                <!-- usar o ORDER BY p filtrar seus  -->
                 <span>Ordenar Por:</span>
                 <button class="btn btn-link">por turma</button>
                 <button class="btn btn-link">mais recente</button>
@@ -63,4 +64,4 @@ include_once("../constantes.php");
     </footer>
     
 </body>
-</html>
+</html>

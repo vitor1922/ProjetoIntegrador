@@ -46,18 +46,29 @@ include_once("../constantes.php")
             <div class="carousel-item active">
               <!-- Primeiro slide -->
               <div class="row">
-                <div class="col-3">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                   <!-- Conteudo do Quadrado -->
-                  <div class="card" style="height:200px;"></div>
+                  <div class="card" style="height:200px;">
+                  <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100 square-img" alt="...">
+                  </div>
                 </div>
-                <div class="col-3">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                   <!-- Conteudo do Quadrado -->
+                  <div class="card" style="height:200px;">
+                  <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100 square-img" alt="...">
+                  </div>
                 </div>
-                <div class="col-3">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                   <!-- Conteudo do Quadrado -->
+                  <div class="card" style="height:200px;">
+                  <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100 square-img" alt="...">
+                  </div>
                 </div>
-                <div class="col-3">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                   <!-- Conteudo do Quadrado -->
+                                     <div class="card" style="height:200px;">
+                  <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100 square-img" alt="...">
+                  </div>
                 </div>
               </div>
             </div>

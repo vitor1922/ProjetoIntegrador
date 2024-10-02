@@ -29,7 +29,7 @@
                         <input type="password" class="form-control bg-light" id="password" name="senha" placeholder="Digite sua senha" required>
                     </div>
                     <div class="alert alert-danger mt-3" role="alert">
-                        !ESTA AÇÃO É IRREVERSÍVEL!
+                        <strong>ESTA AÇÃO É IRREVERSÍVEL!!!<strong>
                     </div>
                     <div class="form-group mt-3">
                         <button type="button" class="btn btn-danger btn-block mt-3" data-bs-toggle="modal" data-bs-target="#confirmDelete">Excluir Conta</button>
@@ -45,7 +45,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Tem certeza de que deseja excluir sua conta? Esta ação é irreversível.
+                                Tem certeza de que deseja excluir sua conta? <strong><u>ESTA AÇÃO É IRREVERSÍVEL!!!<u><strong>.
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>

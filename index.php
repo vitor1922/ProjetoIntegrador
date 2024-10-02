@@ -16,7 +16,7 @@
 <body class=" d-flex flex-column justify-content-between">
     <div>
         <?php
-        include_once("./screens/header.php");
+        include_once("./screens/header");
         ?>
         <main>
             <div class="container-fluid">

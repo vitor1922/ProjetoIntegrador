@@ -55,7 +55,13 @@ include_once("../constantes.php");
                                 </p>
                                 <div class="collapse" id="collapseExample1">
                                     <div class="card card-body">
-                                        Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                                        <p class="text-center">
+                                            18/07/24 - 17:00 até 18:30
+                                        </p>
+                                        <br>
+                                        <p class="p-3 mb-2 bg-warning-subtle text-warning-emphasis">
+                                            18/07/24 - 17:00 até 18:30
+                                        </p>
                                     </div>
                                 </div>
                             </div>
