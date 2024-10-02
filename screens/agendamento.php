@@ -59,8 +59,16 @@ include_once("../constantes.php");
                                             18/07/24 - 17:00 até 18:30
                                         </p>
                                         <br>
-                                        <p class="p-3 mb-2 bg-warning-subtle text-warning-emphasis">
-                                            18/07/24 - 17:00 até 18:30
+                                        <p class="p-3 mb-2 bg-warning-subtle text-warning-emphasis text-center">
+                                            21/07/24 - 17:00 até 18:30
+                                        </p>
+                                        <br>
+                                        <p class="text-center">
+                                            23/07/24 - 17:00 até 18:30
+                                        </p>
+                                        <br>
+                                        <p class="text-center">
+                                            25/07/24 - 17:00 até 18:30
                                         </p>
                                     </div>
                                 </div>

@@ -13,7 +13,6 @@ include_once("../constantes.php");
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
-    
     <?php 
     include_once("./header.php"); 
     ?>
@@ -28,7 +27,7 @@ include_once("../constantes.php");
 
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
             <div>
-                <!-- usar o ORDER BY p filtrar seus  -->
+                <!-- usar o ORDER BY p filtrar. by malinski :) -->
                 <span>Ordenar Por:</span>
                 <button class="btn btn-link">por turma</button>
                 <button class="btn btn-link">mais recente</button>
