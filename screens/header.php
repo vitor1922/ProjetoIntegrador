@@ -1,7 +1,7 @@
 <!-- header magrooooo demais! -->
 
 <header>
-    <div class=" container-fluid  ">
+    <div class=" container-fluid">
         <div class="row header-vii">
             <div class="col-12 d-flex justify-content-center m-1">
                 <img src="<?= BASE_URL ?>assets/img/logoSenac.png" alt="logo senac" class="img-logo-senac ">
@@ -21,7 +21,7 @@
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-bold">
 
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                    <a class="nav-link active" aria-current="page" href="../src/index.php">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Sobre</a>
@@ -30,7 +30,7 @@
                                     <a class="nav-link" href="#">Serviços</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Agendar Horário</a>
+                                    <a class="nav-link" href="./agendamento.php">Agendar Horário</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Fale Conosco</a>
@@ -44,10 +44,10 @@
                 </div>
                 <div class="nav-item dropstart">
                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i>
+                        <i class="bi bi-person-circle fs-5"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="./singUp.php">Cadastrar</a></li>
+                        <li><a class="dropdown-item" href="./signUp.php">Cadastrar</a></li>
                         <li><a class="dropdown-item" href="#">login</a></li>
                     </ul>
                 </div>

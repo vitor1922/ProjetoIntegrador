@@ -1,6 +1,6 @@
 <footer >
 
-    <div class=" container-fluid d-flex align-content-end  ">
+    <div class=" container-fluid d-flex align-content-end mt-5 ">
         <div class="container-fluid border-top border-1 border-black">
             <div class="row">
                 <div class="col-6 col-lg-8 py-2">

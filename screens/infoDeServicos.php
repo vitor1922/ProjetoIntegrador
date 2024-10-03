@@ -34,60 +34,34 @@ include_once("../constantes.php")
           <p class="mt-3 fw-bolder text-primary">Exemplo dos serviços anteriores</p>
         </div>
       </div>
-      <div class="carrosel d-flex justify-content-center">
+      <div class="carrosel d-flex justify-content-center  ">
         <!-- Carrossel de imagens -->
-        <div id="carouselExampleIndicators" class="carousel slide w-75">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-          </div>
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <!-- Primeiro slide -->
-              <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                  <!-- Conteudo do Quadrado -->
-                  <div class="card" style="height:200px;">
-                  <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100 square-img" alt="...">
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                  <!-- Conteudo do Quadrado -->
-                  <div class="card" style="height:200px;">
-                  <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100 square-img" alt="...">
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                  <!-- Conteudo do Quadrado -->
-                  <div class="card" style="height:200px;">
-                  <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100 square-img" alt="...">
-                  </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                  <!-- Conteudo do Quadrado -->
-                                     <div class="card" style="height:200px;">
-                  <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100 square-img" alt="...">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <!-- Segundo slide -->
-            </div>
-            <div class="carousel-item">
-              <!-- terceiro slide -->
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Voltar</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Proximo</span>
-          </button>
+      <div id="carouselExampleIndicators" class="carousel slide w-75">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Voltar</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Proximo</span>
+        </button>
+      </div>
       </div>
 
       <!-- Descrição do serviço -->
@@ -97,8 +71,8 @@ include_once("../constantes.php")
 
 
   <!-- JavaScript do Bootstrap -->
-  <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <?php include_once("./footer.php"); ?>
+    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <?php include_once("./footer.php"); ?>
 </body>
 
 </html>

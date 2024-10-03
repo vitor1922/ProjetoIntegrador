@@ -17,13 +17,13 @@ include("../constantes.php");
 
 <body>
     <?php
-    include_once ();
+    include_once ('./header.php');
     ?>
     <main>
-        <div class="container d-flex justify-content-center align-items-center ">
-            <div class="col-md-12 col-lg-6 form-container bg-light p-3 m-5 rounded-4 shadow-lg">
+        <div class="container d-flex justify-content-center align-items-center vh-100">
+            <div class="col-md-6 col-lg-5 form-container bg-light p-3 m-5 rounded-4 shadow-lg">
                 <a href=""><img src="../src/bootstrap/bootstrap-icons/icons/arrow-left.svg" alt="flecha" srcset=""></a>
-                <h5 class="text-start mb-4 text-warning">Fazer Login!</h5>
+                <h5 class="text-start mb-3 mt-2 text-warning">Fazer Login!</h5>
                 <hr class="border-warning" style="border-width: 3px;">
                 <form>
                     <div class="form-group mt-4">
@@ -43,15 +43,16 @@ include("../constantes.php");
                     </div>
                 </form>
 
+
                 <!-- Modal -->
                 <div class="modal fade" id="fazerLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content shadow-lg rounded-3">
                             <div class="modal-header d-flex justify-content-center">
                                 <h1 class="modal-title text-warning fs-5" id="staticBackdropLabel">Fazer Cadastro</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body border-top border-warning">
                                 <div class="col rounded">
                                     <form>
                                         <div class="form-group mt-2">
@@ -92,7 +93,7 @@ include("../constantes.php");
         </div>
     </main>
     <?php
-    include("../screens/footer.php");
+    include("./footer.php");
     ?>
 
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -13,54 +13,56 @@ include_once("../constantes.php");
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <?php 
-    include_once("./header.php"); 
-    ?>
+<?php 
+include_once("./header.php"); 
+?>
 
-    <main class="container mt-3 flex-grow-1">
-        <h3 class="text-center">Área do Instrutor</h3>
-        <div class="text-center">
-        <hr class="flex-grow-1">
-            <span class="mx-2"><i class="bi bi-chevron-compact-left"></i> Avaliações <i class="bi bi-chevron-compact-right"></i></span>
-            <hr class="flex-grow-1">
+<main class="container mt-3 flex-grow-1">
+    <h3 class="text-center">Área do Instrutor</h3>
+    <div class="text-center">
+        <span>Avaliações</span>
+    </div>
+
+    <div class="d-flex flex-column align-items-center mt-3">
+        <div class="d-flex align-items-center">
+            <span>Ordenar Por:</span>
+            <button class="btn btn-link mx-2">Por turma</button>
+            <span>|</span>
+            <button class="btn btn-link mx-2">Mais recente</button>
+            <span>|</span>
+            <button class="btn btn-link mx-2">Mais antigo</button>
         </div>
-
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
-            <div>
-                <!-- usar o ORDER BY p filtrar. by malinski :) -->
-                <span>Ordenar Por:</span>
-                <button class="btn btn-link">por turma</button>
-                <button class="btn btn-link">mais recente</button>
-                <button class="btn btn-link">mais antigo</button>
-                <?php 
-                include_once("./popUpThalles.php");
-                ?>
-            </div>
+        
+        <div class="mt-3">
+            <button class="btn btn-primary">Filtros</button>
         </div>
+    </div>
 
-        <div class="card mt-3">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex align-items-center">
-                        <img src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="Icone Usuario" width="50" class="me-3">
-                        <div>
-                            <h5>Nome</h5>
-                            <p class="mb-0">Serviço - Turma xx/xx/xxxx</p>
-                        </div>
-                    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="Ícone Usuário" width="50" class="me-3">
                     <div>
-                        <span>Nome do Aluno</span>
-                        <div>4.0</div>
+                        <h5>Nome</h5>
+                        <p class="mb-0">Serviço - Turma xx/xx/xxxx</p>
                     </div>
                 </div>
-                <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec nunc efficitur lacus imperdiet ullamcorper. In dignissim ipsum est, sit amet convallis ligula posuere vitae.</p>
+                <div>
+                    <span>Nome do Aluno</span>
+                    <div>4.0</div>
+                </div>
             </div>
+            <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec nunc efficitur lacus imperdiet ullamcorper. In dignissim ipsum est, sit amet convallis ligula posuere vitae. Aliquam bibendum, tellus vitae hendrerit laoreet, orci felis aliquet.</p>
+            <a href="#">ler mais...</a>
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer class="bg-light text-center py-3 mt-auto">
-        <?php include_once("./footer.php"); ?>
-    </footer>
-    
+<footer>
+    <?php
+    include_once("./footer.php"); 
+    ?>
+</footer>
 </body>
 </html>

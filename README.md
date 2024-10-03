@@ -1,36 +1,31 @@
-# Project Title
+# PROJETO INTEGRADOR
 
-Short project description and introduction.
+![Alt Text](https://images.app.goo.gl/aP5xMXm6xie1iscA7)
 
-## Table of Contents (optional)
+Projeto Integrador SENAC da Turma 2023004
 
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Features](#features)
-4. [Contributing](#contributing)
-5. [License](#license)
-6. [Contact](#contact)
+## SUMÁRIO
 
-## Installation
+1. [CONCEITO](#CONCEITO)
+2. [USABILIDADE](#USABILIDADE)
+3. [Features](#FUNCIONALIDADES)
+4. [CONTRIBUIÇÃO](#CONTRIBUIÇÃO)
 
-Instructions on how to install and set up your project.
+## CONCEITO
 
-## Usage
+O projeto foi desenvolvido com o intuito de colaborar com o Salão de Beleza na Unidade SENAC CAIOBÁ.
 
-Instructions on how to use the project. Include examples or code snippets.
+## USABILIDADE
 
-## Features
+Além de uma espécie de rede social, onde os alunos podem postar seus trabalhos e acompanhar a sua evolução, o projeto também funciona como um Sistema de Gestão, possibilitando o agendamento de serviços e o controle de estoque, podendo ser acessado tanto por instrutores e alunos, como por entusiastas que tem o desejo de colaborar com o andamento do curso.
 
-List key features or functionalities.
+## FUNCIONALIDADES
 
-## Contributing
+-Controle de Estoque
+-Agendamento de Serviços
+-Postagens com Mídia e Comentários
+-
 
-Instructions for contributing to the project.
+## CONTRIBUIÇÃO
 
-## License
 
-Information about the project's license (e.g., MIT, GPL, etc.).
-
-## Contact
-
-How users can reach you for questions or contributions.

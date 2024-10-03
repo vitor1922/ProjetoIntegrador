@@ -49,14 +49,12 @@ include_once("../constantes.php")
                     <p class="mt-3 fw-bold">Escova</p>
                 </div>
                 <div class="col">
-                    <p class="mt-3 fw-bold text-danger"><i class="azul-senac bi bi-plus"></i>2<i class="bi bi-dash"></i>
+                    <p class="mt-3 fw-bold text-danger"><a href=""><i class="azul-senac bi bi-plus fs-5 m-1"></i></a>2 <a href=""><i class="bi bi-dash fs-5"></i></a>
                     </p>
                 </div>
             </div>
             </class=>
     </div>
-
-    <i class="bi bi-plus"></i>
 
 
     <!-- JavaScript do Bootstrap -->
