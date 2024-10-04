@@ -1,39 +1,29 @@
+<?php
+include_once("../constantes.php")
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <title>Avaliação</title>
-    <style>
-        .star {
-            font-size: 35px; /* Tamanho das estrelas aumentado para 35 pixels */
-            color: #808080; /* Cor padrão das estrelas (dourado mais escuro) */
-            cursor: pointer;
-        }
-        .star.selected {
-            color: #FFD700; /* Cor quando selecionada (dourado) */
-        }
-        .form-group {
-            margin-top: 20px; /* Aumentado para espaçar o texto de opinião */
-        }
-    </style>
+    
 </head>
-<body>
-
+<body class="d-flex flex-column min-vh-100">
+<?php include_once("./header.php"); ?>
+<main>
 <div class="container mt-5">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#feedbackModal">
         Avaliar
     </button>
-
     <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalTitle">Avalie sua experiência</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
                     <h4>Como você avaliaria sua experiência do Senac Salão de Beleza?</h4>
@@ -71,9 +61,10 @@
         </div>
     </div>
 </div>
+<?php include_once("./footer.php"); ?>
 
+</main>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     function selectCircle(selected) {

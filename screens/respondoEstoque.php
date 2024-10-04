@@ -55,7 +55,9 @@ include_once("../constantes.php")
             </div>
             </class=>
     </div>
-
+    <?php
+    include("./footer.php");
+    ?>
 
     <!-- JavaScript do Bootstrap -->
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>

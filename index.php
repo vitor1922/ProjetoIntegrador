@@ -13,11 +13,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
-<body class=" d-flex flex-column justify-content-between">
+<body class="d-flex flex-column justify-content-between">
     <div>
         <?php
-        include_once("./screens/header");
+        include_once("./screens/header.php");
         ?>
+
         <main>
             <div class="container-fluid">
                 <div class="banner">
@@ -43,7 +44,6 @@
             </div>
         </main>
     </div>
-
     <?php include("./screens/footer.php") ?>
 
 

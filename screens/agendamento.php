@@ -49,20 +49,13 @@ include_once("../constantes.php");
                             </p>
                             <div class="collapse" id="collapseExample1">
                                 <div class="card card-body" style="position: absolute; z-index: 1; width: 100%;">
-                                    <p class="text-center">
-                                        18/07/24 - 17:00 até 18:30
-                                    </p>
-                                    <p class="p-2 bg-warning-subtle text-warning-emphasis text-center">
-                                        21/07/24 - 17:00 até 18:30
-                                    </p>
-                                    <br>
-                                    <p class="text-center">
-                                        23/07/24 - 17:00 até 18:30
-                                    </p>
-                                    <br>
-                                    <p class="text-center">
-                                        25/07/24 - 17:00 até 18:30
-                                    </p>
+                                    <select class="form-select bg-warning-subtle" aria-label="Default select example">
+                                        <option selected>Selecionar Horario</option>
+                                        <option value="1">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="2">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="3">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="4">18/07/24 - 17:00 até 18:30</option>
+                                    </select>
                                     <div class="position-relative pt-5">
                                         <div class="position-absolute bottom-0 end-0 pt-5">
                                             <button type="submit" class="btn btn-primary">
@@ -88,21 +81,13 @@ include_once("../constantes.php");
                             </p>
                             <div class="collapse" id="collapseExample2">
                                 <div class="card card-body" style="position: absolute; z-index: 1; width: 100%;">
-                                    <p class="text-center">
-                                        18/07/24 - 17:00 até 18:30
-                                    </p>
-                                    <br>
-                                    <p class=" text-center">
-                                        21/07/24 - 17:00 até 18:30
-                                    </p>
-                                    <br>
-                                    <p class="p-2 bg-warning-subtle text-warning-emphasis text-center">
-                                        23/07/24 - 17:00 até 18:30
-                                    </p>
-                                    <br>
-                                    <p class="text-center">
-                                        25/07/24 - 17:00 até 18:30
-                                    </p>
+                                <select class="form-select bg-warning-subtle" aria-label="Default select example">
+                                        <option selected>Selecionar Horario</option>
+                                        <option value="1">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="2">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="3">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="4">18/07/24 - 17:00 até 18:30</option>
+                                    </select>
                                     <div class="position-relative pt-5">
                                         <div class="position-absolute bottom-0 end-0 pt-5">
                                             <button type="submit" class="btn btn-primary">
@@ -128,21 +113,13 @@ include_once("../constantes.php");
                             </p>
                             <div class="collapse" id="collapseExample3">
                                 <div class="card card-body" style="position: absolute; z-index: 1; width: 100%;">
-                                    <p class="text-center">
-                                        18/07/24 - 17:00 até 18:30
-                                    </p>
-                                    <br>
-                                    <p class=" text-center">
-                                        21/07/24 - 17:00 até 18:30
-                                    </p>
-                                    <br>
-                                    <p class="text-center">
-                                        23/07/24 - 17:00 até 18:30
-                                    </p>
-                                    <br>
-                                    <p class="p-2 bg-warning-subtle text-warning-emphasis text-center">
-                                        25/07/24 - 17:00 até 18:30
-                                    </p>
+                                <select class="form-select bg-warning-subtle" aria-label="Default select example">
+                                        <option selected>Selecionar Horario</option>
+                                        <option value="1">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="2">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="3">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="4">18/07/24 - 17:00 até 18:30</option>
+                                    </select>
                                     <div class="position-relative pt-5">
                                         <div class="position-absolute bottom-0 end-0 pt-5">
                                             <button type="submit" class="btn btn-primary">

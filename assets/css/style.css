@@ -99,8 +99,17 @@ body{
 .bg-cinza{
     background-color: var(--cinza);
 }
-.bg-cinza:hover{
+.btn-cinza{
     background-color: var(--cinza);
+}
+.btn-cinza:hover{
+    background-color: var(--cinza);
+}
+.btn-azul-senac{
+    background-color: var(--azul_senac);
+}
+.btn-azul-senac:hover{
+    background-color: var(--azul_senac);
 }
 
 
@@ -113,20 +122,23 @@ body{
 
 
 
-.btn-edit-profile {
+/* .btn-edit-profile {
     background-color: #fff;
     color: #007bff;
     border-color: #007bff;
 }
 .btn-edit-profile:hover {
-    background-color: #f8f9fa; /* cor ao passar o mouse */
-    border-color: #0056b3; /* cor da borda ao passar o mouse */
-    color: #0056b3; /* cor do texto ao passar o mouse */
+    background-color: #f8f9fa; 
+    border-color: #0056b3; 
+    color: #0056b3; 
+} */
+
+
+
+.olho{
+    
+    left: 90%;
 }
-
-
-
-
 
 
 .header-senac{
@@ -173,7 +185,14 @@ body{
 }
 
 
-
+.star {
+    font-size: 35px; 
+    color: #808080;
+    cursor: pointer;
+}
+.star.selected {
+    color: #FFD700; 
+}
 
 
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
+
 <body class="vh-100 d-flex flex-column justify-content-start align-items-center bg-white">
 
   <!-- Container principal -->
   <div class="container-fluid h-100 d-flex flex-column align-items-center p-3">
-    
+
     <!-- Cabeçalho com ícone de menu, logo e ícone de usuário -->
     <div class="row w-100 d-flex justify-content-between align-items-center mb-3">
       <div class="col-auto">
@@ -46,8 +48,8 @@
       <div class="col-auto">
         <i class="fas fa-chevron-right fa-lg text-dark"></i>
       </div>
-          <!-- Linha divisória superior -->
-    <hr class="w-100 my-0 border-2 border-dark">
+      <!-- Linha divisória superior -->
+      <hr class="w-100 my-0 border-2 border-dark">
     </div>
 
 
@@ -105,4 +107,5 @@
 
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

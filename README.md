@@ -1,6 +1,6 @@
 # PROJETO INTEGRADOR
 
-![Alt Text](https://images.app.goo.gl/aP5xMXm6xie1iscA7)
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Senac_logo.svg/1200px-Senac_logo.svg.png)
 
 Projeto Integrador SENAC da Turma 2023004
 
@@ -8,7 +8,7 @@ Projeto Integrador SENAC da Turma 2023004
 
 1. [CONCEITO](#CONCEITO)
 2. [USABILIDADE](#USABILIDADE)
-3. [Features](#FUNCIONALIDADES)
+3. [FUNCIONALIDADES](#FUNCIONALIDADES)
 4. [CONTRIBUIÇÃO](#CONTRIBUIÇÃO)
 
 ## CONCEITO

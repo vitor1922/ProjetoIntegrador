@@ -11,8 +11,8 @@ include_once("../constantes.php")
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Serviço - Corte de Cabelo</title>
-  <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
+  <link href="../src/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.css">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
@@ -21,7 +21,7 @@ include_once("../constantes.php")
   include_once("./header.php");
   ?>
   <main>
-    <div class="row">
+    <div class="row mb-2">
       <div class="col-12">
         <div class="button fs-1 mx-3">
           <a href="#" role="button pb-5">
@@ -30,24 +30,45 @@ include_once("../constantes.php")
         </div>
       </div>
       <div class="col-12 d-flex justify-content-center">
-      <div class="card w-75 w-md-50">
-  <div class="card-body">
-    <h5 class="card-title laranja-senac fw-bold d-flex justify-content-center">Prefêrencias de serviço</h5>
-    <p class="card-text">Você possui algum tipo de alergia a algum produto de beleza?</p>
-    <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Sim</label>
-  </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Não</label>
-  </div>
-    
-    
-  </div>
-</div>
+        <div class="card w-75 w-md-50 px-2">
+          <div class="card-body">
+            <h5 class="card-title laranja-senac fw-bold d-flex justify-content-center">Preferências de serviço</h5>
+
+            <p class="card-text">Você possui algum tipo de alergia a algum produto de beleza?</p>
+            <div class="mb-3 form-check">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">sim</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2" checked>
+                <label class="form-check-label" for="flexRadioDefault2">não</label>
+              </div>
+              <div class="mb-3 mt-2 col-12 col-md-7">
+                <label for="exampleFormControlTextarea1" class="form-label">Que tipos de produtos? (Máximo de 300 caracteres)</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="300"></textarea>
+              </div>
+            </div>
+
+            <p class="card-text">Você possui algum tipo de preferência de como seu atendimento vai ser realizado?</p>
+            <div class="mb-3 form-check">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault3">
+                <label class="form-check-label" for="flexRadioDefault3">sim</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault4" checked>
+                <label class="form-check-label" for="flexRadioDefault4">não</label>
+              </div>
+              <div class="mb-3 mt-2 col-12 col-md-7">
+                <label for="exampleFormControlTextarea2" class="form-label">Que tipos de preferências? (Máximo de 300 caracteres)</label>
+                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" maxlength="300"></textarea>
+              </div>
+            </div>
+          </div>
+          <button class="offset-7 col-4 btn btn-azul-senac bg-cinza" type="submit">Enviar</button>
+        </div>
       </div>
-    </div>
   </main>
 
   <?php

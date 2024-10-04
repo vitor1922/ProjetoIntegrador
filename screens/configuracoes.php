@@ -20,7 +20,7 @@
             <div class=" container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <a href=""><i class="bi bi-arrow-left-short fs-1"></i></a>
+                        <a href=""><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
                     </div>
                 </div>
                 <div class="row ">
@@ -36,7 +36,7 @@
                 </div>
                 <!-- alterar email -->
                 <div class="d-grid col-lg-8 text-start offset-1 me-5 mb-3">
-                    <button class="btn shadow-sm bg-cinza" data-bs-toggle="modal" data-bs-target="#modalEmail">
+                    <button class="btn shadow-sm btn-cinza" data-bs-toggle="modal" data-bs-target="#modalEmail">
                         <div class="row text-start ">
                             <div class="  col-10 ">
                                 <div class="row">
@@ -58,7 +58,7 @@
                 </div>
                 <!-- alterar senha -->
                 <div class="d-grid col-lg-8 text-start offset-1 me-5 mb-3">
-                    <button class="btn shadow-sm bg-cinza button">
+                    <button class="btn shadow-sm btn-cinza button " data-bs-toggle="modal" data-bs-target="#modalSenha">
                         <div class="row text-start ">
                             <div class="  col-10 ">
                                 <div class="row">
@@ -80,7 +80,7 @@
                 </div>
                 <!-- alterar telefone -->
                 <div class="d-grid col-lg-8 text-start offset-1 me-5 mb-3">
-                    <button class="btn shadow-sm bg-cinza">
+                    <button class="btn shadow-sm btn-cinza">
                         <div class="row text-start ">
                             <div class="  col-10 ">
                                 <div class="row">
@@ -107,14 +107,14 @@
                     </div>
                 </div>
                 <div class="d-grid col-lg-8 text-start offset-1 me-5 mb-3">
-                    <button class="btn shadow-sm bg-cinza ">
+                    <button class="btn shadow-sm btn-cinza ">
                         <div class="row text-start ">
                             <div class="  col-10 align-self-center">
                                 <p class="p-0 m-0 fw-bold ">Aceitar receber notificações por email ou telefone</p>
                             </div>
-                            <div class="col-2 align-self-center text-end">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input fs-3" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                            <div class="col-2 align-self-center">
+                                <div class="form-check form-switch d-flex justify-content-end ">
+                                    <input class="form-check-input fs-3 text-end" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                                 </div>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
                     </div>
                 </div>
                 <div class="d-grid col-lg-8 text-start offset-1 me-5 mb-3">
-                    <button class="btn shadow-sm bg-cinza ">
+                    <button class="btn shadow-sm btn-cinza ">
                         <div class="row text-start ">
                             <div class="  col-10 align-self-center">
                                 <p class="p-0 m-0 fw-bold text-danger fs-5">EXCLUIR CONTA</p>
@@ -140,50 +140,82 @@
                 </div>
 
                 <!-- modais -->
-                <!-- modal email -->
+                <!-- modal alterar email -->
                 <div class="modal fade" id="modalEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-body">
+                            <div class="d-flex justify-content-end mb-3">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
                                 <form action="">
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Novo Email</label>
                                         <input type="email" class="form-control" id="txtEmail" name="txtEmail">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold">Senha</label>
+                                        <label class="form-label fw-bold ">Senha</label>
                                         <div class="row">
-                                            <div class="col-11 position-relative">
-                                                <input type="password" class="form-control " id="txtSenha" name="txtSenha">
+                                            <div class="col-12 position-relative">
+                                                <input type="password" class="form-control bg-warning-subtle txtSenha" id="txtSenha" name="txtSenha">
                                             </div>
-                                            <div class="col-1" >
-                                                <i class="bi bi-eye text-start"></i>
+                                            <div class="col-1 position-absolute align-self-center olho olho-senha" id="olho-senha" >
+                            
+                                                    <i class="bi bi-eye text-start" ></i> 
                                             </div>
                                         </div>
-                                        
-                                        
                                     </div>
-
-
-
-
-
-
-
-
+                                    <div class="mb-3 d-flex flex-column justify-content-center align-items-center mt-5">
+                                        <label class="form-label fw-bold">PIN</label>
+                                        <input type="text" class="form-control w-50" id="txtPin" name="txtPin">
+                                        <a href="">Enviar Código</a>
+                                    </div>
+                                    <div class="mb-3 d-flex justify-content-center">
+                                        <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
+                                    </div>
                                 </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <!-- modal alterar senha -->
+                <div class="modal fade" id="modalSenha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                            <div class="d-flex justify-content-end mb-3">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                                <form action="">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Novo Email</label>
+                                        <input type="email" class="form-control" id="txtEmail" name="txtEmail">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold ">Senha</label>
+                                        <div class="row">
+                                            <div class="col-12 position-relative">
+                                                <input type="password" class="form-control bg-warning-subtle txtSenha" id="txtSenha" name="txtSenha">
+                                            </div>
+                                            <div class="col-1 position-absolute align-self-center olho olho-senha" id="olho-senha" >
+                            
+                                                    <i class="bi bi-eye text-start" ></i> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 d-flex flex-column justify-content-center align-items-center mt-5">
+                                        <label class="form-label fw-bold">PIN</label>
+                                        <input type="text" class="form-control w-50" id="txtPin" name="txtPin">
+                                        <a href="">Enviar Código</a>
+                                    </div>
+                                    <div class="mb-3 d-flex justify-content-center">
+                                        <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>
@@ -195,7 +227,7 @@
 
 
 
-    <script src="../src/bootstrap/js/bootstrap.js"></script>
+    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/js/script.js"></script>
 </body>
 

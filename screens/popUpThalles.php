@@ -25,31 +25,34 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex flex-column">
-                    <div>
-                        <i class="bi bi-arrow-left"></i>
-                        Barbearia
-                        <i class="bi bi-arrow-right"></i>
+                    <div class="mb-3">
+                        <div class="border border-success rounded-5 p-2 mb-2">
+                            <i class="bi bi-arrow-left"></i>
+                            Barbearia
+                            <i class="bi bi-arrow-right"></i>
+                        </div>
+                        <a href="" class="d-block mb-1">Cortes Masculinos</a>
+                        <a href="" class="d-block mb-1">Barbearia</a>
                     </div>
-                    <a href="">Cortes Masculinos</a>
-                    <a href="">Cortes Masculinos</a>
-                    <div>
-                        <i class="bi bi-arrow-left"></i>
-                        Barbearia
-                        <i class="bi bi-arrow-right"></i>
+                    <div class="mb-3">
+                        <div class="border border-success rounded-5 p-2 mb-2">
+                            <i class="bi bi-arrow-left"></i>
+                            Salão De Beleza
+                            <i class="bi bi-arrow-right"></i>
+                        </div>
+                        <a href="" class="d-block mb-1">Processos Capilares</a>
+                        <a href="" class="d-block mb-1">Mãos e Pés</a>
+                        <a href="" class="d-block mb-1">Cabelo</a>
                     </div>
-                    <a href="">Cortes Masculinos</a>
-                    <div>
-                        <i class="bi bi-arrow-left"></i>
-                        Salao de beleza
-                        <i class="bi bi-arrow-right"></i>
+                    <div class="mb-3">
+                        <div class="border border-success rounded-5 p-2 mb-2">
+                            <i class="bi bi-arrow-left"></i>
+                            Centro de Estetica
+                            <i class="bi bi-arrow-right"></i>
+                        </div>
+                        <a href="" class="d-block mb-1">Estetica Corporal</a>
+                        <a href="" class="d-block mb-1">Mãos e Pés</a>
                     </div>
-                    <a href="">Cortes Masculinos</a>
-                    <div>
-                        <i class="bi bi-arrow-left"></i>
-                        centro de estetica
-                        <i class="bi bi-arrow-right"></i>
-                    </div>
-                    <a href="">Cortes Masculinos</a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
