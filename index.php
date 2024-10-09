@@ -47,8 +47,7 @@
                             <h1 class="mt-5 laranja-senac fw-bold text-start fs-1">Sobre Nós</h1>
                             <p class="azul-senac">
                                 Desde 1946, o Serviço Nacional de Aprendizagem Comercial(SENAC) é o principal agente de educação profissional voltado para o Comércio de Bens, Serviços e Turismo do País.
-                                
-                                Agora trazendo o salão escola senac, que é um projeto de ensino feito para criar profissionais capazes de atuar nas varias áreas dos cuidados com a beleza, oferecendo diversos cursos relacionados a área da beleza, como barbeiro, cabelereiro, depilação, manicure e pedicure dentre outros. Para a formação de nossos profissionais, temos um atendimento gratuito e personalizado enquanto ajuda na criação de profissionais de qualidade.
+                                Agora trazendo o salão escola senac, que é um projeto de ensino feito para criar profissionais capazes de atuar nas varias áreas dos cuidados com a beleza, oferecendo diversos cursos relacionados a área da beleza, como barbeiro, cabelereiro, depilação, manicure e pedicure dentre outros. Para a formação de profissionais de qualidade, oferecemos um atendimento gratuito e personalizado para clientes dispostos a ajudar nesta empreitada
                             </p>
                         </div>
                         <div class="col-lg-4 d-flex justify-content-center mt-lg-5 pt-lg-5">
