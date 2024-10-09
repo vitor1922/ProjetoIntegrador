@@ -1,9 +1,9 @@
 # PROJETO INTEGRADOR
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Senac_logo.svg/1200px-Senac_logo.svg.png)
-
+--
 Projeto Integrador SENAC da Turma 2023004
-
+--
 ## SUMÁRIO
 
 1. [CONCEITO](#CONCEITO)

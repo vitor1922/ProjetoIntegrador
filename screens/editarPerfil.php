@@ -34,10 +34,10 @@ include_once("../constantes.php");
 
     <div class="row mt-5">
         <div class="col-lg-4 d-flex justify-content-center mb-4 mb-lg-0">
-            <img src="https://inspiracabelo.com.br/wp-content/uploads/2024/03/corte-de-cabelo-para-rosto-redondo-40-anos-10.jpg" alt="Foto de perfil" class="rounded-circle img-fluid" style="max-width: 10px;">
+            <img src="https://inspiracabelo.com.br/wp-content/uploads/2024/03/corte-de-cabelo-para-rosto-redondo-40-anos-10.jpg" alt="Foto de perfil" class="rounded-circle" style="max-width: 120px;">
         </div>
 
-        <div class="col-lg-4 mt-5">
+        <div class="col-lg-4">
             <div class="mb-3">
                 <label for="apelido" class="form-label">Apelido</label>
                 <input type="text" placeholder="Apelido" id="apelido" class="form-control border-0 border-bottom">
@@ -49,7 +49,7 @@ include_once("../constantes.php");
             </div>
         </div>
 
-        <div class="col-lg-4 mt-5">
+        <div class="col-lg-4">
             <div class="mb-3">
                 <label for="bio" class="form-label">Bio</label>
                 <textarea id="bio" class="form-control border-0 border-bottom" style="resize: none;" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." rows="4"></textarea>
