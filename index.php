@@ -28,16 +28,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="home">
+                <div class="home bg-gd-laranja-claro-senac pb-5 mt-5">
                     <div class="row d-flex justify-content-center">
-                        <div class=" offset-md-1 col-lg-4 col-md-12">
-                            <h1 class="mt-5 laranja-senac fw-bold text-center fs-1">Um Salão de Beleza Gratuito</h1>
+                        <div class="  col-lg-4 col-md-12">
+                            <h1 class="mt-5 laranja-senac fw-bold text-start fs-1">Um Salão de Beleza Gratuito</h1>
                             <p class="azul-senac">
                                 Um salão escola feito para criar profissionais capazes de atuar nas varias áreas dos cuidados com a beleza. Ganhe um tratamento gratuito e personalizado enquanto ajuda na criação de profissionais de qualidade.
                             </p>
                         </div>
-                        <div class=" offset-lg-1 col-md-4 ">
-                            <img src="./assets/img/img_mulher_lavando_cabelo.png" alt="imagem de uma mulher lavando o cabelo">
+                        <div class=" offset-lg-1 col-lg-4 d-flex justify-content-center mt-lg-5 pt-lg-5">
+                            <img src="./assets/img/img_mulher_lavando_cabelo.png" alt="imagem de uma mulher lavando o cabelo" class="img-index">
+                        </div>
+                    </div>
+                </div>
+                <div class="sobre bg-gd-azul-claro-senac pb-5 mt-5">
+                    <div class="row d-flex flex-lg-row-reverse justify-content-center">
+                        <div class=" offset-lg-1 col-lg-4 col-md-12">
+                            <h1 class="mt-5 laranja-senac fw-bold text-start fs-1">Sobre Nós</h1>
+                            <p class="azul-senac">
+                                Desde 1946, o Serviço Nacional de Aprendizagem Comercial(SENAC) é o principal agente de educação profissional voltado para o Comércio de Bens, Serviços e Turismo do País.
+                                
+                                Agora trazendo o salão escola senac, que é um projeto de ensino feito para criar profissionais capazes de atuar nas varias áreas dos cuidados com a beleza, oferecendo diversos cursos relacionados a área da beleza, como barbeiro, cabelereiro, depila . Ganhe um tratamento gratuito e personalizado enquanto ajuda na criação de profissionais de qualidade.
+                            </p>
+                        </div>
+                        <div class="col-lg-4 d-flex justify-content-center mt-lg-5 pt-lg-5">
+                            <img src="./assets/img/img.predio-senac.png" alt="foto do prédio do senac matinhos/caioba" class="img-index">
                         </div>
                     </div>
                 </div>

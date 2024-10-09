@@ -1,4 +1,4 @@
-<!-- CRIADOR: MALINSKI -->
+
 
 <?php
 
@@ -18,6 +18,7 @@ include_once("../constantes.php")
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <title>Document</title>
+    <meta name="author" content="Gabriel Malisnki">
 </head>
 
 <body>

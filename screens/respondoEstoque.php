@@ -11,6 +11,7 @@ include_once("../constantes.php")
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Estoque</title>
+    <meta name="author" content="Victor">
     <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">

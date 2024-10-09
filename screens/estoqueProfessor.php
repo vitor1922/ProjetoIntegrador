@@ -56,49 +56,49 @@ include_once("../constantes.php")
 <div class="list-group w-100">
   <!-- Repetição dos blocos -->
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
-    <span>Bancada 1</span>
-    <span>• 10/10 •</span>
-    <span>XX/XX/XXXX</span>
+    <strong>Bancada 1</strong>
+    <strong>• 10/10 •</strong>
+    <strong>XX/XX/XXXX</strong>
   </div>
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
-    <span>Bancada 2</span>
-    <span>• 8/10 •</span>
-    <span>XX/XX/XXXX</span>
+    <strong>Bancada 2</strong>
+    <strong>• 8/10 •</strong>
+    <strong>XX/XX/XXXX</strong>
   </div>
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
-    <span>Bancada 3</span>
-    <span>• 5/10 •</span>
-    <span>XX/XX/XXXX</span>
+    <strong>Bancada 3</strong>
+    <strong>• 5/10 •</strong>
+    <strong>XX/XX/XXXX</strong>
   </div>
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
-    <span>Bancada 4</span>
-    <span>• 7/10 •</span>
-    <span>XX/XX/XXXX</span>
+    <strong>Bancada 4</strong>
+    <strong>• 7/10 •</strong>
+    <strong>XX/XX/XXXX</strong>
   </div>
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
-    <span>Bancada 5</span>
-    <span>• 9/10 •</span>
-    <span>XX/XX/XXXX</span>
+    <strong>Bancada 5</strong>
+    <strong >• 9/10 •</strong>
+    <strong>XX/XX/XXXX</strong>
   </div>
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
-    <span>Bancada 6</span>
-    <span>• 6/10 •</span>
-    <span>XX/XX/XXXX</span>
+    <strong>Bancada 6</strong>
+    <strong>• 6/10 •</strong>
+    <strong>XX/XX/XXXX</strong>
   </div>
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
-    <span>Bancada 7</span>
-    <span>• 4/10 •</span>
-    <span>XX/XX/XXXX</span>
+    <strong>Bancada 7</strong>
+    <strong>• 4/10 •</strong>
+    <strong>XX/XX/XXXX</strong>
   </div>
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
-    <span>Bancada 8</span>
-    <span>• 3/10 • </span>
-    <span>XX/XX/XXXX</span>
+    <strong>Bancada 8</strong>
+    <strong>• 3/10 • </strong>
+    <strong>XX/XX/XXXX</strong>
   </div>
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
-    <span>Bancada 9</span>
-    <span>• 2/10 •</span>
-    <span>XX/XX/XXXX</span>
+    <strong>Bancada 9</strong>
+    <strong>• 2/10 •</strong>
+    <strong>XX/XX/XXXX</strong>
   </div>
 </div>
 </div>

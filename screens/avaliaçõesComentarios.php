@@ -1,7 +1,6 @@
 <?php 
 include_once("../constantes.php");
 
-//AUTOR - CEZAR
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +8,8 @@ include_once("../constantes.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Área do Instrutor</title>
+    <title>Avaliações</title>
+    <meta name="author" content="Cezar">
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
@@ -36,10 +36,48 @@ include_once("./header.php");
         </div>
         
         <div class="mt-3">
-            <button class="btn btn-primary">Filtros</button>
+            <?php include_once("./popUpThalles.php")?>
         </div>
     </div>
 
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="Ícone Usuário" width="50" class="me-3">
+                    <div>
+                        <h5>Nome</h5>
+                        <p class="mb-0">Serviço - Turma xx/xx/xxxx</p>
+                    </div>
+                </div>
+                <div>
+                    <span>Nome do Aluno</span>
+                    <div>4.0</div>
+                </div>
+            </div>
+            <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec nunc efficitur lacus imperdiet ullamcorper. In dignissim ipsum est, sit amet convallis ligula posuere vitae. Aliquam bibendum, tellus vitae hendrerit laoreet, orci felis aliquet.</p>
+            <a href="#">ler mais...</a>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="Ícone Usuário" width="50" class="me-3">
+                    <div>
+                        <h5>Nome</h5>
+                        <p class="mb-0">Serviço - Turma xx/xx/xxxx</p>
+                    </div>
+                </div>
+                <div>
+                    <span>Nome do Aluno</span>
+                    <div>4.0</div>
+                </div>
+            </div>
+            <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec nunc efficitur lacus imperdiet ullamcorper. In dignissim ipsum est, sit amet convallis ligula posuere vitae. Aliquam bibendum, tellus vitae hendrerit laoreet, orci felis aliquet.</p>
+            <a href="#">ler mais...</a>
+        </div>
+    </div>
     <div class="card mt-3">
         <div class="card-body">
             <div class="d-flex justify-content-between">

@@ -1,6 +1,6 @@
 <!-- header magrooooo demais! -->
 
-<header>
+<header class="">
     <div class=" container-fluid">
         <div class="row header-vii">
             <div class="col-12 d-flex justify-content-center m-1">

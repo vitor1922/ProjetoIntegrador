@@ -5,8 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Maxwel">
     <title>Configurações</title>
-
+    
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -157,9 +158,9 @@
                                         <label class="form-label fw-bold ">Senha</label>
                                         <div class="row">
                                             <div class="col-12 position-relative">
-                                                <input type="password" class="form-control bg-warning-subtle" id="txtSenhaEmail" name="txtSenha">
+                                                <input type="password" class="form-control bg-warning-subtle" id="txtSenhaEmail" name="txtSenha" >
                                             </div>
-                                            <div class="col-1 position-absolute align-self-center left-90 olho-senha" id="olhoSenhaEmail">
+                                            <div class="col-1 position-absolute align-self-center left-90 olho-senha" id="olhoSenhaEmail" onclick="mostrarOcultarSenhaEmail()">
                             
                                                     <i class="bi bi-eye-slash text-start" id="btn-senha"></i> 
                                             </div>
@@ -197,7 +198,7 @@
                                             <div class="col-12 position-relative">
                                                 <input type="password" class="form-control bg-warning-subtle" id="txtSenha" name="txtSenha">
                                             </div>
-                                            <div class="col-1 position-absolute align-self-center left-90 olho-senha" id="olhoSenha">
+                                            <div class="col-1 position-absolute align-self-center left-90 olho-senha" id="olhoSenha" onclick="mostrarOcultarSenha()">
                             
                                                     <i class="bi bi-eye-slash text-start" ></i> 
                                             </div>
@@ -209,7 +210,7 @@
                                             <div class="col-12 position-relative">
                                                 <input type="password" class="form-control bg-warning-subtle" id="txtNovaSenha" name="txtNovaSenha">
                                             </div>
-                                            <div class="col-1 position-absolute align-self-center left-90 olho-nova-senha" id="olhoNovaSenha">
+                                            <div class="col-1 position-absolute align-self-center left-90 olho-nova-senha" id="olhoNovaSenha" onclick="mostrarOcultarNovaSenha()">
                             
                                                     <i class="bi bi-eye-slash text-start" ></i> 
                                             </div>
@@ -271,7 +272,7 @@
                                             <div class="col-12 position-relative">
                                                 <input type="password" class="form-control bg-warning-subtle" id="txtSenhaExcluirConta" name="txtSenha">
                                             </div>
-                                            <div class="col-1 position-absolute align-self-center left-90 olho-senha" id="olhoSenhaExcluirConta">
+                                            <div class="col-1 position-absolute align-self-center left-90 olho-senha" id="olhoSenhaExcluirConta" onclick="mostrarOcultarSenhaExcluirConta()">
                             
                                                     <i class="bi bi-eye-slash text-start" ></i> 
                                             </div>

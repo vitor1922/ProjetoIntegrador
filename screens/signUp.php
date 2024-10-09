@@ -8,7 +8,7 @@ include("../constantes.php");
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="J0a0G0mes" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
@@ -18,14 +18,14 @@ include("../constantes.php");
 
 </head>
 
-<body>
+<body >
     <?php
     include_once('./header.php');
     ?>
-    <main>
+    <main class="h-75 d-flex">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="col-md-6 col-lg-5 form-container bg-light p-3 m-5 rounded-4 shadow-lg">
-                <a href=""><img src="../src/bootstrap/bootstrap-icons/icons/arrow-left.svg" alt="flecha" srcset=""></a>
+                <a class=" link-underline-opacity-0" href=""><i class="bi bi-arrow-left text-dark fs-4"></i></a>
                 <h5 class="text-start mb-3 mt-2 text-warning">Fazer Login!</h5>
                 <hr class="border-warning" style="border-width: 3px;">
                 <form>
@@ -36,9 +36,9 @@ include("../constantes.php");
                     <div class="form-group mt-4">
                         <label for="password">Senha</label>
                         <div class="d-flex position-relative">
-                            <input type="password" class="form-control bg-light" id="password" placeholder="Digite sua senha">
+                            <input type="password" class="form-control bg-light" id="txtSenha" placeholder="Digite sua senha">
                             <!-- Ícone do olho -->
-                            <i class="bi bi-eye-fill position-absolute end-0 top-50 translate-middle-y me-3" id="btn-senha" style="cursor: pointer;"></i>
+                            <i class="bi bi-eye-fill position-absolute end-0 top-50 translate-middle-y me-3" id="olhoSenha" style="cursor: pointer;"></i>
                         </div>
                     </div>
                     <div class="form-group mt-3">
@@ -83,6 +83,7 @@ include("../constantes.php");
                                         <div class="form-group mt-2 mb-3">
                                             <label for="confirmPassword">Confirme a Senha</label>
                                             <input type="password" class="form-control bg-light" id="confirmPasswordCadastro" placeholder="Confirme sua senha">
+                                            <i class="bi bi-eye-fill position-absolute end-0 top-25 translate-middle-y " id="olhoSenha" style="cursor: pointer;"></i>
                                         </div>
                                     </form>
                                 </div>
@@ -97,6 +98,7 @@ include("../constantes.php");
             </div>
         </div>
     </main>
+
     <?php
     include("./footer.php");
     ?>

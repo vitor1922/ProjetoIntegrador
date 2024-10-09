@@ -1,7 +1,7 @@
 <?php 
 include_once("../constantes.php");
 
-//AUTOR - CEZAR
+
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +13,7 @@ include_once("../constantes.php");
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <title>Painel</title>
+    <meta name="author" content="Cezar">
 </head>
 <body class="d-flex flex-column min-vh-100">
     <?php 

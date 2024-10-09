@@ -10,7 +10,7 @@ include_once("../constantes.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar agendamento</title>
-    <meta>
+    <meta name="author" content="Daniel">
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.css" class="">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.css">
@@ -24,8 +24,8 @@ include_once("../constantes.php");
     <main class="pb-5 mb-5">
         <div class="container-fluid-lg">
             <div class="row">
-                <div class="button fs-1 mx-3 pb-5">
-                    <a href=""><img class="mb-2 font-size" src="../src/bootstrap/bootstrap-icons/icons/arrow-left.svg" alt="Voltar"></a>
+                <div class="button fs-1 mx-3 azul-senac">
+                    <a href=""><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
                 </div>
             </div>
             <div class="row">
@@ -34,16 +34,16 @@ include_once("../constantes.php");
                 </div>
             </div>
             <div class="row justify-content-center pb-5 mb-5">
-                <div class="col-lg-3 col-md-6 pb-3 d-flex justify-content-center">
-                    <div class="card" style="width: 22rem;">
-                        <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top" alt="...">
+                <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
+                    <div class="card" style="width: 23rem;">
+                        <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6  col-lg-12  col-xxl-7">
                                     <h5 class="card-title">Lavagem de cabelo</h5>
 
                                 </div>
-                                <div class="col-12 col-xxl-5">
+                                <div class="offset-2 col-3 offset-xxl-0 ps-xxl-5 p-0">
                                     <p class="d-inline-flex gap-1">
                                         <button class="btn btn-azul-senac text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
                                             Selecionar
@@ -72,16 +72,16 @@ include_once("../constantes.php");
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 pb-3 d-flex justify-content-center">
-                    <div class="card" style="width: 22rem;">
-                        <img src="../assets/img/img_salao_de_beleza.png" class="card-img-top" alt="...">
+                <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
+                    <div class="card" style="width: 23rem;">
+                        <img src="../assets/img/img_salao_de_beleza.png" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6 col-lg-12 col-xxl-7">
                                     <h5 class="card-title">Corte de cabelo</h5>
 
                                 </div>
-                                <div class="col-12 col-xxl-5">
+                                <div class="offset-2 col-3 offset-xxl-0 ps-xxl-5 p-0">
                                     <p class="d-inline-flex gap-1">
                                         <button class="btn btn-azul-senac text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
                                             Selecionar
@@ -110,15 +110,15 @@ include_once("../constantes.php");
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 pb-3 d-flex justify-content-center">
-                    <div class="card" style="width: 22rem;">
-                        <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top" alt="...">
+                <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
+                    <div class="card" style="width: 23rem;">
+                        <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6 col-lg-12 col-xxl-7 w-md-50">
                                     <h5 class="card-title">Lavagem de cabelo</h5>
                                 </div>
-                                <div class="col-12  col-xxl-5">
+                                <div class="offset-2 col-3 offset-xxl-0 col-xxl-5 ps-xxl-5 p-0">
                                     <p class="d-inline-flex gap-1">
                                         <button class="btn btn-azul-senac text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3">
                                             Selecionar
