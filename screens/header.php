@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="header-vi">
-                    <img src="<?= BASE_URL ?>assets/img/logoSenac.png" alt="logo senac" class="img-logo-senac header-vi">
+                    <img src="<?= BASE_URL ?>assets/img/logoSenac.png" alt="logo senac" class="img-logo-senac header-vi my-1">
                 </div>
                 <div class="nav-item dropstart">
                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

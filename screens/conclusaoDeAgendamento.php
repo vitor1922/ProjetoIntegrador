@@ -2,6 +2,7 @@
 
 include_once("../constantes.php")
 
+//AUTOR - VICTOR
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -62,7 +63,9 @@ include_once("../constantes.php")
         </div>
       </div>
 
-
+      <?php
+    include("./footer.php");
+    ?>
       <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
       <script src="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css"></script>
 </body>

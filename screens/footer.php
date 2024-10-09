@@ -1,13 +1,13 @@
 <footer >
 
-    <div class=" container-fluid d-flex align-content-end">
+    <div class=" container-fluid d-flex align-content-end pt-3">
         <div class="container-fluid border-top border-1 border-black">
             <div class="row">
                 <div class="col-6 col-lg-8 py-2">
                     <div class="row">
                         <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center">
                             <div class="">
-                                <a href="../screens/"><img src="<?= BASE_URL ?>assets/img/logoSenac.png" class=" img-logo-senac" alt=""></a>
+                                <a href="#"><img src="<?= BASE_URL ?>assets/img/logoSenac.png" class=" img-logo-senac" alt=""></a>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 d-flex flex-column align-items-center">

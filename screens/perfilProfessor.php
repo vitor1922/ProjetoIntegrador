@@ -1,3 +1,5 @@
+<!-- CRIADOR: MALINSKI -->
+
 <?php
 include_once("../constantes.php");
 ?>

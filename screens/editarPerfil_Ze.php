@@ -12,21 +12,21 @@ include_once("../constantes.php");
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body class="d-flex flex-column">
+<body class="d-flex flex-column justify-content-between">
 <?php 
         include_once("./header.php");
     ?>
 
 <main>
 
-<div class="d-flex justify-content-between align-items-center">
-        <a href="./Perfil.php"><button class="btn"><i class="bi bi-arrow-left-short" style="font-size: 50px"></i></button></a>
+<div class="d-flex justify-content-between">
+        <a href="./Perfil_Mali.php"><button class="btn"><i class="bi bi-arrow-left-short" style="font-size: 50px"></i></button></a>
         <a href="#"><button class="btn" id="saveButton"><i class="bi bi-check" style="font-size: 50px"></i></button></a>
     </div>
 
 <div class="container">
 
-    <div class="text">
+    <div class="text d-flex">
         <h2 class="text-warning" style="font-weight: bold;">Editar Perfil</h2>
     </div>
 

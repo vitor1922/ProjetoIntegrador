@@ -134,8 +134,7 @@ body{
 } */
 
 
-
-.olho{
+.left-90{
     
     left: 90%;
 }
@@ -193,6 +192,7 @@ body{
 .star.selected {
     color: #FFD700; 
 }
+
 
 
 

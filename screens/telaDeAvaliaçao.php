@@ -30,7 +30,7 @@ include_once("../constantes.php")
         </div>
       </div>
       <div class="col-12 d-flex justify-content-center">
-      <div class="card w-75 w-md-50">
+      <div class="card w-75 w-md-50 pb-3">
   <div class="card-body">
     <h5 class="card-title laranja-senac fw-bold d-flex justify-content-center">Tela de Avaliação</h5>
     <p class="card-text">Como avaliaria sua experiência no Senac?</p>
@@ -54,20 +54,24 @@ include_once("../constantes.php")
   </label>
 </div>
 <p class="card-text">Qual nota você daria para o aluno que lhe atendeu?</p>
-    <div class="mb-3 form-check">
-    <div class="mb-3 form-check">
-    <div class="star-rating">
-            <input type="radio" id="star5" name="rating" value="5">
-            <label for="star5">&#9733;</label>
-            <input type="radio" id="star4" name="rating" value="4">
-            <label for="star4">&#9733;</label>
-            <input type="radio" id="star3" name="rating" value="3">
-            <label for="star3">&#9733;</label>
-            <input type="radio" id="star2" name="rating" value="2">
-            <label for="star2">&#9733;</label>
-            <input type="radio" id="star1" name="rating" value="1">
-            <label for="star1">&#9733;</label>
+
+    <div class="stars">
+            <i class="bi bi-star star" data-rating="1"></i>
+            <i class="bi bi-star star" data-rating="2"></i>
+            <i class="bi bi-star star" data-rating="3"></i>
+            <i class="bi bi-star star" data-rating="4"></i>
+            <i class="bi bi-star star" data-rating="5"></i>
+        </div>
+        <div class="mb-3 mt-2 col-12 col-md-7">
+                <label for="exampleFormControlTextarea2" class="form-label">Deixe sua opnião (Máximo de 300 caracteres)</label>
+                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" maxlength="300"></textarea>
+              </div>
+            </div>
           </div>
+          <div class="mx-4">
+          <button class=" offset-7 col-4 offset-md-11 col-md-1 btn btn-azul-senac text-light" type="submit">Enviar</button>
+          </div>
+
   </div>
 </div>
       </div>

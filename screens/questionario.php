@@ -10,7 +10,8 @@ include_once("../constantes.php")
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Serviço - Corte de Cabelo</title>
+  <title>Questionario</title>
+  <meta name">
   <link href="../src/bootstrap/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.css">
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -21,7 +22,7 @@ include_once("../constantes.php")
   include_once("./header.php");
   ?>
   <main>
-    <div class="row mb-2">
+    <div class="row">
       <div class="col-12">
         <div class="button fs-1 mx-3">
           <a href="#" role="button pb-5">
@@ -30,9 +31,9 @@ include_once("../constantes.php")
         </div>
       </div>
       <div class="col-12 d-flex justify-content-center">
-        <div class="card w-75 w-md-50 px-2">
+        <div class="card w-75 w-md-50 px-2 pb-3 border-0 shadow-lg">
           <div class="card-body">
-            <h5 class="card-title laranja-senac fw-bold d-flex justify-content-center">Preferências de serviço</h5>
+            <h5 class="card-title laranja-senac fw-bold d-flex justify-content-center fs-2">Preferências de serviço</h5>
 
             <p class="card-text">Você possui algum tipo de alergia a algum produto de beleza?</p>
             <div class="mb-3 form-check">
@@ -48,6 +49,7 @@ include_once("../constantes.php")
                 <label for="exampleFormControlTextarea1" class="form-label">Que tipos de produtos? (Máximo de 300 caracteres)</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="300"></textarea>
               </div>
+              
             </div>
 
             <p class="card-text">Você possui algum tipo de preferência de como seu atendimento vai ser realizado?</p>
@@ -66,7 +68,10 @@ include_once("../constantes.php")
               </div>
             </div>
           </div>
-          <button class="offset-7 col-4 btn btn-azul-senac bg-cinza" type="submit">Enviar</button>
+          <div class="mx-4">
+            <button class=" offset-7 col-4 offset-md-11 col-md-1 btn btn-azul-senac text-light mb-" type="submit">Enviar</button>
+          </div>
+
         </div>
       </div>
   </main>

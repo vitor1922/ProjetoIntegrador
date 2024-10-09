@@ -161,7 +161,7 @@
                                             </div>
                                             <div class="col-1 position-absolute align-self-center left-90 olho-senha" id="olhoSenhaEmail">
                             
-                                                    <i class="bi bi-eye-slash text-start" id="btn-senha"></i> 
+                                                    <i class="bi bi-eye-slash text-start" ></i> 
                                             </div>
                                         </div>
                                     </div>
