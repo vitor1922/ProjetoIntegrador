@@ -28,11 +28,11 @@ include_once("../constantes.php");
 
 <div class="container">
 
-    <div class="text mt-2">
+    <div class="d-flex text mt-2">
         <h2 class="text-warning fw-bold">Editar Perfil</h2>
     </div>
 
-    <div class="row mt-5">
+    <div class="d-flex row mt-5">
         <div class="col-lg-4 d-flex justify-content-center mb-4 mb-lg-0">
             <img src="https://inspiracabelo.com.br/wp-content/uploads/2024/03/corte-de-cabelo-para-rosto-redondo-40-anos-10.jpg" alt="Foto de perfil" class="rounded-circle" style="max-width: 120px;">
         </div>

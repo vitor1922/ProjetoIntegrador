@@ -12,6 +12,7 @@ include_once("../constantes.php")
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Questionario</title>
   <meta name="author" content="NickTon">
+  
   <link href="../src/bootstrap/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.css">
   <link rel="stylesheet" href="../assets/css/style.css">

@@ -25,10 +25,11 @@
                 <div class="d-flex justify-content-center align-items-center">
                     <img src="../assets/img/R (1).jpg" class="card-img-top img-perfil-grande rounded-circle" alt="...">
                 </div>
-                <div class="card-body d-flex justify-content-center"></div>
+                <div class="card-body d-flex justify-content-center flex-column">
 
                 <h5 class="card-title">Apelido</h5> <br>
                 <p class="card-text">Nome Real</p>
+                </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Bio</li>
                 <li class="list-group-item">...</li>
