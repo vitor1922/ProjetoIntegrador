@@ -18,7 +18,7 @@
    <hr>
     <a class="dropdown-item" href="./configuracoes.php"> <div class="d-flex justify-content-center "> <li>Configuracoes</li></div></a>
     <hr>
-    <div class="d-flex justify-content-center"> <li><a class="dropdown-item d-flex justify-content-between m-2" href="#">Logout<i class="bi bi-box-arrow-right "></i></a></li>
+    <a class="dropdown-item d-flex justify-content-between m-2" href="#"> <div class="d-flex justify-content-center"> <li>Logout<i class="bi bi-box-arrow-right "></i></li></a>
     <hr>
 </div>
    

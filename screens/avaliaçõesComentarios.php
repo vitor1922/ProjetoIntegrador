@@ -1,6 +1,5 @@
 <?php 
 include_once("../constantes.php");
-
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +17,12 @@ include_once("../constantes.php");
 <?php 
 include_once("./header.php"); 
 ?>
+
+<div class="container mt-3">
+        <a href="" class="btn btn-link" style="text-decoration: none; color: inherit;">
+            <i class="bi bi-arrow-left" style="font-size: 2rem; font-weight: bold;"></i> <strong style="font-size: 1.25rem;"></strong>
+        </a>
+    </div>
 
 <main class="container mt-3 flex-grow-1">
     <h3 class="text-center">Área do Instrutor</h3>

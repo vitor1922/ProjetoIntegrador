@@ -35,7 +35,7 @@ include_once("../constantes.php");
             </div>
             <div class="row justify-content-center pb-5 mb-5">
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card" style="width: 23rem;">
+                    <div class="card shadow-lg" style="width: 23rem;">
                         <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
                         <div class="card-body">
                             <div class="row">
@@ -75,7 +75,7 @@ include_once("../constantes.php");
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
                     <div class="card" style="width: 23rem;">
                         <img src="../assets/img/img_salao_de_beleza.png" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
-                        <div class="card-body">
+                        <div class="card-body shadow-lg">
                             <div class="row">
                                 <div class="col-6 col-lg-12 col-xxl-7">
                                     <h5 class="card-title">Corte de cabelo</h5>
@@ -113,7 +113,7 @@ include_once("../constantes.php");
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
                     <div class="card" style="width: 23rem;">
                         <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
-                        <div class="card-body">
+                        <div class="card-body shadow-lg">
                             <div class="row">
                                 <div class="col-6 col-lg-12 col-xxl-7 w-md-50">
                                     <h5 class="card-title">Lavagem de cabelo</h5>

@@ -22,7 +22,9 @@
     padding: 0;
     margin: 0;
 }
-
+body{
+    height: 100vh;
+}
 
 :root {
     --laranja_senac: #F7941D;
@@ -50,6 +52,11 @@
 }
 .img-index{
     height: calc(13rem + 5vw);
+}
+
+
+.card-index{
+    width: 20rem;
 }
 
 .blur{
@@ -111,6 +118,7 @@
 .btn-cinza:hover{
     background-color: var(--cinza);
 }
+
 .btn-azul-senac{
     background-color: var(--azul_senac);
 }
@@ -153,6 +161,9 @@
 @media(max-width: 991px){
     .header-senac{
         background-color: white;
+    }
+    .img-index{
+        height: calc(10rem + 10vw);
     }
 }
 .footer-senac{

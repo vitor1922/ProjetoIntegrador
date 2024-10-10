@@ -19,30 +19,27 @@
     <?php include_once("./header.php"); ?>
 
     <main class="vh-100">
-        <div class="container d-flex justify-content-center mt-5 ">
-
-            <div class="card d-flex justify-content-center border-3" style="width: 30em;">
+        <div class="container d-flex justify-content-center mt-5 align-content-center ">
+            <div class="card d-flex justify-content-center border-3 shadow-lg" style="width: 30em;">
                 <div class="d-flex justify-content-center align-items-center">
-                    <img src="../assets/img/R (1).jpg" class="card-img-top img-perfil-grande rounded-circle" alt="...">
+                    <img src="../assets/img/R (1).jpg" class="card-img-top img-perfil-grande rounded-circle mt-4" alt="...">
                 </div>
                 <div class="card-body d-flex justify-content-center flex-column">
 
-                <h5 class="card-title">Apelido</h5> <br>
-                <p class="card-text">Nome Real</p>
+                    <h5 class="card-title">Apelido</h5> <br>
+                    <p class="card-text">Nome Real</p>
                 </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Bio</li>
-                <li class="list-group-item">...</li>
-                <li class="list-group-item">(x) Visitas (x) Avaliações</li>
-            </ul>
-            <div class="card-body">
-                <button class="btn border"><a href="./editarPerfil.php" class="link-offset-2 link-underline link-underline-opacity-0 fw-bold azul-senac">Editar Perfil</a></button>
-                <a href="#" class="card-link">Another link</a>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Bio</li>
+                    <li class="list-group-item">...</li>
+                    <li class="list-group-item">(x) Visitas (x) Avaliações</li>
+                </ul>
+                <div class="card-body">
+                <a href="./editarPerfil.php" class="link-offset-2 link-underline link-underline-opacity-0 d-flex justify-content-center"><button class="btn border w-50 fs-3 fw-bold azul-senac border-3">Editar Perfil</button></a>
+                    <!-- <a href="#" class="card-link">Another link</a> -->
+                </div>
             </div>
         </div>
-        </div>
-        </div>
-
     </main>
     <?php
     include("./footer.php");

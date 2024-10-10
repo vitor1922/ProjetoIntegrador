@@ -18,7 +18,7 @@ include("../constantes.php");
 
 </head>
 
-<body >
+<body class="vh-100">
     <?php
     include_once('./header.php');
     ?>
@@ -36,9 +36,9 @@ include("../constantes.php");
                     <div class="form-group mt-4">
                         <label for="password">Senha</label>
                         <div class="d-flex position-relative">
-                            <input type="password" class="form-control bg-light" id="olhoSenhaEmail" placeholder="Digite sua senha">
+                            <input type="password" class="form-control bg-light" id="passwordInput"  placeholder="Digite sua senha">
                             <!-- Ícone do olho -->
-                            <i class="bi bi-eye-fill position-absolute end-0 top-50 translate-middle-y me-3" id="olhoSenha" style="cursor: pointer;"></i>
+                            <i class="bi-eye-fill text-start position-absolute end-0 top-50 translate-middle-y me-3" id="iconPassword" onclick="viewSenha()" style="cursor: pointer;"></i>
                         </div>
                     </div>
                     <div class="form-group mt-3">
