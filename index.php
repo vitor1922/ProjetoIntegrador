@@ -83,18 +83,42 @@
                         </div>
                     </div>
                 </div>
-                <div class="cadastro bg-gd-laranja-claro-senac pb-5 mt-5 px-5 ">
+                <div class="cadastro bg-gd-azul-claro-senac pb-5 mt-5 px-5 ">
                     <div class="row d-flex justify-content-center">
                         <div class="  col-12">
                             <h1 class="mt-5 laranja-senac fw-bold text-center fs-1">Agende Seu Horário </h1>
-                            
+
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center">
-                    <div class="col-12 text-center">
-                        <p class="azul-senac">
-                        Faça agora seu cadastro gratuitamente e <br> agende um atendimento para cuidar de si.
+                        <div class="col-12 text-center">
+                            <p class="azul-senac">
+                                Faça agora seu cadastro gratuitamente e <br> agende um atendimento para cuidar de si.
                             </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contato bg-gd-laranja-claro-senac pb-5 mt-5 px-5 ">
+                    <div class="row d-flex justify-content-center">
+                        <div class=" offset-1 col-lg-4 col-md-12 mb-2 ">
+                            <h1 class="mt-5 laranja-senac fw-bold text-start fs-1">Fale Conosco</h1>
+                            <p class="azul-senac">
+                                Entre em contato com a gente para tirar suas duvidas e nos fornecer suas criticas e sugestões
+                            </p>
+                            <div class="">
+                                <button class="btn btn-azul-senac text-white fw-bold"> entrar em contato</button>
+                            </div>
+                        </div>
+                        <div class="offset-1 col-lg-4 text-start mt-lg-5 pt-lg-5">
+                        <p class="azul-senac">
+                        <i class="bi bi-telephone-fill"></i> (41) 99999-9999
+                        </p>
+                        <p class="azul-senac">
+                        <i class="bi bi-geo-alt-fill"></i> R. Doutor José Pinto Rebelo Junior, 91 
+                        </p>
+                        <p class="azul-senac">
+                        <i class="bi bi-envelope-fill"></i> caioba@pr.senac.br
+                        </p>
                         </div>
                     </div>
                 </div>

@@ -31,12 +31,12 @@ include("../constantes.php");
                 <form>
                     <div class="form-group mt-4">
                         <label for="email">E-mail</label>
-                        <input type="email" class="form-control bg-light" id="email" placeholder="Digite seu e-mail">
+                        <input type="email" class="form-control bg-light" id="email" aria-describedby="emailHelp" placeholder="Digite seu e-mail">
                     </div>
                     <div class="form-group mt-4">
                         <label for="password">Senha</label>
                         <div class="d-flex position-relative">
-                            <input type="password" class="form-control bg-light" id="passwordInput"  placeholder="Digite sua senha">
+                            <input type="password" class="form-control bg-light" id="passwordInput" placeholder="Digite sua senha">
                             <!-- Ícone do olho -->
                             <i class="bi-eye-fill text-start position-absolute end-0 top-50 translate-middle-y me-3" id="iconPassword" onclick="viewSenha()" style="cursor: pointer;"></i>
                         </div>
@@ -82,8 +82,10 @@ include("../constantes.php");
                                         </div>
                                         <div class="form-group mt-2 mb-3">
                                             <label for="confirmPassword">Confirme a Senha</label>
-                                            <input type="password" class="form-control bg-light" id="confirmPasswordCadastro" placeholder="Confirme sua senha">
-                                            <i class="bi bi-eye-fill position-absolute end-0 top-25 translate-middle-y " id="olhoSenha" style="cursor: pointer;"></i>
+                                            <div class="form-group">
+                                                <input type="password" class="form-control bg-light pe-5" id="passwordInput" placeholder="Confirme sua senha">
+                                                <i class="bi-eye-fill position-absolute end-0 translate-middle-y me-3" id="iconPassword" onclick="viewSenha()" style="cursor: pointer;"></i>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>

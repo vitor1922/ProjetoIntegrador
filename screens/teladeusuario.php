@@ -14,7 +14,7 @@
   </button>
   <ul class="dropdown-menu dropdown-menu-dark">
     <li><a class="dropdown-item active" href="#"><i class="bi bi-person-circle fs-2"></i>ㅤNome</a></li><hr>
-    <a class="dropdown-item" href="./Perfil.php"> <div class="d-flex justify-content-center">    <li>Perfil</li></div></a>
+    <a class="dropdown-item" href="./Perfil.php"> <div class="d-flex justify-content-center"><li>Perfil</li></div></a>
    <hr>
     <a class="dropdown-item" href="./configuracoes.php"> <div class="d-flex justify-content-center "> <li>Configuracoes</li></div></a>
     <hr>

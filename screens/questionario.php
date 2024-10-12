@@ -47,7 +47,7 @@ include_once("../constantes.php")
                 <label class="form-check-label" for="flexRadioDefault2">não</label>
               </div>
               <div class="mb-3 mt-2 col-12 col-md-7">
-                <label for="exampleFormControlTextarea1" class="form-label">Que tipos de produtos? (Máximo de 300 caracteres)</label>
+                <label for="exampleFormControlTextarea1" class="form-label">Quais tipos de produtos? (Máximo de 300 caracteres)</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="300"></textarea>
               </div>
               
@@ -64,7 +64,7 @@ include_once("../constantes.php")
                 <label class="form-check-label" for="flexRadioDefault4">não</label>
               </div>
               <div class="mb-3 mt-2 col-12 col-md-7">
-                <label for="exampleFormControlTextarea2" class="form-label">Que tipos de preferências? (Máximo de 300 caracteres)</label>
+                <label for="exampleFormControlTextarea2" class="form-label">Quais tipos de preferências? (Máximo de 300 caracteres)</label>
                 <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" maxlength="300"></textarea>
               </div>
             </div>

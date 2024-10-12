@@ -3,8 +3,8 @@
 <header class="">
     <div class=" container-fluid">
         <div class="row header-vii">
-            <div class="col-12 d-flex justify-content-center m-1">
-                <img src="<?= BASE_URL ?>assets/img/logoSenac.png" alt="logo senac" class="img-logo-senac ">
+            <div class="col-12 d-flex justify-content-center m-1 mt-1 mb-2">
+                <a href="https://www.pr.senac.br/principal/"><img src="<?= BASE_URL ?>assets/img/logoSenac.png" alt="logo senac" class="img-logo-senac " href=""></a>
             </div>
         </div>
         <nav class="navbar navbar-expand-lg bg-body-tertiary py-0 my-0 border-bottom border-1 border-black">
@@ -21,13 +21,13 @@
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-bold">
 
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="../src/index.php">Home</a>
+                                    <a class="nav-link active" aria-current="page" href="../index.php">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Sobre</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Serviços</a>
+                                    <a class="nav-link" href="./verTodosServiços.php">Serviços</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="./agendamento.php">Agendar Horário</a>

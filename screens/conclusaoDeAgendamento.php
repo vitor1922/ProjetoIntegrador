@@ -37,14 +37,88 @@ include_once("../constantes.php")
 
         <div class="row">
 
-        </div>
-        <div class="col-12 d-flex justify-content-center">
-          <div class="card w-75 w-md-50 px-2 pb-3 border-0 shadow-lg">
-            <div class="card-body">
+          <!--Resumo do agendamento-->
+          <div class="col-12 col-lg-6 d-flex justify-content-center">
+            <div class="card shadow-lg">
+              <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid p-3" alt="...">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <h5 class="card-title fs-6 text-start">Lavagem de cabelo</h5>
+                  </div>
+                  <div class="col-6">
+                    <h5 class="card-title fs-6 text-end">00/00/0000</h5>
+                  </div>
+                </div>
+              </div>
             </div>
-              
           </div>
+
+          <!--Opções gerais-->
+          <div class="col-12 col-lg-6 d-flex justify-content-center">
+            <div class="card border-0 shadow-lg">
+              <div class="card-body ">
+
+                <!--Botão do questionario-->
+                <div class="d-grid col-12 text-start me-5 mb-3">
+                  <button class="btn shadow-sm btn-cinza" data-bs-toggle="modal" data-bs-target="#modalEmail">
+                    <div class="row text-start ">
+                      <div class="  col-10 ">
+                        <div class="row">
+                          <div class="col-12">
+                            <p class="p-0 m-0 fw-bold ">Questionário de preferências de serviço (opcional)</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-2 align-self-center text-end">
+                        <i class="bi bi-chevron-right fs-3 "></i>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!--Notificações-->
+
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <h5 class="p-0 m-0 fs-6 azul-senac">Caso deixe ligado a seguinte opção, você receberá notificações em até 48 horas do dia marcado</h5>
+                  </div>
+                </div>
+
+                <div class="d-grid col-12 text-start me-5 mb-3">
+                  <button class="btn shadow-sm btn-cinza ">
+                    <div class="row text-start ">
+                      <div class="  col-10 align-self-center">
+                        <p class="p-0 m-0 fw-bold ">Aceitar receber notificações por email ou telefone</p>
+                      </div>
+                      <div class="col-2 align-self-center">
+                        <div class="form-check form-switch d-flex justify-content-end ">
+                          <input class="form-check-input fs-3 text-end" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+
+                <!--Cancelar Agendamento-->
+
+                <div class="row">
+                  <div class="col-12 text-center">
+                    <h5 class="p-0 m-0 fs-6 text-danger">Caso deixe ligado a seguinte opção, você receberá notificações em até 48 horas do dia marcado</h5>
+                  </div>
+                </div>
+
+                <div class="mb-3  d-flex justify-content-center">
+                  <button class="btn  btn-danger  text-white fw-bold px-5" type="submit">Confirmar</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
         </div>
+
+
 
       </div>
     </main>

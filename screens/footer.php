@@ -12,7 +12,7 @@
                         </div>
                         <div class="col-12 col-lg-6 d-flex flex-column align-items-center">
                             <h3 class="border-bottom border-dark border-1 pb-1 fs-2">Contatos</h3>
-                            <p>+99 99999-9999</p>
+                            <p>(41) 3473-2469</p>
                             <p>+99 99999-9999</p>
                         </div>
                     </div>
@@ -20,9 +20,9 @@
                 <div class="col-6 col-lg-4 py-2 d-flex flex-column justify-content-center">
                     <div class="row">
                         <a href="#" class="col-6 col-lg-3"><i class="bi bi-whatsapp text-black p-2 fs-4"></i></a>
-                        <a href="#" class="col-6 col-lg-3"><i class="bi bi-facebook text-black p-2 fs-4"></i></a>
-                        <a href="#" class="col-6 col-lg-3"><i class="bi bi-instagram text-black p-2 fs-4"></i></a>
-                        <a href="https://youtu.be/BBJa32lCaaY?si=JoXrKykGGQbpi9_z?autoplay=1" class="col-6 col-lg-3"><i class="bi bi-youtube text-black p-2 fs-4"></i></a>
+                        <a href="https://www.facebook.com/SenacParana/" class="col-6 col-lg-3"><i class="bi bi-facebook text-black p-2 fs-4"></i></a>
+                        <a href="https://www.instagram.com/senacparana?igsh=dHcxNzlsbXQ1dm84" class="col-6 col-lg-3"><i class="bi bi-instagram text-black p-2 fs-4"></i></a>
+                        <a href="https://www.youtube.com/@senacpr" class="col-6 col-lg-3"><i class="bi bi-youtube text-black p-2 fs-4"></i></a>
                     </div>
                 </div>
             </div>
