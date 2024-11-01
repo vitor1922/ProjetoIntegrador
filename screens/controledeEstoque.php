@@ -156,6 +156,9 @@ include_once("../constantes.php");
             </a>
         </div>
     </main>
+    <?php
+    include("./footer.php");
+    ?>
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css"></script>
 </body>

@@ -1,4 +1,13 @@
-<?php include_once("./constantes.php") ?>
+<?php 
+
+session_start();
+include_once("./constantes.php");
+include_once('./data/conexao.php');
+$perfil = $_SESSION['perfil'] ?? NULL;
+
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -7,20 +16,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Maxwel">
     <title>Salão de Beleza Senac</title>
     <link rel="stylesheet" href="./src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
 </head>
 
-<body class="d-flex flex-column justify-content-between">
+<body class="vh-100 d-flex flex-column justify-content-between">
     <div>
         <?php
         include_once("./screens/header.php");
         ?>
 
         <main class=" ">
-            <div class="container-fluid">
+            <div class="container-fluid ">
                 <div class="banner">
                     <div class="row">
                         <div class="col-12 blur">
@@ -97,6 +107,13 @@
                             </p>
                         </div>
                     </div>
+                    <div class="row pb-5 mb-5">
+                        <div class="col-12 d-flex justify-content-center">
+                        <div class="">
+                                <button class="btn btn-azul-senac text-white fw-bold">Agendar um Horário</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="contato bg-gd-laranja-claro-senac pb-5 mt-5 px-5 ">
                     <div class="row d-flex justify-content-center">
@@ -106,7 +123,7 @@
                                 Entre em contato com a gente para tirar suas duvidas e nos fornecer suas criticas e sugestões
                             </p>
                             <div class="">
-                                <button class="btn btn-azul-senac text-white fw-bold"> entrar em contato</button>
+                                <button class="btn btn-azul-senac text-white fw-bold"> <i class="bi bi-whatsapp"></i> entrar em contato</button>
                             </div>
                         </div>
                         <div class="offset-1 col-lg-4 text-start mt-lg-5 pt-lg-5">

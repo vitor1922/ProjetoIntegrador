@@ -8,8 +8,9 @@ include_once("../constantes.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modal Estética</title>
-    <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
+    <link href="../src/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
     <!-- Botão para abrir o modal -->
@@ -32,8 +33,8 @@ include_once("../constantes.php");
                         <div class="categoria-header" style="display: inline-flex; align-items: center; padding: 5px 10px; border: 2px solid black; border-radius: 25px; font-weight: bold; font-size: 14px;">
                             <span style="margin: 0 10px;"><i class="bi bi-arrow-left"></i> Barbearia <i class="bi bi-arrow-right"></i></span>
                         </div>
-                        <p><a href="#" style="text-decoration: none; color: black;">Cortes masculinos</a></p>
-                        <p><a href="#" style="text-decoration: none; color: black;">Barbearia</a></p>
+                        <p><a href="infoDeServicos.php" style="text-decoration: none; color: black;">Cortes masculinos</a></p>
+                        <p><a href="infoDeServicos.php" style="text-decoration: none; color: black;">Barbearia</a></p>
                     </div>
 
                     <!-- Categoria 2 -->
@@ -41,9 +42,9 @@ include_once("../constantes.php");
                         <div class="categoria-header" style="display: inline-flex; align-items: center; padding: 5px 10px; border: 2px solid black; border-radius: 25px; font-weight: bold; font-size: 14px;">
                             <span style="margin: 0 10px;"><i class="bi bi-arrow-left"></i> Salão de Beleza <i class="bi bi-arrow-right"></i></span>
                         </div>
-                        <p><a href="#" style="text-decoration: none; color: black;">Processos Capilares</a></p>
-                        <p><a href="#" style="text-decoration: none; color: black;">Mãos e Pés</a></p>
-                        <p><a href="#" style="text-decoration: none; color: black;">Cabelo</a></p>
+                        <p><a href="infoDeServicos.php" style="text-decoration: none; color: black;">Processos Capilares</a></p>
+                        <p><a href="infoDeServicos.php" style="text-decoration: none; color: black;">Mãos e Pés</a></p>
+                        <p><a href="infoDeServicos.php" style="text-decoration: none; color: black;">Cabelo</a></p>
                     </div>
 
                     <!-- Categoria 3 -->
@@ -51,8 +52,8 @@ include_once("../constantes.php");
                         <div class="categoria-header" style="display: inline-flex; align-items: center; padding: 5px 10px; border: 2px solid black; border-radius: 25px; font-weight: bold; font-size: 14px;">
                             <span style="margin: 0 10px;"><i class="bi bi-arrow-left"></i> Centro de Estética <i class="bi bi-arrow-right"></i></span>
                         </div>
-                        <p><a href="#" style="text-decoration: none; color: black;">Estética Corporal</a></p>
-                        <p><a href="#" style="text-decoration: none; color: black;">Mãos e Pés</a></p>
+                        <p><a href="infoDeServicos.php" style="text-decoration: none; color: black;">Estética Corporal</a></p>
+                        <p><a href="infoDeServicos.php" style="text-decoration: none; color: black;">Mãos e Pés</a></p>
                     </div>
                 </div>
             </div>
@@ -60,6 +61,6 @@ include_once("../constantes.php");
     </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

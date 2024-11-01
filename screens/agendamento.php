@@ -35,8 +35,8 @@ include_once("../constantes.php");
             </div>
             <div class="row justify-content-center pb-5 mb-5">
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card shadow-lg" style="width: 23rem;">
-                        <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
+                    <div class="card shadow-lg w-23rem">
+                        <img src="../assets/img/img_mulher_lavando_cabelo.png"alt="...">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6  col-lg-12  col-xxl-7">
@@ -52,7 +52,7 @@ include_once("../constantes.php");
                                 </div>
                             </div>
                             <div class="collapse" id="collapseExample1">
-                                <div class="card card-body" style="position: absolute; z-index: 1; width: 100%;">
+                                <div class="card card-body start-0 position-absolute w-100" >
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
                                         <option value="1">18/07/24 - 17:00 até 18:30</option>
@@ -60,8 +60,8 @@ include_once("../constantes.php");
                                         <option value="3">18/07/24 - 17:00 até 18:30</option>
                                         <option value="4">18/07/24 - 17:00 até 18:30</option>
                                     </select>
-                                    <div class="position-relative pt-5">
-                                        <div class="position-absolute bottom-0 end-0 pt-5">
+                                    <div class="position-relative mt-5">
+                                        <div class="position-absolute bottom-0 end-0 mt-5">
                                             <button type="submit" class="btn btn-azul-senac text-light">
                                                 Agendar
                                             </button>
@@ -73,9 +73,9 @@ include_once("../constantes.php");
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card" style="width: 23rem;">
-                        <img src="../assets/img/img_salao_de_beleza.png" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
-                        <div class="card-body shadow-lg">
+                    <div class="card">
+                        <img src="../assets/img/img_salao_de_beleza.png" alt="...">
+                        <div class="card-body shadow-sm w-23rem">
                             <div class="row">
                                 <div class="col-6 col-lg-12 col-xxl-7">
                                     <h5 class="card-title">Corte de cabelo</h5>
@@ -90,7 +90,7 @@ include_once("../constantes.php");
                                 </div>
                             </div>
                             <div class="collapse" id="collapseExample2">
-                                <div class="card card-body" style="position: absolute; z-index: 1; width: 100%;">
+                                <div class="card card-body  start-0 position-absolute w-100">
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
                                         <option value="1">18/07/24 - 17:00 até 18:30</option>
@@ -98,8 +98,8 @@ include_once("../constantes.php");
                                         <option value="3">18/07/24 - 17:00 até 18:30</option>
                                         <option value="4">18/07/24 - 17:00 até 18:30</option>
                                     </select>
-                                    <div class="position-relative pt-5">
-                                        <div class="position-absolute bottom-0 end-0 pt-5">
+                                    <div class="position-relative mt-5">
+                                        <div class="position-absolute bottom-0 end-0">
                                             <button type="submit" class="btn btn-azul-senac text-light">
                                                 Agendar
                                             </button>
@@ -111,9 +111,9 @@ include_once("../constantes.php");
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card" style="width: 23rem;">
-                        <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;" alt="...">
-                        <div class="card-body shadow-lg">
+                    <div class="card">
+                        <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" alt="...">
+                        <div class="card-body shadow-sm w-23rem">
                             <div class="row">
                                 <div class="col-6 col-lg-12 col-xxl-7 w-md-50">
                                     <h5 class="card-title">Lavagem de cabelo</h5>
@@ -127,7 +127,7 @@ include_once("../constantes.php");
                                 </div>
                             </div>
                             <div class="collapse" id="collapseExample3">
-                                <div class="card card-body" style="position: absolute; z-index: 1; width: 100%;">
+                                <div class="card card-body  start-0 position-absolute w-100">
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
                                         <option value="1">18/07/24 - 17:00 até 18:30</option>
@@ -135,8 +135,8 @@ include_once("../constantes.php");
                                         <option value="3">18/07/24 - 17:00 até 18:30</option>
                                         <option value="4">18/07/24 - 17:00 até 18:30</option>
                                     </select>
-                                    <div class="position-relative pt-5">
-                                        <div class="position-absolute bottom-0 end-0 pt-5">
+                                    <div class="position-relative mt-5">
+                                        <div class="position-absolute bottom-0 end-0">
                                             <button type="submit" class="btn btn-azul-senac text-light">
                                                 Agendar
                                             </button>

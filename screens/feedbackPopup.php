@@ -12,7 +12,8 @@ include_once("../constantes.php")
     <title>Avaliação</title>
     
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column justify-content-between min-vh-100">
+    <div>
 <?php include_once("./header.php"); ?>
 <main>
 <div class="container mt-5">
@@ -61,9 +62,11 @@ include_once("../constantes.php")
         </div>
     </div>
 </div>
-<?php include_once("./footer.php"); ?>
+
 
 </main>
+</div>
+<?php include_once("./footer.php"); ?>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>

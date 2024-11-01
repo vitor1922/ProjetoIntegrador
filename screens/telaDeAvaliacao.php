@@ -16,11 +16,11 @@ include_once("../constantes.php")
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
-<body>
+<body class="vh-100" >
   <?php
   include_once("./header.php");
   ?>
-  <main>
+  <main class="h-75">
     <div class="row">
       <div class="col-12">
         <div class="button fs-1 mx-3">

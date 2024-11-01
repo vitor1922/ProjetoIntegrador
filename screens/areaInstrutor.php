@@ -1,7 +1,5 @@
 <?php 
 include_once("../constantes.php");
-
-
 ?>
 
 <!DOCTYPE html>
@@ -12,75 +10,94 @@ include_once("../constantes.php");
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Painel</title>
-    <meta name="author" content="Cezar">
+    <title>Área do Instrutor</title>
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <?php 
-    include_once("./header.php");
-    ?>
+<?php 
+include_once("./header.php"); 
+?>
 
-    <div class="container mt-3">
-        <a href="../index.php" class="btn btn-link" style="text-decoration: none; color: inherit;">
-            <i class="bi bi-arrow-left" style="font-size: 2rem; font-weight: bold;"></i> <strong style="font-size: 1.25rem;"></strong>
-        </a>
-    </div>
+<div class="container-fluid mt-3">
+    <a href="../index.php" class="btn btn-link">
+        <i class="bi bi-arrow-left-short azul-senac fw-bold fs-1"></i>
+    </a>
+</div>
 
-    <main class="flex-grow-1">
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6 col-lg-3 mb-4">
-                    <a href="./turmasProfessores.php" class="card-link" style="text-decoration: none; color: inherit;">
-                        <div class="card d-flex flex-column align-items-center border-0">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI82Gcx4qvLD41uZwxiIJvmkU9sq5p7I-u5uqKdk0I35Vh4AH8" alt="Turmas" class="card-img-top" style="height: 120px; width: 120px; object-fit: contain;" draggable="false" ondragstart="return false;" oncontextmenu="return false;">
-                            <div class="card-body">
-                                <h3 class="title" style="color: orange; text-align: center;">Turmas</h3>
-                            </div>
+<main class="flex-grow-1">
+    <div class="container-fluid mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3 mb-4">
+                <a href="./turmasProfessores.php" class="text-decoration-none text-dark">
+                    <div class="card d-flex flex-column align-items-center border-0">
+                        <div class="image-container">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI82Gcx4qvLD41uZwxiIJvmkU9sq5p7I-u5uqKdk0I35Vh4AH8" alt="Turmas" class="card-image">
                         </div>
-                    </a>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3 mb-4">
-                    <a href="./estoqueProfessor.php" class="card-link" style="text-decoration: none; color: inherit;">
-                        <div class="card d-flex flex-column align-items-center border-0">
-                            <img src="https://cdn-icons-png.flaticon.com/512/3121/3121768.png" alt="Estoque" class="card-img-top" style="height: 120px; width: 120px; object-fit: contain;" draggable="false" ondragstart="return false;" oncontextmenu="return false;">
-                            <div class="card-body">
-                                <h3 class="title" style="color: orange; text-align: center;">Estoque</h3>
-                            </div>
+                        <div class="card-body text-center">
+                            <h3 class="text-warning">Turmas</h3>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-6 col-lg-3 mb-4">
-                    <a href="./agendamento.php" class="Agendamentos" style="text-decoration: none; color: inherit;">
-                        <div class="card d-flex flex-column align-items-center border-0">
-                            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcToLzfeMFYcjlicL3YTb6y9DG85-Q19rxxdKuw0yfcP5oamMLJq" alt="Agendamentos" class="card-img-top" style="height: 120px; width: 120px; object-fit: contain;" draggable="false" ondragstart="return false;" oncontextmenu="return false;">
-                            <div class="card-body">
-                                <h3 class="title" style="color: orange; text-align: center;">Agendamento</h3>
-                            </div>
+            <div class="col-12 col-md-6 col-lg-3 mb-4">
+                <a href="./estoqueProfessor.php" class="text-decoration-none text-dark">
+                    <div class="card d-flex flex-column align-items-center border-0">
+                        <div class="image-container">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3121/3121768.png" alt="Estoque" class="card-image">
                         </div>
-                    </a>
-                </div>
-                <div class="col-12 col-md-6 col-lg-3 mb-4">
-                    <a href="./avaliaçõesComentarios.php" class="avaliações" style="text-decoration: none; color: inherit;">
-                        <div class="card d-flex flex-column align-items-center border-0">
-                            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRVDblf9NGuc4co8nFnPEvgA_zcO2A352GquF4Rr0NtKzcBiGxe" alt="Avaliações" class="card-img-top" style="height: 120px; width: 120px; object-fit: contain;" draggable="false" ondragstart="return false;" oncontextmenu="return false;">
-                            <div class="card-body">
-                                <h3 class="title" style="color: orange; text-align: center;">Avaliações</h3>
-                            </div>
+                        <div class="card-body text-center">
+                            <h3 class="text-warning">Estoque</h3>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             </div>
         </div>
-    </main>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3 mb-4">
+                <a href="./agendamento.php" class="text-decoration-none text-dark">
+                    <div class="card d-flex flex-column align-items-center border-0">
+                        <div class="image-container">
+                            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcToLzfeMFYcjlicL3YTb6y9DG85-Q19rxxdKuw0yfcP5oamMLJq" alt="Agendamentos" class="card-image">
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="text-warning">Agendamento</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 mb-4">
+                <a href="./avaliacoesComentarios.php" class="text-decoration-none text-dark">
+                    <div class="card d-flex flex-column align-items-center border-0">
+                        <div class="image-container">
+                            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRVDblf9NGuc4co8nFnPEvgA_zcO2A352GquF4Rr0NtKzcBiGxe" alt="Avaliações" class="card-image">
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="text-warning">Avaliações</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3 mb-4">
+                <a href="./gerenciamento.php" class="text-decoration-none text-dark">
+                    <div class="card d-flex flex-column align-items-center border-0">
+                        <div class="image-container">
+                            <img src="https://cdn.icon-icons.com/icons2/1524/PNG/512/gear_106450.png" alt="Gerenciamento" class="card-image">
+                        </div>
+                        <div class="card-body text-center">
+                            <h3 class="text-warning">Gerenciamento</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
 
-    <footer class="mt-auto">
-        <?php 
-            include("./footer.php");
-        ?>
-    </footer>
+<footer class="mt-auto">
+    <?php include_once("./footer.php"); ?>
+</footer>
+<script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

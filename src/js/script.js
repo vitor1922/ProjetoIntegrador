@@ -53,44 +53,56 @@ function mostrarOcultarSenhaExcluirConta() {
 //funçao do joao dos bottoes, nao mexer pq nao funciono o do max,
 //sim tive que fazer o meu infelizmente
 
-function viewSenha() {
+function viewSenha( ) {
 
     let inputPass = document.getElementById("passwordInput")
     let iconPassBtn = document.getElementById("iconPassword")
+    let inputConfirmPass = document.getElementById("inputConfirmPass")
+    let iconConfirmPass = document.getElementById("icontogleConfirmPass")
 
-    if (inputPass.type === "password") {
-        inputPass.setAttribute("type", "text")
-        iconPassBtn.classList.replace('bi-eye-fill', 'bi-eye-slash-fill')
-    } else{
-        inputPass.setAttribute('type','password')
-        iconPassBtn.classList.replace('bi-eye-slash-fill','bi-eye-fill')
+        if (inputPass.type === "password") {
+            inputPass.setAttribute("type", "text")
+            iconPassBtn.classList.replace('bi-eye-fill', 'bi-eye-slash-fill')
+
+        } else if (inputPass.type === "text") { 
+            inputPass.setAttribute('type', 'password')
+            iconPassBtn.classList.replace('bi-eye-slash-fill', 'bi-eye-fill')
+
+        } if (inputConfirmPass.type === "password" ) {
+            inputConfirmPass.setAttribute("type", "text")
+            iconConfirmPass.classList.replace('bi-eye-fill', 'bi-eye-slash-fill')
+    
+        } else if (inputConfirmPass.type === "text" ) {
+            inputConfirmPass.setAttribute('type', 'password')
+            iconConfirmPass.classList.replace('bi-eye-slash-fill', 'bi-eye-fill')
+        } 
+
     }
-}
+    // coloca traço no telefone
 
+    let telefone = document.querySelector("#txtTelefone")
 
-// coloca traço no telefone
+    telefone.addEventListener("keypress", mask.bind(null, telefone))
 
-let telefone = document.querySelector("#txtTelefone")
-
-telefone.addEventListener("keypress", mask.bind(null, telefone))
-
-function mask(telefone) {
-    if (telefone.value.length == 5) {
-        telefone.value += "-"
-    }
-}
-
-// pular campo input
-let ddd = document.querySelector("#txtDDD")
-ddd.addEventListener("keypress", pularCampoTelefone.bind(null, ddd, telefone))
-
-function pularCampoTelefone(campoAtual, proximoCampo) {
-    setTimeout(function () {
-        if (campoAtual.value.length == 2) {
-            proximoCampo.focus()
+    function mask(telefone) {
+        if (telefone.value.length == 5) {
+            telefone.value += "-"
         }
-    }, 1);
-}
+    }
+
+    // pular campo input
+    let ddd = document.querySelector("#txtDDD")
+    ddd.addEventListener("keypress", pularCampoTelefone.bind(null, ddd, telefone))
+
+    function pularCampoTelefone(campoAtual, proximoCampo) {
+        setTimeout(function () {
+            if (campoAtual.value.length == 2) {
+                proximoCampo.focus()
+            }
+        }, 1);
+    }
+
+
 
 
 

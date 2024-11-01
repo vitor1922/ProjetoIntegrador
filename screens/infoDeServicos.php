@@ -27,14 +27,25 @@ include_once("../constantes.php")
       <div class="m-3">
         <i class="bi bi-arrow-left"></i>
       </div>
-      <div class="row text-center mt-5 mb-3">
+      <div class="row text- mt-5 mb-3">
         <h3 class="display-6 text-warning fw-bold">Corte de Cabelo</h3>
       </div>
+      <div class="d-flex mt-5"></div>
+      <hr>
       <div class="row d-flex align-items-center mb-3 w-100 w-md-50 w-lg-25 mx-auto">
-        <div class="col text-center">
-          <p class="mt-3 fw-bolder text-primary">Exemplo dos serviços anteriores</p>
+        <div class="col text-">
+          <h4 class="mt-3 fw-bolder text-primary">Turma 1</h4>
         </div>
       </div>
+      <hr>
+      <div class="d-flex justify-content-lg-start">
+      <img src="https://th.bing.com/th/id/OIP._eCIljHRA15vp38zaPRE4QHaHR?rs=1&pid=ImgDetMain" alt="Foto de perfil" class="rounded-circle img-fluid mb-3" style="width: 50px; height: 50px;">
+      <div class="d-flex mt-3 p-3 small">
+      <p>Nome do aluno - dd/mm/aaaa</p>
+      </div>
+      </div>
+      <h4>Titulo do Post</h4>
+      <hr>
       <div class="carrosel d-flex justify-content-center  ">
         <!-- Carrossel de imagens -->
       <div id="carouselExampleIndicators" class="carousel slide w-75">
@@ -64,9 +75,44 @@ include_once("../constantes.php")
         </button>
       </div>
       </div>
+      <hr>
+      <div class="row d-flex align-items-center mb-3 w-100 w-md-50 w-lg-25 mx-auto">
+        <div class="col text d-flex mb-3">
+          <h4 class="mt-3 fw-bolder text-primary">Turma 2</h4>
+        </div>
+      </div>
+      <div class="d-flex justify-content-lg-start">
+      <img src="https://th.bing.com/th/id/OIP._eCIljHRA15vp38zaPRE4QHaHR?rs=1&pid=ImgDetMain" alt="Foto de perfil" class="rounded-circle img-fluid mb-3" style="width: 50px; height: 50px;">
+      <div class="d-flex mt-3 p-3 small">
+      <p>Nome do aluno - dd/mm/aaaa</p>
+      </div>
+      </div>
+      <h4>Titulo do Post</h4>
+      <hr>
+      <div class="carrosel d-flex justify-content-center  ">
+      <div id="carouselExample" class="carousel slide w-75">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+      </div>
 
-      <!-- Descrição do serviço -->
-      <p class="azul-senac mt-5 px-3">Lorem ipsum dolor sit amet. A iste architecto et distinctio sapiente hic atque dolores. Et sunt nihil in rerum consequuntur vel perferendis nostrum vel magni dolor eum.</p>
     </div>
   </main>
 

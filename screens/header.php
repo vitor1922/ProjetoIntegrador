@@ -1,4 +1,5 @@
 <!-- header magrooooo demais! -->
+<!--Poha Malinski -->
 
 <header class="">
     <div class=" container-fluid">
@@ -21,7 +22,7 @@
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-bold">
 
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="../index.php">Home</a>
+                                    <a class="nav-link " aria-current="page" href="<?= BASE_URL ?>index.php">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Sobre</a>
@@ -35,6 +36,15 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Fale Conosco</a>
                                 </li>
+                                <li class="nav-item">
+                                        <a class="nav-link" href="#">Blog</a>
+                                    </li>
+                                <?php if($perfil=== 'admin' || $perfil === "professor"){?>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Area do Instrutor</a>
+                                    </li>
+                                <?php }?>
+
                             </ul>
                         </div>
                     </div>
@@ -44,11 +54,16 @@
                 </div>
                 <div class="nav-item dropstart">
                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle fs-5"></i>
+                        <i class="bi bi-person-circle fs-5"><?= $perfil?></i>
                     </a>
                     <ul class="dropdown-menu">
+                        <?php if($_SESSION['logado'] == true){?>
+                            <li><a class="dropdown-item" href="perfil.php">Perfil</a></li>
+                            <li><a class="dropdown-item" href="perfil.php">Log Out</a></li>
+                            <?php }else{?>
                         <li><a class="dropdown-item" href="./signUp.php">Cadastrar</a></li>
-                        <li><a class="dropdown-item" href="#">login</a></li>
+                        <li><a class="dropdown-item" href="#">Login</a></li>
+                        <?php }?>
                     </ul>
                 </div>
             </div>
