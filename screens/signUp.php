@@ -3,9 +3,16 @@
 <?php
 session_start();
 include("../constantes.php");
+include_once('../data/conexao.php');
+$perfil = $_SESSION['perfil'] ?? NULL;
+$logado = $_SESSION['logado'] ?? NULL;
+
+
 $mensagem = $_SESSION['mensagem'] ?? null;
 $_SESSION['mensagem'] = null;
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -37,24 +44,23 @@ $_SESSION['mensagem'] = null;
                         <label for="email">E-mail</label>
                         <input type="email" class="form-control bg-light" id="email" name="txtEmail" aria-describedby="emailHelp" placeholder="Digite seu e-mail">
                     </div>
-                    <div class="form-group mt-4">
+                    <div class="form-group mb-3 mt-4">
                         <label for="password">Senha</label>
-                        <div class="d-flex position-relative">
-                            <input type="password" class="form-control bg-warning-subtle" id="passwordInput" name="txtSenha" placeholder="Digite sua senha">
-                            <!-- Ícone do olho -->
-                            <i class="bi-eye-fill text-start position-absolute end-0 top-50 translate-middle-y me-3" id="iconPassword" onclick="viewSenha()" style="cursor: pointer;"></i>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control bg-warning-subtle border-right-0" id="passwordInput" name="txtSenha" placeholder="Digite sua senha">
+                            <div class="input-group-text border-left-0">
+                                <i class="bi-eye-fill text-start" id="iconPassword" onclick="viewSenha()"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group mt-3">
-                        <button type="submit" class="btn btn-primary btn-block mt-3">Fazer Login</button>
+                    <a class="text-decoration-none" href="">
+                        <p class="text-end me-4">esqueceu a senha ?</p>
+                    </a>
+                    <div>
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Fazer Login</button>
                 </form>
-                <!-- Button trigger modal -->
-
-                <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#fazerLogin">
-                    Criar conta
-                </button>
+                <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#fazerLogin"> Criar conta </button>
             </div>
-
             <?php if (isset($mensagem)) { ?>
                 <p class="alert alert-warning mt-2">
                     <?= $mensagem ?>
@@ -71,33 +77,29 @@ $_SESSION['mensagem'] = null;
                         </div>
                         <div class="modal-body border-top border-warning">
                             <div class="col rounded">
-                                <form>
+                                <form action="../src/logicos/cadUsuario.php" method="POST">
                                     <div class="form-group mt-2">
                                         <label for="firstName">Nome</label>
-                                        <input type="text" class="form-control bg-light" id="firstName" placeholder="Digite seu nome">
+                                        <input type="text" class="form-control bg-light" id="firstName" placeholder="Digite seu nome" nome="txtnome">
                                     </div>
                                     <div class="form-group mt-2">
                                         <label for="cpf">CPF</label>
-                                        <input type="text" class="form-control bg-light" id="cpf" placeholder="Digite seu CPF">
+                                        <input type="text" class="form-control bg-light" id="cpf" placeholder="Digite seu CPF" name="txtCpf">
                                     </div>
                                     <div class="form-group mt-2">
                                         <label for="phone">Telefone</label>
-                                        <input type="text" class="form-control bg-light" id="phone" placeholder="Digite seu telefone">
+                                        <input type="text" class="form-control bg-light" id="phone" placeholder="Digite seu telefone" name="txtTelefone">
                                     </div>
                                     <div class="form-group mt-2">
                                         <label for="email">E-mail</label>
-                                        <input type="email" class="form-control bg-light" id="email" name="txtEmail" placeholder="Digite seu e-mail">
-                                    </div>
-                                    <div class="form-group mt-2">
-                                        <label for="password">Senha</label>
-                                        <input type="password" class="form-control bg-light" id="passwordCadastro" name="txtSenha" placeholder="Digite sua senha">
+                                        <input type="email" class="form-control bg-light" id="email" placeholder="Digite seu e-mail" name="txtEmail">
                                     </div>
                                     <div class="form-group mt-2 mb-3">
-                                        <label for="confirmPassword">Confirme a Senha</label>
+                                        <label for="confirmPassword">Senha</label>
                                         <div class="input-group mb-3">
-                                            <input type="password" class="form-control bg-warning-subtle border-right-0" id="inputConfirmPass" placeholder="Confirme sua senha">
+                                            <input type="password" class="form-control bg-warning-subtle border-right-0" id="inputConfirmPass" placeholder="Insira a senha" name="txtSenha">
                                             <div class="input-group-text border-left-0">
-                                                <i class="bi-eye-fill" id="icontogleConfirmPass" onclick="viewSenha()" style="cursor: pointer;"></i>
+                                                <i class="bi-eye-fill" id="icontogleConfirmPass" onclick="viewSenhaCad()"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +116,6 @@ $_SESSION['mensagem'] = null;
         </div>
         </div>
     </main>
-
     <?php
     include("./footer.php");
     ?>

@@ -53,7 +53,11 @@ body {
     height: 11rem;
     width: 11rem;
 }
-
+.img-perfil-mini {
+    object-fit: cover;
+    height: 2.8rem;
+    width: 2.8rem;
+}
 .img-index {
     height: calc(13rem + 5vw);
 }
@@ -68,7 +72,6 @@ body {
 
 .w-23rem{
     width: 23rem;
-    
 }
 
 .blur {
@@ -77,6 +80,10 @@ body {
 
 .grayscale {
     filter: grayscale(1);
+}
+
+.txt-shadow-red{
+    text-shadow: 0 1px 1px red;
 }
 
 /*cores*/
@@ -247,32 +254,19 @@ body {
 
 
 .profile-background {
-    background-color: #5865f2;
-    /* Cor de fundo */
+    background-color: #07079e;
     width: 475px;
-    /* Tamanho do fundo circular */
     height: 100px;
     border-radius: 5px;
-    /* Deixa o fundo circular */
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .imgPerfil {
-    border: 5px solid black;
-    width: 10rem;
-    /* Tamanho da imagem dentro do círculo */
-    height: 10rem;
+    width: 12rem;
+    height: 1rem;
     border-radius: 50%;
-    /* Deixa a imagem circular */
-    object-fit: cover;
-    /* Garante que a imagem se ajuste ao espaço */
-    transition: width 1s;
-}
-
-.imgPerfil:hover {
-    width: 10.5rem;
 }
 
 .color-button,
@@ -303,3 +297,28 @@ body {
     height: 100%;
     object-fit: contain;
 }
+
+
+.cor-back{
+    width: 25px;
+    height: 50px;
+    border-radius: 0.5rem;
+    border: solid #fff;
+}
+
+.cor-back2{
+    width: 75px;
+    height: 50px;
+    border-radius: 1rem;
+    background-color: gray;
+    border: solid #fff;
+}
+
+.bordaa {
+    margin-top: 4rem;
+    width: 10rem;
+    height: 8rem;
+    position: absolute;
+    
+}
+

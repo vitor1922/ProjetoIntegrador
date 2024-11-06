@@ -1,5 +1,11 @@
 <?php
+
+session_start();
 include_once("../constantes.php");
+include_once('../data/conexao.php');
+$perfil = $_SESSION['perfil'] ?? NULL;
+$logado = $_SESSION['logado'] ?? NULL;
+
 ?>
 
 <!DOCTYPE html>

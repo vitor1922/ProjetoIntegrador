@@ -1,6 +1,32 @@
 <?php
 
-include_once("../constantes.php")
+include_once("../constantes.php");
+include_once('../data/conexao.php');
+
+session_start();
+$perfil = $_SESSION['perfil'] ?? NULL;
+$logado = $_SESSION['logado'] ?? NULL;
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+$perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
+$_SESSION['mensagem'] = NULL;
+
+$logado =  $_SESSION['logado'] ?? FALSE;
+$nome = $_SESSION['nome'] ?? "";
+$id_usuario = $_SESSION['id_usuario'] ?? "";
+$login = NULL;
+
+if (!$logado) {
+    header("Location: " . BASE_URL . "screens/signUp.php");
+    exit;
+}
+// Mostrar dados do usuario logado
+$sql = "SELECT * FROM agendamento WHERE id_agendamento = :id_agendamento";
+$select = $conexao->prepare($sql);
+$select->bindParam(':id_agendamento', $id_agendamento);
+
+if ($select->execute()) {
+    $login = $select->fetch(PDO::FETCH_ASSOC);
+}
 
 ?>
 <!DOCTYPE html>
@@ -20,7 +46,7 @@ include_once("../constantes.php")
   <div>
     <?php include_once("./header.php"); ?>
 
-    <main>
+    <main>  
       <div class="container-fluid">
 
         <div class="row">
@@ -47,7 +73,7 @@ include_once("../constantes.php")
                     <h5 class="card-title fs-6 text-start">Lavagem de cabelo</h5>
                   </div>
                   <div class="col-6">
-                    <h5 class="card-title fs-6 text-end">00/00/0000</h5>
+                    <h5 class="card-title fs-6 text-end"><?= $login["data"]?></h5>
                   </div>
                 </div>
               </div>

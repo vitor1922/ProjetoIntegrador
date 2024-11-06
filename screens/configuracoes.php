@@ -1,4 +1,16 @@
-<?php include("../constantes.php") ?>
+<?php
+session_start();
+include_once("../constantes.php");
+include_once('../data/conexao.php');
+$perfil = $_SESSION['perfil'] ?? NULL;
+$logado = $_SESSION['logado'] ?? FALSE;
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+
+$email = $_SESSION['email'] ?? NULL;
+$telefone = $_SESSION['telefone'] ?? NULL;
+
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -18,10 +30,13 @@
         <?php include("./header.php") ?>
 
         <main>
+
+
             <div class=" container-fluid">
+                
                 <div class="row">
                     <div class="col-12">
-                        <a href=""><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
+                        <a href="./perfil.php"><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
                     </div>
                 </div>
                 <div class="row ">
@@ -48,7 +63,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
-                                            <p class="p-0 m-0">nome@email.com</p>
+                                            <p class="p-0 m-0"><?= $email ?> </p>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +111,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
-                                            <p class="p-0 m-0">41 99999-9999</p>
+                                            <p class="p-0 m-0"><?= $telefone ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -148,17 +163,31 @@
                         </div>
                     </button>
                 </div>
+                <div class="d-grid col-lg-8 col-10 text-start offset-1 me-5 mb-3">
+                <div>
+                    <?php if (isset($mensagem)) { ?>
+                        <p class="alert alert-danger mt-2">
+                            <?= $mensagem ?>
+                        </p>
+                    <?php } ?>
+                </div>
+                </div>
+
+                
+
+
+
 
                 <!-- modais -->
                 <!-- modal alterar email -->
-                <div class="modal fade" id="modalEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="modalEmail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="d-flex justify-content-end mb-3">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <form action="">
+                                <form action="../src/logicos/atualizarEmail.php" method="POST">
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Novo Email</label>
                                         <input type="email" class="form-control" name="txtEmail">
@@ -168,33 +197,31 @@
                                         <div class="row">
                                             <div class="col-12 d-flex position-relative">
                                                 <input type="password" class="form-control bg-warning-subtle" id="txtSenhaEmail" name="txtSenha">
-                                                <!-- <div class="text-start position-absolute end-0 top-50 translate-middle-y me-3" id="olhoSenhaEmail">
-                                                    <i class="bi bi-eye-fill "  onclick="mostrarOcultarSenhaEmail()""></i>
-                                                </div> -->
+
                                                 <div class="col-2 text-end me-3 position-absolute align-self-center  end-0 top-50 translate-middle-y  olho-senha" id="olhoSenhaEmail" onclick="mostrarOcultarSenhaEmail()">
 
-                                                        <i class="bi bi-eye-slash text-start" id="btn-senha"></i>
+                                                    <i class="bi bi-eye-slash text-start" id="btn-senha"></i>
                                                 </div>
-                                                
+
                                             </div>
-                                            
-                                            </div>
+
                                         </div>
-                                        <div class="mb-3 d-flex flex-column justify-content-center align-items-center mt-5">
-                                            <label class="form-label fw-bold">PIN</label>
-                                            <input type="text" class="form-control w-50" name="txtPin">
-                                            <a href="">Enviar Código</a>
-                                        </div>
-                                        <div class="mb-3 d-flex justify-content-center">
-                                            <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
-                                        </div>
+                                    </div>
+                                    <div class="mb-3 d-flex flex-column justify-content-center align-items-center mt-5">
+                                        <label class="form-label fw-bold">PIN</label>
+                                        <input type="text" class="form-control w-50" name="txtPin">
+                                        <a href="">Enviar Código</a>
+                                    </div>
+                                    <div class="mb-3 d-flex justify-content-center">
+                                        <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- modal alterar senha -->
-                <div class="modal fade" id="modalSenha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="modalSenha" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -213,10 +240,10 @@
                                                 <input type="password" class="form-control bg-warning-subtle" id="txtSenha" name="txtSenha">
                                                 <div class="col-2 text-end me-3 position-absolute align-self-center  end-0 top-50 translate-middle-y olho-senha" id="olhoSenha" onclick="mostrarOcultarSenha()">
 
-                                                <i class="bi bi-eye-slash text-start"></i>
+                                                    <i class="bi bi-eye-slash text-start"></i>
+                                                </div>
                                             </div>
-                                            </div>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -226,10 +253,10 @@
                                                 <input type="password" class="form-control bg-warning-subtle" id="txtNovaSenha" name="txtNovaSenha">
                                                 <div class="col-2 text-end me-3 position-absolute align-self-center  end-0 top-50 translate-middle-y olho-nova-senha" id="olhoNovaSenha" onclick="mostrarOcultarNovaSenha()">
 
-                                                <i class="bi bi-eye-slash text-start"></i>
+                                                    <i class="bi bi-eye-slash text-start"></i>
+                                                </div>
                                             </div>
-                                            </div>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="mb-3 d-flex flex-column justify-content-center align-items-center mt-5">
@@ -246,19 +273,19 @@
                     </div>
                 </div>
                 <!-- modal alterar telefone -->
-                <div class="modal fade" id="modalTelefone" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="modalTelefone" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <div class="d-flex justify-content-end mb-3">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <form action="">
+                                <form action="../src/logicos/atualizarTelefone.php" method="POST">
                                     <div class="mb-5 pb-5 d-flex justify-content-center flex-column align-items-center">
                                         <label class="form-label fw-bold">Altere seu número de telefone</label>
                                         <div class="row">
-                                            <div class=" offset-1 col-2"><input type="text" class="form-control px-1 text-center" name="txtDDD" placeholder="DDD" maxlength="2" id="txtDDD"></div>
-                                            <div class="col-8"><input type="text" class="form-control" name="txtTelefone" placeholder="Telefone" maxlength="10" id="txtTelefone"></div>
+                                            <div class=" offset-1 col-2"><input type="text" class="form-control px-1 text-center" name="txtDDD" placeholder="DDD" maxlength="2" id="txtDDD" required></div>
+                                            <div class="col-8"><input type="text" class="form-control" name="txtTelefone" placeholder="Telefone" maxlength="10" id="txtTelefone" required></div>
                                         </div>
                                     </div>
 
@@ -271,7 +298,7 @@
                     </div>
                 </div>
                 <!-- modal excluir conta -->
-                <div class="modal fade" id="modalExcluirConta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="modalExcluirConta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -288,10 +315,10 @@
                                             <div class="col-12 position-relative">
                                                 <input type="password" class="form-control bg-warning-subtle" id="txtSenhaExcluirConta" name="txtSenha">
                                                 <div class="col-2 text-end me-3 position-absolute align-self-center  end-0 top-50 translate-middle-y olho-senha" id="olhoSenhaExcluirConta" onclick="mostrarOcultarSenhaExcluirConta()">
-                                                <i class="bi bi-eye-slash text-start"></i>
+                                                    <i class="bi bi-eye-slash text-start"></i>
+                                                </div>
                                             </div>
-                                            </div>
-                                            
+
                                         </div>
                                     </div>
 
@@ -317,6 +344,7 @@
 
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/js/script.js"></script>
+    <script src="../src/js/telefone.js"></script>
 </body>
 
 </html>

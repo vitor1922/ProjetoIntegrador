@@ -1,5 +1,10 @@
 <?php
+
+session_start();
 include_once("../constantes.php");
+include_once('../data/conexao.php');
+$perfil = $_SESSION['perfil'] ?? NULL;
+$logado = $_SESSION['logado'] ?? NULL;
 
 ?>
 
@@ -35,7 +40,7 @@ include_once("../constantes.php");
             </div>
             <div class="row justify-content-center pb-5 mb-5">
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card shadow-lg w-23rem">
+                    <div class="card shadow-sm   w-23rem border-0">
                         <img src="../assets/img/img_mulher_lavando_cabelo.png"alt="...">
                         <div class="card-body">
                             <div class="row">
@@ -73,7 +78,7 @@ include_once("../constantes.php");
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card">
+                    <div class="card border-0">
                         <img src="../assets/img/img_salao_de_beleza.png" alt="...">
                         <div class="card-body shadow-sm w-23rem">
                             <div class="row">
@@ -111,7 +116,7 @@ include_once("../constantes.php");
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card">
+                    <div class="card border-0">
                         <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" alt="...">
                         <div class="card-body shadow-sm w-23rem">
                             <div class="row">

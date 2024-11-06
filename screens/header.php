@@ -25,10 +25,10 @@
                                     <a class="nav-link " aria-current="page" href="<?= BASE_URL ?>index.php">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Sobre</a>
+                                    <a class="nav-link" href="<?= BASE_URL ?>index.php#sobre">Sobre</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="./verTodosServiços.php">Serviços</a>
+                                    <a class="nav-link" href="<?= BASE_URL ?>screens/verTodosServicos.php">Serviços</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="./agendamento.php">Agendar Horário</a>
@@ -41,7 +41,7 @@
                                     </li>
                                 <?php if($perfil=== 'admin' || $perfil === "professor"){?>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Area do Instrutor</a>
+                                        <a class="nav-link" href="#">Área do Instrutor</a>
                                     </li>
                                 <?php }?>
 
@@ -57,12 +57,11 @@
                         <i class="bi bi-person-circle fs-5"><?= $perfil?></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <?php if($_SESSION['logado'] == true){?>
-                            <li><a class="dropdown-item" href="perfil.php">Perfil</a></li>
-                            <li><a class="dropdown-item" href="perfil.php">Log Out</a></li>
+                        <?php if($logado === true){?>
+                            <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/perfil.php">Perfil</a></li>
+                            <li><a class="dropdown-item" href="<?= BASE_URL ?>src/logicos/logOut.php">Log Out</a></li>
                             <?php }else{?>
-                        <li><a class="dropdown-item" href="./signUp.php">Cadastrar</a></li>
-                        <li><a class="dropdown-item" href="#">Login</a></li>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/signUp.php">Login</a></li>
                         <?php }?>
                     </ul>
                 </div>

@@ -1,6 +1,9 @@
 <?php
 
-include_once("../constantes.php")
+include_once("../constantes.php");
+include_once('../data/conexao.php');
+
+
 
 ?>
 
@@ -57,7 +60,7 @@ include_once("../constantes.php")
   <!-- Repetição dos blocos -->
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
     <strong>Bancada 1</strong>
-    <strong>• 10/10 •</strong>
+    <strong>• <?= $login['qtde'] ?> •</strong>
     <strong>XX/XX/XXXX</strong>
   </div>
   <div class="list-group-item d-flex justify-content-between align-items-center mb-3">

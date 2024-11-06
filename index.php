@@ -4,7 +4,7 @@ session_start();
 include_once("./constantes.php");
 include_once('./data/conexao.php');
 $perfil = $_SESSION['perfil'] ?? NULL;
-
+$logado = $_SESSION['logado'] ?? NULL;
 
 
 ?>
@@ -51,7 +51,7 @@ $perfil = $_SESSION['perfil'] ?? NULL;
                         </div>
                     </div>
                 </div>
-                <div class="sobre bg-gd-azul-claro-senac pb-5 mt-5 px-5">
+                <div id="sobre" class="sobre bg-gd-azul-claro-senac pb-5 mt-5 px-5">
                     <div class="row d-flex flex-lg-row-reverse justify-content-center">
                         <div class=" offset-lg-1 col-lg-4 col-md-12">
                             <h1 class="mt-5 laranja-senac fw-bold text-start fs-1">Sobre Nós</h1>
@@ -110,7 +110,7 @@ $perfil = $_SESSION['perfil'] ?? NULL;
                     <div class="row pb-5 mb-5">
                         <div class="col-12 d-flex justify-content-center">
                         <div class="">
-                                <button class="btn btn-azul-senac text-white fw-bold">Agendar um Horário</button>
+                                <a href="<?= BASE_URL ?>screens/agendamento.php"  class="btn btn-azul-senac text-white fw-bold">Agendar um Horário</a>
                             </div>
                         </div>
                     </div>

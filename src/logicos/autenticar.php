@@ -23,12 +23,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($select->rowCount() > 0) {
                 $login = $select->fetch(PDO::FETCH_ASSOC);
                 
+                
                 // Verifica se a senha é correta
                 if ($login['email'] === $email && password_verify($senha, $login["senha"])) { #password_verify($senha, $login["senha"])
                     $_SESSION['logado'] = TRUE;
-                    $_SESSION['idUser'] = $login['id_usuario'];
+                    $_SESSION['id_usuario'] = $login['id_usuario'];
                     $_SESSION['nomeUser'] = $login['nome'];
                     $_SESSION['perfil'] = $login['perfil'];
+                    $_SESSION['email'] = $login['email'];
+                    $_SESSION['telefone'] = $login["telefone"];
                     
                     if ($login['perfil'] === 'admin' || $login['perfil'] === 'professor') {
                         header("Location: " . BASE_URL . "screens/areaInstrutor.php");

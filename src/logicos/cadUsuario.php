@@ -1,0 +1,74 @@
+<?php
+#inicia as variaveis de sessão
+include('../../constantes.php');
+include_once('../../data/conexao.php');
+
+session_start();
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+$_SESSION['mensagem'] = NULL;
+
+$logado =  $_SESSION['logado'] ?? FALSE;
+$nomeUser = $_SESSION['nomeUser'] ?? "";
+$idUser = $_SESSION['idUser'] ?? "";
+$login = NULL;
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    if (!empty($_POST['txtGenero']) && !empty($_POST['txtNome']) && !empty($_POST['txtDataNasc']) && !empty($_POST['txtCpf']) && !empty($_POST['txtEmail']) && !empty($_POST['txtTelefone']) && !empty($_POST['txtCep']) && !empty($_POST['txtUf']) && !empty($_POST['txtCidade']) && !empty($_POST['txtEndereco']) && !empty($_POST['txtSenha'])) {
+
+        $genero = filter_input(INPUT_POST, "txtGenero", FILTER_SANITIZE_SPECIAL_CHARS);
+        $nome = filter_input(INPUT_POST, "txtNome", FILTER_SANITIZE_SPECIAL_CHARS);
+        $dataNasc = filter_input(INPUT_POST, "txtDataNasc", FILTER_SANITIZE_SPECIAL_CHARS);
+        $cpf = filter_input(INPUT_POST, "txtCpf", FILTER_SANITIZE_SPECIAL_CHARS);
+        $email = filter_input(INPUT_POST, "txtEmail", FILTER_SANITIZE_EMAIL);
+        $telefone = filter_input(INPUT_POST, "txtTelefone", FILTER_SANITIZE_SPECIAL_CHARS);
+        $cep = filter_input(INPUT_POST, "txtCep", FILTER_SANITIZE_SPECIAL_CHARS);
+        $uf = filter_input(INPUT_POST, "txtUf", FILTER_SANITIZE_SPECIAL_CHARS);
+        $cidade = filter_input(INPUT_POST, "txtCidade", FILTER_SANITIZE_SPECIAL_CHARS);
+        $endereco = filter_input(INPUT_POST, "txtEndereco", FILTER_SANITIZE_SPECIAL_CHARS);
+        $senha = filter_input(INPUT_POST, "txtSenha", FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $senhaCriptografada = password_hash($senha, PASSWORD_DEFAULT);
+
+        //-----------------------
+        // CODIGO PARA INSERT
+        //-----------------------
+
+        try {
+            $sql = "INSERT INTO usuario (genero, nome, data_de_nascimento, cpf, email, telefone, cep, uf, cidade, endereco, senha) VALUES (genero:, :nome, data_de_nascimento:, :cpf, :email, :telefone, :cep, :uf, :cidade, :endereco, :senha)";
+            $insert = $conexao->prepare($sql);
+            $insert->bindParam(':genero', $genero);
+            $insert->bindParam(':nome', $nome);
+            $insert->bindParam(':data_de_nascimento', $dataNasc);
+            $insert->bindParam(':cpf', $cpf);
+            $insert->bindParam(':email', $email);
+            $insert->bindParam(':telefone', $telefone);
+            $insert->bindParam(':cep', $cep);
+            $insert->bindParam(':uf', $uf);
+            $insert->bindParam(':cidade', $cidade);
+            $insert->bindParam(':endereco', $endereco);
+
+
+            $insert->bindParam(':senha', $senhaCriptografada);
+
+            if ($insert->execute() && $insert->rowCount() > 0) {
+                $_SESSION['mensagem'] = "Cadastrado com sucesso!";
+                header("Location: " . BASE_URL . "screens/login.php");
+                exit;
+            } else {
+                throw new Exception("Ocorreu um erro ao cadastrar!");
+            }
+        } catch (Exception $e) {
+            $_SESSION['mensagem'] = "Ocorreu um erro ao cadastrar! / Usuário já cadastrado!";
+            header("Location: " . BASE_URL . "screens/signUp.php");
+            exit;
+        } finally {
+            unset($conexao);
+        }
+    } else {
+        $_SESSION['mensagem'] = "Obrigatório preencher todos os campos!";
+        header("Location: " . BASE_URL . "screens/signUp.php");
+        exit;
+    }
+}

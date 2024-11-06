@@ -1,6 +1,10 @@
 <?php
 
-include_once("../constantes.php")
+session_start();
+include_once("../constantes.php");
+include_once('../data/conexao.php');
+$perfil = $_SESSION['perfil'] ?? NULL;
+$logado = $_SESSION['logado'] ?? NULL;
 
 ?>
 
@@ -58,7 +62,7 @@ include_once("../constantes.php")
 
         <div class="row border-top border-bottom border-light-subtle py-2 mt-3">
           <div class="col-2 ms-3">
-            <img src="../assets/img/img_barbeiro.png" class="rounded-circle img-fluid" style="height: 2.8rem; width: 2.8rem;" alt="Foto de perfil do aluno">
+            <img src="../assets/img/img_barbeiro.png" class="rounded-circle img-fluid img-perfil-mini" alt="Foto de perfil do aluno">
           </div>
           <div class="col-7 d-flex align-items-center text-nowrap">
             <p class="fs-6 mb-0 me-2">Nome do Usuário</p>
@@ -66,7 +70,7 @@ include_once("../constantes.php")
             <p class="fs-6 mb-0">000.000.000-00</p>
           </div>
           <div class="ms-2 col-2 d-flex align-items-center">
-            <button class="btn text-danger"><i class="bi bi-ban" style="text-shadow: 0 1px 1px red"></i></button>
+            <button class="btn text-danger"><i class="bi bi-ban txt-shadow-red" ></i></button>
           </div>
         </div>
       </div>

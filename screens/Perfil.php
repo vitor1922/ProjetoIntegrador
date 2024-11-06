@@ -1,12 +1,14 @@
 <!-- CRIADOR: MALINSKI -->
 
-<?php 
+<?php
 #inicia as variaveis de sessão
-include_once('../data/conexao.php');
 include('../constantes.php');
-include_once('../data/conexao.php');
+include_once("../data/conexao.php");
+
 
 session_start();
+$perfil = $_SESSION['perfil'] ?? NULL;
+$logado = $_SESSION['logado'] ?? NULL;
 $mensagem = $_SESSION['mensagem'] ?? NULL;
 $perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
 $_SESSION['mensagem'] = NULL;
@@ -15,17 +17,45 @@ $logado =  $_SESSION['logado'] ?? FALSE;
 $nome = $_SESSION['nome'] ?? "";
 $id_usuario = $_SESSION['id_usuario'] ?? "";
 $login = NULL;
-if (!$logado){
+
+if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
     exit;
 }
 // Mostrar dados do usuario logado
-$sql = "SELECT * FROM usuarios WHERE usuario_id = :id_usuario";
+$sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
 $select = $conexao->prepare($sql);
 $select->bindParam(':id_usuario', $id_usuario);
-if ($select->execute()){
+
+if ($select->execute()) {
     $login = $select->fetch(PDO::FETCH_ASSOC);
 }
+
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+
+    if (isset($_FILES["foto"]) && !empty($_FILES["foto"]["name"])) {
+        $allowedTypes = ["image/png", "image/jpeg"];
+        $fileType = mime_content_type($_FILES["foto"]["tmp_name"]);
+        $ext = strtolower(pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION));
+        if (in_array($fileType, $allowedTypes) && ($ext == "jpg" || $ext == "jpeg" || $ext == "png")) {
+            $nameFile = pathinfo($_FILES["foto"]["name"], PATHINFO_FILENAME);
+            $imagem_url = hash("md5", $nameFile) . "." . $ext;
+            $dir = "../foto/";
+            move_uploaded_file($_FILES["foto"]["tmp_name"], $dir . $imagem_url);
+        } else {
+            $_SESSION['mensagem'] =  "Erro: Apenas arquivos JPG ou PNG são permitidos.";
+            header("Location: " . BASE_URL . "screens/criarPost.php");
+            exit;
+        }
+    } else {
+        $imagem_url = "";
+    }
+}
+
+//  echo("<pre>");
+//  var_dump($login);
+//  die;
+
 unset($conexao);
 ?>
 
@@ -54,18 +84,22 @@ unset($conexao);
             <div class="cardPerfil card d-flex justify-content-center border-3 shadow-lg">
                 <div class="headerPerfil d-flex justify-content-center align-items-center">
                     <div class="profile-background">
-                        <img src="../assets/img/R (1).jpg" class="imgPerfil mt-4" alt="Imagem de perfil">
+                        <div class="bordaa border rounded-circle">
+                        <img src="<?= $login['foto'] ?>" class="imgPerfil mt-4 " alt="Imagem de perfil">
+                        </div>
                     </div>
                 </div>
+
                 <div class="card-body d-flex justify-content-center flex-column mt-5">
-                    <h5 class="card-title d-flex justify-content-center fw-bold ">Nome</h5> <br>
-                    <h6 class="card-text d-flex justify-content-center" id="cargoProfile">Cargo</h6> <br>
-                    <p class="d-flex justify-content-center"> (<span class="fw-bold">X</span>) Visitas (<span class="fw-bold">X</span>) Avaliações</p>
+                    <h5 class="card-title d-flex justify-content-center fw-bold "><?= $login["nome"]?></h5> <br>
+                    <h6 class="card-text d-flex justify-content-center" id="cargoProfile"><?= $login["perfil"]?></h6> <br>
+                    <!-- caso precise -->
+                    <!-- <p class="d-flex justify-content-center"> (<span class="fw-bold">X</span>) Visitas (<span class="fw-bold">X</span>) Avaliações</p> -->
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Bio</li>
-                    <li class="list-group-item">...</li>
+                    <p class="list-group-item"><?= $login["biografia"]?></p>
                 </ul>
+
                 <div class="card-body">
                     <a href="./editarPerfil.php" class="btn border shadow-sm fs-4 fw-bold azul-senac border-3 rounded-4 d-flex justify-content-center mb-3">Editar Perfil</a>
                     <a href="./configuracoes.php" class="link-offset-2 link-underline link-underline-opacity-0">
@@ -79,6 +113,7 @@ unset($conexao);
     <?php
     include("./footer.php");
     ?>
+    <script src="../src/js/script.js"></script>
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css"></script>
 </body>
