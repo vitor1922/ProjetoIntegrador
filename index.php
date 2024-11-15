@@ -30,11 +30,11 @@ $logado = $_SESSION['logado'] ?? NULL;
         ?>
 
         <main class=" ">
-            <div class="container-fluid ">
+            <div class="container-fluid">
                 <div class="banner">
                     <div class="row">
                         <div class="col-12 blur">
-                            <img class="img_home_page" src="./assets/img/img_salao_de_beleza.png" alt="imagem de um salão de beleza ">
+                            <img class="img-home-page" src="./assets/img/img_salao_de_beleza.png" alt="imagem de um salão de beleza ">
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ $logado = $_SESSION['logado'] ?? NULL;
                         </div>
                     </div>
                 </div>
-                <div class="contato bg-gd-laranja-claro-senac pb-5 mt-5 px-5 ">
+                <div id="contato" class="contato bg-gd-laranja-claro-senac pb-5 mt-5 px-5 ">
                     <div class="row d-flex justify-content-center">
                         <div class=" offset-1 col-lg-4 col-md-12 mb-2 ">
                             <h1 class="mt-5 laranja-senac fw-bold text-start fs-1">Fale Conosco</h1>

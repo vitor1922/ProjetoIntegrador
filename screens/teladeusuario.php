@@ -10,11 +10,11 @@
 </head>
 
 <body>
-  <div class="dropdown">
+  <div class="dropdown bg-white">
     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
     </button>
-    <ul class="dropdown-menu dropdown-menu-dark">
+    <ul class="dropdown-menu dropdown-menu-dark ">
       <h2 class="d-flex justify-content-center">Olá, Nome</h2>
       <hr>
       <a class="dropdown-item" href="./Perfil.php">

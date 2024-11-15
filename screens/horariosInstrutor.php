@@ -6,6 +6,28 @@ include_once('../data/conexao.php');
 $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? FALSE;
 
+$sql_turma = "SELECT t.numero_da_turma as numeroTurma, u.nome as nomeInstrutor, a.data  FROM agendamento a
+INNER JOIN turma t
+ON a.id_turma = t.id_turma
+INNER JOIN alunos al
+ON a.id_aluno = al.id_aluno
+INNER JOIN usuario u
+ON al.id_aluno = u.id_usuario
+-- INNER JOIN agenda ag
+-- ON a.data = ag.hora
+WHERE a.id_usuario = 5
+ORDER BY t.numero_da_turma DESC";
+$select = $conexao->prepare($sql_turma);
+// $select->bindParam(':id_usuario', $id_usuario);
+
+if ($select->execute()) {
+    $desc = $select->fetch(PDO::FETCH_ASSOC);
+}
+
+// var_dump($desc);
+// die;
+
+
 ?>
 
 <!DOCTYPE html>
@@ -50,8 +72,8 @@ $logado = $_SESSION['logado'] ?? FALSE;
                         Por Turma
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                        <li><a class="dropdown-item" href="/?filtro=mais-novo">Mais Novo</a></li>
-                        <li><a class="dropdown-item" href="/?filtro=mais-antigo">Mais Antigo</a></li>
+                        <button data-bs-toggle="dropdown">Mais Novo </button>
+                    
                         <li><a class="dropdown-item" href="/?filtro=por-turma">Por Turma</a></li>
                     </ul>
             </div>
@@ -62,14 +84,14 @@ $logado = $_SESSION['logado'] ?? FALSE;
             <div class="card p-3">
                 <div class="row mb-2">
                     <div class="col">
-                        <p><strong>Horário:</strong> 20h99</p>
-                        <p><i class="bi bi-person-circle"></i><strong> Nome:</strong><br>Juanito da Peste</p>
-                        <p><i class="bi bi-person-circle"></i><strong> Aluno:</strong><br>Mariano de Pau</p>
+                        <p><strong>Horário:</strong> 23H30</p>
+                        <p><i class="bi bi-person-circle"></i><strong>Nome:</strong><br> Juanito da Peste</p>
+                        <i class="bi bi-person-circle"></i><strong>Aluno:</strong><br> Thalles Gordo</p>
                     </div>
                     <div class="col">
-                        <p><strong>Data:</strong> 31/02/2005</p>
+                        <p><strong>Data:</strong> 08-11-2024</p>
                         <p><strong>Serviço:</strong><br>Corte de Cabelo</p>
-                        <p><strong>Turma:</strong><br>xx/xx/xxxx</p>
+                        <p><strong>Turma:</strong><br>1234</p>
                     </div>
                 </div>
             </div>
@@ -78,14 +100,13 @@ $logado = $_SESSION['logado'] ?? FALSE;
             <div class="card p-3">
                 <div class="row mb-2">
                     <div class="col">
-                        <p><strong>Horário:</strong> 20h99</p>
-                        <p><i class="bi bi-person-circle"></i><strong> Nome:</strong><br>Juanito da Peste</p>
-                        <p><i class="bi bi-person-circle"></i><strong> Aluno:</strong><br>Mariano de Pau</p>
+                        <i class="bi bi-person-circle"></i><strong>Responsável:</strong> <?= $desc["nomeInstrutor"]?></p>
                     </div>
                     <div class="col">
-                        <p><strong>Data:</strong> 31/02/2005</p>
-                        <p><strong>Serviço:</strong><br>Corte de Cabelo</p>
-                        <p><strong>Turma:</strong><br>xx/xx/xxxx</p>
+                        <p><strong>Data:</strong> <?= $desc["data"]?></p>
+                    </div>
+                    <div class="col">
+                    <p><strong>Turma:</strong> <?= $desc["numeroTurma"]?></p>
                     </div>
                 </div>
             </div>

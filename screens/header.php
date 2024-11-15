@@ -1,6 +1,9 @@
 <!-- header magrooooo demais! -->
 <!--Poha Malinski -->
 
+
+<!-- poha malinski é o kct arrumei esse sapo mucho do header q tava tendo problema no $perfil -->
+
 <header class="">
     <div class=" container-fluid">
         <div class="row header-vii">
@@ -31,19 +34,19 @@
                                     <a class="nav-link" href="<?= BASE_URL ?>screens/verTodosServicos.php">Serviços</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="./agendamento.php">Agendar Horário</a>
+                                    <a class="nav-link" href="<?=BASE_URL?>screens/agendamento.php">Agendar Horário</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Fale Conosco</a>
+                                    <a class="nav-link" href="<?=BASE_URL?>index.php#contato">Fale Conosco</a>
                                 </li>
                                 <li class="nav-item">
-                                        <a class="nav-link" href="#">Blog</a>
-                                    </li>
-                                <?php if($perfil=== 'admin' || $perfil === "professor"){?>
+                                    <a class="nav-link" href="<?=BASE_URL?>screens/blog.php">Blog</a>
+                                </li>
+                                <?php if ($perfil === 'admin' || $perfil === "professor") { ?>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Área do Instrutor</a>
+                                        <a class="nav-link" href="<?=BASE_URL?>screens/areaInstrutor.php">Área do Instrutor</a>
                                     </li>
-                                <?php }?>
+                                <?php } ?>
 
                             </ul>
                         </div>
@@ -52,18 +55,27 @@
                 <div class="header-vi">
                     <img src="<?= BASE_URL ?>assets/img/logoSenac.png" alt="logo senac" class="img-logo-senac header-vi my-1">
                 </div>
-                <div class="nav-item dropstart">
+                <div class="nav-item dropdown">
                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle fs-5"><?= $perfil?></i>
+                        <i class="bi bi-person-circle fs-5"><?= $perfil ?></i>
                     </a>
-                    <ul class="dropdown-menu">
-                        <?php if($logado === true){?>
-                            <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/perfil.php">Perfil</a></li>
-                            <li><a class="dropdown-item" href="<?= BASE_URL ?>src/logicos/logOut.php">Log Out</a></li>
-                            <?php }else{?>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/signUp.php">Login</a></li>
+                    
+
+
+                        <!-- <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown button
+                            </button> -->
+                        <ul class="dropdown-menu dropdown-menu-end bg-white">
+                        <?php if ($logado) { ?>
+                            <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/Perfil.php">Perfil</a></li>
+                            <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/configuracoes.php">Configurações</a></li>
+                            <li><a class="dropdown-item" href="<?= BASE_URL ?>src/logicos/logOut.php">Logout</a></li>
+                        <?php }else{?>
+                            <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/signUp.php">Login</a></li>
                         <?php }?>
-                    </ul>
+                        </ul>
+
+                    
                 </div>
             </div>
         </nav>

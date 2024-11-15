@@ -43,31 +43,30 @@ $logado = $_SESSION['logado'] ?? FALSE;
           <p class="card-text ms-4 fs-5">Você possui algum tipo de alergia a algum produto de beleza?</p>
           <div class="mb-3 ms-2 form-check">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault1">
-              <label class="form-check-label" for="flexRadioDefault1">sim</label>
+              <input class="form-check-input" type="radio" name="flexRadioDefault1" id="simQuest" onclick="toggleTextarea('preferenceTextarea', true)" checked>
+              <label class="form-check-label" for="simQuest">sim</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2" checked>
-              <label class="form-check-label" for="flexRadioDefault2">não</label>
+              <input class="form-check-input" type="radio" name="flexRadioDefault1" id="naoQuest" onclick="toggleTextarea('preferenceTextarea', false)">
+              <label class="form-check-label" for="naoQuest">não</label>
             </div>
-            <div class="mb-3 mt-2 col-12 col-md-7">
+            <div class="mb-3 mt-2 col-12 col-md-7" id="preferenceTextarea">
               <label for="exampleFormControlTextarea1" class="form-label">Quais tipos de produtos? <i>(Máximo de 300 caracteres)</i></label>
               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="300"></textarea>
             </div>
-
           </div>
 
           <p class="card-text ms-4 fs-5">Você possui algum tipo de preferência de como seu atendimento vai ser realizado?</p>
           <div class="mb-3 ms-2 form-check">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault3">
-              <label class="form-check-label" for="flexRadioDefault3">sim</label>
+              <input class="form-check-input" type="radio" value="sim" name="flexRadioDefault2" id="simQuest2" onclick="toggleTextarea('preferenceTextarea2', true)" checked>
+              <label class="form-check-label" for="simQuest2">sim</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault4" checked>
-              <label class="form-check-label" for="flexRadioDefault4">não</label>
+              <input class="form-check-input" type="radio" value="nao" name="flexRadioDefault2" id="naoQuest2" onclick="toggleTextarea('preferenceTextarea2', false)">
+              <label class="form-check-label" for="naoQuest2">não</label>
             </div>
-            <div class="mb-3 mt-2 col-12 col-md-7">
+            <div class="mb-3 mt-2 col-12 col-md-7" id="preferenceTextarea2">
               <label for="exampleFormControlTextarea2" class="form-label">Quais tipos de preferências? <i>(Máximo de 300 caracteres)</i></label>
               <textarea class="form-control" id="exampleFormControlTextarea2" rows="3" maxlength="300"></textarea>
             </div>
@@ -81,10 +80,23 @@ $logado = $_SESSION['logado'] ?? FALSE;
     </div>
   </main>
 
+
   <?php
   include_once("./footer.php");
   ?>
-  <script src="../src/bootstrap/js/bootstrap.js"></script>
+  <script src="../src/bootstrap/js/bootstrap.min.js"></script>
+  <script>
+    function toggleTextarea(id, show) {
+    var textarea = document.getElementById(id);
+    if (show) {
+      textarea.style.display = 'block';
+    } else {
+      textarea.style.display = 'none'; 
+    }
+  }
+
+  </script>
+
 </body>
 
 </html>

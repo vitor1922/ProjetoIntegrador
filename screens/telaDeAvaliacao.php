@@ -54,7 +54,6 @@ $logado = $_SESSION['logado'] ?? FALSE;
 <div class="form-check">
   <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
   <label class="form-check-label" for="flexRadioDefault2">
-    Ótima
   </label>
 </div>
 <p class="card-text">Qual nota você daria para o aluno que lhe atendeu?</p>

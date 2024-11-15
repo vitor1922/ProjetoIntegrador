@@ -2,13 +2,7 @@
 
 let telefone = document.querySelector("#txtTelefone")
 
-telefone.addEventListener("keypress", mask.bind(null, telefone))
 
-function mask(telefone) {
-    if (telefone.value.length == 5) {
-        telefone.value += "-"
-    }
-}
 
 // pular campo input
 let ddd = document.querySelector("#txtDDD")

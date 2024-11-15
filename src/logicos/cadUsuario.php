@@ -1,17 +1,7 @@
 <?php
-#inicia as variaveis de sessão
+session_start();
 include('../../constantes.php');
 include_once('../../data/conexao.php');
-
-session_start();
-$mensagem = $_SESSION['mensagem'] ?? NULL;
-$_SESSION['mensagem'] = NULL;
-
-$logado =  $_SESSION['logado'] ?? FALSE;
-$nomeUser = $_SESSION['nomeUser'] ?? "";
-$idUser = $_SESSION['idUser'] ?? "";
-$login = NULL;
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -28,15 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cidade = filter_input(INPUT_POST, "txtCidade", FILTER_SANITIZE_SPECIAL_CHARS);
         $endereco = filter_input(INPUT_POST, "txtEndereco", FILTER_SANITIZE_SPECIAL_CHARS);
         $senha = filter_input(INPUT_POST, "txtSenha", FILTER_SANITIZE_SPECIAL_CHARS);
-
+        
         $senhaCriptografada = password_hash($senha, PASSWORD_DEFAULT);
-
-        //-----------------------
-        // CODIGO PARA INSERT
-        //-----------------------
+        $perfil = "cliente";
 
         try {
-            $sql = "INSERT INTO usuario (genero, nome, data_de_nascimento, cpf, email, telefone, cep, uf, cidade, endereco, senha) VALUES (genero:, :nome, data_de_nascimento:, :cpf, :email, :telefone, :cep, :uf, :cidade, :endereco, :senha)";
+            $sql = "INSERT INTO usuario (genero, nome, data_de_nascimento, cpf, email, telefone, cep, uf, cidade, endereco, senha, perfil) VALUES ( :genero, :nome, :data_de_nascimento, :cpf, :email, :telefone, :cep, :uf, :cidade, :endereco, :senha, :perfil)";
             $insert = $conexao->prepare($sql);
             $insert->bindParam(':genero', $genero);
             $insert->bindParam(':nome', $nome);
@@ -48,18 +35,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $insert->bindParam(':uf', $uf);
             $insert->bindParam(':cidade', $cidade);
             $insert->bindParam(':endereco', $endereco);
-
-
             $insert->bindParam(':senha', $senhaCriptografada);
+            $insert->bindParam(':perfil', $perfil);
 
             if ($insert->execute() && $insert->rowCount() > 0) {
                 $_SESSION['mensagem'] = "Cadastrado com sucesso!";
-                header("Location: " . BASE_URL . "screens/login.php");
+                header("Location: " . BASE_URL . "screens/areaInstrutor.php");
                 exit;
             } else {
                 throw new Exception("Ocorreu um erro ao cadastrar!");
             }
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             $_SESSION['mensagem'] = "Ocorreu um erro ao cadastrar! / Usuário já cadastrado!";
             header("Location: " . BASE_URL . "screens/signUp.php");
             exit;

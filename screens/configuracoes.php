@@ -3,11 +3,44 @@ session_start();
 include_once("../constantes.php");
 include_once('../data/conexao.php');
 $perfil = $_SESSION['perfil'] ?? NULL;
-$logado = $_SESSION['logado'] ?? FALSE;
-$mensagem = $_SESSION['mensagem'] ?? NULL;
 
-$email = $_SESSION['email'] ?? NULL;
-$telefone = $_SESSION['telefone'] ?? NULL;
+$logado = $_SESSION['logado'] ?? FALSE;
+$perfilMensagem = $_SESSION['perfil_mensagem'] ?? NULL;
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+$_SESSION['mensagem'] = NULL;
+$idUsuario = $_SESSION['id_usuario'];
+
+
+
+try {
+    $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
+    $select = $conexao->prepare($sql);
+    $select->bindParam(':id_usuario', $idUsuario);
+    $select->execute();
+
+    if ($select->rowCount() > 0) {
+        $login = $select->fetch(PDO::FETCH_ASSOC);
+        $email = $login['email'];
+        $telefone = $login['telefone'];
+        
+    }
+} catch (Exception $e) {
+        $_SESSION['perfil_mensagem'] = "text-danger bg-danger-subtle";
+        $_SESSION["mensagem"] = "Ocorreu um erro ao Atualizar";
+        header("Location: " . BASE_URL . "screens/configuracoes.php");
+        exit;
+    } finally {
+        unset($conexao);
+    }
+
+
+
+
+
+
+if (!$logado) {
+    header('Location:' . BASE_URL . 'screens/signUp.php');
+}
 
 
 ?>
@@ -22,10 +55,13 @@ $telefone = $_SESSION['telefone'] ?? NULL;
 
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
 </head>
 
 <body class="d-flex flex-column justify-content-between">
+
+
+
     <div>
         <?php include("./header.php") ?>
 
@@ -33,7 +69,7 @@ $telefone = $_SESSION['telefone'] ?? NULL;
 
 
             <div class=" container-fluid">
-                
+
                 <div class="row">
                     <div class="col-12">
                         <a href="./perfil.php"><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
@@ -146,6 +182,7 @@ $telefone = $_SESSION['telefone'] ?? NULL;
                     </div>
                 </div>
                 <!-- avançado -->
+                 <?php if($perfil === 'cliente'){?>
                 <div class="row mt-5">
                     <div class=" offset-1 col-12">
                         <p class="fw-bold fs-5">Avançado</p>
@@ -163,17 +200,10 @@ $telefone = $_SESSION['telefone'] ?? NULL;
                         </div>
                     </button>
                 </div>
-                <div class="d-grid col-lg-8 col-10 text-start offset-1 me-5 mb-3">
-                <div>
-                    <?php if (isset($mensagem)) { ?>
-                        <p class="alert alert-danger mt-2">
-                            <?= $mensagem ?>
-                        </p>
-                    <?php } ?>
-                </div>
-                </div>
+                <?php }?>
 
-                
+
+
 
 
 
@@ -228,7 +258,7 @@ $telefone = $_SESSION['telefone'] ?? NULL;
                                 <div class="d-flex justify-content-end mb-3">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <form action="">
+                                <form action="../src/logicos/atualizarSenha.php" method="POST">
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Email</label>
                                         <input type="email" class="form-control" name="txtEmail">
@@ -284,8 +314,8 @@ $telefone = $_SESSION['telefone'] ?? NULL;
                                     <div class="mb-5 pb-5 d-flex justify-content-center flex-column align-items-center">
                                         <label class="form-label fw-bold">Altere seu número de telefone</label>
                                         <div class="row">
-                                            <div class=" offset-1 col-2"><input type="text" class="form-control px-1 text-center" name="txtDDD" placeholder="DDD" maxlength="2" id="txtDDD" required></div>
-                                            <div class="col-8"><input type="text" class="form-control" name="txtTelefone" placeholder="Telefone" maxlength="10" id="txtTelefone" required></div>
+                                            <div class=" offset-1 col-2"><input type="text" class="form-control px-1 text-center" name="txtDDD" placeholder="DDD" minlength="2" maxlength="2" id="txtDDD" required></div>
+                                            <div class="col-8"><input type="text" class="form-control" name="txtTelefone" placeholder="Telefone" minlength="9" maxlength="9" id="txtTelefone" required></div>
                                         </div>
                                     </div>
 
@@ -307,7 +337,7 @@ $telefone = $_SESSION['telefone'] ?? NULL;
                                 </div>
                                 <form action="">
                                     <div class="mb-4">
-                                        <p class=" fs-5 text-danger fw-bold text-center">ESTA AÇÃO É IRREVERSSÍVEL</p>
+                                        <p class=" fs-5 text-danger fw-bold text-center">ESTA AÇÃO É IRREVERSÍVEL</p>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label fw-bold ">Senha</label>
@@ -330,7 +360,16 @@ $telefone = $_SESSION['telefone'] ?? NULL;
                         </div>
                     </div>
                 </div>
-
+                <!-- modal alerta mensagem -->
+                <div class="modal fade " id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog  ">
+                        <div class="modal-content <?=$perfilMensagem?>">
+                            <div class="modal-body ">
+                                <?= $mensagem ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>
@@ -342,9 +381,16 @@ $telefone = $_SESSION['telefone'] ?? NULL;
 
 
 
+
+
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/js/script.js"></script>
     <script src="../src/js/telefone.js"></script>
+    <?php if (isset($mensagem)) { ?>
+        <script src="../src/js/alert.js"></script>
+    <?php } ?>
+    
 </body>
 
 </html>
+
