@@ -32,6 +32,7 @@ if (!$logado) {
 $searchUser = $_POST['searchUser'] ?? "";
 $searchResults = [];
 $defaultResults = [];
+$filter = $_GET['filter'] ?? null;
 
 if ($searchUser) {
     $search = "SELECT nome, cpf, perfil FROM usuario WHERE nome REGEXP :searchUser";
@@ -44,7 +45,14 @@ if ($searchUser) {
 }
 
 $defaultQuery = "SELECT nome, cpf, perfil FROM usuario";
+if ($filter) {
+    $defaultQuery .= " WHERE perfil = :filter";
+}
 $defaultStmt = $conexao->prepare($defaultQuery);
+
+if ($filter) {
+    $defaultStmt->bindParam(':filter', $filter);
+}
 
 if ($defaultStmt->execute()) {
     $defaultResults = $defaultStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -83,20 +91,38 @@ if ($defaultStmt->execute()) {
                     <a href="#"><i class="bi-chevron-right"></i></a>
                 </div>
             </div>
+
             <div class="mt-4">
                 <div class="row mb-2">
                     <div class="col d-flex justify-content-center align-items-center">
                         <form method="POST" action="">
-                            <input type="text" name="searchUser" class="text-center rounded" placeholder="Pesquisar">
+                            <div class="d-flex flex-column align-items-center">
+                                <input type="text" name="searchUser" class="text-center rounded mb-2"
+                                    placeholder="Pesquisar">
+                                <a href="?" class="text-decoration-none">Limpar Filtros</a>
+                            </div>
                         </form>
                     </div>
-                    <div class="col d-flex justify-content-end flex-column align-items-center">
+
+                    <div class="col d-flex justify-content-center flex-column align-items-center">
                         <div class="col"></div>
                         <div class="col">
-                            <p><span class="badge rounded-circle bg-danger">&nbsp;</span><strong class="text-danger">Ademir</strong></p>
-                            <p><span class="badge rounded-circle bg-success">&nbsp;</span><strong class="text-success">Professor</strong></p>
-                            <p><span class="badge rounded-circle bg-primary">&nbsp;</span><strong class="text-primary">Aluno</strong></p>
-                            <p><span class="badge rounded-circle bg-warning">&nbsp;</span><strong class="text-warning">Usuário</strong></p>
+                            <p>
+                                <a href="?filter=admin" class="btn btn-danger rounded-circle">&nbsp;</a>
+                                <strong class="text-danger">Admin</strong>
+                            </p>
+                            <p>
+                                <a href="?filter=professor" class="btn btn-success rounded-circle">&nbsp;</a>
+                                <strong class="text-success">Professor</strong>
+                            </p>
+                            <p>
+                                <a href="?filter=aluno" class="btn btn-primary rounded-circle">&nbsp;</a>
+                                <strong class="text-primary">Aluno</strong>
+                            </p>
+                            <p>
+                                <a href="?filter=cliente" class="btn btn-warning rounded-circle">&nbsp;</a>
+                                <strong class="text-warning">Usuário</strong>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -147,6 +173,7 @@ if ($defaultStmt->execute()) {
                 </div>
             <?php endforeach; ?>
         </div>
+
     </main>
 
     <?php include_once("./footer.php"); ?>

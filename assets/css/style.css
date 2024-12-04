@@ -22,6 +22,10 @@
   padding: 0;
   margin: 0;
 }
+a{
+  text-decoration: none;
+  color: auto;
+}
 
 body {
   height: 100%;
@@ -51,10 +55,17 @@ body {
     width: 6.25rem;
   }
 
+
+
 .img-210{
-    object-fit: cover;
-    height: 13.125rem;
-    width: 13.125rem;
+  object-fit: cover;
+  height: 13.125rem;
+  width: 13.125rem;
+}
+.img-130{
+  object-fit: cover;
+  height: 8.125rem;
+  width: 8.125rem;
 }
 
 .img-logo-senac {
@@ -80,10 +91,10 @@ body {
 }
 
 
-/* .card img {
+.card-imagem img{
   height: 200px;
   object-fit: cover;
-} */
+} 
 
 .w-23rem {
   width: 23rem;
@@ -284,10 +295,22 @@ body {
   justify-content: center;
 }
 
+.profile-background {
+  display: flex;
+}
+
+
 .imgPerfil {
   width: 12rem;
   height: 1rem;
+  border-radius: 100%;
+}
+
+.imgPerfill {
+  width: 10rem;
+  height: 8rem;
   border-radius: 50%;
+  margin-top: 5rem;
 }
 
 .color-button,
@@ -376,3 +399,4 @@ textarea {
   border-radius: 10px;
   background-color: gainsboro;
 }
+

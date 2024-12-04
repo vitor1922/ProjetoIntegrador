@@ -97,3 +97,11 @@ function viewSenhaCad() {
 
 
 //questionario hidden text area
+function toggleTextarea(id, show) {
+    var textarea = document.getElementById(id);
+    if (show) {
+      textarea.style.display = 'block';
+    } else {
+      textarea.style.display = 'none'; 
+    }
+  }

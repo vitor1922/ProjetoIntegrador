@@ -20,18 +20,19 @@ $id_usuario = $_SESSION['id_usuario'] ?? "";
 
 
 
+
 // $perfil = "cliente";
 
 // border colors of each user role 
-    if ($perfil == 'professor') {
-        $estilo = "border border-success rounded-circle border border-3 m-2";
-    } elseif ($perfil == 'aluno') {
-        $estilo = "border-primary rounded-circle border border-3 m-2;";
-    } elseif ($perfil == 'cliente') {
-        $estilo = "border border-warning rounded-circle border border-3 m-2;";
-    } elseif ($perfil == 'admin') {
-        $estilo = "border border-danger rounded-circle border border-3 m-2";
-    }
+if ($perfil == 'professor') {
+    $estilo = "border border-success rounded-circle border border-3 m-2";
+} elseif ($perfil == 'aluno') {
+    $estilo = "border-primary rounded-circle border border-3 m-2;";
+} elseif ($perfil == 'cliente') {
+    $estilo = "border border-warning rounded-circle border border-3 m-2;";
+} elseif ($perfil == 'admin') {
+    $estilo = "border border-danger rounded-circle border border-3 m-2";
+}
 
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
@@ -50,6 +51,7 @@ if ($select->execute()) {
 //  var_dump($login);
 //  die;
 
+
 unset($conexao);
 ?>
 
@@ -64,7 +66,7 @@ unset($conexao);
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Document</title>
+    <title>Perfil</title>
 </head>
 
 <body class="vh-100">
@@ -77,8 +79,11 @@ unset($conexao);
         <div class="container d-flex justify-content-center mt-5 align-content-center ">
             <div class="cardPerfil card d-flex justify-content-center border-3 shadow-lg">
                 <div class="headerPerfil d-flex justify-content-center align-items-center">
-                    <div class="profile-background">
-                            <img src="../foto/<?= $login["foto"]?>" class="imgPerfil mt-4 bordaa w-50 <?= $estilo ?>" alt="Imagem de perfil">
+                    <div class="profile-background ">
+                        <div class="d-flex justify-content-center align-items-center mt-5">
+                            <img src="../foto/<?= $login['foto']?>" class="imgPerfil mt-4 bordaa  <?= $estilo ?>" name="foto" alt="Imagem de perfil">
+                            
+                        </div>
                     </div>
                 </div>
 
@@ -88,7 +93,7 @@ unset($conexao);
                 </div>
 
                 <ul class="list-group list-group-flush">
-                    <p class="list-group-item"><?= $login["biografia"]?></p>
+                    <p class="list-group-item"><?= $login["biografia"] ?></p>
                 </ul>
 
                 <div class="card-body">

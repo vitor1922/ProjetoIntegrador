@@ -1,11 +1,47 @@
 <?php
-
-session_start();
 include_once("../constantes.php");
 include_once('../data/conexao.php');
-$perfil = $_SESSION['perfil'] ?? NULL;
-$logado = $_SESSION['logado'] ?? FALSE;
 
+
+
+session_start();
+$perfil = $_SESSION['perfil'] ?? "cliente";
+$logado = $_SESSION['logado'] ?? NULL;
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+$perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
+$_SESSION['mensagem'] = NULL;
+
+$logado =  $_SESSION['logado'] ?? FALSE;
+$nome = $_SESSION['nome'] ?? "";
+$id_usuario = $_SESSION['id_usuario'] ?? "";
+
+
+// Verificar se o usuário está logado
+if (!$_SESSION['logado']) {
+    header("Location: " . BASE_URL . "screens/signUp.php");
+    exit;
+}
+
+
+
+// Consulta para trazer os produtos com base no estoque
+$sql = "
+    SELECT p.id_produto, p.nome, p.descricao, p.unidade, p.qtde_min, p.qtde_max, 
+           e.qtde, e.data_movimentacao 
+    FROM produto p
+    INNER JOIN estoque e ON p.id_produto = e.id_produto
+";
+
+$select = $conexao->prepare($sql);
+
+if ($select->execute()) {
+    $produtos = $select->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $produtos = [];
+}
+
+// Fechar conexão com o banco
+unset($conexao);
 ?>
 
 <!DOCTYPE html>
@@ -22,9 +58,8 @@ $logado = $_SESSION['logado'] ?? FALSE;
 </head>
 
 <body>
-    <?php
-    include_once("./header.php");
-    ?>
+    <?php include_once("./header.php"); ?>
+
     <div class="container">
         <!-- Linha divisória abaixo do título -->
         <hr class="w-100 my-0 border-2 border-dark">
@@ -39,7 +74,6 @@ $logado = $_SESSION['logado'] ?? FALSE;
             <div class="d-flex mt-2 p-2"><i class="azul-senac bi bi-send fs-3"></i></div>
         </div>
 
-
         <!-- Linha divisória abaixo do título -->
         <hr class="w-100 my-0 border-2 border-dark">
         <div class="conteudo d-flex justify-content-center">
@@ -48,21 +82,33 @@ $logado = $_SESSION['logado'] ?? FALSE;
             </div>
         </div>
 
-        <class="link-dark link-underline link-underline-opacity-0 rounded-1" href="">
-            <div class="row bg-light mt-5 text-center shadow-sm border-bottom border-2">
-                <div class="col">
-                    <p class="mt-3 fw-bold">Escova</p>
+        <!-- Listagem de Produtos -->
+        <div>
+            <?php if (!empty($produtos)): ?>
+                <?php foreach ($produtos as $produto): ?>
+                    <div class="row bg-light mt-3 text-center shadow-sm border-bottom border-2">
+                        <div class="col">
+                            <p class="mt-3 fw-bold"><?= htmlspecialchars($produto['nome']) ?></p>
+                        </div>
+                        <div class="col">
+                            <p class="mt-3 fw-bold text-danger">
+                                <a href="#"><i class="azul-senac bi bi-plus fs-5 m-1"></i></a>
+                                <?= htmlspecialchars($produto['qtde']) ?>
+                                <a href="#"><i class="bi bi-dash fs-5"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="row bg-light mt-3 text-center shadow-sm border-bottom border-2">
+                    <div class="col">
+                        <p class="mt-3 fw-bold">Nenhum produto encontrado.</p>
+                    </div>
                 </div>
-                <div class="col">
-                    <p class="mt-3 fw-bold text-danger"><a href=""><i class="azul-senac bi bi-plus fs-5 m-1"></i></a>2 <a href=""><i class="bi bi-dash fs-5"></i></a>
-                    </p>
-                </div>
-            </div>
-            </class=>
+            <?php endif; ?>
+        </div>
     </div>
-    <?php
-    include("./footer.php");
-    ?>
+    <?php include("./footer.php"); ?>
 
     <!-- JavaScript do Bootstrap -->
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>

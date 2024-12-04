@@ -6,13 +6,13 @@ function buscarCEP() {
         .then(response => response.json())
         .then(data => {
             if (data.erro) {
-                document.getElementById('resultado').innerHTML = "CEP inválido!";
+                alert("CEP inválido!");
             } else {
-                document.getElementById('resultado').innerHTML = `
-                    <p><strong>Logradouro:</strong> ${data.logradouro}</p>
-                    <p><strong>Bairro:</strong> ${data.bairro}</p>
-                    <p><strong>Cidade:</strong> ${data.localidade}</p>
-                    <p><strong>Estado:</strong> ${data.uf}</p>
+                // Preenche os campos de endereço com os dados da API
+                document.getElementById('endereco').value = data.logradouro || '';
+                document.getElementById('bairro').value = data.bairro || '';
+                document.getElementById('cidade').value = data.localidade || '';
+                document.getElementById('uf').value = data.uf || '';
             }
         })
         .catch(error => console.error('Erro:', error));

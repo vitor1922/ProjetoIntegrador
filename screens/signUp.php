@@ -144,9 +144,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="cep">CEP</label>
-                                            <input type="text" class="form-control bg-light" id="cep" placeholder="Digite seu CEP" minlength="8" maxlength="8" name="txtCep" required>
-                                            <button type="button" onclick="buscarCEP()">Buscar CEP</button>
-                                            <div id="resultado"></div>
+                                            <div class="input-group col-md-3 ">
+                                                <input type="text" class="form-control bg-light rounded " id="cep" placeholder="Digite seu CEP" minlength="8" maxlength="8" name="txtCep" required>
+                                                <div class="input-group-text ">
+                                                    <i  class="bi bi-mailbox2-flag " id="icontogleConfirmPass" onclick="buscarCEP()" style="cursor: pointer;"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="uf">UF</label>
@@ -182,9 +185,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     </main>
     <?php

@@ -85,17 +85,7 @@ $logado = $_SESSION['logado'] ?? FALSE;
   include_once("./footer.php");
   ?>
   <script src="../src/bootstrap/js/bootstrap.min.js"></script>
-  <script>
-    function toggleTextarea(id, show) {
-    var textarea = document.getElementById(id);
-    if (show) {
-      textarea.style.display = 'block';
-    } else {
-      textarea.style.display = 'none'; 
-    }
-  }
-
-  </script>
+  <script src="../src/js/script.js"></script>
 
 </body>
 

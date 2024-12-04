@@ -11,7 +11,18 @@ $_SESSION['mensagem'] = NULL;
 
 $logado =  $_SESSION['logado'] ?? FALSE;
 $nome = $_SESSION['nome'] ?? "";
-$id_usuario = $_SESSION['id_usuario'] ?? "";
+$id_usuario = $_SESSION['id_usuario'] ?? "";    
+
+if ($perfil == 'professor') {
+    $estilo = "border border-success rounded-circle border border-3 m-2";
+} elseif ($perfil == 'aluno') {
+    $estilo = "border-primary rounded-circle border border-3 m-2;";
+} elseif ($perfil == 'cliente') {
+    $estilo = "border border-warning rounded-circle border border-3 m-2;";
+} elseif ($perfil == 'admin') {
+    $estilo = "border border-danger rounded-circle border border-3 m-2";
+}
+
 
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
@@ -38,6 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $post = $select->fetch(PDO::FETCH_ASSOC);
     }
 }
+
+// var_dump($login["foto"]);
+// die;
 
 unset($conexao);
 
@@ -71,13 +85,13 @@ unset($conexao);
         </div>
         <div class="container d-flex justify-content-center align-content-center">
             <div class="cardPerfil card border-3 shadow-lg">
-                <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php">
+                <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php" enctype="multipart/form-data">
                     <div class="headerPerfil d-flex">
                         <div class="profile-background">
-                            <img src="../foto/<?= $login["foto"] ?>" class="imgPerfil mt-4" alt="">
+                            <img src="../foto/<?= $login["foto"] ?>" class="imgPerfill mt-4 bordaa <?= $estilo ?>" alt="">
                         </div>
                     </div>
-                    <input type="file" class="inputs w-25 form-control" accept="image/jpg, image/png" onchange="previewImage(event)">
+                    <input type="file" class="inputs form-control mt-5" name="foto" accept="image/jpg, image/png, image/jpeg" onchange="previewImage(event)">
                     <input type="text" name="imgName" value="<?= $login["foto"] ?>" hidden>
                     <div class="card-body d-flex flex-column mt-5">
                         <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
@@ -89,14 +103,14 @@ unset($conexao);
                                     <h6 class="mt-1 fw-bold laranja-senac mx-2">Nome Atual:</h6>
                                     <h5 class="card-title d-flex mx-1"><?= $login['nome'] ?? '' ?></h5> <br>
                                     <label for="nome" class="form-label fw-bold azul-senac mx-2">Novo Nome</label>
-                                    <input type="text" name="txtNome" class="form-control border-0 border-bottom" value="<?= $login['nome'] ?? '' ?>">
+                                    <input type="text" name="txtNome" class="form-control border-0 border-bottom mb-2" value="<?= $login['nome'] ?? '' ?>">
                                 </div>
                             </div>
                         </div>
                         <div class="col mb-3">
                             <div class="nomePerfil">
-                            <div class="mb-3 mt-1 fw-bold">
-                                <label for="bio" class="form-label fw-bold azul-senac mx-2">Bio</label>
+                            <div class="mx-3 mb-3 mt-1 fw-bold">
+                                <label for="bio" class="form-label fw-bold azul-senac mx-2-+">Bio</label>
                                 <textarea class="form-control border-0 border-bottom" name="txtBiografia" rows="3"><?= $login['biografia'] ?? '' ?></textarea>
                                 </div>
                             </div>

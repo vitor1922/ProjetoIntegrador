@@ -40,8 +40,8 @@ $logado = $_SESSION['logado'] ?? NULL;
             </div>
             <div class="row justify-content-center pb-5 mb-5">
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card shadow-sm   w-23rem border-0">
-                        <img src="../assets/img/img_mulher_lavando_cabelo.png"alt="...">
+                    <div class="card card-imagem shadow-sm   w-23rem border-0">
+                        <img class="" src="../assets/img/img_mulher_lavando_cabelo.png"alt="...">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6  col-lg-12  col-xxl-7">
@@ -78,7 +78,7 @@ $logado = $_SESSION['logado'] ?? NULL;
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card border-0">
+                    <div class="card card-imagem border-0">
                         <img src="../assets/img/img_salao_de_beleza.png" alt="...">
                         <div class="card-body shadow-sm w-23rem">
                             <div class="row">
@@ -95,7 +95,7 @@ $logado = $_SESSION['logado'] ?? NULL;
                                 </div>
                             </div>
                             <div class="collapse" id="collapseExample2">
-                                <div class="card card-body  start-0 position-absolute w-100">
+                                <div class="card card-body   start-0 position-absolute w-100">
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
                                         <option value="1">18/07/24 - 17:00 até 18:30</option>
@@ -116,8 +116,8 @@ $logado = $_SESSION['logado'] ?? NULL;
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card border-0">
-                        <img src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" alt="...">
+                    <div class="card card-imagem border-0">
+                        <img class="" src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" alt="...">
                         <div class="card-body shadow-sm w-23rem">
                             <div class="row">
                                 <div class="col-6 col-lg-12 col-xxl-7 w-md-50">
@@ -158,7 +158,9 @@ $logado = $_SESSION['logado'] ?? NULL;
     <?php
     include("./footer.php")
     ?>
-    <script src="../src/bootstrap/js/bootstrap.js"></script>
+    <script src="../src/bootstrap/js/bootstrap.js">
+        
+    </script>
 </body>
 
 </html>
