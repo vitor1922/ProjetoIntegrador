@@ -5,6 +5,18 @@ include_once('../data/conexao.php');
 $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
 
+if (!$logado) {
+    header("Location: " . BASE_URL . "screens/signUp.php");
+    exit;
+}elseif($perfil !== "professor"){
+    if ($perfil !== "admin"){
+        header("Location: " . BASE_URL . "index.php");
+    }
+}
+
+
+
+
 $cursoId = $_GET["id"];
 
 $sqlCurso = "SELECT * FROM curso WHERE id_curso = :id_curso";
@@ -54,7 +66,7 @@ unset($conexao);
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
                         <a href="./gerenciamentoCursos.php"><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
-                        <button class="btn border fw-bold azul-senac me-5">Editar</button>
+                        <button class="btn border fw-bold azul-senac me-5 ">Editar</button>
                     </div>
                 </div>
                 <div class="row ">
@@ -67,11 +79,11 @@ unset($conexao);
                 </div>
                 <div class=" shadow-sm border mt-3 pb-2 ">
                     <div class="row ">
-                        <div class="d-flex align-items-center justify-content-center offset-2 col-8">
+                        <div class="d-flex align-items-center justify-content-center offset-3 col-6">
                             <h3 class="text-center fs-4">Horários</h3>
                         </div>
                         <div class="col-1">
-                            <button class=" btn "><i class="bi bi-plus-square-fill fs-3 azul-senac "></i></button>
+                            <button class=" btn "><i class="bi bi-plus-square-fill fs-2 azul-senac "></i></button>
                         </div>
                     </div>
                     <div class="row">
@@ -83,35 +95,96 @@ unset($conexao);
                         </div>
                     </div>
                 </div>
-                <div class="shadow-sm border  py-3 ">
+                <div class="shadow-sm border py-3 ">
                     <div class="row">
                         <div class=" offset-1 d-grid align-items-center col-4  ">
                             <input class="d-inline rounded-pill text-center py-2" type="text " placeholder="Pesquisar">
 
                         </div>
-                        <div class="col-1 d-flex align-items-end">
-                            <button class="btn "><i class="bi bi-plus-square-fill fs-3 azul-senac "></i></button>
+                        <div class="col-1 offset-sm-0 offset-3 d-flex align-items-end">
+                            <button class="btn " data-bs-toggle="modal" data-bs-target="#modalCadastrarTurma"><i class="bi bi-plus-square-fill fs-2 azul-senac"></i></button>
+                        </div>
+
+                        <div class="col-sm-6 d-grid align-items-center">
+                            <div class="row">
+                                <div class=" offset-1 col-1 p-0 ponto d-block rounded-circle bg-azul-senac align-self-center"></div>
+                                <div class="col-9 azul-senac">Em Andamento</div>
+                            </div>
+                            <div class="row">
+                                <div class=" offset-1 col-1 p-0 bg-danger ponto d-block rounded-circle align-self-center"></div>
+                                <div class="col-9 text-danger">Concluída</div>
+                            </div>
                         </div>
                     </div>
-
-
                 </div>
-                <?php foreach ($turmas as $turma) {?>
-                    <?php 
+
+
+
+
+
+                <?php foreach ($turmas as $turma) { ?>
+                    <?php
                     $numeroDeAlunos = 0;
-                        foreach($alunos as $aluno){
-                            if (in_array($turma['id_turma'], $aluno)){
+                    foreach ($alunos as $aluno) {
+                        if ($turma['id_turma']=== $aluno["id_turma"]) {
                             $numeroDeAlunos += 1;
-                            }
                         }
-                        ?>
-                    
+                    }
+                    $dataAtual = date("y-m-d");
+                    if ($turma["data_final"] <= $dataAtual) {
+                        $andamentoCurso = "bg-azul-senac";
+                    } else {
+                        $andamentoCurso = "bg-danger";
+                    }
+                    ?>
+
                     <a href="">
                         <div class=" text-center border py-2 text-secondary">
-                            <div class="col-12 "> idTurma:<?=$turma["numero_da_turma"]?> • <?=$curso["nome_do_curso"]?> • <?=$numeroDeAlunos?> Alunos</div>
+
+                            <div class="row d-flex align-content-center">
+                                <div class=" offset-1 col-9 "> idTurma:<?= $turma["numero_da_turma"] ?> • <?= $curso["nome_do_curso"] ?> • <?= $numeroDeAlunos ?> Alunos </div>
+                                <div class=" col-1 p-0 <?= $andamentoCurso ?> ponto d-block rounded-circle align-self-center"></div>
+
+                            </div>
                         </div>
                     </a>
                 <?php } ?>
+
+
+
+                <!-- MODAL ADICIONAR CURSO -->
+                <div class="modal fade" id="modalCadastrarTurma" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="d-flex justify-content-end mb-3">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="../src/logicos/adicionarTurma.php" method="POST" >
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">ID da Turma</label>
+                                        <input type="text" class="form-control" name="txtIdTurma" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold" >Data de Início</label>
+                                        <input type="date" class="form-control" name="txtDataInicio" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold" >Data do Fim</label>
+                                        <input type="date" class="form-control" name="txtDataFim" required>
+                                    </div>
+                                    <input type="text" value="<?=$cursoId?>" name="txtIdCurso" hidden>
+                                    
+
+                                    <div class="mb-3 d-flex justify-content-center">
+                                        <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
         </main>

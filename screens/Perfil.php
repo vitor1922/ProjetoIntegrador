@@ -17,12 +17,7 @@ $logado =  $_SESSION['logado'] ?? FALSE;
 $nome = $_SESSION['nome'] ?? "";
 $id_usuario = $_SESSION['id_usuario'] ?? "";
 
-
-
-
-
 // $perfil = "cliente";
-
 // border colors of each user role 
 if ($perfil == 'professor') {
     $estilo = "border border-success rounded-circle border border-3 m-2";
@@ -89,7 +84,7 @@ unset($conexao);
 
                 <div class="card-body d-flex justify-content-center flex-column mt-5">
                     <h5 class="card-title d-flex justify-content-center fw-bold "><?= $login["nome"] ?></h5> <br>
-                    <h6 class="card-text d-flex justify-content-center" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
+                    <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
                 </div>
 
                 <ul class="list-group list-group-flush">

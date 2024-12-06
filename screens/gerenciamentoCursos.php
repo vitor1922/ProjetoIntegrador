@@ -6,6 +6,14 @@ include_once('../data/conexao.php');
 $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
 
+if (!$logado) {
+    header("Location: " . BASE_URL . "screens/signUp.php");
+    exit;
+}elseif($perfil !== "professor"){
+    if ($perfil !== "admin"){
+        header("Location: " . BASE_URL . "index.php");
+    }
+}
 
 $sql = "SELECT * FROM curso ORDER BY nome_do_curso";
 $select = $conexao->prepare($sql);
@@ -48,15 +56,15 @@ if ($select->execute()) {
                     </div>
                 </div>
                 <div class="row mt-5 d-flex justify-content-center ">
-                    <div class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 fw-bold p-0 ">
+                    <a href="./gerenciamentoTurmas.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 fw-bold p-0 ">
                         <button class="btn border-dark-subtle fs-7" type="button">TURMAS</button>
-                    </div>
-                    <div class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 p-0">
+                    </a>
+                    <a href="./gerenciamentoCursos.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 p-0">
                         <button class="btn btn-azul-senac text-white border-dark-subtle fs-7 fw-bold" type="button">CURSOS</button>
-                    </div>
-                    <div class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 p-0">
+                    </a>
+                    <a href="./gerenciamentoProfessores.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 p-0">
                         <button class="btn border-dark-subtle fs-7 fw-bold" type="button">PROFESSORES</button>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="mt-4">
@@ -79,33 +87,6 @@ if ($select->execute()) {
                 </a>
                 <?php }?>
 
-                <div class="row border-top border-3 py-3">
-                    <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-4">
-                        <img src="../foto/foto_DjAnCb5Fqa.jpg" alt="" class="img-curso">
-                    </div>
-
-                    <div class="col-lg-7 col-md-7 col-5 d-flex align-items-center">
-                        <p class=" fs-5 text-secondary text-start">NOME DO CURSO</p>
-                    </div>
-                </div>
-                <div class="row border-top border-3 py-3">
-                    <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-4">
-                        <img src="../foto/foto_DjAnCb5Fqa.jpg" alt="" class="img-curso">
-                    </div>
-
-                    <div class="col-lg-7 col-md-7 col-5 d-flex align-items-center">
-                        <p class=" fs-5 text-secondary text-start">NOME DO CURSO</p>
-                    </div>
-                </div>
-                <div class="row border-top border-3 py-3">
-                    <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-4">
-                        <img src="../foto/foto_DjAnCb5Fqa.jpg" alt="" class="img-curso">
-                    </div>
-
-                    <div class="col-lg-7 col-md-7 col-5 d-flex align-items-center">
-                        <p class=" fs-5 text-secondary text-start">NOME DO CURSO</p>
-                    </div>
-                </div>
                 <!-- MODAL ADICIONAR CURSO -->
                 <div class="modal fade" id="modalCadastrarCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">

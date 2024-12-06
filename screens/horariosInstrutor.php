@@ -148,25 +148,25 @@ if ($stmt->execute()) {
 
                         <div class="card p-3 mb-3">
                             <div class="row mb-2">
-                                <div class="col-auto d-flex justify-content-start align-items-start">
+                                <div class="col d-flex justify-content-start align-items-center">
                                     <p><strong>Turma:</strong><br><?= $result["numeroTurma"] ?></p>
                                 </div>
-                                <div class="col-auto d-flex justify-content-center align-items-center">
+                                <div class="col d-flex justify-content-center align-items-center">
                                     <p><strong>Serviço:</strong><br>Corte de Cabelo</p>
                                 </div>
-                                <div class="col-auto d-flex justify-content-end align-items-end">
+                                <div class="col d-flex justify-content-end align-items-center">
                                     <p><strong>Data:</strong><br><?= $result["data"] ?></p>
                                 </div>
                             </div>
 
                             <div class="row mb-2">
-                                <div class="col-auto d-flex justify-content-start align-items-start">
+                                <div class="col d-flex justify-content-start align-items-center">
                                     <i class="bi-person-circle"></i>
                                 </div>
-                                <div class="col-auto d-flex justify-content-center align-items-center">
+                                <div class="col cavera d-flex justify-content-center align-items-center">
                                     <?= $result["nomeResponsavel"] . " • " . $result["cpf"] ?>
                                 </div>
-                                <div class="col-auto d-flex justify-content-end align-items-end">
+                                <div class="col d-flex justify-content-end align-items-center">
                                     <span class="<?= $badgeClass ?>">&nbsp;</span>
                                 </div>
                             </div>
@@ -174,7 +174,7 @@ if ($stmt->execute()) {
                             <?php if ($result['status'] === '0'): ?>
                                 <form method="POST" action="">
                                     <div class="row ">
-                                        <div class="col d-flex align-items-end justify-content-end">
+                                        <div class="col d-flex align-items-center justify-content-end">
                                         <input type="hidden" name="id_agendamento" value="<?= $result['idAgendamento'] ?>">
                                         <button type="submit" class="btn btn-primary">Concluir</button>
                                         </div>

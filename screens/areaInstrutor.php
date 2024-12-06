@@ -54,7 +54,7 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "index.php";
                     </a>
                 </div>
                 <div class="col-12 col-md-6 col-lg-3 mb-4">
-                    <a href="" class="text-decoration-none text-dark">
+                    <a href="./gerenciamentoCursos.php" class="text-decoration-none text-dark">
                         <div class="card d-flex flex-column align-items-center ard-area-instrutor border-0 ">
                             <div class="">
                                 <img src="../assets/img/img_gerenciamento.png" class=" img-210" alt="imagem de gerenciamento">

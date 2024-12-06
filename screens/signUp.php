@@ -128,11 +128,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="dataNasc">Data de Nascimento</label>
-                                            <input type="date" class="form-control bg-light" id="dataNasc" name="txtDataNasc" required>
+                                            <input type="date" class="form-control bg-light" id="dataNasc"  max="9999-12-31" name="txtDataNasc" required>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="cpf">CPF</label>
-                                            <input type="text" class="form-control bg-light" id="cpf" minlength="11" maxlength="11" placeholder="Digite seu CPF" name="txtCpf" required>
+                                            <input type="text" class="form-control bg-light" id="cpf" placeholder="Digite seu CPF" maxlength="14" name="txtCpf" required>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="email">E-mail</label>
@@ -140,15 +140,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="phone">Telefone</label>
-                                            <input type="text" class="form-control bg-light" id="phone" minlength="10" maxlength="11" placeholder="Digite seu telefone" name="txtTelefone" required>
+                                            <input type="text" class="form-control bg-light" id="phone" maxlength="15" placeholder="Digite seu telefone" name="txtTelefone" required>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="cep">CEP</label>
                                             <div class="input-group col-md-3 ">
-                                                <input type="text" class="form-control bg-light rounded " id="cep" placeholder="Digite seu CEP" minlength="8" maxlength="8" name="txtCep" required>
-                                                <div class="input-group-text ">
-                                                    <i  class="bi bi-mailbox2-flag " id="icontogleConfirmPass" onclick="buscarCEP()" style="cursor: pointer;"></i>
-                                                </div>
+                                                <input type="text" class="form-control bg-light rounded " id="cep" placeholder="Digite seu CEP" minlength="9" maxlength="9" name="txtCep" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">

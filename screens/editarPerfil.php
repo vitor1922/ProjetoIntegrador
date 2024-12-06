@@ -96,7 +96,7 @@ unset($conexao);
                     <div class="card-body d-flex flex-column mt-5">
                         <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
                             value="<?= $login['id_usuario'] ?? '' ?>" hidden>
-                        <h6 class="card-text d-flex justify-content-center" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
+                        <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
                         <div class="col mt-5">
                             <div class="mb-3">
                                 <div class="nomePerfil">

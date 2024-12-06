@@ -192,6 +192,8 @@ body {
   height: 2.5rem;
   min-width: 2.5rem;
   min-height: 2.5rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
 }
 /* .btn-edit-profile {
     background-color: #fff;
@@ -218,6 +220,16 @@ body {
   width: 30rem;
 }
 
+.h-1rem{
+  max-height: 1rem;
+}
+.ponto{
+  min-height: 1rem;
+  min-width: 1rem;
+  max-height: 1rem;
+  max-width: 1rem;
+
+}
 .header-senac {
   background-color: var(--laranja_senac);
 }
@@ -400,3 +412,12 @@ textarea {
   background-color: gainsboro;
 }
 
+.cavera {
+  font-size: 16px;
+}
+
+@media (max-width: 576px) {
+  .cavera {
+    font-size: 12px;
+  }
+}

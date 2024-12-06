@@ -1,14 +1,59 @@
 <!-- CRIADOR: MALINSKI -->
 
 <?php
+#inicia as variaveis de sessão
+include('../constantes.php');
+include_once("../data/conexao.php");
+
 
 session_start();
-include_once("../constantes.php");
-include_once('../data/conexao.php');
-$perfil = $_SESSION['perfil'] ?? NULL;
-$logado = $_SESSION['logado'] ?? FALSE;
+$perfil = $_SESSION['perfil'] ?? "cliente";
+$logado = $_SESSION['logado'] ?? NULL;
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+$perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
+$_SESSION['mensagem'] = NULL;
 
+
+
+$logado =  $_SESSION['logado'] ?? FALSE;
+$nome = $_SESSION['nome'] ?? "";
+$id_usuario = $_SESSION['id_usuario'] ?? "";
+$img_post = $_SESSION['img_post'];
+$post = $_SESSION['post'];
+// $perfil = "cliente";
+
+if ($perfil == 'professor') {
+    $estilo = "border border-success rounded-circle border border-3 m-2";
+} elseif ($perfil == 'aluno') {
+    $estilo = "border-primary rounded-circle border border-3 m-2;";
+} elseif ($perfil == 'cliente') {
+    $estilo = "border border-warning rounded-circle border border-3 m-2;";
+} elseif ($perfil == 'admin') {
+    $estilo = "border border-danger rounded-circle border border-3 m-2";
+}
+
+if (!$logado) {
+    header("Location: " . BASE_URL . "screens/signUp.php");
+    exit;
+}
+// Mostrar dados do usuario logado
+$sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
+$select = $conexao->prepare($sql);
+$select->bindParam(':id_usuario', $id_usuario);
+
+if ($select->execute()) {
+    $login = $select->fetch(PDO::FETCH_ASSOC);
+}
+
+//  echo("<pre>");
+//  var_dump($login);
+//  die;
+
+
+unset($conexao);
 ?>
+
+<?php include_once("../constantes.php"); ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -16,7 +61,7 @@ $logado = $_SESSION['logado'] ?? FALSE;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Aluno</title>
+    <!-- <title> ESCREVER AQUI DPS </title> -->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
@@ -34,19 +79,19 @@ $logado = $_SESSION['logado'] ?? FALSE;
         <div class="container text-center">
             <!-- Perfil -->
             <div class="position-relative mt-3">
-                <img src="https://th.bing.com/th/id/OIP._eCIljHRA15vp38zaPRE4QHaHR?rs=1&pid=ImgDetMain" alt="Foto de perfil" class="rounded-circle img-fluid mb-3" style="width: 120px; height: 120px;">
-                <button class="btn btn-edit-profile position-absolute top-0 end-0 me-2" style="border-color: gray;">Editar Perfil</button>
+                <img src="../foto/<?= $login['foto'] ?>" alt="Foto de perfil" class="rounded-circle img-fluid mb-3 mt-1 <?= $estilo ?>" style="width: 120px; height: 120px;">
+                <h5 class="card-title d-flex justify-content-center fw-bold "><?= $login["nome"] ?></h5> <br>
+                <h5 class=""> <?= $login["perfil"] ?></h5>
+                <a href="./editarPerfil.php"><button class="btn position-absolute top-0 end-0 me-2 btn-primary">Editar Perfil</button></a>
             </div>
-            <h4>APELIDO</h4>
-            <p class="text-muted">Nome Real</p>
+
+            <h5 class="card-title d-flex justify-content-center fw-bold "></h5> <br>
             <div class="bio mb-3">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+                <p class="list-group-item"><?= $login["biografia"] ?></p>
             </div>
 
             <!-- Botão Configurações -->
-            <button class="btn btn-primary mb-4 w-100" style="max-width: 200px;">Configurações</button>
+            <a href="./configuracoes.php"><button class="btn btn-primary mb-4 w-100" style="max-width: 200px;">Configurações</button></a>
 
             <hr style="border: none; border-top: 1px solid black; width: 100%; margin: 30px 0;">
 
@@ -58,25 +103,30 @@ $logado = $_SESSION['logado'] ?? FALSE;
             </div>
 
             <!-- Galeria de fotos -->
+
+
             <div class="row d-flex justify-content-center g-2 mt-3 mb-3">
 
-                <div class="col-4 col-md-2">
-                    <a href=""><img src="https://th.bing.com/th/id/OIP.s12OIiziuNadhVOj2qWlRgAAAA?rs=1&pid=ImgDetMain" class="img-fluid rounded" alt="Foto 1"></a>
+                <div class="card" style="width: 18rem;">
+                    <img src="<?= ['img_post'] ?> " class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text"> <?= ['texto'] ?> </p>
+                    </div>
                 </div>
                 <div class="col-4 col-md-2">
-                <a href=""><img src="https://th.bing.com/th/id/OIP.CoeNYRYF8JXtPPwO_K_kTwAAAA?rs=1&pid=ImgDetMain" class="img-fluid rounded" alt="Foto 2"></a>
+                    <a href=""><img src="" class="img-fluid rounded" alt="Foto 2"></a>
                 </div>
                 <div class="col-4 col-md-2">
-                <a href=""><img src="https://th.bing.com/th/id/OIP.Nf1sMOBxzCN3bzvrOsDO0AAAAA?rs=1&pid=ImgDetMain" class="img-fluid rounded" alt="Foto 3"></a>
+                    <a href=""><img src="" class="img-fluid rounded" alt="Foto 3"></a>
                 </div>
                 <div class="col-4 col-md-2">
-                <a href=""><img src="https://homensquesecuidam.com/wp-content/uploads/2017/10/cortes-de-cabelo-masculino-curto-homens-que-se-cuidam-a.jpg" class="img-fluid rounded" alt="Foto 4"></a>
+                    <a href=""><img src="" class="img-fluid rounded" alt="Foto 4"></a>
                 </div>
                 <div class="col-4 col-md-2">
-                <a href=""><img src="https://th.bing.com/th/id/OIP.tBrXgx6vUU6ZxO9kyCPmrQAAAA?rs=1&pid=ImgDetMain" class="img-fluid rounded" alt="Foto 5"></a>
+                    <a href=""><img src="" class="img-fluid rounded" alt="Foto 5"></a>
                 </div>
                 <div class="col-4 col-md-2">
-                <a href=""><img src="https://homensquesecuidam.com/wp-content/uploads/2017/10/cortes-de-cabelo-masculino-curto-homens-que-se-cuidam-b.jpg" class="img-fluid rounded" alt="Foto 6"></a>
+                    <a href=""><img src="" class="img-fluid rounded" alt="Foto 6"></a>
                 </div>
             </div>
             <main>

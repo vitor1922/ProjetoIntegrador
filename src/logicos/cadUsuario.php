@@ -19,8 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $endereco = filter_input(INPUT_POST, "txtEndereco", FILTER_SANITIZE_SPECIAL_CHARS);
         $senha = filter_input(INPUT_POST, "txtSenha", FILTER_SANITIZE_SPECIAL_CHARS);
         
+        #senha Cripitografada para ser armazenada no banco de dados 
         $senhaCriptografada = password_hash($senha, PASSWORD_DEFAULT);
         $perfil = "cliente";
+
+        # Retirada das Mascaras
+        $cep_sem_traco = str_replace("-", "", $cep);
+
+
 
         try {
             $sql = "INSERT INTO usuario (genero, nome, data_de_nascimento, cpf, email, telefone, cep, uf, cidade, endereco, senha, perfil) VALUES ( :genero, :nome, :data_de_nascimento, :cpf, :email, :telefone, :cep, :uf, :cidade, :endereco, :senha, :perfil)";
@@ -31,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $insert->bindParam(':cpf', $cpf);
             $insert->bindParam(':email', $email);
             $insert->bindParam(':telefone', $telefone);
-            $insert->bindParam(':cep', $cep);
+            $insert->bindParam(':cep', $cep_sem_traco);
             $insert->bindParam(':uf', $uf);
             $insert->bindParam(':cidade', $cidade);
             $insert->bindParam(':endereco', $endereco);
@@ -40,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($insert->execute() && $insert->rowCount() > 0) {
                 $_SESSION['mensagem'] = "Cadastrado com sucesso!";
-                header("Location: " . BASE_URL . "screens/areaInstrutor.php");
+                header("Location: " . BASE_URL . "screens/signUp.php");
                 exit;
             } else {
                 throw new Exception("Ocorreu um erro ao cadastrar!");
