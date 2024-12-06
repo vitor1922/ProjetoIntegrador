@@ -18,8 +18,8 @@ $_SESSION['mensagem'] = NULL;
 $logado =  $_SESSION['logado'] ?? FALSE;
 $nome = $_SESSION['nome'] ?? "";
 $id_usuario = $_SESSION['id_usuario'] ?? "";
-$img_post = $_SESSION['img_post'];
-$post = $_SESSION['post'];
+$img_post = ['img_post'];
+$post = ['post'];
 // $perfil = "cliente";
 
 if ($perfil == 'professor') {
@@ -46,7 +46,7 @@ if ($select->execute()) {
 }
 
 //  echo("<pre>");
-//  var_dump($login);
+//  var_dump($post);
 //  die;
 
 
