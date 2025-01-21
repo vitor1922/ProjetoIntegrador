@@ -15,30 +15,24 @@ $nome = $_SESSION['nome'] ?? "";
 $id_usuario = $_SESSION['id_usuario'] ?? "";
 $login = NULL;
 
-$id_agendamento = ["id_agendamento"];
 if (!$logado) {
   header("Location: " . BASE_URL . "screens/signUp.php");
   exit; 
 }
 // Mostrar dados do agendamento
-// if ($_SERVER["REQUEST_METHOD"] === "GET") {
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
   // $id_agendamento = $_GET["id_agendamento"];
-
-
   $sql = "SELECT * FROM agendamento WHERE id_agendamento = :id_agendamento ";
   $select = $conexao->prepare($sql);
   $select->bindParam(':id_agendamento', $id_agendamento);
   if ($select->execute()) {
     $login = $select->fetch(PDO::FETCH_ASSOC);
   }
+}
 
-
-
-// }
-
-// echo ("<pre>");
-// var_dump($);
-// die;
+echo ("<pre>");
+var_dump($data);
+die;
 
 
 unset($conexao);
