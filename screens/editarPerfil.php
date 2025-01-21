@@ -91,27 +91,31 @@ unset($conexao);
                             <img src="../foto/<?= $login["foto"] ?>" class="imgPerfill mt-4 bordaa <?= $estilo ?>" alt="">
                         </div>
                     </div>
-                    <input type="file" class="inputs form-control mt-5" name="foto" accept="image/jpg, image/png, image/jpeg" onchange="previewImage(event)">
+                    <div class="mx-5">
+                    <input type="file" class="inputs form-control mt-5 mx-1" name="foto" accept="image/jpg, image/png, image/jpeg" onchange="previewImage(event)">
+                    </div>
+                    <div class="">
                     <input type="text" name="imgName" value="<?= $login["foto"] ?>" hidden>
+                    </div>
                     <div class="card-body d-flex flex-column mt-5">
                         <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
                             value="<?= $login['id_usuario'] ?? '' ?>" hidden>
                         <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
                         <div class="col mt-5">
                             <div class="mb-3">
-                                <div class="nomePerfil">
+                                <div class="nomePerfil p-2">
                                     <h6 class="mt-1 fw-bold laranja-senac mx-2">Nome Atual:</h6>
                                     <h5 class="card-title d-flex mx-1"><?= $login['nome'] ?? '' ?></h5> <br>
-                                    <label for="nome" class="form-label fw-bold azul-senac mx-2">Novo Nome</label>
-                                    <input type="text" name="txtNome" class="form-control border-0 border-bottom mb-2" value="<?= $login['nome'] ?? '' ?>">
+                                    <label for="nome" class="form-label fw-bold mx-2">Novo Nome</label>
+                                    <input type="text" name="txtNome" class="form-control mb-2" value="<?= $login['nome'] ?? '' ?>">
                                 </div>
                             </div>
                         </div>
                         <div class="col mb-3">
                             <div class="nomePerfil">
                             <div class="mx-3 mb-3 mt-1 fw-bold">
-                                <label for="bio" class="form-label fw-bold azul-senac mx-2-+">Bio</label>
-                                <textarea class="form-control border-0 border-bottom" name="txtBiografia" rows="3"><?= $login['biografia'] ?? '' ?></textarea>
+                                <label for="bio" class="form-label fw-bold azul-senac">Bio</label>
+                                <textarea class="form-control p-2" name="txtBiografia" rows="1"><?= $login['biografia'] ?? '' ?></textarea>
                                 </div>
                             </div>
                         </div>

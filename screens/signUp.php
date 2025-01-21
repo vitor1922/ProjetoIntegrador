@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="J0A0 GOMES">
-    <title>Document</title>
+    <title>Faça login</title>
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons">
@@ -83,14 +83,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a class="text-decoration-none" href="">
-                            <p class="text-end me-4">esqueceu a senha ?</p>
-                        </a>
+                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalRecuperacao">
+                        Esqueceu a senha?
+                        </button>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary btn-block mt-3">Fazer Login</button>
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Fazer Login</button>
                 </form>
                 <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#fazerCadastro"> Criar conta </button>
+                <?php
+                include(".//recuperarSenha.php");
+                ?>
+                
             </div>
             <?php if (isset($mensagem)) { ?>
                 <p class="alert alert-warning mt-2">
@@ -128,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="dataNasc">Data de Nascimento</label>
-                                            <input type="date" class="form-control bg-light" id="dataNasc"  max="9999-12-31" name="txtDataNasc" required>
+                                            <input type="date" class="form-control bg-light" id="dataNasc" max="9999-12-31" name="txtDataNasc" required>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="cpf">CPF</label>

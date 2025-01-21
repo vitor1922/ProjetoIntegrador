@@ -25,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         # Retirada das Mascaras
         $cep_sem_traco = str_replace("-", "", $cep);
+        $cpfSemMascara = preg_replace('/\D/', '', $cpf); 
+        $telefoneSemMascara = preg_replace('/\D/', '', $telefone); 
 
 
 
@@ -34,9 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $insert->bindParam(':genero', $genero);
             $insert->bindParam(':nome', $nome);
             $insert->bindParam(':data_de_nascimento', $dataNasc);
-            $insert->bindParam(':cpf', $cpf);
+            $insert->bindParam(':cpf', $cpfSemMascara);
             $insert->bindParam(':email', $email);
-            $insert->bindParam(':telefone', $telefone);
+            $insert->bindParam(':telefone', $telefoneSemMascara);
             $insert->bindParam(':cep', $cep_sem_traco);
             $insert->bindParam(':uf', $uf);
             $insert->bindParam(':cidade', $cidade);

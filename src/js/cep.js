@@ -37,6 +37,7 @@ cepInput.addEventListener('input', () => {
 });
 
 
+
 // Máscara para CPF
 const cpfInput = document.getElementById('cpf');
 cpfInput.addEventListener('input', () => {
@@ -61,4 +62,5 @@ telefoneInput.addEventListener('input', () => {
 
     telefoneInput.value = telefone.slice(0, 15); // Limita o tamanho do telefone
 });
+
 

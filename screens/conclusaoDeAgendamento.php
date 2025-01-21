@@ -15,24 +15,36 @@ $nome = $_SESSION['nome'] ?? "";
 $id_usuario = $_SESSION['id_usuario'] ?? "";
 $login = NULL;
 
+$id_agendamento = ["id_agendamento"];
 if (!$logado) {
   header("Location: " . BASE_URL . "screens/signUp.php");
-  exit;
+  exit; 
 }
-// Mostrar dados do usuario logado
-if ($_SERVER["REQUEST_METHOD"] === "GET") {
-  $id_agendamento = $_GET["id"];
+// Mostrar dados do agendamento
+// if ($_SERVER["REQUEST_METHOD"] === "GET") {
+  // $id_agendamento = $_GET["id_agendamento"];
+
+
   $sql = "SELECT * FROM agendamento WHERE id_agendamento = :id_agendamento ";
   $select = $conexao->prepare($sql);
   $select->bindParam(':id_agendamento', $id_agendamento);
-
   if ($select->execute()) {
     $login = $select->fetch(PDO::FETCH_ASSOC);
   }
-}
 
 
+
+// }
+
+// echo ("<pre>");
+// var_dump($);
+// die;
+
+
+unset($conexao);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -77,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
                     <h5 class="card-title fs-6 text-start">Lavagem de cabelo</h5>
                   </div>
                   <div class="col-6">
-                    <h5 class="card-title fs-6 text-end"><?= $login["data"] ?></h5>
+                    <h5 class="card-title fs-6 text-end"><?= $agendamento["data"] ?></h5>
                   </div>
                 </div>
               </div>

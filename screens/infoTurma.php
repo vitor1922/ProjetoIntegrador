@@ -5,6 +5,7 @@ include_once("../constantes.php");
 include_once('../data/conexao.php');
 $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
+$paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoTurmas.php";
 
 ?>
 
@@ -32,7 +33,7 @@ $logado = $_SESSION['logado'] ?? NULL;
         <div class="row">
           <div class="col-12">
             <div class="button fs-1 mx-3">
-              <a href="#" role="button pb-5">
+              <a href="<?= $paginaAnterior?>" role="button pb-5">
                 <i class="bi bi-arrow-left-short azul-senac fw-bold"></i>
               </a>
             </div>

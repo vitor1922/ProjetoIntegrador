@@ -78,9 +78,6 @@ function viewSenhaCad() {
 }
 
 
-
-
-
 // mensagem = document.querySelector(".desabilitarMenssagem")
 // setTimeout(function () {
 //     mensagem.style.visibility = "hidden"
@@ -100,8 +97,8 @@ function viewSenhaCad() {
 function toggleTextarea(id, show) {
     var textarea = document.getElementById(id);
     if (show) {
-      textarea.style.display = 'block';
+        textarea.style.display = 'block';
     } else {
-      textarea.style.display = 'none'; 
+        textarea.style.display = 'none';
     }
-  }
+}

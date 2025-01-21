@@ -311,6 +311,11 @@ body {
   display: flex;
 }
 
+.img-perfil-mini{
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
+}
 
 .imgPerfil {
   width: 12rem;
@@ -404,12 +409,6 @@ textarea {
 .indisponivel a {
   text-decoration: none;
   color: #6c757d !important; /* Texto cinza */
-}
-
-.nomePerfil {
-  border: black solid 1px;
-  border-radius: 10px;
-  background-color: gainsboro;
 }
 
 .cavera {

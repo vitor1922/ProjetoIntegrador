@@ -41,7 +41,7 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "index.php";
             <div class="row justify-content-center">
 
                 <div class="col-12 col-md-6 col-lg-3 mb-4">
-                    <a href="" class="text-decoration-none text-dark">
+                    <a href="./usuarios.php" class="text-decoration-none text-dark">
                         <div class="card d-flex flex-column align-items-center ard-area-instrutor border-0 ">
                             <div class="">
                                 <img src="../assets/img/img_usuarios.png" class=" img-210" alt="imagem de usuarios">
@@ -70,20 +70,20 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "index.php";
 
             <div class="row justify-content-center">
                 <div class="col-12 col-md-6 col-lg-3 mb-4">
-                    <a href="" class="text-decoration-none text-dark">
+                    <a href="./controleDeEstoque.php" class="text-decoration-none text-dark">
                         <div class="card d-flex flex-column align-items-center ard-area-instrutor border-0 ">
                             <div class="">
                                 <img src="../assets/img/img_estoque.png" class=" img-210" alt="imagem de estoque">
 
                             </div>
                             <div class="card-body mt-0 pt-0">
-                                <h5 class="card-title text-center fs-2 fw-bold laranja-senac">Estoque</h5>
+                                <h5 class="card-title text-center fs-2 fw-bold laranja-senac" >Estoque</h5>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-12 col-md-6 col-lg-3 mb-4">
-                    <a href="" class="text-decoration-none text-dark">
+                    <a href="./avaliacoesComentarios.php" class="text-decoration-none text-dark">
                         <div class="card d-flex flex-column align-items-center ard-area-instrutor border-0 ">
                             <div class="">
                                 <img src="../assets/img/img_avaliacoes.png" class=" img-210" alt="imagem de avaliações">
@@ -100,7 +100,7 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "index.php";
 
             <div class="row justify-content-center">
                 <div class="col-12 col-md-6 col-lg-3 mb-4">
-                    <a href="" class="text-decoration-none text-dark">
+                    <a href="./agendamento.php" class="text-decoration-none text-dark">
                         <div class="card d-flex flex-column align-items-center ard-area-instrutor border-0 ">
                             <div class="">
                                 <img src="../assets/img/img_agendamentos.png" class=" img-210" alt="imagem de agendamentos">

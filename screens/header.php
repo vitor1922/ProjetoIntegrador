@@ -1,8 +1,3 @@
-<!-- header magrooooo demais! -->
-<!--Poha Malinski -->
-
-
-<!-- poha malinski é o kct arrumei esse sapo mucho do header q tava tendo problema no $perfil -->
 
 <header class="">
     <div class=" container-fluid">

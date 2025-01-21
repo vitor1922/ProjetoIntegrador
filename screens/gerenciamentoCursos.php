@@ -49,7 +49,7 @@ if ($select->execute()) {
                         <a href="#"><i class="bi bi-chevron-left"></i></a>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-3 col-7 text-center">
-                        <p class="mt-3 fw-bolder fs-4 azul-senac">gerenciamento</p>
+                        <p class="mt-3 fw-bolder fs-4 azul-senac">Gerenciamento</p>
                     </div>
                     <div class="col text-start">
                         <a href="#"><i class="bi bi-chevron-right"></i></a>

@@ -29,8 +29,15 @@ $sqlTurmas = "SELECT * FROM turma WHERE id_curso = :id_curso";
 $selectTurmas = $conexao->prepare("$sqlTurmas");
 $selectTurmas->bindParam(":id_curso", $cursoId);
 if ($selectTurmas->execute()) {
+
     $turmas = $selectTurmas->fetchAll(PDO::FETCH_ASSOC);
 }
+// $sqlHorarios = "SELECT * FROM horarios WHERE id_curso = :id_curso";
+// $selectHorarios = $conexao->prepare("$sqlHorarios");
+// $selectHorarios->bindParam(":id_curso", $cursoId);
+// if ($selectHorarios->execute()) {
+//     $sqlHorarios = $selectHorarios->fetchAll(PDO::FETCH_ASSOC);
+// }
 
 $cargo = "aluno";
 $sqlAlunos = "SELECT * FROM alunos";
@@ -80,7 +87,7 @@ unset($conexao);
                 <div class=" shadow-sm border mt-3 pb-2 ">
                     <div class="row ">
                         <div class="d-flex align-items-center justify-content-center offset-3 col-6">
-                            <h3 class="text-center fs-4">Horários</h3>
+                            <h3 class="text-center fs-4">Horários de Atendimento</h3>
                         </div>
                         <div class="col-1">
                             <button class=" btn "><i class="bi bi-plus-square-fill fs-2 azul-senac "></i></button>

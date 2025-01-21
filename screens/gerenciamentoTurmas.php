@@ -9,18 +9,28 @@ $logado = $_SESSION['logado'] ?? NULL;
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
     exit;
-}elseif($perfil !== "professor"){
-    if ($perfil !== "admin"){
+} elseif ($perfil !== "professor") {
+    if ($perfil !== "admin") {
         header("Location: " . BASE_URL . "index.php");
     }
 }
 
-$sql = "SELECT * FROM curso ORDER BY nome_do_curso";
-$select = $conexao->prepare($sql);
-if ($select->execute()) {
-    $cursos = $select->fetchAll(PDO::FETCH_ASSOC);
-    unset($conexao);
+$sqlCursos = "SELECT * FROM curso ";
+$selectCursos = $conexao->prepare($sqlCursos);
+if ($selectCursos->execute()) {
+    $cursos = $selectCursos->fetchAll(PDO::FETCH_ASSOC);
 }
+$sqlTurmas = "SELECT * FROM turma ORDER BY id_curso";
+$selectTurmas = $conexao->prepare($sqlTurmas);
+if ($selectTurmas->execute()) {
+    $turmas = $selectTurmas->fetchAll(PDO::FETCH_ASSOC);
+}
+$sqlAlunos = "SELECT * FROM alunos";
+$selectAlunos = $conexao->prepare($sqlAlunos);
+if ($selectAlunos->execute()) {
+    $alunos = $selectAlunos->fetchAll(PDO::FETCH_ASSOC);
+}
+unset($conexao);
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +59,7 @@ if ($select->execute()) {
                         <a href="#"><i class="bi bi-chevron-left"></i></a>
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-3 col-7 text-center">
-                        <p class="mt-3 fw-bolder fs-4 azul-senac">gerenciamento</p>
+                        <p class="mt-3 fw-bolder fs-4 azul-senac">Gerenciamento</p>
                     </div>
                     <div class="col text-start">
                         <a href="#"><i class="bi bi-chevron-right"></i></a>
@@ -73,47 +83,53 @@ if ($select->execute()) {
                             <input type="text" class="col-10 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" value="PESQUISAR">
                             <button type="button" class="ms-2 btn btn-primary rounded btn-plus" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">+</button>
                         </div>
+                        <div class="col-sm-6 d-grid align-items-center">
+                            <div class="row">
+                                <div class=" offset-1 col-1 p-0 ponto d-block rounded-circle bg-azul-senac align-self-center"></div>
+                                <div class="col-9 azul-senac">Em Andamento</div>
+                            </div>
+                            <div class="row">
+                                <div class=" offset-1 col-1 p-0 bg-danger ponto d-block rounded-circle align-self-center"></div>
+                                <div class="col-9 text-danger">Concluída</div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
-                <?php foreach($cursos as $curso){?>
-                <a href="./infoCurso.php?id=<?=$curso["id_curso"]?>" class="row border-top border-3 py-3">
-                    <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
-                        <img src="../foto/<?=$curso["imagem"]?>" alt="" class="img-curso">
-                    </div>
 
-                    <div class="col-lg-7 col-md-7 col-sm-5 col-7 d-flex align-items-center">
-                        <p class=" fs-5 text-secondary text-start"><?=$curso["nome_do_curso"] ?></p>
-                    </div>
-                </a>
-                <?php }?>
+                <?php foreach ($turmas as $turma) { ?>
+                    <?php $numeroAlunos = 0; ?>
+                    <?php foreach ($cursos as $curso) { ?>
+                        <?php if ($turma["id_curso"] === $curso["id_curso"]) { ?>
+                            <?php foreach ($alunos as $aluno) { ?>
+                                <?php if ($turma["id_turma"] === $aluno["id_turma"]) { ?>
+                                    <?php $numeroAlunos += 1; ?>
+                                <?php } ?>
+                            <?php } ?>
+                            <?php
+                            $dataAtual = date("y-m-d");
+                            if ($turma["data_final"] <= $dataAtual) {
+                                $andamentoCurso = "bg-azul-senac";
+                            } else {
+                                $andamentoCurso = "bg-danger";
+                            }
+                            
+                            ?>
+                            <a href="./infoTurma.php?id=<?= $turma["id_turma"]?>">
+                                <div class=" text-center border py-3 text-secondary">
 
-                <div class="row border-top border-3 py-3">
-                    <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-4">
-                        <img src="../foto/foto_DjAnCb5Fqa.jpg" alt="" class="img-curso">
-                    </div>
+                                    <div class="row d-flex align-content-center">
+                                        <div class=" offset-1 col-9 "> idTurma:<?= $turma["numero_da_turma"] ?> • <?= $curso["nome_do_curso"] ?> • <?= $numeroAlunos ?> Alunos </div>
+                                        <div class=" col-1 p-0 <?= $andamentoCurso ?> ponto d-block rounded-circle align-self-center"></div>
 
-                    <div class="col-lg-7 col-md-7 col-5 d-flex align-items-center">
-                        <p class=" fs-5 text-secondary text-start">NOME DO CURSO</p>
-                    </div>
-                </div>
-                <div class="row border-top border-3 py-3">
-                    <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-4">
-                        <img src="../foto/foto_DjAnCb5Fqa.jpg" alt="" class="img-curso">
-                    </div>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php } ?>
+                    <?php } ?>
+                <?php } ?>
 
-                    <div class="col-lg-7 col-md-7 col-5 d-flex align-items-center">
-                        <p class=" fs-5 text-secondary text-start">NOME DO CURSO</p>
-                    </div>
-                </div>
-                <div class="row border-top border-3 py-3">
-                    <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-4">
-                        <img src="../foto/foto_DjAnCb5Fqa.jpg" alt="" class="img-curso">
-                    </div>
-
-                    <div class="col-lg-7 col-md-7 col-5 d-flex align-items-center">
-                        <p class=" fs-5 text-secondary text-start">NOME DO CURSO</p>
-                    </div>
-                </div>
+                
                 <!-- MODAL ADICIONAR CURSO -->
                 <div class="modal fade" id="modalCadastrarCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">

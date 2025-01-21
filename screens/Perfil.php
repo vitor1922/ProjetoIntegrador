@@ -37,7 +37,6 @@ if (!$logado) {
 $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
 $select = $conexao->prepare($sql);
 $select->bindParam(':id_usuario', $id_usuario);
-
 if ($select->execute()) {
     $login = $select->fetch(PDO::FETCH_ASSOC);
 }

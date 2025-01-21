@@ -53,7 +53,7 @@ $logado = $_SESSION['logado'] ?? FALSE;
             <div class="mb-3 mt-2 col-12 col-md-7" id="preferenceTextarea">
               <label for="exampleFormControlTextarea1" class="form-label">Quais tipos de produtos? <i>(Máximo de 300 caracteres)</i></label>
               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="300"></textarea>
-            </div>
+            </div> 
           </div>
 
           <p class="card-text ms-4 fs-5">Você possui algum tipo de preferência de como seu atendimento vai ser realizado?</p>
