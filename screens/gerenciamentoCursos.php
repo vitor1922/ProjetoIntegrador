@@ -71,12 +71,12 @@ if ($select->execute()) {
                     <div class="row mb-3">
                         <div class=" col-6 d-flex align-items-center ">
                             <input type="text" class="col-10 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" value="PESQUISAR">
-                            <button type="button" class="ms-2 btn btn-primary rounded btn-plus" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">+</button>
+                            <button type="button" class="ms-2 btn btn-primary bg-azul-senac rounded btn-plus" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">+</button>
                         </div>
                     </div>
                 </div>
                 <?php foreach($cursos as $curso){?>
-                <a href="./infoCurso.php?id=<?=$curso["id_curso"]?>" class="row border-top border-3 py-3">
+                <a href="./infoCurso.php?id=<?=$curso["id_curso"]?>" class="row border border-1 py-3">
                     <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
                         <img src="../foto/<?=$curso["imagem"]?>" alt="" class="img-curso">
                     </div>

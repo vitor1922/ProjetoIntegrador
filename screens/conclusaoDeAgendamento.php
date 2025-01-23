@@ -13,7 +13,6 @@ $_SESSION['mensagem'] = NULL;
 $logado =  $_SESSION['logado'] ?? FALSE;
 $nome = $_SESSION['nome'] ?? "";
 $id_usuario = $_SESSION['id_usuario'] ?? "";
-$login = NULL;
 
 if (!$logado) {
   header("Location: " . BASE_URL . "screens/signUp.php");
@@ -28,11 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
   if ($select->execute()) {
     $login = $select->fetch(PDO::FETCH_ASSOC);
   }
-}
+} 
 
-echo ("<pre>");
-var_dump($data);
-die;
+// echo ("<pre>");
+// var_dump($login);
+// die;
 
 
 unset($conexao);
@@ -83,7 +82,7 @@ unset($conexao);
                     <h5 class="card-title fs-6 text-start">Lavagem de cabelo</h5>
                   </div>
                   <div class="col-6">
-                    <h5 class="card-title fs-6 text-end"><?= $agendamento["data"] ?></h5>
+                    <h5 class="card-title fs-6 text-end"><?= $login["data"]?></h5>
                   </div>
                 </div>
               </div>

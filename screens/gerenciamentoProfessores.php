@@ -71,7 +71,9 @@ if ($selectProfessores->execute()) {
                     <div class="row mb-3">
                         <div class=" col-6 d-flex align-items-center ">
                             <input type="text" class="col-10 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" value="PESQUISAR">
+                            <?php if($perfil === "admin"){?>
                             <button type="button" class="ms-2 btn btn-primary rounded btn-plus" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">+</button>
+                            <?php }?>
                         </div>
                     </div>
                 </div>
@@ -98,9 +100,9 @@ if ($selectProfessores->execute()) {
                                 <div class="d-flex justify-content-end mb-3">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <form action="../src/logicos/adicionarCurso.php" method="POST" enctype="multipart/form-data">
+                                <form action="../src/logicos/adicionarProfessor.php" method="POST" enctype="multipart/form-data">
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold">Nome do Curso</label>
+                                        <label class="form-label fw-bold">Nome do Professor</label>
                                         <input type="text" class="form-control" name="txtCurso" required>
                                     </div>
                                     <div class="mb-3">

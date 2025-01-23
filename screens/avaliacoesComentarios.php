@@ -1,4 +1,4 @@
-<?php  
+<?php 
 session_start();
 include_once("../constantes.php");
 include_once('../data/conexao.php');
@@ -15,41 +15,73 @@ if (!$logado) {
     exit;
 }
 
-// Adicionar avaliação (apenas para clientes)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comentario'], $_POST['nivel_de_avaliacao']) && $perfil === 'cliente') {
-    $comentario = trim($_POST['comentario']);
-    $nivel_de_avaliacao = $_POST['nivel_de_avaliacao']; // Nota de 1 a 5
-    $id_usuario = $_SESSION['id_usuario']; // ID do usuário logado
-    $id_turma = $_POST['id_turma'] ?? null;
-    $id_agendamento = $_POST['id_agendamento'] ?? null;
-    $id_aluno = $_POST['id_aluno'] ?? null;
-
-    if (!empty($comentario) && in_array($nivel_de_avaliacao, [1, 2, 3, 4, 5])) {
-        // Inserir avaliação na tabela
-        $sqlAvaliacao = "INSERT INTO avaliacao (nivel_de_avaliacao, comentario, id_usuario, id_turma, id_agendamento, id_aluno) 
-                         VALUES (:nivel_de_avaliacao, :comentario, :id_usuario, :id_turma, :id_agendamento, :id_aluno)";
-        $stmtAvaliacao = $conexao->prepare($sqlAvaliacao);
-        $stmtAvaliacao->bindParam(':nivel_de_avaliacao', $nivel_de_avaliacao);
-        $stmtAvaliacao->bindParam(':comentario', $comentario);
-        $stmtAvaliacao->bindParam(':id_usuario', $id_usuario);
-        $stmtAvaliacao->bindParam(':id_turma', $id_turma);
-        $stmtAvaliacao->bindParam(':id_agendamento', $id_agendamento);
-        $stmtAvaliacao->bindParam(':id_aluno', $id_aluno);
-        $stmtAvaliacao->execute();
-    }
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
+// Recuperar avaliações, comentários e turmas
+try {
+    $sqlAvaliacoes = "SELECT a.nivel_de_avaliacao, a.comentario, a.id_usuario, 
+                             u.nome, u.foto, t.numero_da_turma, t.data_inicio, t.data_final, a.id_avaliacao
+                      FROM avaliacao a
+                      JOIN usuario u ON a.id_usuario = u.id_usuario
+                      LEFT JOIN turma t ON u.id_usuario = t.id_usuario
+                      ORDER BY a.id_avaliacao DESC";  
+    $stmtAvaliacoes = $conexao->prepare($sqlAvaliacoes);
+    $stmtAvaliacoes->execute();
+    $avaliacoes = $stmtAvaliacoes->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Erro ao recuperar avaliações: " . $e->getMessage());
 }
 
-// Recuperar as avaliações
-$sqlAvaliacoes = "SELECT a.nivel_de_avaliacao, a.comentario, a.data_avaliacao, u.nome, u.foto_perfil
-                  FROM avaliacao a
-                  JOIN usuarios u ON a.id_usuario = u.id_usuario
-                  ORDER BY a.data_avaliacao DESC";
-$stmtAvaliacoes = $conexao->prepare($sqlAvaliacoes);
-$stmtAvaliacoes->execute();
+// Processar a avaliação enviada
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['avaliacao'])) {
+    $nivelAvaliacao = $_POST['nivel_de_avaliacao'];
+    $comentario = $_POST['comentario'];
+    $idUsuario = $_SESSION['id_usuario']; // ID do usuário logado
 
-$avaliacoes = $stmtAvaliacoes->fetchAll(PDO::FETCH_ASSOC);
+    try {
+        $sqlInserirAvaliacao = "INSERT INTO avaliacao (nivel_de_avaliacao, comentario, id_usuario)
+                                VALUES (:nivel_de_avaliacao, :comentario, :id_usuario)";
+        $stmt = $conexao->prepare($sqlInserirAvaliacao);
+        $stmt->bindParam(':nivel_de_avaliacao', $nivelAvaliacao);
+        $stmt->bindParam(':comentario', $comentario);
+        $stmt->bindParam(':id_usuario', $idUsuario);
+        $stmt->execute();
+
+        // Redireciona para a mesma página para evitar envio duplicado do formulário
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    } catch (PDOException $e) {
+        die("Erro ao salvar avaliação: " . $e->getMessage());
+    }
+}
+
+// Deletar comentário
+if (isset($_GET['deletar'])) {
+    $idComentario = $_GET['deletar'];
+
+    // Verifica se o usuário logado é o dono do comentário ou administrador
+    try {
+        $sqlComentario = "SELECT id_usuario FROM avaliacao WHERE id_avaliacao = :id_avaliacao";
+        $stmtComentario = $conexao->prepare($sqlComentario);
+        $stmtComentario->bindParam(':id_avaliacao', $idComentario);
+        $stmtComentario->execute();
+        $comentario = $stmtComentario->fetch(PDO::FETCH_ASSOC);
+
+        if ($comentario) {
+            // Se for o dono do comentário ou o administrador
+            if ($comentario['id_usuario'] == $_SESSION['id_usuario'] || $_SESSION['perfil'] == 'admin') {
+                $sqlDeletar = "DELETE FROM avaliacao WHERE id_avaliacao = :id_avaliacao";
+                $stmtDeletar = $conexao->prepare($sqlDeletar);
+                $stmtDeletar->bindParam(':id_avaliacao', $idComentario);
+                $stmtDeletar->execute();
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit;
+            } else {
+                echo "<script>alert('Você não tem permissão para excluir este comentário.');</script>";
+            }
+        }
+    } catch (PDOException $e) {
+        die("Erro ao verificar comentário: " . $e->getMessage());
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -62,108 +94,184 @@ $avaliacoes = $stmtAvaliacoes->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../assets/css/style.css">
     <title>Avaliações</title>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+        .imgPerfil {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ddd;
         }
-        footer {
-            margin-top: auto;
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            position: relative;
         }
         .stars {
+            font-size: 1.5rem;
             color: #FFD700;
-            font-size: 1.5em;
         }
         .star {
-            cursor: pointer;
+            font-size: 1.5rem;
         }
-        .avaliacao-info {
+        .comentario-info {
             display: flex;
             align-items: center;
         }
-        .avaliacao-info img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
+        .comentario-info p {
+            margin-bottom: 0;
+        }
+        .turma-info {
+            font-size: 0.9rem;
+            color: gray;
+        }
+        .ordenacao {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .ordenacao a {
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .ordenacao a:hover {
+            text-decoration: underline;
+        }
+        .ordenacao .btn {
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 5px 15px;
+            border: 1px solid #007bff;
+            color: #007bff;
+            background-color: transparent;
+            border-radius: 4px;
+        }
+        .ordenacao .btn:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .btn-danger {
+            background-color: #d9534f;
+            border-color: #d43f00;
+        }
+        .btn-danger:hover {
+            background-color: #c9302c;
+            border-color: #ac2925;
+        }
+        .btn-danger.btn-sm {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+        }
+        .modal-dialog {
+            max-width: 400px;
+        }
+        /* Estilo para o ícone da lixeira */
+        .delete-icon {
+            position: absolute;
+            bottom: 10px;  /* Alinha no canto inferior */
+            right: 10px;   /* Alinha no canto direito */
+            font-size: 1.5rem;
+            color: #000;   /* Cor preta */
+            cursor: pointer;
         }
     </style>
+    <script>
+        // Função para abrir o modal de confirmação
+        function confirmarExclusao(url) {
+            const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+            document.getElementById('confirmDelete').onclick = function() {
+                window.location.href = url;
+            };
+            modal.show();
+        }
+    </script>
 </head>
 <body>
 <?php include_once("./header.php"); ?>
 
 <div class="container mt-5">
     <h2 class="text-center text-warning">Avaliações</h2>
-    
-    <!-- Formulário para adicionar avaliação (somente clientes) -->
-    <?php if ($perfil === 'cliente'): ?>
-        <form method="POST" class="mt-4">
+
+    <!-- Formulário de avaliação -->
+    <div class="mt-4">
+        <h4>Deixe sua avaliação:</h4>
+        <form action="" method="POST">
             <div class="mb-3">
-                <label for="comentario" class="form-label">Deixe sua avaliação:</label>
-                <textarea class="form-control" name="comentario" id="comentario" rows="3" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Nível de Avaliação:</label>
-                <div id="stars" class="stars">
-                    <!-- Avaliação por estrelas -->
-                    <span class="star" data-value="1">&#9733;</span>
-                    <span class="star" data-value="2">&#9733;</span>
-                    <span class="star" data-value="3">&#9733;</span>
-                    <span class="star" data-value="4">&#9733;</span>
-                    <span class="star" data-value="5">&#9733;</span>
+                <label for="nivel_de_avaliacao" class="form-label">Avaliação</label>
+                <div id="nivel_de_avaliacao" class="d-flex">
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <input type="radio" class="btn-check" name="nivel_de_avaliacao" id="star<?= $i ?>" value="<?= $i ?>" required>
+                        <label class="btn btn-outline-warning" for="star<?= $i ?>">&#9733;</label>
+                    <?php endfor; ?>
                 </div>
-                <input type="hidden" name="nivel_de_avaliacao" id="nivel_de_avaliacao" required>
             </div>
-            <button type="submit" class="btn btn-warning">Enviar</button>
+            <div class="mb-3">
+                <label for="comentario" class="form-label">Comentário</label>
+                <textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" name="avaliacao">Enviar Avaliação</button>
         </form>
-
-        <script>
-            // Lógica para selecionar as estrelas
-            const stars = document.querySelectorAll('.star');
-            const avaliacaoInput = document.getElementById('nivel_de_avaliacao');
-
-            stars.forEach(star => {
-                star.addEventListener('click', () => {
-                    const value = star.getAttribute('data-value');
-                    avaliacaoInput.value = value;
-
-                    // Atualiza a cor das estrelas
-                    stars.forEach(s => s.style.color = '#ccc');
-                    for (let i = 0; i < value; i++) {
-                        stars[i].style.color = '#FFD700'; // Cor de estrela dourada
-                    }
-                });
-            });
-        </script>
-    <?php endif; ?>
+    </div>
 
     <!-- Exibição de avaliações -->
-    <div class="mt-5">
+    <div class="mt-4">
         <?php if (!empty($avaliacoes)): ?>
             <?php foreach ($avaliacoes as $avaliacao): ?>
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="avaliacao-info">
-                            <img src="../uploads/<?= htmlspecialchars($avaliacao['foto_perfil']) ?>" alt="Foto de perfil">
-                            <h5 class="card-title"><?= htmlspecialchars($avaliacao['nome']) ?></h5>
+                <div class="card">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <a href="./perfilVer.php?id=<?= $avaliacao['id_usuario'] ?>">
+                            <?php if (!empty($avaliacao['foto']) && file_exists("../foto/" . $avaliacao['foto'])): ?>
+                                <img src="../foto/<?= htmlspecialchars($avaliacao['foto']) ?>" class="imgPerfil me-3" alt="Imagem de perfil">
+                            <?php else: ?>
+                                <img src="../assets/img/default-avatar.png" class="imgPerfil me-3" alt="Imagem de perfil padrão">
+                            <?php endif; ?> </a>
+                            <div>
+                                <p class="mb-0 fw-bold"><?= htmlspecialchars($avaliacao['nome']) ?></p>
+                                <p class="mb-0 turma-info">Turma: <?= htmlspecialchars($avaliacao['numero_da_turma']) ?> | Início: <?= htmlspecialchars($avaliacao['data_inicio']) ?> | Fim: <?= htmlspecialchars($avaliacao['data_final']) ?></p>
+                            </div>
                         </div>
-                        <p class="card-text"><?= htmlspecialchars($avaliacao['comentario']) ?></p>
-                        <p class="card-text">
-                            <small class="text-muted"><?= date('d/m/Y H:i', strtotime($avaliacao['data_avaliacao'])) ?></small>
-                        </p>
-
                         <div class="stars">
                             <?php for ($i = 1; $i <= 5; $i++): ?>
                                 <span class="star" style="color: <?= $i <= $avaliacao['nivel_de_avaliacao'] ? '#FFD700' : '#ccc' ?>;">&#9733;</span>
                             <?php endfor; ?>
+                            <span class="ms-2"><?= number_format($avaliacao['nivel_de_avaliacao'], 1) ?></span>
                         </div>
-
                     </div>
+                    <p class="mt-3 text-muted"><?= htmlspecialchars($avaliacao['comentario']) ?></p>
+
+                    <?php if ($_SESSION['id_usuario'] == $avaliacao['id_usuario'] || $_SESSION['perfil'] == 'admin'): ?>
+                        <i class="bi bi-trash delete-icon" onclick="confirmarExclusao('?deletar=<?= $avaliacao['id_avaliacao'] ?>')"></i>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
             <p class="text-center">Nenhuma avaliação disponível.</p>
         <?php endif; ?>
+    </div>
+</div>
+
+<!-- Modal de confirmação -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Você tem certeza que deseja excluir este comentário? Esta ação não pode ser desfeita.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="confirmDelete" class="btn btn-danger">Excluir</button>
+            </div>
+        </div>
     </div>
 </div>
 

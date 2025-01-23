@@ -97,12 +97,12 @@ unset($conexao);
                     <div class="">
                     <input type="text" name="imgName" value="<?= $login["foto"] ?>" hidden>
                     </div>
-                    <div class="card-body d-flex flex-column mt-5">
+                    <div class="card-body d-flex flex-column mt-2">
                         <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
                             value="<?= $login['id_usuario'] ?? '' ?>" hidden>
                         <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
-                        <div class="col mt-5">
-                            <div class="mb-3">
+                        <div class="col mt-1">
+                            <div class="mb-1">
                                 <div class="nomePerfil p-2">
                                     <h6 class="mt-1 fw-bold laranja-senac mx-2">Nome Atual:</h6>
                                     <h5 class="card-title d-flex mx-1"><?= $login['nome'] ?? '' ?></h5> <br>
@@ -115,7 +115,7 @@ unset($conexao);
                             <div class="nomePerfil">
                             <div class="mx-3 mb-3 mt-1 fw-bold">
                                 <label for="bio" class="form-label fw-bold azul-senac">Bio</label>
-                                <textarea class="form-control p-2" name="txtBiografia" rows="1"><?= $login['biografia'] ?? '' ?></textarea>
+                                <textarea class="form-control p-2" name="txtBiografia" rows="3"><?= $login['biografia'] ?? '' ?></textarea>
                                 </div>
                             </div>
                         </div>

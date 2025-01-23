@@ -1,24 +1,24 @@
-<!-- CRIADOR: MALINSKI -->
-
 <?php
-#inicia as variaveis de sessão
+# Inicia as variáveis de sessão
 include('../constantes.php');
 include_once("../data/conexao.php");
 
-
 session_start();
+$logado = $_SESSION['logado'] ?? FALSE;
 $perfil = $_SESSION['perfil'] ?? "cliente";
-$logado = $_SESSION['logado'] ?? NULL;
-$mensagem = $_SESSION['mensagem'] ?? NULL;
-$perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
-$_SESSION['mensagem'] = NULL;
-
-$logado =  $_SESSION['logado'] ?? FALSE;
-$nome = $_SESSION['nome'] ?? "";
 $id_usuario = $_SESSION['id_usuario'] ?? "";
+$nome = $_SESSION['nome'] ?? "";
 
-// $perfil = "cliente";
-// border colors of each user role 
+// Redireciona para a página de login se não estiver logado
+if (!$logado) {
+    header("Location: " . BASE_URL . "screens/signUp.php");
+    exit;
+}
+
+// Verifica se um ID foi passado pela URL
+$id_usuario = $_GET['id'] ?? $id_usuario_logado;
+
+// Define a borda do perfil com base no tipo de usuário
 if ($perfil == 'professor') {
     $estilo = "border border-success rounded-circle border border-3 m-2";
 } elseif ($perfil == 'aluno') {
@@ -29,22 +29,22 @@ if ($perfil == 'professor') {
     $estilo = "border border-danger rounded-circle border border-3 m-2";
 }
 
-if (!$logado) {
-    header("Location: " . BASE_URL . "screens/signUp.php");
-    exit;
-}
-// Mostrar dados do usuario logado
+// Busca os dados do usuário com base no ID
 $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
 $select = $conexao->prepare($sql);
 $select->bindParam(':id_usuario', $id_usuario);
+
 if ($select->execute()) {
-    $login = $select->fetch(PDO::FETCH_ASSOC);
+    $usuario = $select->fetch(PDO::FETCH_ASSOC);
+} else {
+    $usuario = null; // Caso o ID seja inválido ou não encontrado
 }
 
-//  echo("<pre>");
-//  var_dump($login);
-//  die;
-
+// Verifica se o usuário foi encontrado
+if (!$usuario) {
+    echo "Usuário não encontrado.";
+    exit;
+}
 
 unset($conexao);
 ?>
@@ -72,29 +72,22 @@ unset($conexao);
         <div class="container d-flex justify-content-center mt-5 align-content-center ">
             <div class=" card d-flex justify-content-center border-3 shadow-lg col-lg-12">
                 <div class="headerPerfil d-flex justify-content-center align-items-center">
-                    <div class="profile-background <?= $estilo ?>">
+                    <div class="profile-background">
                         <div class="d-flex justify-content-start mt-5">
-                            <img src="../foto/<?= $login['foto']?>" class="imgPerfil mt-4 bordaa" name="foto" alt="Imagem de perfil">
+                            <img src="../foto/<?= $usuario['foto']?>" class="imgPerfil mt-4 bordaa  <?= $estilo ?>" name="foto" alt="Imagem de perfil">
                             
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body d-flex justify-content-center flex-column mt-5">
-                    <h5 class="card-title d-flex justify-content-center fw-bold "><?= $login["nome"] ?></h5> <br>
-                    <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
+                    <h5 class="card-title d-flex justify-content-center fw-bold "><?= $usuario["nome"] ?></h5> <br>
+                    <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"><?= $usuario["perfil"] ?></h6> <br>
                 </div>
 
                 <ul class="list-group list-group-flush">
-                    <p class="list-group-item"><?= $login["biografia"] ?></p>
+                    <p class="list-group-item"><?= $usuario["biografia"] ?></p>
                 </ul>
-
-                <div class="card-body">
-                    <a href="./editarPerfil.php" class="btn border shadow-sm fs-4 fw-bold azul-senac border-3 rounded-4 d-flex justify-content-center mb-3">Editar Perfil</a>
-                    <a href="./configuracoes.php" class="link-offset-2 link-underline link-underline-opacity-0">
-                        <div class="btn text-light shadow-sm fs-4 fw-bold btn-azul-senac border-3 rounded-4 d-flex justify-content-center " type="button" href="">Configurações</div>
-                    </a>
-                </div>
             </div>
         </div>
     </main>

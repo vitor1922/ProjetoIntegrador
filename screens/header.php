@@ -1,4 +1,5 @@
 
+
 <header class="">
     <div class=" container-fluid">
         <div class="row header-vii">
@@ -25,21 +26,21 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= BASE_URL ?>index.php#sobre">Sobre</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" href="<?= BASE_URL ?>screens/verTodosServicos.php">Serviços</a>
+                                </li> -->
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= BASE_URL ?>screens/agendamento.php">Agendar Horário</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?=BASE_URL?>screens/agendamento.php">Agendar Horário</a>
+                                    <a class="nav-link" href="<?= BASE_URL ?>index.php#contato">Fale Conosco</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?=BASE_URL?>index.php#contato">Fale Conosco</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<?=BASE_URL?>screens/blog.php">Blog</a>
+                                    <a class="nav-link" href="<?= BASE_URL ?>screens/blog.php">Blog</a>
                                 </li>
                                 <?php if ($perfil === 'admin' || $perfil === "professor") { ?>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?=BASE_URL?>screens/areaInstrutor.php">Área do Instrutor</a>
+                                        <a class="nav-link" href="<?= BASE_URL ?>screens/areaInstrutor.php">Área do Instrutor</a>
                                     </li>
                                 <?php } ?>
 
@@ -52,25 +53,21 @@
                 </div>
                 <div class="nav-item dropdown">
                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle fs-5"><?= $perfil ?></i>
+                        <i class="bi bi-person-circle fs-5">Olá! <?= $perfil ?></i>
                     </a>
-                    
 
 
-                        <!-- <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown button
-                            </button> -->
-                        <ul class="dropdown-menu dropdown-menu-end bg-white">
+                    <ul class="dropdown-menu dropdown-menu-end bg-white">
                         <?php if ($logado) { ?>
                             <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/Perfil.php">Perfil</a></li>
                             <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/configuracoes.php">Configurações</a></li>
                             <li><a class="dropdown-item" href="<?= BASE_URL ?>src/logicos/logOut.php">Logout</a></li>
-                        <?php }else{?>
+                        <?php } else { ?>
                             <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/signUp.php">Login</a></li>
-                        <?php }?>
-                        </ul>
+                        <?php } ?>
+                    </ul>
 
-                    
+
                 </div>
             </div>
         </nav>

@@ -35,7 +35,7 @@ $defaultResults = [];
 $filter = $_GET['filter'] ?? null;
 
 if ($searchUser) {
-    $search = "SELECT nome, cpf, perfil FROM usuario WHERE nome REGEXP :searchUser";
+    $search = "SELECT * FROM usuario WHERE nome REGEXP :searchUser";
     $select = $conexao->prepare($search);
     $select->bindParam(':searchUser', $searchUser);
 
@@ -44,7 +44,7 @@ if ($searchUser) {
     }
 }
 
-$defaultQuery = "SELECT nome, cpf, perfil FROM usuario";
+$defaultQuery = "SELECT * FROM usuario";
 if ($filter) {
     $defaultQuery .= " WHERE perfil = :filter";
 }
@@ -57,6 +57,14 @@ if ($filter) {
 if ($defaultStmt->execute()) {
     $defaultResults = $defaultStmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function formatCPF($cpf)
+{
+    $cpf = preg_replace('/[^0-9]/', '', $cpf);
+    return preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $cpf);
+}
+
+unset($conexao);
 
 ?>
 
@@ -108,19 +116,19 @@ if ($defaultStmt->execute()) {
                         <div class="col"></div>
                         <div class="col">
                             <p>
-                                <a href="?filter=admin" class="btn btn-danger rounded-circle">&nbsp;</a>
+                                <a href="?filter=admin" class="badge rounded-circle bg-danger text-decoration-none">&nbsp;</a>
                                 <strong class="text-danger">Admin</strong>
                             </p>
                             <p>
-                                <a href="?filter=professor" class="btn btn-success rounded-circle">&nbsp;</a>
+                                <a href="?filter=professor" class="badge rounded-circle bg-success text-decoration-none">&nbsp;</a>
                                 <strong class="text-success">Professor</strong>
                             </p>
                             <p>
-                                <a href="?filter=aluno" class="btn btn-primary rounded-circle">&nbsp;</a>
+                                <a href="?filter=aluno" class="badge rounded-circle bg-primary text-decoration-none">&nbsp;</a>
                                 <strong class="text-primary">Aluno</strong>
                             </p>
                             <p>
-                                <a href="?filter=cliente" class="btn btn-warning rounded-circle">&nbsp;</a>
+                                <a href="?filter=cliente" class="badge rounded-circle bg-warning text-decoration-none">&nbsp;</a>
                                 <strong class="text-warning">Usuário</strong>
                             </p>
                         </div>
@@ -128,6 +136,14 @@ if ($defaultStmt->execute()) {
                 </div>
             </div>
         </div>
+
+        <?php if ($searchUser && empty($searchResults)): ?>
+            <div class="container mt-3 d-flex justify-content-center">
+                <div class="alert alert-warning" role="alert">
+                    Nenhum usuário encontrado com o nome "<?= htmlspecialchars($searchUser) ?>".
+                </div>
+            </div>
+        <?php endif; ?>
 
         <?php if (!empty($searchResults)): ?>
             <div class="container mt-3">
@@ -144,7 +160,16 @@ if ($defaultStmt->execute()) {
                     ?>
                     <div class="card p-3">
                         <div class="d-flex justify-content-between align-items-center">
-                            <p class="mb-0"><i class="bi-person-circle"></i> <?= htmlspecialchars($result["nome"]) . " • " . htmlspecialchars($result["cpf"]) ?></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <?php if (!empty($result['foto']) && file_exists("../foto/" . $result['foto'])): ?>
+                                    <img src="../foto/<?= htmlspecialchars($result['foto']) ?>" alt="Foto de <?= htmlspecialchars($result['nome']) ?>" class="rounded-circle" width="50" height="50">
+                                <?php else: ?>
+                                    <i class="bi bi-person-circle" style="font-size: 40px;"></i>
+                                <?php endif; ?>
+                                <p class="mb-0 ms-3">
+                                    <?= htmlspecialchars($result["nome"]) . " • " . htmlspecialchars(formatCPF($result["cpf"])) ?>
+                                </p>
+                            </div>
                             <span class="<?= $badgeClass ?>">&nbsp;</span>
                         </div>
                     </div>
@@ -153,10 +178,10 @@ if ($defaultStmt->execute()) {
         <?php endif; ?>
 
         <div class="container mt-3">
-            <h2>Usuários</h2>
+            <h2></h2>
             <?php foreach ($defaultResults as $result): ?>
                 <?php
-                
+
                 $badgeClass = match ($result['perfil']) {
                     'professor' => "badge rounded-circle bg-success",
                     'aluno' => "badge rounded-circle bg-primary",
@@ -165,12 +190,21 @@ if ($defaultStmt->execute()) {
                     default => "badge rounded-circle bg-secondary",
                 };
                 ?>
-                <div class="card p-3">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="mb-0"><i class="bi-person-circle"></i> <?= htmlspecialchars($result["nome"]) . " • " . htmlspecialchars($result["cpf"]) ?></p>
-                        <span class="<?= $badgeClass ?>">&nbsp;</span>
+                    <div class="card p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <?php if (!empty($result['foto']) && file_exists("../foto/" . $result['foto'])): ?>
+                                    <img src="../foto/<?= htmlspecialchars($result['foto']) ?>" alt="Foto de <?= htmlspecialchars($result['nome']) ?>" class="rounded-circle" width="50" height="50">
+                                <?php else: ?>
+                                    <i class="bi bi-person-circle" style="font-size: 40px;"></i>
+                                <?php endif; ?>
+                                <p class="mb-0 ms-3">
+                                    <?= htmlspecialchars($result["nome"]) . " • " . htmlspecialchars(formatCPF($result["cpf"])) ?>
+                                </p>
+                            </div>
+                            <span class="<?= $badgeClass ?>">&nbsp;</span>
+                        </div>
                     </div>
-                </div>
             <?php endforeach; ?>
         </div>
 

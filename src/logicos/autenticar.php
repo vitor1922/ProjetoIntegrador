@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 if ($login['email'] === $email && password_verify($senha, $login["senha"])) { #password_verify($senha, $login["senha"])
                     $_SESSION['logado'] = TRUE;
                     $_SESSION['id_usuario'] = $login['id_usuario'];
-                    $_SESSION['nomeUser'] = $login['nome'];
+                    $_SESSION['nome'] = $login['nome'];
                     $_SESSION['perfil'] = $login['perfil'];
                     
 

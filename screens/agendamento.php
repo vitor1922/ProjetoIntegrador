@@ -6,6 +6,14 @@ include_once('../data/conexao.php');
 $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
 
+
+$sql = "SELECT * FROM agendamento ORDER BY id_agendamento DESC";
+$select = $conexao->prepare($sql);
+ 
+if ($select->execute()) {
+    $postagens = $select->fetchAll(PDO::FETCH_ASSOC);
+}
+unset($conexao);
 ?>
 
 <!DOCTYPE html>

@@ -1,6 +1,6 @@
 <?php
-// include_once("./data/conexao.php");
-// include_once("./constantes.php");
+include_once("./data/conexao.php");
+include_once("./constantes.php");
 // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 //     $email = $_POST['email'];
 

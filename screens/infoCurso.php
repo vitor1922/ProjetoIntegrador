@@ -1,9 +1,17 @@
 <?php
-session_start();
+
+
+
 include_once("../constantes.php");
 include_once('../data/conexao.php');
+
+session_start();
+
 $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+$perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
+$_SESSION['mensagem'] = NULL;
 
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
@@ -14,20 +22,17 @@ if (!$logado) {
     }
 }
 
-
-
-
 $cursoId = $_GET["id"];
 
-$sqlCurso = "SELECT * FROM curso WHERE id_curso = :id_curso";
-$selectCurso = $conexao->prepare($sqlCurso);
-$selectCurso->bindParam(":id_curso", $cursoId);
-if ($selectCurso->execute()) {
-    $curso = $selectCurso->fetch(PDO::FETCH_ASSOC);
+$sqlCursos = "SELECT * FROM curso WHERE id_curso = :id_curso";
+$selectCursos = $conexao->prepare($sqlCursos);
+$selectCursos->bindParam(":id_curso", $cursoId);
+if ($selectCursos->execute()) {
+    $curso = $selectCursos->fetch(PDO::FETCH_ASSOC);
 }
 $sqlTurmas = "SELECT * FROM turma WHERE id_curso = :id_curso";
-$selectTurmas = $conexao->prepare("$sqlTurmas");
-$selectTurmas->bindParam(":id_curso", $cursoId);
+$selectTurmas = $conexao->prepare($sqlTurmas);
+$selectTurmas->bindParam(":id_curso", $id_curso);
 if ($selectTurmas->execute()) {
 
     $turmas = $selectTurmas->fetchAll(PDO::FETCH_ASSOC);
@@ -45,7 +50,14 @@ $selectAlunos = $conexao->prepare($sqlAlunos);
 if ($selectAlunos->execute()) {
     $alunos = $selectAlunos->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// echo("<pre>");
+ var_dump($curso);
+//  die;
+
 unset($conexao);
+
+$paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoCursos.php";
 
 ?>
 
@@ -72,7 +84,7 @@ unset($conexao);
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
-                        <a href="./gerenciamentoCursos.php"><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
+                        <a href="<?=$paginaAnterior?>"><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
                         <button class="btn border fw-bold azul-senac me-5 ">Editar</button>
                     </div>
                 </div>
@@ -90,7 +102,7 @@ unset($conexao);
                             <h3 class="text-center fs-4">Horários de Atendimento</h3>
                         </div>
                         <div class="col-1">
-                            <button class=" btn "><i class="bi bi-plus-square-fill fs-2 azul-senac "></i></button>
+                        <button class="btn " data-bs-toggle="modal" data-bs-target="#modalAdicionarHorario"><i class="bi bi-plus-square-fill fs-2 azul-senac"></i></button>
                         </div>
                     </div>
                     <div class="row">
@@ -109,7 +121,7 @@ unset($conexao);
 
                         </div>
                         <div class="col-1 offset-sm-0 offset-3 d-flex align-items-end">
-                            <button class="btn " data-bs-toggle="modal" data-bs-target="#modalCadastrarTurma"><i class="bi bi-plus-square-fill fs-2 azul-senac"></i></button>
+                            <button class="btn " data-bs-toggle="modal" data-bs-target="#modalAdicionarTurma"><i class="bi bi-plus-square-fill fs-2 azul-senac"></i></button>
                         </div>
 
                         <div class="col-sm-6 d-grid align-items-center">
@@ -159,8 +171,8 @@ unset($conexao);
 
 
 
-                <!-- MODAL ADICIONAR CURSO -->
-                <div class="modal fade" id="modalCadastrarTurma" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <!-- MODAL ADICIONAR TURMA -->
+                <div class="modal fade" id="modalAdicionarTurma" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -192,6 +204,38 @@ unset($conexao);
                     </div>
                 </div>
 
+                <!-- MODAL ADICIONAR HORARIO -->
+                <div class="modal fade" id="modalAdicionarHorario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="d-flex justify-content-end mb-3">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form action="../src/logicos/adicionarHorario.php" method="POST" >
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Data</label>
+                                        <input type="date" class="form-control" name="txtData" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold" >Horario</label>
+                                        <input type="time" class="form-control" name="txtHorario" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold" >Vagas</label>
+                                        <input type="number" class="form-control" name="txtVagas" min="0" required>
+                                    </div>
+                                    <input type="text" value="<?=$cursoId?>" name="txtCurso" hidden>
+                                    
+
+                                    <div class="mb-3 d-flex justify-content-center">
+                                        <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </main>
