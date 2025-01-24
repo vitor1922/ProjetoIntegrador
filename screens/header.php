@@ -1,4 +1,8 @@
+<?php  
+$nomeCompleto = $nome;
+$primeiroNome = explode(" ", $nomeCompleto)[0];
 
+?>
 
 <header class="">
     <div class=" container-fluid">
@@ -53,7 +57,8 @@
                 </div>
                 <div class="nav-item dropdown">
                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle fs-5"><?= $nome?></i>
+                        <i class="bi bi-person-circle fs-5"><?=$primeiroNome?></i>
+                        
                     </a>
 
 

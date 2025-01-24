@@ -106,9 +106,10 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoC
                         </div>
                     </div>
                     <?php foreach($horarios as $horario){?>
+                        <?php $data = date('d/m/Y', strtotime($horario["data"]))?>
                     <div class="row">
                         <div class="offset-sm-4 offset-2 col-sm-3 col-7 d-flex justify-content-center align-items-center">
-                            <p class="text-center my-0 py-0"><?=?>seg - 17:00 até 18:30</p>
+                            <p class="text-center my-0 py-0"><?=$data?> - <?=$horario["hora"]?> - /<?=$horario["vagas"]?> vagas</p>
                         </div>
                         <div class=" col-1 d-flex justify-content-start">
                             <button class=" btn"><i class="bi bi-ban text-danger"></i></button>
