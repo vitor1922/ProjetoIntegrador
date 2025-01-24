@@ -32,17 +32,17 @@ if ($selectCursos->execute()) {
 }
 $sqlTurmas = "SELECT * FROM turma WHERE id_curso = :id_curso";
 $selectTurmas = $conexao->prepare($sqlTurmas);
-$selectTurmas->bindParam(":id_curso", $id_curso);
+$selectTurmas->bindParam(":id_curso", $cursoId);
 if ($selectTurmas->execute()) {
 
     $turmas = $selectTurmas->fetchAll(PDO::FETCH_ASSOC);
 }
-// $sqlHorarios = "SELECT * FROM horarios WHERE id_curso = :id_curso";
-// $selectHorarios = $conexao->prepare("$sqlHorarios");
-// $selectHorarios->bindParam(":id_curso", $cursoId);
-// if ($selectHorarios->execute()) {
-//     $sqlHorarios = $selectHorarios->fetchAll(PDO::FETCH_ASSOC);
-// }
+$sqlHorarios = "SELECT * FROM agenda WHERE id_curso = :id_curso";
+$selectHorarios = $conexao->prepare("$sqlHorarios");
+$selectHorarios->bindParam(":id_curso", $cursoId);
+if ($selectHorarios->execute()) {
+    $horarios = $selectHorarios->fetchAll(PDO::FETCH_ASSOC);
+}
 
 $cargo = "aluno";
 $sqlAlunos = "SELECT * FROM alunos";
@@ -52,7 +52,7 @@ if ($selectAlunos->execute()) {
 }
 
 // echo("<pre>");
- var_dump($curso);
+//  var_dump($turmas);
 //  die;
 
 unset($conexao);
@@ -105,14 +105,16 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoC
                         <button class="btn " data-bs-toggle="modal" data-bs-target="#modalAdicionarHorario"><i class="bi bi-plus-square-fill fs-2 azul-senac"></i></button>
                         </div>
                     </div>
+                    <?php foreach($horarios as $horario){?>
                     <div class="row">
                         <div class="offset-sm-4 offset-2 col-sm-3 col-7 d-flex justify-content-center align-items-center">
-                            <p class="text-center my-0 py-0">seg - 17:00 até 18:30</p>
+                            <p class="text-center my-0 py-0"><?=?>seg - 17:00 até 18:30</p>
                         </div>
                         <div class=" col-1 d-flex justify-content-start">
                             <button class=" btn"><i class="bi bi-ban text-danger"></i></button>
                         </div>
                     </div>
+                    <?php }?>
                 </div>
                 <div class="shadow-sm border py-3 ">
                     <div class="row">

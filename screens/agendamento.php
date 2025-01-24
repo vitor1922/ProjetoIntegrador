@@ -11,8 +11,9 @@ $sql = "SELECT * FROM agendamento ORDER BY id_agendamento DESC";
 $select = $conexao->prepare($sql);
  
 if ($select->execute()) {
-    $postagens = $select->fetchAll(PDO::FETCH_ASSOC);
+    $agendamento = $select->fetchAll(PDO::FETCH_ASSOC);
 }
+
 unset($conexao);
 ?>
 
@@ -65,10 +66,11 @@ unset($conexao);
                                 </div>
                             </div>
                             <div class="collapse" id="collapseExample1">
+                            <?php foreach ($agendamento as $hora) { ?>
                                 <div class="card card-body start-0 position-absolute w-100" >
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
-                                        <option value="1">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="1"><?= $hora ? $hora["data"] : "" ?></option>
                                         <option value="2">18/07/24 - 17:00 até 18:30</option>
                                         <option value="3">18/07/24 - 17:00 até 18:30</option>
                                         <option value="4">18/07/24 - 17:00 até 18:30</option>
@@ -81,6 +83,7 @@ unset($conexao);
                                         </div>
                                     </div>
                                 </div>
+                            <?php } ?>
                             </div>
                         </div>
                     </div>

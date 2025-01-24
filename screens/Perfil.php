@@ -20,13 +20,13 @@ $id_usuario = $_SESSION['id_usuario'] ?? "";
 // $perfil = "cliente";
 // border colors of each user role 
 if ($perfil == 'professor') {
-    $estilo = "border border-success rounded-circle border border-3 m-2";
+    $estilo = "border border-black bg-success";
 } elseif ($perfil == 'aluno') {
-    $estilo = "border-primary rounded-circle border border-3 m-2;";
+    $estilo = "border border-black bg-primary";
 } elseif ($perfil == 'cliente') {
-    $estilo = "border border-warning rounded-circle border border-3 m-2;";
+    $estilo = "border border-black bg-warning";
 } elseif ($perfil == 'admin') {
-    $estilo = "border border-danger rounded-circle border border-3 m-2";
+    $estilo = "border border-black bg-danger";
 }
 
 if (!$logado) {
@@ -73,8 +73,8 @@ unset($conexao);
             <div class=" card d-flex justify-content-center border-3 shadow-lg col-lg-12">
                 <div class="headerPerfil d-flex justify-content-center align-items-center">
                     <div class="profile-background <?= $estilo ?>">
-                        <div class="d-flex justify-content-start mt-5">
-                            <img src="../foto/<?= $login['foto']?>" class="imgPerfil mt-4 bordaa" name="foto" alt="Imagem de perfil">
+                        <div class="d-flex justify-content-start mt-5 ">
+                            <img src="../foto/<?= $login['foto']?>" class="imgPerfil mt-4 bordaa border border-black" name="foto" alt="Imagem de perfil">
                             
                         </div>
                     </div>

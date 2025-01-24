@@ -4,11 +4,15 @@ include('../constantes.php');
 include_once("../data/conexao.php");
 
 session_start();
-$logado = $_SESSION['logado'] ?? FALSE;
 $perfil = $_SESSION['perfil'] ?? "cliente";
-$id_usuario = $_SESSION['id_usuario'] ?? "";
-$nome = $_SESSION['nome'] ?? "";
+$logado = $_SESSION['logado'] ?? NULL;
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+$perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
+$_SESSION['mensagem'] = NULL;
 
+$logado = $_SESSION['logado'] ?? FALSE;
+$nome = $_SESSION['nome'] ?? "";
+$id_usuario = $_SESSION['id_usuario'] ?? "";
 // Redireciona para a página de login se não estiver logado
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
@@ -20,13 +24,13 @@ $id_usuario = $_GET['id'] ?? $id_usuario_logado;
 
 // Define a borda do perfil com base no tipo de usuário
 if ($perfil == 'professor') {
-    $estilo = "border border-success rounded-circle border border-3 m-2";
+    $estilo = "border border-black bg-success";
 } elseif ($perfil == 'aluno') {
-    $estilo = "border-primary rounded-circle border border-3 m-2;";
+    $estilo = "border border-black bg-primary";
 } elseif ($perfil == 'cliente') {
-    $estilo = "border border-warning rounded-circle border border-3 m-2;";
+    $estilo = "border border-black bg-warning";
 } elseif ($perfil == 'admin') {
-    $estilo = "border border-danger rounded-circle border border-3 m-2";
+    $estilo = "border border-black bg-danger";
 }
 
 // Busca os dados do usuário com base no ID
@@ -72,9 +76,9 @@ unset($conexao);
         <div class="container d-flex justify-content-center mt-5 align-content-center ">
             <div class=" card d-flex justify-content-center border-3 shadow-lg col-lg-12">
                 <div class="headerPerfil d-flex justify-content-center align-items-center">
-                    <div class="profile-background">
+                    <div class="profile-background <?= $estilo ?>">
                         <div class="d-flex justify-content-start mt-5">
-                            <img src="../foto/<?= $usuario['foto']?>" class="imgPerfil mt-4 bordaa  <?= $estilo ?>" name="foto" alt="Imagem de perfil">
+                            <img src="../foto/<?= $usuario['foto']?>" class="imgPerfil mt-4 bordaa  " name="foto" alt="Imagem de perfil">
                             
                         </div>
                     </div>
