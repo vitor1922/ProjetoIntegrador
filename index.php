@@ -1,12 +1,10 @@
-<?php 
-
+<?php
 session_start();
 include_once("./constantes.php");
 include_once('./data/conexao.php');
 $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
-$nome = $_SESSION['nome'];
-
+$nome = $_SESSION['nome'] ?? NULL;
 ?>
 
 <!DOCTYPE html>
@@ -15,136 +13,107 @@ $nome = $_SESSION['nome'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Maxwel">
+    <meta name="author" content="Maxwel/malinski">
     <title>Salão de Beleza Senac</title>
-    <link rel="stylesheet" href="./src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 
-<body class="vh-100 d-flex flex-column justify-content-between">
+<body class="vh-100 d-flex flex-column">
     <div>
-        <?php
-        include_once("./screens/header.php");
-        ?>
+        <?php include_once("./screens/header.php"); ?>
 
-        <main class=" ">
-            <div class="container-fluid">
-                <div class="banner">
-                    <div class="row">
-                        <div class="col-12 blur">
-                            <img class="img-home-page" src="./assets/img/img_salao_de_beleza.png" alt="imagem de um salão de beleza ">
-                        </div>
-                    </div>
+        <main>
+            <!-- Imagem Parallax -->
+            <div class="bg-dark position-relative" style="background-image: url('./assets/img/woman-using-dryer-beard-man.jpg'); background-size: cover; background-attachment: fixed; background-position: center; height: 450px;">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white fs-2 fw-bold" style="background-color: rgba(0, 0, 0, 0.4);">
+                    <h1 class="animate__animated animate__backInDown">Bem-vindo ao Salão Senac</h1> <!-- TIRAR FOTO DO ESPAÇO  -->
                 </div>
-                <div class="home bg-gd-laranja-claro-senac pb-5 mt-5 px-5 ">
-                    <div class="row d-flex justify-content-center">
-                        <div class="  col-lg-4 col-md-12">
-                            <h1 class="mt-5 laranja-senac fw-bold text-start fs-1">Um Salão de Beleza Gratuito</h1>
-                            <p class="azul-senac">
-                                Um salão escola feito para criar profissionais capazes de atuar nas varias áreas dos cuidados com a beleza. Ganhe um tratamento gratuito e personalizado enquanto ajuda na criação de profissionais de qualidade.
-                            </p>
-                        </div>
-                        <div class=" offset-lg-1 col-lg-4 d-flex justify-content-center mt-lg-5 pt-lg-5">
-                            <img src="./assets/img/img_mulher_lavando_cabelo.png" alt="imagem de uma mulher lavando o cabelo" class="img-index">
-                        </div>
-                    </div>
+            </div>
+            <div class="bg-dark position-relative" style="background-image: url('./assets/img/woman-using-dryer-beard-man.jpg'); background-size: cover; background-attachment: fixed; background-position: center; height: 450px;">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white fs-2 fw-bold" style="background-color: rgba(0, 0, 0, 0.4);">
+                    <h1 class="animate__animated animate__backInRight">Um curso onde formam profissionais</h1>
                 </div>
-                <div id="sobre" class="sobre bg-gd-azul-claro-senac pb-5 mt-5 px-5">
-                    <div class="row d-flex flex-lg-row-reverse justify-content-center">
-                        <div class=" offset-lg-1 col-lg-4 col-md-12">
-                            <h1 class="mt-5 laranja-senac fw-bold text-start fs-1">Sobre Nós</h1>
-                            <p class="azul-senac">
-                                Desde 1946, o Serviço Nacional de Aprendizagem Comercial (SENAC) se destaca como o principal agente de educação profissional voltado para o Comércio de Bens, Serviços e Turismo no Brasil.
-                                Com o intuito de expandir suas iniciativas, o SENAC apresenta o Salão Escola, um projeto educacional dedicado à formação de profissionais capacitados nas diversas áreas de cuidados com a beleza. Oferecemos uma ampla gama de cursos, incluindo barbeiro, cabeleireiro, depilação, manicure e pedicure, entre outros. Para garantir a qualidade da formação, disponibilizamos atendimento gratuito e personalizado a clientes que desejam participar dessa experiência.
-                            </p>
-                        </div>
-                        <div class="col-lg-4 d-flex justify-content-center mt-lg-5 pt-lg-5">
-                            <img src="./assets/img/img_predio_senac.png" alt="foto do prédio do senac matinhos/caioba" class="img-index">
-                        </div>
-                    </div>
+            </div>
+            
+            <div class="bg-dark position-relative" style="background-image: url('./assets/img/woman-using-dryer-beard-man.jpg'); background-size: cover; background-attachment: fixed; background-position: center; height: 350px;">
+                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white fs-2 fw-bold" style="background-color: rgba(0, 0, 0, 0.6);">
+                    <h2 class="animate__animated animate__backInLeft">Conheça nossos Serviços </h2>
                 </div>
-                <div class="servicos bg-gd-laranja-claro-senac pb-5 mt-5">
-                    <div class="row d-flex justify-content-center">
+            </div>
+            <div id="carouselExample" class="carousel slide" style="height: 450px;">
+                <div class="carousel-inner h-100">
+                    <!-- Slide 1 -->
+                    <a href="verTodosServicos.php">
+                        <div class="carousel-item active h-100">
+                            <img src="./assets/img/side-view-man-getting-haircut.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Cabeleireiro">
+                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white fs-2 fw-bold" style="background-color: rgba(0, 0, 0, 0.6);">
+                    Cabeleleiro
+                </div>
+                        </div>
+                    </a>
+                    <!-- Slide 2 -->
+                    <a href="verTodosServicos.php">
+                        <div class="carousel-item h-100">
+                            <img src="./assets/img/female-bare-feet-hands-manicure-pedicure-concept.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Manicure e Pedicure">
+                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white fs-2 fw-bold" style="background-color: rgba(0, 0, 0, 0.6);">
+                                Pedicure
+                            </div>
+                        </div>
+                    </a>
+                    <!-- Slide 3 -->
+                    <a href="verTodosServicos.php">
+                        <div class="carousel-item h-100">
+                            <img src="./assets/img/close-up-man-hairstylist-indoors.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Barbeiro">
+                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white fs-2 fw-bold" style="background-color: rgba(0, 0, 0, 0.6);">
+                                Barbeiro
+                            </div>
+                        </div>
+                </div></a>
 
-                        <div class="card card-index border-0 rounded-0 shadow-sm p-0 mx-2 mb-1">
-                            <div class="card-body">
-                                <h5 class="card-title laranja-senac fw-bold">Cabeleireiro</h5>
-                            </div>
-                            <img src="./assets/img/img_cabeleireiro.png" class="card-img rounded-0" alt="...">
-                        </div>
-                        <div class="card card-index border-0 rounded-0 shadow-sm p-0 mx-2 mb-1">
-                            <div class="card-body">
-                                <h5 class="card-title laranja-senac fw-bold">Cabeleireiro</h5>
-                            </div>
-                            <img src="./assets/img/img_manicure_pedicure.png" class="card-img rounded-0" alt="...">
-                        </div>
-                        <div class="card card-index border-0 rounded-0 shadow-sm p-0 mx-2 mb-1">
-                            <div class="card-body">
-                                <h5 class="card-title laranja-senac fw-bold">Cabeleireiro</h5>
-                            </div>
-                            <img src="./assets/img/img_barbeiro.png" class="card-img rounded-0" alt="...">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class=" col-lg-10 col-11 text-end">
-                            <button class="btn btn-azul-senac text-white fw-bold"> Ver Todos</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="cadastro bg-gd-azul-claro-senac pb-5 mt-5 px-5 ">
-                    <div class="row d-flex justify-content-center">
-                        <div class="  col-12">
-                            <h1 class="mt-5 laranja-senac fw-bold text-center fs-1">Agende Seu Horário </h1>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Próximo</span>
+                </button>
+            </div>
 
-                        </div>
-                    </div>
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-12 text-center">
-                            <p class="azul-senac">
-                                Faça agora seu cadastro gratuitamente e <br> agende um atendimento para cuidar de si.
+            <div class="bg-warning py-5 px-3">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h1 class="text-dark fw-bold">Um Salão de Beleza Gratuito</h1>
+                            <p class="text-secondary">
+                                Um salão escola feito para criar profissionais capazes de atuar nas várias áreas dos cuidados com a beleza. Ganhe um tratamento gratuito e personalizado enquanto ajuda na criação de profissionais de qualidade.
                             </p>
                         </div>
-                    </div>
-                    <div class="row pb-5 mb-5">
-                        <div class="col-12 d-flex justify-content-center">
-                        <div class="">
-                                <a href="<?= BASE_URL ?>screens/agendamento.php"  class="btn btn-azul-senac text-white fw-bold">Agendar um Horário</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="contato" class="contato bg-gd-laranja-claro-senac pb-5 mt-5 px-5 ">
-                    <div class="row d-flex justify-content-center">
-                        <div class=" offset-1 col-lg-4 col-md-12 mb-2 ">
-                            <h1 class="mt-5 laranja-senac fw-bold text-start fs-1">Fale Conosco</h1>
-                            <p class="azul-senac">
-                                Entre em contato com a gente para tirar suas duvidas e nos fornecer suas criticas e sugestões
-                            </p>
-                            <div class="">
-                                <button class="btn btn-azul-senac text-white fw-bold"> <i class="bi bi-whatsapp"></i> entrar em contato</button>
-                            </div>
-                        </div>
-                        <div class="offset-1 col-lg-4 text-start mt-lg-5 pt-lg-5">
-                        <p class="azul-senac">
-                        <i class="bi bi-telephone-fill"></i> (41) 99999-9999
-                        </p>
-                        <p class="azul-senac">
-                        <i class="bi bi-geo-alt-fill"></i> R. Doutor José Pinto Rebelo Junior, 91 
-                        </p>
-                        <p class="azul-senac">
-                        <i class="bi bi-envelope-fill"></i> caioba@pr.senac.br
-                        </p>
+                        <div class="col-lg-6 text-center">
+                            <!-- Ajuste para reduzir imagem no mobile -->
+                            <img src="./assets/img/beautiful-hair-process-keratin-treatment.jpg" alt="Mulher lavando o cabelo" class="img-fluid w-75 w-md-50 w-lg-100 rounded">
                         </div>
                     </div>
                 </div>
             </div>
+
+
+            <!-- Seção de Agendamento -->
+            <div class="bg-primary text-white py-5 text-center">
+                <h1 class="fw-bold">Agende Seu Horário</h1>
+                <p>Faça agora seu cadastro gratuitamente e agende um atendimento para cuidar de si.</p>
+                <a href="<?= BASE_URL ?>screens/agendamento.php" class="btn btn-light text-primary fw-bold">Agendar um Horário</a>
+            </div>
         </main>
     </div>
-    <?php include("./screens/footer.php") ?>
 
-
+    <?php include("./screens/footer.php"); ?>
     <script src="./src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./src/js/script.js"></script>
+    <script src="./src/magic-master/gulpfile.js"></script>
 </body>
 
 </html>

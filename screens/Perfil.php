@@ -20,13 +20,13 @@ $id_usuario = $_SESSION['id_usuario'] ?? "";
 // $perfil = "cliente";
 // border colors of each user role 
 if ($perfil == 'professor') {
-    $estilo = "border border-black bg-success";
+    $estilo = "bg-success";
 } elseif ($perfil == 'aluno') {
-    $estilo = "border border-black bg-primary";
+    $estilo = "bg-primary";
 } elseif ($perfil == 'cliente') {
-    $estilo = "border border-black bg-warning";
+    $estilo = "bg-warning";
 } elseif ($perfil == 'admin') {
-    $estilo = "border border-black bg-danger";
+    $estilo = "bg-danger";
 }
 
 if (!$logado) {
@@ -68,26 +68,22 @@ unset($conexao);
     <?php include_once("./header.php"); ?>
 
     <main class="h-75 mt-5">
-        
+
         <div class="container d-flex justify-content-center mt-5 align-content-center ">
-            <div class=" card d-flex justify-content-center border-3 shadow-lg col-lg-12">
+            <div class=" card d-flex justify-content-center border-4 shadow-lg col-lg-12">
                 <div class="headerPerfil d-flex justify-content-center align-items-center">
                     <div class="profile-background <?= $estilo ?>">
-                        <div class="d-flex justify-content-start mt-5 ">
-                            <img src="../foto/<?= $login['foto']?>" class="imgPerfil mt-4 bordaa border border-black" name="foto" alt="Imagem de perfil">
-                            
-                        </div>
                     </div>
                 </div>
-
+                <div class="d-flex justify-content-start mx-3 align-items-start col-5">
+                    <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil mt-4 bordaa border border-black" name="foto" alt="Imagem de perfil">
+                </div>
                 <div class="card-body d-flex justify-content-center flex-column mt-5">
-                    <h5 class="card-title d-flex justify-content-center fw-bold "><?= $login["nome"] ?></h5> <br>
-                    <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
+                    <h5 class="card-title d-flex fw-bold justify-content-center "><?= $login["nome"] ?></h5> <br>
+                    <h6 class="card-text d-flex  fw-bold justify-content-center" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
                 </div>
 
-                <ul class="list-group list-group-flush">
-                    <p class="list-group-item"><?= $login["biografia"] ?></p>
-                </ul>
+                <p class="list-group-item mx-4"><?= $login["biografia"] ?></p>
 
                 <div class="card-body">
                     <a href="./editarPerfil.php" class="btn border shadow-sm fs-4 fw-bold azul-senac border-3 rounded-4 d-flex justify-content-center mb-3">Editar Perfil</a>

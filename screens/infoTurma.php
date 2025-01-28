@@ -6,6 +6,46 @@ include_once('../data/conexao.php');
 $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
 $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoTurmas.php";
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+$_SESSION['mensagem'] = NULL;
+$turmaId = $_GET["id"];
+
+$sqlTurma = "SELECT * FROM turma WHERE id_turma = :id_turma";
+$selectTurma = $conexao->prepare($sqlTurma);
+$selectTurma->bindParam(":id_turma", $turmaId);
+if ($selectTurma->execute()) {
+    $turma = $selectTurma->fetch(PDO::FETCH_ASSOC);
+}
+
+$sqlCurso = "SELECT * FROM curso WHERE id_curso = :id_curso";
+$selectCurso = $conexao->prepare($sqlCurso);
+$selectCurso->bindParam(":id_curso", $turma["id_curso"]);
+if ($selectCurso->execute()) {
+
+    $curso = $selectCurso->fetch(PDO::FETCH_ASSOC);
+}
+$sqlAlunos = "SELECT u.* FROM alunos a INNER JOIN usuario u ON u.id_usuario = a.id_usuario WHERE a.id_turma = :id_turma";
+$selectAlunos = $conexao->prepare($sqlAlunos);
+$selectAlunos->bindParam(":id_turma", $turma["id_turma"]);
+if ($selectAlunos->execute()) {
+
+    $alunos = $selectAlunos->fetchAll(PDO::FETCH_ASSOC);
+}
+// echo("<pre>");
+// var_dump(count($alunos));
+//  die;
+
+unset($conexao);
+
+
+
+
+
+
+
+
+
+
 
 ?>
 
@@ -39,20 +79,21 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoT
             </div>
           </div>
           <div class="col-12">
-            <h5 class="text-secondary fw-bold d-flex justify-content-center fs-1">202400004</h5>
-            <h6 class="mb-2 azul-senac d-flex justify-content-center fw-bold fs-5">Nome do Curso</h6>
+            <h5 class="text-secondary fw-bold d-flex justify-content-center fs-1"><?=$turma["numero_da_turma"]?></h5>
+            <h6 class="mb-2 azul-senac d-flex justify-content-center fw-bold fs-5"><?=$curso["nome_do_curso"]?></h6>
           </div>
         </div>
         <div class="row bg-cinza shadow d-flex justify-content-center mt-5">
           <div class="col-12 col-lg-6 d-flex justify-content-center">
-            <h5 class="text-black fw-bold fs-6">dd-mm-aa - dd/mm/aa</h5>
+            <h5 class="text-black fw-bold fs-6"><?=date("d/m/Y",strtotime($turma["data_inicio"]))?> - <?=date("d/m/Y",strtotime($turma["data_final"]))?></h5>
           </div>
           <div class="col-12 col-lg-6 d-flex justify-content-center">
-            <h6 class="mb-2 text-black fw-bold fs-6">13/14 Alunos</h6>
+            <h6 class="mb-2 text-black fw-bold fs-6"><?=count($alunos)?> Alunos</h6>
           </div>
         </div>
+        
 
-        <div class="row mt-5 ms-4">
+        <div class="row mt-5 ms-4 mb-3">
           <div class="col-6">
             <input type="text" class="form-control rounded-5 fw-bold fs-6  text-center" id="formGroupExampleInput" placeholder="Pesquisar">
           </div>
@@ -60,20 +101,24 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoT
             <button class="btn btn-azul-senac text-light rounded-3" type="submit" data-bs-toggle="modal" data-bs-target="#modalAddAluno"><i class="bi bi-plus-lg"></i></button>
           </div>
         </div>
-
-        <div class="row border-top border-bottom border-light-subtle py-2 mt-3">
+        <p class="alert alert-warning mt-2">
+                    <?= $mensagem ?>
+                </p>
+        <?php foreach($alunos as $aluno){?>
+        <a href="" class="row border-top border-bottom border-light-subtle py-2 text-secondary">
           <div class="col-2 ms-3">
-            <img src="../assets/img/img_barbeiro.png" class="rounded-circle img-fluid img-perfil-mini" alt="Foto de perfil do aluno">
+            <img src="../foto/<?=$aluno["foto"]?>" class="rounded-circle img-fluid img-perfil-mini" alt="Foto de perfil do aluno">
           </div>
           <div class="col-7 d-flex align-items-center text-nowrap">
-            <p class="fs-6 mb-0 me-2">Nome do Usuário</p>
+            <p class="fs-6 mb-0 me-2"><?=$aluno["nome"]?></p>
             <p class="fs-6 mb-0 me-2">•</p>
-            <p class="fs-6 mb-0">000.000.000-00</p>
+            <p class="fs-6 mb-0"><?=$aluno["cpf"]?></p>
           </div>
           <div class="ms-2 col-2 d-flex align-items-center">
             <button class="btn text-danger"><i class="bi bi-ban txt-shadow-red" ></i></button>
           </div>
-        </div>
+        </a>
+        <?php }?>
       </div>
 
 
@@ -85,15 +130,11 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoT
               <div class="d-flex justify-content-end mb-3">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form action="">
-                <div class="form-floating mb-3">
-                  <p class="fs-6 fw-bold">Nome do Aluno</p>
-                  <input type="text" class="form-control py-0" id="nomeDoAlunoInput" placeholder="Nome do Aluno">
-                  <label for="nomeDoAlunoInput"></label>
-                </div>
+              <form action="../src/logicos/adicionarAluno.php" method="POST">
                 <div class="form-floating mb-3">
                   <p class="fs-6 fw-bold">CPF do Aluno</p>
-                  <input type="cpf" class="form-control py-0" id="cpfDoAlunoInput" placeholder="CPF do Aluno">
+                  <input type="cpf" class="form-control py-0" name="txtCpf" placeholder="CPF do Aluno" required>
+                  <input type="cpf" class="form-control py-0" name="txtIdTurma" value="<?=$turmaId?>" hidden>
                   <label for="cpfDoAlunoInput"></label>
                 </div>
                 <div class="mb-3 d-flex justify-content-end">

@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
 </head>
 
-<body>
+<body class="container-fluid">
   <div class="dropdown bg-white">
     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 

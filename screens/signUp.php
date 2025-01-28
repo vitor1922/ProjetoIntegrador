@@ -59,11 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </head>
 
-<body class="vh-100">
+<body class="container-fluid">
     <?php
     include_once('./header.php');
     ?>
-    <main class=" h-75 d-flex">
+    <main class="d-flex align-items-center">
         <div class="container form-container d-flex justify-content-center align-items-center">
             <div class="col-10 col-md-6 col-lg-6 bg-light p-3 rounded-4 shadow-lg">
                 <h5 class="text-center mb-3 mt-2 text-warning">Fazer Login</h5>

@@ -18,10 +18,12 @@ if (!$logado) {
 // Recuperar avaliações, comentários e turmas
 try {
     $sqlAvaliacoes = "SELECT a.nivel_de_avaliacao, a.comentario, a.id_usuario, 
-                             u.nome, u.foto, t.numero_da_turma, t.data_inicio, t.data_final, a.id_avaliacao
+                             u.nome, u.foto, t.numero_da_turma, t.data_inicio, t.data_final, 
+                             a.id_avaliacao
                       FROM avaliacao a
                       JOIN usuario u ON a.id_usuario = u.id_usuario
-                      LEFT JOIN turma t ON u.id_usuario = t.id_usuario
+                      LEFT JOIN turma t ON a.id_turma = t.id_turma
+                      LEFT JOIN post p ON a.id_usuario = p.id_usuario
                       ORDER BY a.id_avaliacao DESC";  
     $stmtAvaliacoes = $conexao->prepare($sqlAvaliacoes);
     $stmtAvaliacoes->execute();
@@ -94,39 +96,56 @@ if (isset($_GET['deletar'])) {
     <link rel="stylesheet" href="../assets/css/style.css">
     <title>Avaliações</title>
     <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
         .imgPerfil {
             width: 60px;
             height: 60px;
             object-fit: cover;
             border-radius: 50%;
-            border: 2px solid #ddd;
         }
+
         .card {
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            background-color: #ffffff;
             margin-bottom: 20px;
             padding: 20px;
             position: relative;
+            box-shadow: none; /* Remove a sombra e as bordas extras do card */
         }
+
         .stars {
             font-size: 1.5rem;
             color: #FFD700;
         }
+
         .star {
-            font-size: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
         }
+
+        .star:hover {
+            color: #FFD700;
+        }
+
         .comentario-info {
             display: flex;
             align-items: center;
         }
+
         .comentario-info p {
             margin-bottom: 0;
         }
+
         .turma-info {
             font-size: 0.9rem;
-            color: gray;
+            color: #6c757d;
         }
+
         .ordenacao {
             display: flex;
             justify-content: flex-start;
@@ -134,14 +153,17 @@ if (isset($_GET['deletar'])) {
             gap: 15px;
             margin-top: 15px;
         }
+
         .ordenacao a {
             font-weight: bold;
             color: #007bff;
             text-decoration: none;
         }
+
         .ordenacao a:hover {
             text-decoration: underline;
         }
+
         .ordenacao .btn {
             font-weight: bold;
             font-size: 0.9rem;
@@ -151,45 +173,71 @@ if (isset($_GET['deletar'])) {
             background-color: transparent;
             border-radius: 4px;
         }
+
         .ordenacao .btn:hover {
             background-color: #007bff;
             color: #fff;
         }
+
         .btn-danger {
             background-color: #d9534f;
             border-color: #d43f00;
         }
+
         .btn-danger:hover {
             background-color: #c9302c;
             border-color: #ac2925;
         }
+
         .btn-danger.btn-sm {
             font-size: 0.75rem;
             padding: 3px 8px;
         }
+
         .modal-dialog {
             max-width: 400px;
         }
-        /* Estilo para o ícone da lixeira */
+
         .delete-icon {
             position: absolute;
-            bottom: 10px;  /* Alinha no canto inferior */
-            right: 10px;   /* Alinha no canto direito */
+            bottom: 10px;
+            right: 10px;
             font-size: 1.5rem;
-            color: #000;   /* Cor preta */
+            color: #ff5733;
             cursor: pointer;
         }
-    </style>
-    <script>
-        // Função para abrir o modal de confirmação
-        function confirmarExclusao(url) {
-            const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
-            document.getElementById('confirmDelete').onclick = function() {
-                window.location.href = url;
-            };
-            modal.show();
+
+        .delete-icon:hover {
+            color: #c0392b;
         }
-    </script>
+
+        h2, h4 {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
 <body>
 <?php include_once("./header.php"); ?>
@@ -199,14 +247,13 @@ if (isset($_GET['deletar'])) {
 
     <!-- Formulário de avaliação -->
     <div class="mt-4">
-        <h4>Deixe sua avaliação:</h4>
         <form action="" method="POST">
             <div class="mb-3">
                 <label for="nivel_de_avaliacao" class="form-label">Avaliação</label>
                 <div id="nivel_de_avaliacao" class="d-flex">
                     <?php for ($i = 1; $i <= 5; $i++): ?>
                         <input type="radio" class="btn-check" name="nivel_de_avaliacao" id="star<?= $i ?>" value="<?= $i ?>" required>
-                        <label class="btn btn-outline-warning" for="star<?= $i ?>">&#9733;</label>
+                        <label class="btn btn-outline-warning star" for="star<?= $i ?>" data-star="<?= $i ?>">&#9733;</label>
                     <?php endfor; ?>
                 </div>
             </div>
@@ -265,20 +312,58 @@ if (isset($_GET['deletar'])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Você tem certeza que deseja excluir este comentário? Esta ação não pode ser desfeita.
+                Você tem certeza de que deseja excluir esta avaliação?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" id="confirmDelete" class="btn btn-danger">Excluir</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Excluir</button>
             </div>
         </div>
     </div>
 </div>
 
-<footer>
-    <?php include_once("./footer.php"); ?>
-</footer>
-
 <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Função de confirmação para exclusão
+    function confirmarExclusao(url) {
+        document.getElementById('confirmDelete').onclick = function() {
+            window.location.href = url;
+        };
+
+        // Abre o modal de confirmação
+        var myModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+        myModal.show();
+    }
+
+    // Função para alterar a cor das estrelas ao passar o mouse
+    document.querySelectorAll('.star').forEach(function(star) {
+        star.addEventListener('mouseover', function() {
+            let rating = this.getAttribute('data-star');
+            highlightStars(rating);
+        });
+        star.addEventListener('mouseout', function() {
+            let checkedRating = document.querySelector('input[name="nivel_de_avaliacao"]:checked');
+            let rating = checkedRating ? checkedRating.value : 0;
+            highlightStars(rating);
+        });
+    });
+
+    // Função para destacar as estrelas
+    function highlightStars(rating) {
+        document.querySelectorAll('.star').forEach(function(star) {
+            let starValue = star.getAttribute('data-star');
+            star.style.color = starValue <= rating ? '#FFD700' : '#ccc';
+        });
+    }
+
+    // Inicia com o valor da avaliação já setado
+    window.onload = function() {
+        let checkedRating = document.querySelector('input[name="nivel_de_avaliacao"]:checked');
+        let rating = checkedRating ? checkedRating.value : 0;
+        highlightStars(rating);
+    };
+</script>
+
 </body>
 </html>

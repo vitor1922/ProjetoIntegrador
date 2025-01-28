@@ -88,7 +88,7 @@ unset($conexao);
                 <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php" enctype="multipart/form-data">
                     <div class="headerPerfil d-flex">
                         <div class="profile-background">
-                            <img src="../foto/<?= $login["foto"] ?>" class="imgPerfill mt-4 bordaa <?= $estilo ?>" alt="">
+                            <img src="../foto/<?= $login["foto"] ?>" class="imgPerfill mt-2 bordaa <?= $estilo ?>" alt="">
                         </div>
                     </div>
                     <div class="mx-5">

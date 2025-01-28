@@ -30,7 +30,7 @@ unset($conexao);
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 
-<body>
+<body class="container-fluid">
     <?php
     include("./header.php");
     ?>
@@ -70,7 +70,7 @@ unset($conexao);
                                 <div class="card card-body start-0 position-absolute w-100" >
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
-                                        <option value="1"><?= $hora ? $hora["data"] : "" ?></option>
+                                        <option value="1"><?= $hora['data'] ?></option>
                                         <option value="2">18/07/24 - 17:00 até 18:30</option>
                                         <option value="3">18/07/24 - 17:00 até 18:30</option>
                                         <option value="4">18/07/24 - 17:00 até 18:30</option>
@@ -109,7 +109,7 @@ unset($conexao);
                                 <div class="card card-body   start-0 position-absolute w-100">
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
-                                        <option value="1">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="1"><?= $hora ? $hora["data"]:"" ?></option>
                                         <option value="2">18/07/24 - 17:00 até 18:30</option>
                                         <option value="3">18/07/24 - 17:00 até 18:30</option>
                                         <option value="4">18/07/24 - 17:00 até 18:30</option>
@@ -146,7 +146,7 @@ unset($conexao);
                                 <div class="card card-body  start-0 position-absolute w-100">
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
-                                        <option value="1">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="1"><?= $hora ? $hora["data"]:"" ?></option>
                                         <option value="2">18/07/24 - 17:00 até 18:30</option>
                                         <option value="3">18/07/24 - 17:00 até 18:30</option>
                                         <option value="4">18/07/24 - 17:00 até 18:30</option>

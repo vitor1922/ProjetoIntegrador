@@ -56,8 +56,7 @@ if ($selectAlunos->execute()) {
 //  die;
 
 unset($conexao);
-
-$paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoCursos.php";
+$paginaAnterior = "gerenciamentoCursos.php";
 
 ?>
 
@@ -109,7 +108,7 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoC
                         <?php $data = date('d/m/Y', strtotime($horario["data"]))?>
                     <div class="row">
                         <div class="offset-sm-4 offset-2 col-sm-3 col-7 d-flex justify-content-center align-items-center">
-                            <p class="text-center my-0 py-0"><?=$data?> - <?=$horario["hora"]?> - /<?=$horario["vagas"]?> vagas</p>
+                            <p class="text-center my-0 py-0"><?=$data?> - <?=date("H:i", strtotime($horario["hora"]))?> - ?/<?=$horario["vagas"]?> vagas</p>
                         </div>
                         <div class=" col-1 d-flex justify-content-start">
                             <button class=" btn"><i class="bi bi-ban text-danger"></i></button>
@@ -160,7 +159,7 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "screens/gerenciamentoC
                     }
                     ?>
 
-                    <a href="">
+                    <a href="infoTurma.php?id=<?=$turma["id_turma"]?>">
                         <div class=" text-center border py-2 text-secondary">
 
                             <div class="row d-flex align-content-center">

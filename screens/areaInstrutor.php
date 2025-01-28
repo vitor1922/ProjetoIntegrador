@@ -25,12 +25,12 @@ $paginaAnterior = $_SERVER['HTTP_REFERER'] ?? BASE_URL . "index.php";
     <title>Área do Instrutor</title>
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column container-fluid">
     <?php
     include_once("./header.php");
     ?>
 
-    <div class="container-fluid mt-3">
+    <div class=" mt-3">
         <a href="<?=$paginaAnterior?>" class="btn btn-link">
             <i class="bi bi-arrow-left-short azul-senac fw-bold fs-1"></i>
         </a>

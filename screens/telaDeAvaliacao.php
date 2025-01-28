@@ -20,7 +20,7 @@ $logado = $_SESSION['logado'] ?? FALSE;
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
-<body class="vh-100" >
+<body class="container-fluid" >
   <?php
   include_once("./header.php");
   ?>
