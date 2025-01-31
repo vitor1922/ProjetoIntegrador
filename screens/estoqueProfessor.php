@@ -20,13 +20,13 @@ include_once('../data/conexao.php');
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
-<body>
+<body class="container-fluid">
 <?php
     include_once("./header.php");
     ?>
   <main>
       <!-- Container principal -->
-  <div class="container-fluid h-100 d-flex flex-column align-items-center p-3">
+  <div class="h-100 d-flex flex-column align-items-center p-3">
 
 
 <!-- Linha divisória superior -->
@@ -105,10 +105,10 @@ include_once('../data/conexao.php');
   </div>
 </div>
 </div>
-<?php
+  </main>
+  <?php
     include("./footer.php");
     ?>
-  </main>
 
   <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css"></script>

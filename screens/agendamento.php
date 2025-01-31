@@ -7,11 +7,13 @@ $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
 
 
-$sql = "SELECT * FROM agendamento ORDER BY id_agendamento DESC";
+
+
+$sql = "SELECT * FROM agenda ORDER BY id_agenda DESC";
 $select = $conexao->prepare($sql);
- 
+
 if ($select->execute()) {
-    $agendamento = $select->fetchAll(PDO::FETCH_ASSOC);
+    $agenda = $select->fetchAll(PDO::FETCH_ASSOC);
 }
 
 unset($conexao);
@@ -50,7 +52,7 @@ unset($conexao);
             <div class="row justify-content-center pb-5 mb-5">
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
                     <div class="card card-imagem shadow-sm   w-23rem border-0">
-                        <img class="" src="../assets/img/img_mulher_lavando_cabelo.png"alt="...">
+                        <img class="" src="../assets/img/img_mulher_lavando_cabelo.png" alt="...">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6  col-lg-12  col-xxl-7">
@@ -65,26 +67,25 @@ unset($conexao);
                                     </p>
                                 </div>
                             </div>
-                            <div class="collapse" id="collapseExample1">
-                            <?php foreach ($agendamento as $hora) { ?>
-                                <div class="card card-body start-0 position-absolute w-100" >
-                                    <select class="form-select bg-warning-subtle" aria-label="Default select example">
-                                        <option selected>Selecionar Horario</option>
-                                        <option value="1"><?= $hora['data'] ?></option>
-                                        <option value="2">18/07/24 - 17:00 até 18:30</option>
-                                        <option value="3">18/07/24 - 17:00 até 18:30</option>
-                                        <option value="4">18/07/24 - 17:00 até 18:30</option>
-                                    </select>
-                                    <div class="position-relative mt-5">
-                                        <div class="position-absolute bottom-0 end-0 mt-5">
-                                            <button type="submit" class="btn btn-azul-senac text-light">
-                                                Agendar
-                                            </button>
+                            <form action="#" method="post">
+                                <div class="collapse" id="collapseExample1">
+                                    <div class="card card-body start-0 position-absolute w-100">
+                                        <select class="form-select bg-warning-subtle" aria-label="Default select example">
+                                            <option selected>Selecionar Horario</option>
+                                            <?php foreach ($agenda as $hora) { ?>
+                                                <option value="<?= $hora['id_agenda'] ?>"><?= $hora['data'] ?> <?= $hora['hora'] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <div class="position-relative mt-5">
+                                            <div class="position-absolute bottom-0 end-0 mt-5">
+                                                <button type="submit" class="btn btn-azul-senac text-light">
+                                                    Agendar
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            <?php } ?>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -109,7 +110,7 @@ unset($conexao);
                                 <div class="card card-body   start-0 position-absolute w-100">
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
-                                        <option value="1"><?= $hora ? $hora["data"]:"" ?></option>
+                                        <option value="1"><?= $hora ? $hora["data"] : "" ?></option>
                                         <option value="2">18/07/24 - 17:00 até 18:30</option>
                                         <option value="3">18/07/24 - 17:00 até 18:30</option>
                                         <option value="4">18/07/24 - 17:00 até 18:30</option>
@@ -146,7 +147,7 @@ unset($conexao);
                                 <div class="card card-body  start-0 position-absolute w-100">
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
-                                        <option value="1"><?= $hora ? $hora["data"]:"" ?></option>
+                                        <option value="1"><?= $hora ? $hora["data"] : "" ?></option>
                                         <option value="2">18/07/24 - 17:00 até 18:30</option>
                                         <option value="3">18/07/24 - 17:00 até 18:30</option>
                                         <option value="4">18/07/24 - 17:00 até 18:30</option>
@@ -166,12 +167,10 @@ unset($conexao);
             </div>
     </main>
 
-    <?php
-    include("./footer.php")
-    ?>
-    <script src="../src/bootstrap/js/bootstrap.js">
-        
-    </script>
+    <?php include_once("./footer.php"); ?>
+    <!-- JavaScript do Bootstrap -->
+    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

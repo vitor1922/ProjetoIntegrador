@@ -45,7 +45,7 @@ unset($conexao);
     <title></title>
 </head>
 
-<body class="vh-100 d-flex flex-column justify-content-between">
+<body class="container-fluid d-flex flex-column justify-content-between">
     <div>
         <?php
         include_once("./header.php");

@@ -9,8 +9,8 @@ $logado = $_SESSION['logado'] ?? NULL;
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
     exit;
-}elseif($perfil !== "professor"){
-    if ($perfil !== "admin"){
+} elseif ($perfil !== "professor") {
+    if ($perfil !== "admin") {
         header("Location: " . BASE_URL . "index.php");
     }
 }
@@ -35,7 +35,7 @@ if ($select->execute()) {
     <title></title>
 </head>
 
-<body class="vh-100 d-flex flex-column justify-content-between">
+<body class="container-fluid d-flex flex-column justify-content-between">
     <div>
         <?php
         include_once("./header.php");
@@ -75,17 +75,52 @@ if ($select->execute()) {
                         </div>
                     </div>
                 </div>
-                <?php foreach($cursos as $curso){?>
-                <a href="./infoCurso.php?id=<?=$curso["id_curso"]?>" class="row border border-1 py-3">
-                    <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
-                        <img src="../foto/<?=$curso["imagem"]?>" alt="" class="img-curso">
-                    </div>
+                <?php foreach ($cursos as $curso) { ?>
+    <div class="row border border-1 py-3">
+        <!-- Link na imagem -->
+        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
+            <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="img-curso">
+        </a>
 
-                    <div class="col-lg-7 col-md-7 col-sm-5 col-7 d-flex align-items-center">
-                        <p class=" fs-5 text-secondary text-start"><?=$curso["nome_do_curso"] ?></p>
+        <!-- Link no nome do curso -->
+        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="col-lg-4 col-md-4 col-sm-2 col-4 d-flex align-items-center text-decoration-none">
+            <p class="fs-5 text-secondary text-start"><?= $curso["nome_do_curso"] ?></p>
+        </a>
+
+        <!-- Botão de exclusão (fora do link) -->
+        <div class="col-lg-1 col-md-1 col-sm-1 col-1 d-flex align-items-center">
+            <div class="col-1 d-flex justify-content-start">
+                <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+                        <!-- Modal excluir Curso -->
+                        <div class="modal fade" id="modalExcluirCurso<?= $curso["id_curso"] ?>" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </a>
-                <?php }?>
+                    <form action="../src/logicos/excluirCurso.php" method="POST">
+                        <input type="hidden" name="id_curso" value="<?= $curso["id_curso"] ?>">
+                        <p class="text-center">Tem certeza que deseja excluir o curso <strong><?= $curso["nome_do_curso"] ?></strong>?</p>
+                        <div class="mb-3 d-flex justify-content-center">
+                            <button class="btn btn-danger text-white fw-bold px-5" type="submit">EXCLUIR</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php } ?>
+
+
+
 
                 <!-- MODAL ADICIONAR CURSO -->
                 <div class="modal fade" id="modalCadastrarCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">

@@ -20,7 +20,7 @@ $logado = $_SESSION['logado'] ?? NULL;
     <title>Document</title>
 </head>
 
-<body>
+<body class="container-fluid">
     <main>
         <div class="container">
             <?php

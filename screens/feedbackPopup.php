@@ -19,7 +19,7 @@ $logado = $_SESSION['logado'] ?? NULL;
     <title>Avaliação</title>
     
 </head>
-<body class="d-flex flex-column justify-content-between min-vh-100">
+<body class="d-flex flex-column justify-content-between container-fluid">
     <div>
 <?php include_once("./header.php"); ?>
 <main>

@@ -19,7 +19,7 @@ $logado = $_SESSION['logado'] ?? FALSE;
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body class="d-flex flex-column justify-content-between">
+<body class="container-fluid flex-column justify-content-between">
     <!-- Header -->
     <?php
     include_once("./header.php");

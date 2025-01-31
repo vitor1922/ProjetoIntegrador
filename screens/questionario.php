@@ -73,7 +73,7 @@ $logado = $_SESSION['logado'] ?? FALSE;
           </div>
 
           <div class="mx-4">
-            <button class=" offset-7 col-4 offset-md-11 col-md-1 btn btn-azul-senac text-light mb-" type="submit">Enviar</button>
+            <button class=" offset-7 col-5 offset-md-11 col-md-1 btn btn-azul-senac text-light mb-1" type="submit">Enviar</button>
           </div>
         </div>
       </div>

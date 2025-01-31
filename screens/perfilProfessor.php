@@ -69,7 +69,7 @@ unset($conexao);
 </head>
 </head>
 
-<body class="d-flex flex-column justify-content-between">
+<body class="container-fluid d-flex flex-column justify-content-between">
     <!-- Header -->
     <?php
     include_once("./header.php");

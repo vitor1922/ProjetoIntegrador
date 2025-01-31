@@ -50,6 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 
+if ($perfil == 'professor') {
+    $estilo = "bg-success";
+} elseif ($perfil == 'aluno') {
+    $estilo = "bg-primary";
+} elseif ($perfil == 'cliente') {
+    $estilo = "bg-warning";
+} elseif ($perfil == 'admin') {
+    $estilo = "bg-danger";
+}
+
+
 // var_dump($login["foto"]);
 // die;
 
@@ -70,12 +81,12 @@ unset($conexao);
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
-<body class="vh-75">
+<body class="container-fluid">
     <?php
     include_once("./header.php");
     ?>
 
-    <main class="h-100 mt-3 mb-5">
+    <main class="h-100">
 
         <div class="d-flex justify-content-between align-items-center">
             <a href="./Perfil.php"><button class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
@@ -83,48 +94,55 @@ unset($conexao);
                         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
                     </svg></button></a>
         </div>
-        <div class="container d-flex justify-content-center align-content-center">
-            <div class="cardPerfil card border-3 shadow-lg">
+
+        <div class="container d-flex justify-content-center align-content-center ">
+            <div class=" card d-flex justify-content-center border-4 shadow-lg col-lg-12">
                 <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php" enctype="multipart/form-data">
-                    <div class="headerPerfil d-flex">
-                        <div class="profile-background">
-                            <img src="../foto/<?= $login["foto"] ?>" class="imgPerfill mt-2 bordaa <?= $estilo ?>" alt="">
+                <div class="headerPerfil d-flex justify-content-center align-items-center">
+                    <div class="profile-background <?= $estilo ?>">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-start mx-3 mt-1 align-items-start col-5">
+                    <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil mt-3 bordaa border border-black" name="foto" alt="Imagem de perfil">
+                </div>
+                    <div class="d-flex justify-content-center">
+                        <input type="file" class="inputs form-control w-50 mt-5" name="foto" accept="image/jpg, image/png, image/jpeg" onchange="previewImage(event)"><button class="btn">
+                    </div>
+                        <div>
+                            <input type="text" name="imgName" value="<?= $login["foto"] ?>" hidden>
                         </div>
-                    </div>
-                    <div class="mx-5">
-                    <input type="file" class="inputs form-control mt-5 mx-1" name="foto" accept="image/jpg, image/png, image/jpeg" onchange="previewImage(event)">
-                    </div>
-                    <div class="">
-                    <input type="text" name="imgName" value="<?= $login["foto"] ?>" hidden>
-                    </div>
-                    <div class="card-body d-flex flex-column mt-2">
-                        <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
+                    <div>
+
+                <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
                             value="<?= $login['id_usuario'] ?? '' ?>" hidden>
-                        <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
-                        <div class="col mt-1">
-                            <div class="mb-1">
-                                <div class="nomePerfil p-2">
-                                    <h6 class="mt-1 fw-bold laranja-senac mx-2">Nome Atual:</h6>
+                        <h6 class="card-text d-flex justify-content-center fw-bold mt-5" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
+
+                                <div class="nomePerfil p-3">
+                                    <h6 class="fw-bold laranja-senac mx-2 mt-5">Nome Atual:</h6>
                                     <h5 class="card-title d-flex mx-1"><?= $login['nome'] ?? '' ?></h5> <br>
-                                    <label for="nome" class="form-label fw-bold mx-2">Novo Nome</label>
+                                    <label for="nome" class="form-label fw-bold azul-senac mx-2">Novo Nome</label>
                                     <input type="text" name="txtNome" class="form-control mb-2" value="<?= $login['nome'] ?? '' ?>">
                                 </div>
                             </div>
-                        </div>
+
+                            <h6 class="mt-2 fw-bold laranja-senac mx-2">Bio Atual:</h6>
+                            <p class="list-group-item mx-4"><?= $login["biografia"] ?></p>
+
                         <div class="col mb-3">
                             <div class="nomePerfil">
                             <div class="mx-3 mb-3 mt-1 fw-bold">
-                                <label for="bio" class="form-label fw-bold azul-senac">Bio</label>
+                                <label for="bio" class="form-label fw-bold azul-senac">Nova Bio</label>
                                 <textarea class="form-control p-2" name="txtBiografia" rows="3"><?= $login['biografia'] ?? '' ?></textarea>
                                 </div>
                             </div>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn text-light shadow-sm fs-4 fw-bold btn-azul-senac border-2 rounded-5 d-flex justify-content-center w-75">Confirmar</button>
+                            </div>
                         </div>
-                        <button type="submit" class="btn text-light shadow-sm fs-4 fw-bold btn-azul-senac border-3 rounded-4 d-flex justify-content-center w-100">Confirmar</button>
-                    </div>
                 </form>
-
             </div>
         </div>
+
     </main>
 
     <?php

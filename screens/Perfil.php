@@ -63,32 +63,32 @@ unset($conexao);
     <title>Perfil</title>
 </head>
 
-<body class="vh-100">
+<body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0">
 
     <?php include_once("./header.php"); ?>
 
-    <main class="h-75 mt-5">
+    <main class="container mt-5">
 
-        <div class="container d-flex justify-content-center mt-5 align-content-center ">
-            <div class=" card d-flex justify-content-center border-4 shadow-lg col-lg-12">
+        <div class=" d-flex justify-content-center mt-4 align-content-center mb-5 ">
+            <div class=" card d-flex justify-content-center border-4 shadow-lg col">
                 <div class="headerPerfil d-flex justify-content-center align-items-center">
                     <div class="profile-background <?= $estilo ?>">
                     </div>
                 </div>
-                <div class="d-flex justify-content-start mx-3 align-items-start col-5">
-                    <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil mt-4 bordaa border border-black" name="foto" alt="Imagem de perfil">
+                <div class="card-body d-flex justify-content-center flex-column flex-md-row mt-5">
+                    <div class="d-flex justify-content-center">
+                        <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa border border-black" name="foto" alt="Imagem de perfil">
+                    </div>
+                    <div class="ms-0 ms-md-5 mt-3 mt-md-0 d-flex flex-column justify-content-center">
+                        <h5 class="d-flex fw-bold justify-content-center m-0"><?= $login["nome"] ?></h5> <br>
+                        <h6 class=" d-flex fw-bold justify-content-center m-0" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
+                        <p class="text-center"><?= $login["biografia"] ?></p>
+                    </div>
                 </div>
-                <div class="card-body d-flex justify-content-center flex-column mt-5">
-                    <h5 class="card-title d-flex fw-bold justify-content-center "><?= $login["nome"] ?></h5> <br>
-                    <h6 class="card-text d-flex  fw-bold justify-content-center" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
-                </div>
-
-                <p class="list-group-item mx-4"><?= $login["biografia"] ?></p>
-
                 <div class="card-body">
-                    <a href="./editarPerfil.php" class="btn border shadow-sm fs-4 fw-bold azul-senac border-3 rounded-4 d-flex justify-content-center mb-3">Editar Perfil</a>
+                    <a href="./editarPerfil.php" class="btn border shadow-sm fw-bold azul-senac border-3 rounded-4 d-flex justify-content-center mb-3">Editar Perfil</a>
                     <a href="./configuracoes.php" class="link-offset-2 link-underline link-underline-opacity-0">
-                        <div class="btn text-light shadow-sm fs-4 fw-bold btn-azul-senac border-3 rounded-4 d-flex justify-content-center " type="button" href="">Configurações</div>
+                        <div class="btn text-light shadow-sm fw-bold btn-azul-senac border-3 rounded-4 d-flex justify-content-center " type="button" href="">Configurações</div>
                     </a>
                 </div>
             </div>

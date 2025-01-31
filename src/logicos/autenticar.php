@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         header("Location: " . BASE_URL . "screens/areaInstrutor.php");
                         exit;
                     } elseif ($login['perfil'] === 'aluno' || $login['perfil'] === 'cliente') {
-                        header("Location: " . BASE_URL . "screens/blog.php");
+                        header("Location: " . BASE_URL . "index.php");
                         exit;
                     }
                 }

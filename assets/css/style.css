@@ -28,13 +28,12 @@ a{
 }
 
 body {
-  height: 100%;
-  max-width: 99.8%;
+  padding: 0 !important; 
 }
-
 :root {
   --laranja_senac: #f7941d;
   --laranja_claro_senac: #fdc180;
+  --laranja_escuro_senac:#EA6230;
   --azul_senac: #004a8d;
   --azul_medio_senac: #4c7cab;
   --azul_claro_senac: #a5bdd5;
@@ -69,7 +68,7 @@ body {
 }
 
 .img-logo-senac {
-  height: 3.5rem;
+  height:  5rem;
 }
 
 .img-perfil-grande {
@@ -124,6 +123,9 @@ body {
 .laranja-claro-senac {
   color: var(--laranja_claro_senac);
 }
+.laranja-escuro-senac {
+  color: var(--laranja_escuro_senac);
+}
 
 .azul-senac {
   color: var(--azul_senac);
@@ -143,6 +145,10 @@ body {
 
 .bg-laranja-claro-senac {
   background-color: var(--laranja_claro_senac);
+}
+
+.bg-laranja-escuro-senac {
+  background-color: var(--laranja_escuro_senac);
 }
 
 .bg-azul-senac {
@@ -248,11 +254,20 @@ body {
   background-color: var(--laranja_senac);
 }
 
-@media (min-width: 991px) {
+/* @media (max-width: 991px) {
   .footer-senac {
     background-color: white;
-  }
+  } */
+
+.footer-scuro-senac {
+  background-color: var(--laranja_escuro_senac);
 }
+
+/* @media (max-width: 991px) {
+  .footer-scuro-senac {
+    background-color: white;
+  } */
+
 
 .header-vi {
   visibility: visible;
@@ -375,10 +390,8 @@ textarea {
 }
 
 .bordaa {
-  margin-top: 4rem;
   width: 10rem;
   height: 8rem;
-  position: absolute;
 }
 
 .bordaa-blue {
@@ -422,4 +435,28 @@ textarea {
 
 .headerPerfil {
   width: auto;
+}
+
+.paralax1{
+background-image: url('../img/woman-using-dryer-beard-man.jpg'); 
+background-size: cover; 
+background-attachment: fixed; 
+background-position: center;
+height: 600px;
+
+}
+
+.matte {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.matte2 {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.paralax2 {
+background-image: url('../img/woman-using-dryer-beard-man.jpg'); 
+background-size: cover;
+background-attachment:
+fixed; background-position: center;
+height: 350px;
 }

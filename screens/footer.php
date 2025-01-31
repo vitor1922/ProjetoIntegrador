@@ -1,34 +1,36 @@
-<footer >
+<footer>
 
-    <div class=" container-fluid d-flex align-content-end pt-3">
-        <div class="container-fluid border-top border-1 border-black">
-            <div class="row">
-                <div class="col-6 col-lg-8 py-2">
-                    <div class="row">
-                        <div class="col-12 col-lg-6 d-flex justify-content-center align-items-center">
+    <div class=" d-flex align-content-end pt-3">
+        <div class="container-fluid ">
+            <div class="row footer-senac">
+                <div class="col-6 col-lg-5 py-2">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-12 col-lg-4 d-flex justify-content-center align-items-center">
                             <div class="">
-                                <a href="#"><img src="<?= BASE_URL ?>assets/img/logoSenac.png" class=" img-logo-senac" alt=""></a>
+                                <a href="#"><img src="<?= BASE_URL ?>assets/img/senac_logo_branco.png" class=" img-logo-senac" alt=""></a>
                             </div>
-                        </div>
-                        <div class="col-12 col-lg-6 d-flex flex-column align-items-center">
-                            <h3 class="border-bottom border-dark border-1 pb-1 fs-2">Contatos</h3>
-                            <p>(41) 3473-2469</p>
-                            <p>+99 99999-9999</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-6 col-lg-4 py-2 d-flex flex-column justify-content-center">
-                    <div class="row">
-                        <a href="#" class="col-6 col-lg-3"><i class="bi bi-whatsapp text-black p-2 fs-4"></i></a>
-                        <a href="https://www.facebook.com/SenacParana/" class="col-6 col-lg-3"><i class="bi bi-facebook text-black p-2 fs-4"></i></a>
-                        <a href="https://www.instagram.com/senacparana?igsh=dHcxNzlsbXQ1dm84" class="col-6 col-lg-3"><i class="bi bi-instagram text-black p-2 fs-4"></i></a>
-                        <a href="https://www.youtube.com/@senacpr" class="col-6 col-lg-3"><i class="bi bi-youtube text-black p-2 fs-4"></i></a>
+                <div class="col-6 col-lg-7 py-2">
+                    <div class="row d-flex justify-content-between flex-column-reverse flex-lg-row">
+                        <div class="col-12 col-lg-4 d-flex flex-column align-items-center text-light">
+                            <h3 class=" pb-1 fs-2 fw-bolder">Contatos</h3>
+                            <p>(41) 3473-2469</p>
+                            <p>(41) 3452-8050</p>
+                        </div>
+                        <div class="col-6 col-lg-4 me-3 d-flex justify-content-between justify-content-center align-items-center">
+                            <a href="#" class="col-6 col-lg-3"><i class="bi bi-whatsapp text-light p-2 fs-4"></i></a>
+                            <a href="https://www.facebook.com/SenacParana/" class="col-6 col-lg-3"><i class="bi bi-facebook text-light p-2 fs-4"></i></a>
+                            <a href="https://www.instagram.com/senacparana?igsh=dHcxNzlsbXQ1dm84" class="col-6 col-lg-3"><i class="bi bi-instagram text-light p-2 fs-4"></i></a>
+                            <a href="https://www.youtube.com/@senacpr" class="col-6 col-lg-3"><i class="bi bi-youtube text-light p-2 fs-4"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 text-center align-self-end p-0 footer-senac">
-                    <p class="mb-0">&copy; 2024 Senac Caiobá. Todos os direitos reservados.</p>
+                <div class="col-12 text-center align-self-end py-3 px-0 mx-0 footer-scuro-senac">
+                    <p class="mb-0 text-light">&copy; 2024 Senac Caiobá. Todos os direitos reservados.</p>
                 </div>
             </div>
         </div>

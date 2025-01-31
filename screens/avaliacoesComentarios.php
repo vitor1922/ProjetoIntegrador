@@ -3,10 +3,8 @@ session_start();
 include_once("../constantes.php");
 include_once('../data/conexao.php');
 
-// Define o fuso horário para o Brasil
 date_default_timezone_set('America/Sao_Paulo');
 
-// Verifica se o usuário está logado
 $perfil = $_SESSION['perfil'] ?? null;
 $logado = $_SESSION['logado'] ?? false;
 
@@ -15,16 +13,42 @@ if (!$logado) {
     exit;
 }
 
-// Recuperar avaliações, comentários e turmas
+$filterQuery = ""; 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['filtro'])) {
+    $filtro = $_POST['filtro'];
+    
+    if ($filtro == 'mais_recentes') {
+        $filterQuery = "ORDER BY a.id_avaliacao DESC";
+    } elseif ($filtro == 'mais_antigos') {
+        $filterQuery = "ORDER BY a.id_avaliacao ASC";
+    } elseif ($filtro == 'por_turma') {
+        $filterQuery = "ORDER BY t.numero_da_turma";
+    }
+} else {
+    $filterQuery = "ORDER BY a.id_avaliacao DESC";
+}
+
+// Lista de palavras proibidas (exemplo)
+$palavrasProibidas = ['cu', 'palavra2', 'palavra3']; // Substitua pelas palavras que deseja bloquear
+
+// Função para filtrar palavras inapropriadas
+function filtrarPalavras($comentario, $palavrasProibidas) {
+    foreach ($palavrasProibidas as $palavra) {
+        $comentario = str_ireplace($palavra, '***', $comentario); // Substitui palavras por "***"
+    }
+    return $comentario;
+}
+
 try {
     $sqlAvaliacoes = "SELECT a.nivel_de_avaliacao, a.comentario, a.id_usuario, 
-                             u.nome, u.foto, t.numero_da_turma, t.data_inicio, t.data_final, 
-                             a.id_avaliacao
-                      FROM avaliacao a
-                      JOIN usuario u ON a.id_usuario = u.id_usuario
-                      LEFT JOIN turma t ON a.id_turma = t.id_turma
-                      LEFT JOIN post p ON a.id_usuario = p.id_usuario
-                      ORDER BY a.id_avaliacao DESC";  
+                            u.nome, u.foto, t.numero_da_turma, t.data_inicio, t.data_final, 
+                            a.id_avaliacao
+                    FROM avaliacao a
+                    JOIN usuario u ON a.id_usuario = u.id_usuario
+                    LEFT JOIN turma t ON a.id_turma = t.id_turma
+                    LEFT JOIN post p ON a.id_usuario = p.id_usuario
+                    $filterQuery";  
     $stmtAvaliacoes = $conexao->prepare($sqlAvaliacoes);
     $stmtAvaliacoes->execute();
     $avaliacoes = $stmtAvaliacoes->fetchAll(PDO::FETCH_ASSOC);
@@ -32,22 +56,23 @@ try {
     die("Erro ao recuperar avaliações: " . $e->getMessage());
 }
 
-// Processar a avaliação enviada
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['avaliacao'])) {
     $nivelAvaliacao = $_POST['nivel_de_avaliacao'];
     $comentario = $_POST['comentario'];
-    $idUsuario = $_SESSION['id_usuario']; // ID do usuário logado
+    $idUsuario = $_SESSION['id_usuario'];
+
+    // Filtra o comentário antes de inserir
+    $comentarioFiltrado = filtrarPalavras($comentario, $palavrasProibidas);
 
     try {
         $sqlInserirAvaliacao = "INSERT INTO avaliacao (nivel_de_avaliacao, comentario, id_usuario)
                                 VALUES (:nivel_de_avaliacao, :comentario, :id_usuario)";
         $stmt = $conexao->prepare($sqlInserirAvaliacao);
         $stmt->bindParam(':nivel_de_avaliacao', $nivelAvaliacao);
-        $stmt->bindParam(':comentario', $comentario);
+        $stmt->bindParam(':comentario', $comentarioFiltrado); // Usa o comentário filtrado
         $stmt->bindParam(':id_usuario', $idUsuario);
         $stmt->execute();
 
-        // Redireciona para a mesma página para evitar envio duplicado do formulário
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;
     } catch (PDOException $e) {
@@ -55,11 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['avaliacao'])) {
     }
 }
 
-// Deletar comentário
 if (isset($_GET['deletar'])) {
     $idComentario = $_GET['deletar'];
 
-    // Verifica se o usuário logado é o dono do comentário ou administrador
     try {
         $sqlComentario = "SELECT id_usuario FROM avaliacao WHERE id_avaliacao = :id_avaliacao";
         $stmtComentario = $conexao->prepare($sqlComentario);
@@ -68,7 +91,6 @@ if (isset($_GET['deletar'])) {
         $comentario = $stmtComentario->fetch(PDO::FETCH_ASSOC);
 
         if ($comentario) {
-            // Se for o dono do comentário ou o administrador
             if ($comentario['id_usuario'] == $_SESSION['id_usuario'] || $_SESSION['perfil'] == 'admin') {
                 $sqlDeletar = "DELETE FROM avaliacao WHERE id_avaliacao = :id_avaliacao";
                 $stmtDeletar = $conexao->prepare($sqlDeletar);
@@ -96,274 +118,177 @@ if (isset($_GET['deletar'])) {
     <link rel="stylesheet" href="../assets/css/style.css">
     <title>Avaliações</title>
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .imgPerfil {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .card {
-            border-radius: 15px;
-            background-color: #ffffff;
-            margin-bottom: 20px;
-            padding: 20px;
-            position: relative;
-            box-shadow: none; /* Remove a sombra e as bordas extras do card */
-        }
-
         .stars {
-            font-size: 1.5rem;
-            color: #FFD700;
+            display: inline-block;
+            direction: ltr; /* Estrelas devem ser exibidas da esquerda para a direita */
         }
 
-        .star {
-            font-size: 2rem;
+        .stars input {
+            display: none;
+        }
+
+        .stars label {
+            font-size: 30px;
+            color: #ccc;
             cursor: pointer;
-            transition: color 0.2s ease;
         }
 
-        .star:hover {
+        .stars input:checked ~ label {
+            color: #FFD700; /* Estrela preenchida após a seleção */
+        }
+
+        .stars input:hover ~ label {
+            color: #FFD700; /* Estrelas ficam amarelas ao passar o mouse */
+        }
+
+        .stars input:checked + label {
+            color: #FFD700; /* Colorir estrelas preenchidas */
+        }
+
+        .stars label:hover, .stars input:checked ~ label:hover {
             color: #FFD700;
         }
 
-        .comentario-info {
-            display: flex;
-            align-items: center;
+        .img-avaliacao {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
         }
 
-        .comentario-info p {
-            margin-bottom: 0;
-        }
-
-        .turma-info {
-            font-size: 0.9rem;
-            color: #6c757d;
-        }
-
-        .ordenacao {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .ordenacao a {
-            font-weight: bold;
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .ordenacao a:hover {
-            text-decoration: underline;
-        }
-
-        .ordenacao .btn {
-            font-weight: bold;
-            font-size: 0.9rem;
-            padding: 5px 15px;
-            border: 1px solid #007bff;
-            color: #007bff;
-            background-color: transparent;
-            border-radius: 4px;
-        }
-
-        .ordenacao .btn:hover {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .btn-danger {
-            background-color: #d9534f;
-            border-color: #d43f00;
-        }
-
-        .btn-danger:hover {
-            background-color: #c9302c;
-            border-color: #ac2925;
-        }
-
-        .btn-danger.btn-sm {
-            font-size: 0.75rem;
-            padding: 3px 8px;
-        }
-
-        .modal-dialog {
-            max-width: 400px;
-        }
-
-        .delete-icon {
+        .excluir-btn {
             position: absolute;
             bottom: 10px;
             right: 10px;
+            color: black;
             font-size: 1.5rem;
-            color: #ff5733;
-            cursor: pointer;
-        }
-
-        .delete-icon:hover {
-            color: #c0392b;
-        }
-
-        h2, h4 {
-            font-weight: bold;
-        }
-
-        .form-control {
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .form-label {
-            font-weight: bold;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        .card:hover {
-            transform: scale(1.02);
-            transition: all 0.3s ease;
         }
     </style>
 </head>
 <body>
 <?php include_once("./header.php"); ?>
 
-<div class="container mt-5">
-    <h2 class="text-center text-warning">Avaliações</h2>
-
-    <!-- Formulário de avaliação -->
-    <div class="mt-4">
-        <form action="" method="POST">
-            <div class="mb-3">
-                <label for="nivel_de_avaliacao" class="form-label">Avaliação</label>
-                <div id="nivel_de_avaliacao" class="d-flex">
-                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                        <input type="radio" class="btn-check" name="nivel_de_avaliacao" id="star<?= $i ?>" value="<?= $i ?>" required>
-                        <label class="btn btn-outline-warning star" for="star<?= $i ?>" data-star="<?= $i ?>">&#9733;</label>
-                    <?php endfor; ?>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="comentario" class="form-label">Comentário</label>
-                <textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" name="avaliacao">Enviar Avaliação</button>
-        </form>
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-auto">
+            <a href="areaInstrutor.php" class="btn d-flex align-items-center">
+                <i class="bi bi-arrow-left-short azul-senac fw-bold fs-1"></i> 
+            </a>
+        </div>
     </div>
+</div>
 
-    <!-- Exibição de avaliações -->
+<div class="container mt-5">
+    <h2 class="text-center">Avaliações</h2>
+
+    <form method="POST" class="mb-4">
+        <div class="d-flex justify-content-between">
+            <div>
+                <label for="filtro" class="form-label">Filtrar avaliações:</label>
+                <select name="filtro" id="filtro" class="form-select" onchange="this.form.submit()">
+                    <option value="mais_recentes" <?php if (isset($_POST['filtro']) && $_POST['filtro'] == 'mais_recentes') echo 'selected'; ?>>Mais recentes</option>
+                    <option value="mais_antigos" <?php if (isset($_POST['filtro']) && $_POST['filtro'] == 'mais_antigos') echo 'selected'; ?>>Mais antigos</option>
+                    <option value="por_turma" <?php if (isset($_POST['filtro']) && $_POST['filtro'] == 'por_turma') echo 'selected'; ?>>Por turma</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <h3 class="mt-5">Deixe sua avaliação:</h3>
+    <form method="POST">
+        <div class="mb-3">
+            <div class="stars">
+                <input type="radio" name="nivel_de_avaliacao" id="star1" value="1" required>
+                <label for="star1">★</label>
+                <input type="radio" name="nivel_de_avaliacao" id="star2" value="2" required>
+                <label for="star2">★</label>
+                <input type="radio" name="nivel_de_avaliacao" id="star3" value="3" required>
+                <label for="star3">★</label>
+                <input type="radio" name="nivel_de_avaliacao" id="star4" value="4" required>
+                <label for="star4">★</label>
+                <input type="radio" name="nivel_de_avaliacao" id="star5" value="5" required>
+                <label for="star5">★</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="comentario" class="form-label">Comentário</label>
+            <textarea class="form-control" id="comentario" name="comentario" rows="3" required></textarea>
+        </div>
+        <button type="submit" name="avaliacao" class="btn btn-primary">Enviar Avaliação</button>
+    </form>
+
     <div class="mt-4">
         <?php if (!empty($avaliacoes)): ?>
             <?php foreach ($avaliacoes as $avaliacao): ?>
-                <div class="card">
+                <div class="card mb-3 p-3 shadow-sm position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <a href="./perfilVer.php?id=<?= $avaliacao['id_usuario'] ?>">
-                            <?php if (!empty($avaliacao['foto']) && file_exists("../foto/" . $avaliacao['foto'])): ?>
-                                <img src="../foto/<?= htmlspecialchars($avaliacao['foto']) ?>" class="imgPerfil me-3" alt="Imagem de perfil">
-                            <?php else: ?>
-                                <img src="../assets/img/default-avatar.png" class="imgPerfil me-3" alt="Imagem de perfil padrão">
-                            <?php endif; ?> </a>
+                                <img src="../foto/<?= !empty($avaliacao['foto']) && file_exists("../foto/" . $avaliacao['foto']) ? htmlspecialchars($avaliacao['foto']) : 'default-avatar.png' ?>" 
+                                    class="img-avaliacao rounded-circle me-3" 
+                                    alt="Imagem de perfil">
+                            </a>
                             <div>
                                 <p class="mb-0 fw-bold"><?= htmlspecialchars($avaliacao['nome']) ?></p>
-                                <p class="mb-0 turma-info">Turma: <?= htmlspecialchars($avaliacao['numero_da_turma']) ?> | Início: <?= htmlspecialchars($avaliacao['data_inicio']) ?> | Fim: <?= htmlspecialchars($avaliacao['data_final']) ?></p>
+                                <p class="mb-0 text-muted small">Turma: <?= htmlspecialchars($avaliacao['numero_da_turma']) ?> | Início: <?= htmlspecialchars($avaliacao['data_inicio']) ?> | Fim: <?= htmlspecialchars($avaliacao['data_final']) ?></p>
                             </div>
                         </div>
                         <div class="stars">
-                            <?php for ($i = 1; $i <= 5; $i++): ?>
-                                <span class="star" style="color: <?= $i <= $avaliacao['nivel_de_avaliacao'] ? '#FFD700' : '#ccc' ?>;">&#9733;</span>
+                            <?php 
+                            // Arredondar para o inteiro mais próximo
+                            $nivelAvaliado = round($avaliacao['nivel_de_avaliacao']);
+                            for ($i = 1; $i <= 5; $i++): 
+                                // Mostrar estrelas preenchidas ou vazias dependendo do valor arredondado
+                                $starColor = ($i <= $nivelAvaliado) ? '#FFD700' : '#ccc';
+                            ?>
+                                <span class="bi bi-star-fill" style="color: <?= $starColor ?>"></span>
                             <?php endfor; ?>
-                            <span class="ms-2"><?= number_format($avaliacao['nivel_de_avaliacao'], 1) ?></span>
+                            <span class="ms-2"><?= number_format($nivelAvaliado, 1) ?></span>
                         </div>
                     </div>
                     <p class="mt-3 text-muted"><?= htmlspecialchars($avaliacao['comentario']) ?></p>
 
                     <?php if ($_SESSION['id_usuario'] == $avaliacao['id_usuario'] || $_SESSION['perfil'] == 'admin'): ?>
-                        <i class="bi bi-trash delete-icon" onclick="confirmarExclusao('?deletar=<?= $avaliacao['id_avaliacao'] ?>')"></i>
+                        <button class="btn excluir-btn" data-bs-toggle="modal" data-bs-target="#modalDeletar" data-id="<?= $avaliacao['id_avaliacao'] ?>">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <p class="text-center">Nenhuma avaliação disponível.</p>
+            <p class="text-center">Não há avaliações disponíveis.</p>
         <?php endif; ?>
     </div>
 </div>
 
-<!-- Modal de confirmação -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="modalDeletar" tabindex="-1" aria-labelledby="modalDeletarLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Confirmar Exclusão</h5>
+                <h5 class="modal-title" id="modalDeletarLabel">Confirmar Exclusão</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Você tem certeza de que deseja excluir esta avaliação?
+                Tem certeza de que deseja excluir esta avaliação?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="confirmDelete">Excluir</button>
+                <a href="#" class="btn btn-danger" id="confirmDelete">Excluir</a>
             </div>
         </div>
     </div>
 </div>
 
-<script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 <script>
-    // Função de confirmação para exclusão
-    function confirmarExclusao(url) {
-        document.getElementById('confirmDelete').onclick = function() {
-            window.location.href = url;
-        };
-
-        // Abre o modal de confirmação
-        var myModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-        myModal.show();
-    }
-
-    // Função para alterar a cor das estrelas ao passar o mouse
-    document.querySelectorAll('.star').forEach(function(star) {
-        star.addEventListener('mouseover', function() {
-            let rating = this.getAttribute('data-star');
-            highlightStars(rating);
-        });
-        star.addEventListener('mouseout', function() {
-            let checkedRating = document.querySelector('input[name="nivel_de_avaliacao"]:checked');
-            let rating = checkedRating ? checkedRating.value : 0;
-            highlightStars(rating);
-        });
+    const modalDeletar = document.querySelector('#modalDeletar');
+    modalDeletar.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const idAvaliacao = button.getAttribute('data-id');
+        const confirmDelete = modalDeletar.querySelector('#confirmDelete');
+        confirmDelete.setAttribute('href', `?deletar=${idAvaliacao}`);
     });
-
-    // Função para destacar as estrelas
-    function highlightStars(rating) {
-        document.querySelectorAll('.star').forEach(function(star) {
-            let starValue = star.getAttribute('data-star');
-            star.style.color = starValue <= rating ? '#FFD700' : '#ccc';
-        });
-    }
-
-    // Inicia com o valor da avaliação já setado
-    window.onload = function() {
-        let checkedRating = document.querySelector('input[name="nivel_de_avaliacao"]:checked');
-        let rating = checkedRating ? checkedRating.value : 0;
-        highlightStars(rating);
-    };
 </script>
 
+<script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

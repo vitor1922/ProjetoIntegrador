@@ -5,13 +5,11 @@ $nome = isset($_SESSION['nome']) && !empty($_SESSION['nome']) ? $_SESSION['nome'
 // Se não for "Visitante", extrai o primeiro nome
 $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";
 
-$urlAtual = $_SERVER['REQUEST_URI']; // Obtém a URL atual
-$exibirUsuario = strpos($urlAtual, "index.php") !== false; // Verifica se está na home (index.php)
 ?>
 
 <header>
-    <div class="row header-vii">
-        <div class="col-12 d-flex justify-content-center m-1 mt-1 mb-2">
+    <div class=" header-vii">
+        <div class="d-flex justify-content-center mt-1 mb-2">
             <a href="https://www.pr.senac.br/principal/"><img src="<?= BASE_URL ?>assets/img/logoSenac.png" alt="logo senac" class="img-logo-senac " href=""></a>
         </div>
     </div>
@@ -34,15 +32,15 @@ $exibirUsuario = strpos($urlAtual, "index.php") !== false; // Verifica se está 
                             <li class="nav-item">
                                 <a class="nav-link" href="<?= BASE_URL ?>index.php#sobre">Sobre</a>
                             </li>
-                            <!-- <li class="nav-item">
-                                    <a class="nav-link" href="<?= BASE_URL ?>screens/verTodosServicos.php">Serviços</a>
-                                </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= BASE_URL ?>screens/verTodosServicos.php">Serviços</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?= BASE_URL ?>screens/agendamento.php">Agendar Horário</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?= BASE_URL ?>index.php#contato">Fale Conosco</a>
-                            </li>
+                            </li>                           
                             <li class="nav-item">
                                 <a class="nav-link" href="<?= BASE_URL ?>screens/blog.php">Blog</a>
                             </li>
@@ -62,10 +60,7 @@ $exibirUsuario = strpos($urlAtual, "index.php") !== false; // Verifica se está 
             <div class="nav-item dropdown">
                 <a class="nav-link mx-4" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-person-circle fs-5"><?= htmlspecialchars($primeiroNome) ?></i>
-
                 </a>
-
-
                 <ul class="dropdown-menu dropdown-menu-end bg-white">
                     <?php if ($logado) { ?>
                         <li><a class="dropdown-item" href="<?= BASE_URL ?>screens/Perfil.php">Perfil</a></li>

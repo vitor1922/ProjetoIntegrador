@@ -59,12 +59,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </head>
 
-<body class="container-fluid">
+<body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0">
     <?php
     include_once('./header.php');
     ?>
-    <main class="d-flex align-items-center">
-        <div class="container form-container d-flex justify-content-center align-items-center">
+    <main class="d-flex align-items-center p-3">
+        <div class=" container form-container d-flex justify-content-center align-items-center">
             <div class="col-10 col-md-6 col-lg-6 bg-light p-3 rounded-4 shadow-lg">
                 <h5 class="text-center mb-3 mt-2 text-warning">Fazer Login</h5>
                 <hr class="border-warning" style="border-width: 3px;">
@@ -84,17 +84,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalRecuperacao">
-                        Esqueceu a senha?
+                            Esqueceu a senha?
                         </button>
                     </div>
                     <div>
-                    <button type="submit" class="btn btn-primary btn-block mt-3">Fazer Login</button>
+                        <button type="submit" class="btn btn-primary btn-block mt-3">Fazer Login</button>
                 </form>
                 <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#fazerCadastro"> Criar conta </button>
                 <?php
                 include(".//recuperarSenha.php");
                 ?>
-                
             </div>
             <?php if (isset($mensagem)) { ?>
                 <p class="alert alert-warning mt-2">
@@ -103,8 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php } ?>
 
             <!-- Modal -->
-
-
 
             <div class="modal fade" id="fazerCadastro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -136,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="cpf">CPF</label>
-                                            <input type="text" class="form-control bg-light" id="cpf" placeholder="Digite seu CPF" maxlength="14" name="txtCpf" required>
+                                            <input type="text" class="form-control bg-light" id="cpf" placeholder="Digite seu CPF"  name="txtCpf" required>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="email">E-mail</label>
@@ -144,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="phone">Telefone</label>
-                                            <input type="text" class="form-control bg-light" id="phone" maxlength="15" placeholder="Digite seu telefone" name="txtTelefone" required>
+                                            <input type="text" class="form-control bg-light" id="phone"minlength="9"  maxlength="15" placeholder="Digite seu telefone" name="txtTelefone" required>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="cep">CEP</label>
@@ -188,6 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </main>
+
     <?php
     include("./footer.php");
     ?>
@@ -195,5 +193,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../src/js/script.js"></script>
     <script src="../src/js/cep.js"></script>
 </body>
-
 </html>

@@ -58,7 +58,7 @@ if (!$logado) {
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
 </head>
 
-<body class="d-flex flex-column justify-content-between">
+<body class=" container-fluid d-flex flex-column justify-content-between">
 
 
 

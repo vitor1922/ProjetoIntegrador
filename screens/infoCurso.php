@@ -16,8 +16,8 @@ $_SESSION['mensagem'] = NULL;
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
     exit;
-}elseif($perfil !== "professor"){
-    if ($perfil !== "admin"){
+} elseif ($perfil !== "professor") {
+    if ($perfil !== "admin") {
         header("Location: " . BASE_URL . "index.php");
     }
 }
@@ -50,6 +50,13 @@ $selectAlunos = $conexao->prepare($sqlAlunos);
 if ($selectAlunos->execute()) {
     $alunos = $selectAlunos->fetchAll(PDO::FETCH_ASSOC);
 }
+$prof = "professor";
+$sqlProfessores = "SELECT * FROM usuario WHERE perfil = :id_curso ORDER BY nome ASC";
+$selectProfessores = $conexao->prepare("$sqlProfessores");
+$selectProfessores->bindParam(":id_curso", $prof);
+if ($selectProfessores->execute()) {
+    $professores = $selectProfessores->fetchAll(PDO::FETCH_ASSOC);
+}
 
 // echo("<pre>");
 //  var_dump($turmas);
@@ -73,7 +80,7 @@ $paginaAnterior = "gerenciamentoCursos.php";
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
-<body class="vh-100 d-flex flex-column justify-content-between">
+<body class="container-fluid d-flex flex-column justify-content-between">
     <div>
         <?php
         include_once("./header.php");
@@ -83,7 +90,7 @@ $paginaAnterior = "gerenciamentoCursos.php";
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
-                        <a href="<?=$paginaAnterior?>"><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
+                        <a href="<?= $paginaAnterior ?>"><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
                         <button class="btn border fw-bold azul-senac me-5 ">Editar</button>
                     </div>
                 </div>
@@ -101,20 +108,20 @@ $paginaAnterior = "gerenciamentoCursos.php";
                             <h3 class="text-center fs-4">Horários de Atendimento</h3>
                         </div>
                         <div class="col-1">
-                        <button class="btn " data-bs-toggle="modal" data-bs-target="#modalAdicionarHorario"><i class="bi bi-plus-square-fill fs-2 azul-senac"></i></button>
+                            <button class="btn " data-bs-toggle="modal" data-bs-target="#modalAdicionarHorario"><i class="bi bi-plus-square-fill fs-2 azul-senac"></i></button>
                         </div>
                     </div>
-                    <?php foreach($horarios as $horario){?>
-                        <?php $data = date('d/m/Y', strtotime($horario["data"]))?>
-                    <div class="row">
-                        <div class="offset-sm-4 offset-2 col-sm-3 col-7 d-flex justify-content-center align-items-center">
-                            <p class="text-center my-0 py-0"><?=$data?> - <?=date("H:i", strtotime($horario["hora"]))?> - ?/<?=$horario["vagas"]?> vagas</p>
+                    <?php foreach ($horarios as $horario) { ?>
+                        <?php $data = date('d/m/Y', strtotime($horario["data"])) ?>
+                        <div class="row">
+                            <div class="offset-sm-4 offset-2 col-sm-3 col-7 d-flex justify-content-center align-items-center">
+                                <p class="text-center my-0 py-0"><?= $data ?> - <?= date("H:i", strtotime($horario["hora"])) ?> - ?/<?= $horario["vagas"] ?> vagas</p>
+                            </div>
+                            <div class=" col-1 d-flex justify-content-start">
+                                <button class=" btn"><i class="bi bi-ban text-danger"></i></button>
+                            </div>
                         </div>
-                        <div class=" col-1 d-flex justify-content-start">
-                            <button class=" btn"><i class="bi bi-ban text-danger"></i></button>
-                        </div>
-                    </div>
-                    <?php }?>
+                    <?php } ?>
                 </div>
                 <div class="shadow-sm border py-3 ">
                     <div class="row">
@@ -147,7 +154,7 @@ $paginaAnterior = "gerenciamentoCursos.php";
                     <?php
                     $numeroDeAlunos = 0;
                     foreach ($alunos as $aluno) {
-                        if ($turma['id_turma']=== $aluno["id_turma"]) {
+                        if ($turma['id_turma'] === $aluno["id_turma"]) {
                             $numeroDeAlunos += 1;
                         }
                     }
@@ -159,7 +166,7 @@ $paginaAnterior = "gerenciamentoCursos.php";
                     }
                     ?>
 
-                    <a href="infoTurma.php?id=<?=$turma["id_turma"]?>">
+                    <a href="infoTurma.php?id=<?= $turma["id_turma"] ?>">
                         <div class=" text-center border py-2 text-secondary">
 
                             <div class="row d-flex align-content-center">
@@ -181,21 +188,31 @@ $paginaAnterior = "gerenciamentoCursos.php";
                                 <div class="d-flex justify-content-end mb-3">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <form action="../src/logicos/adicionarTurma.php" method="POST" >
+                                <form action="../src/logicos/adicionarTurma.php" method="POST">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Professor Responsável</label>
+
+                                        <select type="text" class="form-control" name="txtProfessor" required>
+                                            <option value="" disabled selected>Selecione um professor</option>
+                                            <?php foreach ($professores as $professor) { ?>
+                                                <option value="<?= $professor["id_usuario"] ?>"><?= $professor["nome"] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">ID da Turma</label>
                                         <input type="text" class="form-control" name="txtIdTurma" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold" >Data de Início</label>
+                                        <label class="form-label fw-bold">Data de Início</label>
                                         <input type="date" class="form-control" name="txtDataInicio" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold" >Data do Fim</label>
+                                        <label class="form-label fw-bold">Data do Fim</label>
                                         <input type="date" class="form-control" name="txtDataFim" required>
                                     </div>
-                                    <input type="text" value="<?=$cursoId?>" name="txtIdCurso" hidden>
-                                    
+                                    <input type="text" value="<?= $cursoId ?>" name="txtIdCurso" hidden>
+
 
                                     <div class="mb-3 d-flex justify-content-center">
                                         <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
@@ -214,21 +231,21 @@ $paginaAnterior = "gerenciamentoCursos.php";
                                 <div class="d-flex justify-content-end mb-3">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <form action="../src/logicos/adicionarHorario.php" method="POST" >
+                                <form action="../src/logicos/adicionarHorario.php" method="POST">
                                     <div class="mb-3">
                                         <label class="form-label fw-bold">Data</label>
                                         <input type="date" class="form-control" name="txtData" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold" >Horario</label>
+                                        <label class="form-label fw-bold">Horario</label>
                                         <input type="time" class="form-control" name="txtHorario" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold" >Vagas</label>
+                                        <label class="form-label fw-bold">Vagas</label>
                                         <input type="number" class="form-control" name="txtVagas" min="0" required>
                                     </div>
-                                    <input type="text" value="<?=$cursoId?>" name="txtCurso" hidden>
-                                    
+                                    <input type="text" value="<?= $cursoId ?>" name="txtCurso" hidden>
+
 
                                     <div class="mb-3 d-flex justify-content-center">
                                         <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>

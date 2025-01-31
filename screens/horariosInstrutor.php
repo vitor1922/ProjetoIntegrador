@@ -104,7 +104,7 @@ function formatDate($date) {
     <meta name="author" content="Vitor Baggio">
 </head>
 
-<body>
+<body class="container-fluid">
 
     <?php include_once("./header.php"); ?>
 

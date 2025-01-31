@@ -72,7 +72,7 @@ unset($conexao);
     <title>Perfil</title>
 </head>
 
-<body class="vh-100">
+<body class="container-fluid">
 
     <?php include_once("./header.php"); ?>
 
