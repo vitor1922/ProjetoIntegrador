@@ -12,9 +12,11 @@ $logado = $_SESSION['logado'] ?? NULL;
 $sql = "SELECT * FROM agenda ORDER BY id_agenda DESC";
 $select = $conexao->prepare($sql);
 
+
 if ($select->execute()) {
     $agenda = $select->fetchAll(PDO::FETCH_ASSOC);
 }
+
 
 unset($conexao);
 ?>
@@ -72,8 +74,9 @@ unset($conexao);
                                     <div class="card card-body start-0 position-absolute w-100">
                                         <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                             <option selected>Selecionar Horario</option>
-                                            <?php foreach ($agenda as $hora) { ?>
-                                                <option value="<?= $hora['id_agenda'] ?>"><?= $hora['data'] ?> <?= $hora['hora'] ?></option>
+                                            <?php foreach ($agenda as $hora) { 
+                                                $dataFormatada = (new DateTime($hora['data']))->format('d/m/Y');?>
+                                                <option value="<?= $hora['id_agenda'] ?>"> <?= $hora['hora'] ?> - <?= $dataFormatada?></option>
                                             <?php } ?>
                                         </select>
                                         <div class="position-relative mt-5">

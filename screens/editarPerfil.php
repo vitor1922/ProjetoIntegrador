@@ -11,7 +11,7 @@ $_SESSION['mensagem'] = NULL;
 
 $logado =  $_SESSION['logado'] ?? FALSE;
 $nome = $_SESSION['nome'] ?? "";
-$id_usuario = $_SESSION['id_usuario'] ?? "";    
+$id_usuario = $_SESSION['id_usuario'] ?? "";
 
 if ($perfil == 'professor') {
     $estilo = "border border-success rounded-circle border border-3 m-2";
@@ -50,20 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 
-if ($perfil == 'professor') {
-    $estilo = "bg-success";
-} elseif ($perfil == 'aluno') {
-    $estilo = "bg-primary";
-} elseif ($perfil == 'cliente') {
-    $estilo = "bg-warning";
-} elseif ($perfil == 'admin') {
-    $estilo = "bg-danger";
-}
-
-
-// var_dump($login["foto"]);
-// die;
-
 unset($conexao);
 
 ?>
@@ -95,50 +81,57 @@ unset($conexao);
                     </svg></button></a>
         </div>
 
-        <div class="container d-flex justify-content-center align-content-center ">
-            <div class=" card d-flex justify-content-center border-4 shadow-lg col-lg-12">
+        <div class="container d-flex justify-content-center align-content-center">
+            <div class=" card d-flex justify-content-center border-4 shadow-lg col-lg-12 w-100">
                 <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php" enctype="multipart/form-data">
-                <div class="headerPerfil d-flex justify-content-center align-items-center">
-                    <div class="profile-background <?= $estilo ?>">
+                    <div class="headerPerfil d-flex">
+                        <div class="">
+                                <div class="profile-background">
+                                    <img src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
+                                </div>
+                                    <div class="d-flex justify-content-center">
+                                        <label class="btn btn-primary">
+                                        Selecionar Banner<input type="file" name="banner" accept="image/jpg, image/png, image/jpeg" hidden onchange="updateLabel(this, 'fileLabelBanner')">
+                                    </label>
+                                <input type="text" name="imgBanner" value="<?= $login["banner"] ?>" hidden>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="d-flex justify-content-start mx-3 mt-1 align-items-start col-5">
-                    <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil mt-3 bordaa border border-black" name="foto" alt="Imagem de perfil">
-                </div>
+                    <div class="d-flex justify-content-start mx-3 align-items-start col-5">
+                        <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa border border-black" name="foto" alt="Imagem de perfil">
+                    </div>
                     <div class="d-flex justify-content-center">
-                        <input type="file" class="inputs form-control w-50 mt-5" name="foto" accept="image/jpg, image/png, image/jpeg" onchange="previewImage(event)"><button class="btn">
-                    </div>
-                        <div>
+                        <label class="btn btn-primary">
+                            Selecionar foto de perfil<input type="file" name="foto" accept="image/jpg, image/png, image/jpeg" hidden onchange="updateLabel(this)">
+                        </label>
                             <input type="text" name="imgName" value="<?= $login["foto"] ?>" hidden>
-                        </div>
-                    <div>
+                    </div>
 
-                <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
+                        <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
                             value="<?= $login['id_usuario'] ?? '' ?>" hidden>
-                        <h6 class="card-text d-flex justify-content-center fw-bold mt-5" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
+                        <h6 class="card-text d-flex justify-content-center fw-bold mt-1" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
 
-                                <div class="nomePerfil p-3">
-                                    <h6 class="fw-bold laranja-senac mx-2 mt-5">Nome Atual:</h6>
-                                    <h5 class="card-title d-flex mx-1"><?= $login['nome'] ?? '' ?></h5> <br>
-                                    <label for="nome" class="form-label fw-bold azul-senac mx-2">Novo Nome</label>
-                                    <input type="text" name="txtNome" class="form-control mb-2" value="<?= $login['nome'] ?? '' ?>">
-                                </div>
-                            </div>
+                    <div class="col mb-3">
+                        <div class="nomePerfil p-3">
+                            <h6 class="fw-bold laranja-senac mx-2">Nome Atual:</h6>
+                            <h5 class="card-title d-flex mx-1"><?= $login['nome'] ?? '' ?></h5> <br>
+                            <label for="nome" class="form-label fw-bold azul-senac mx-2">Novo Nome</label>
+                            <input type="text" name="txtNome" class="form-control mb-2" value="<?= $login['nome'] ?? '' ?>">
+                        </div>
 
-                            <h6 class="mt-2 fw-bold laranja-senac mx-2">Bio Atual:</h6>
-                            <p class="list-group-item mx-4"><?= $login["biografia"] ?></p>
+                    <h6 class="fw-bold laranja-senac mx-2">Bio Atual:</h6>
+                    <p class="list-group-item mx-4"><?= $login["biografia"] ?></p>
 
-                        <div class="col mb-3">
-                            <div class="nomePerfil">
-                            <div class="mx-3 mb-3 mt-1 fw-bold">
+                        <div class="nomePerfil">
+                            <div class="mx-3 mb-3 fw-bold">
                                 <label for="bio" class="form-label fw-bold azul-senac">Nova Bio</label>
-                                <textarea class="form-control p-2" name="txtBiografia" rows="3"><?= $login['biografia'] ?? '' ?></textarea>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn text-light shadow-sm fs-4 fw-bold btn-azul-senac border-2 rounded-5 d-flex justify-content-center w-75">Confirmar</button>
+                                <textarea class="form-control p-2" name="txtBiografia" rows="2"><?= $login['biografia'] ?? '' ?></textarea>
                             </div>
                         </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn text-light shadow-sm fs-4 fw-bold btn-azul-senac border-2 rounded-5 d-flex justify-content-center w-50">Confirmar</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -148,6 +141,8 @@ unset($conexao);
     <?php
     include("./footer.php");
     ?>
+
+
 
 
     <script src="../src/js/script.js"></script>

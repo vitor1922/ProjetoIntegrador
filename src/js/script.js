@@ -102,3 +102,46 @@ function toggleTextarea(id, show) {
         textarea.style.display = 'none';
     }
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const inputImagem = document.getElementById("inputImagem");
+    const imagemPreview = document.getElementById("imagemPreview");
+    let cropper;
+
+    inputImagem.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imagemPreview.src = e.target.result;
+
+                // Se já existe um cropper, destruí-lo antes de criar um novo
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                cropper = new Cropper(imagemPreview, {
+                    aspectRatio: 1, // Define a proporção do corte (1:1, quadrado)
+                    viewMode: 2
+                });
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById("cortarImagem").addEventListener("click", function () {
+        if (cropper) {
+            const canvas = cropper.getCroppedCanvas();
+            document.getElementById("resultado").getContext("2d").drawImage(canvas, 0, 0);
+        }
+    });
+});
+
+// do zezinho
+    function updateLabel(input) {
+        let fileLabel = document.getElementById('fileLabel');
+        fileLabel.textContent = input.files.length > 0 ? input.files[0].name : "Nenhum arquivo selecionado";
+    }

@@ -18,16 +18,24 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             if ($delete->execute()) {
                 $_SESSION['mensagem'] = "Curso excluído com sucesso";
                 $_SESSION['perfil_mensagem'] = "text-success bg-success-subtle";
+                
+                // Redireciona para a página gerenciamentoCursos.php após a exclusão com sucesso
+                header("Location: " . BASE_URL . "screens/gerenciamentoCursos.php");
+                exit;  // Não se esqueça de usar exit após o header para evitar a execução de código adicional
             } else {
                 throw new Exception("Erro ao excluir o curso");
             }
         } catch (Exception $e) {
             $_SESSION['mensagem'] = "Ocorreu um erro ao excluir o curso: " . $e->getMessage();
             $_SESSION['perfil_mensagem'] = "text-danger bg-danger-subtle";
-            header("Location: " . BASE_URL . "screens/infoTurma.php?id=". $idCurso);
+            
+            // Em caso de erro, redireciona para a página gerenciamentoCursos.php
+            header("Location: " . BASE_URL . "screens/gerenciamentoCursos.php");
             exit;
         } finally {
             unset($conexao);
         }
     }
 }
+
+

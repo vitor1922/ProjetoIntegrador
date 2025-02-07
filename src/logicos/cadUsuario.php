@@ -4,28 +4,32 @@ include('../../constantes.php');
 include_once('../../data/conexao.php');
 
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $camposObrigatorios = [$_POST];
 
-    
-  
+
+
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $camposObrigatorios = $_POST;
+
+
     // Verificação de campos vazios
-    foreach ($camposObrigatorios[0] as $campo) {
+    foreach ($camposObrigatorios as $campo) {
         if (empty($campo)) {
-            $_SESSION['mensagem'] = "Todos os campos são obrigatórios!";
+            $_SESSION['mensagem'] = "O campo " . ucfirst(str_replace('txt', '', $campo)) . " é obrigatório!";
             header("Location: " . BASE_URL . "/index.php");
             exit;
-        }
+        }       
     }
 
-    // Sanitização dos dados
-    $dados = array_map(function ($campo) {
-        return filter_input(INPUT_POST, $campo, FILTER_SANITIZE_SPECIAL_CHARS);
+     // Sanitização dos dados (após verificação de campos vazios)
+     $dados = array_map(function ($valorCampo) {
+        return htmlspecialchars($valorCampo, ENT_QUOTES, 'UTF-8');
     }, $_POST);
+     
+   
 
-    var_dump($dados);
-    die;
 
+    // Sanitização específica
     $dados['txtEmail'] = filter_var($dados['txtEmail'], FILTER_SANITIZE_EMAIL);
     $dados['txtSenha'] = password_hash($dados['txtSenha'], PASSWORD_DEFAULT);
     $dados['perfil'] = "cliente";
@@ -35,20 +39,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $cpfSemMascara = preg_replace('/\D/', '', $dados['txtCpf']);
     $telefoneSemMascara = preg_replace('/\D/', '', $dados['txtTelefone']);
 
-    
+ 
 
+    // Validações de CPF e Telefone
     if (strlen($cpfSemMascara) < 11) {
-        $_SESSION['mensagem'] = "CPF inválido! Por favor, insira um CPF com 11 dígitos.";
-        header("Location: " . BASE_URL . "screens/signUp.php");
-        exit;
-    }
-    
-    if (strlen($telefoneSemMascara) < 10 || strlen($dados['txtTelefone']) > 11) {
-        $_SESSION['mensagem'] = "Telefone inválido! O número deve conter 10 ou 11 dígitos (DDD + número).";
+        $_SESSION['mensagem'] = "CPF inválido! O CPF deve conter exatamente 11 dígitos.";
         header("Location: " . BASE_URL . "screens/signUp.php");
         exit;
     }
 
+    if (strlen($telefoneSemMascara) < 11) {
+        $_SESSION['mensagem'] = "Telefone inválido! O número deve conter 11 dígitos (DDD + número).";
+        header("Location: " . BASE_URL . "screens/signUp.php");
+        exit;
+    }
+
+    // Inserção no banco?
     try {
         $sql = "INSERT INTO usuario (genero, nome, data_de_nascimento, cpf, email, telefone, cep, uf, cidade, endereco, senha, perfil) 
                 VALUES (:genero, :nome, :dataNasc, :cpf, :email, :telefone, :cep, :uf, :cidade, :endereco, :senha, :perfil)";
@@ -69,12 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             ':perfil' => $dados['perfil']
         ]);
 
-        if ($stmt->rowCount() > 0) {
-            $_SESSION['mensagem'] = "Cadastrado com sucesso!";
-        } else {
-            $_SESSION['mensagem'] = "Erro ao cadastrar!";
-        }
-
+        $_SESSION['mensagem'] = $stmt->rowCount() > 0 ? "Cadastrado com sucesso!" : "Erro ao cadastrar!";
         header("Location: " . BASE_URL . "screens/signUp.php");
         exit;
     } catch (PDOException $e) {
@@ -85,4 +86,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         unset($conexao);
     }
 }
-

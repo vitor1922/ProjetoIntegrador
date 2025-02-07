@@ -5,11 +5,10 @@ session_start();
 include("../constantes.php");
 include_once('../data/conexao.php');
 
-$perfil = $_SESSION['perfil'] ?? NULL;
-$logado = $_SESSION['logado'] ?? FALSE;
-$mensagem = $_SESSION['mensagem'] ?? NULL;
-$_SESSION['mensagem'] = NULL;
 $_SESSION['logado'] = FALSE;
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+$_SESSION['formulario'] = $_POST ?? NULL;
+$perfil = $_SESSION['perfil'] ?? NULL;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cep = preg_replace('/[^0-9]/', '', $_POST['txtCep']); // Limpa o CEP, mantendo apenas números
@@ -63,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php
     include_once('./header.php');
     ?>
-    <main class="d-flex align-items-center p-3">
+    <main class="d-flex justify-content-center align-items-center ">
         <div class=" container form-container d-flex justify-content-center align-items-center">
             <div class="col-10 col-md-6 col-lg-6 bg-light p-3 rounded-4 shadow-lg">
                 <h5 class="text-center mb-3 mt-2 text-warning">Fazer Login</h5>

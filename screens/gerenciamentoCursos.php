@@ -56,12 +56,13 @@ if ($select->execute()) {
                     </div>
                 </div>
                 <div class="row mt-5 d-flex justify-content-center ">
-                    <a href="./gerenciamentoTurmas.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 fw-bold p-0 ">
-                        <button class="btn border-dark-subtle fs-7" type="button">TURMAS</button>
-                    </a>
                     <a href="./gerenciamentoCursos.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 p-0">
                         <button class="btn btn-azul-senac text-white border-dark-subtle fs-7 fw-bold" type="button">CURSOS</button>
                     </a>
+                    <a href="./gerenciamentoTurmas.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 fw-bold p-0 ">
+                        <button class="btn border-dark-subtle fs-7 fw-bold" type="button">TURMAS</button>
+                    </a>
+
                     <a href="./gerenciamentoProfessores.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 p-0">
                         <button class="btn border-dark-subtle fs-7 fw-bold" type="button">PROFESSORES</button>
                     </a>
@@ -71,53 +72,55 @@ if ($select->execute()) {
                     <div class="row mb-3">
                         <div class=" col-6 d-flex align-items-center ">
                             <input type="text" class="col-10 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" value="PESQUISAR">
-                            <button type="button" class="ms-2 btn btn-primary bg-azul-senac rounded btn-plus" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">+</button>
+                            <?php if ($perfil == "admin") { ?>
+                                <button type="button" class="ms-2 btn btn-primary btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Curso</button>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
                 <?php foreach ($cursos as $curso) { ?>
-    <div class="row border border-1 py-3">
-        <!-- Link na imagem -->
-        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
-            <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="img-curso">
-        </a>
+                    <div class="row border border-1 py-3">
+                        <!-- Link na imagem -->
+                        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
+                            <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="img-curso">
+                        </a>
 
-        <!-- Link no nome do curso -->
-        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="col-lg-4 col-md-4 col-sm-2 col-4 d-flex align-items-center text-decoration-none">
-            <p class="fs-5 text-secondary text-start"><?= $curso["nome_do_curso"] ?></p>
-        </a>
+                        <!-- Link no nome do curso -->
+                        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="col-lg-4 col-md-4 col-sm-2 col-4 d-flex align-items-center text-decoration-none">
+                            <p class="fs-5 text-secondary text-start"><?= $curso["nome_do_curso"] ?></p>
+                        </a>
 
-        <!-- Botão de exclusão (fora do link) -->
-        <div class="col-lg-1 col-md-1 col-sm-1 col-1 d-flex align-items-center">
-            <div class="col-1 d-flex justify-content-start">
-                <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
-                    <i class="bi bi-trash-fill"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-                        <!-- Modal excluir Curso -->
-                        <div class="modal fade" id="modalExcluirCurso<?= $curso["id_curso"] ?>" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="d-flex justify-content-end mb-3">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="../src/logicos/excluirCurso.php" method="POST">
-                        <input type="hidden" name="id_curso" value="<?= $curso["id_curso"] ?>">
-                        <p class="text-center">Tem certeza que deseja excluir o curso <strong><?= $curso["nome_do_curso"] ?></strong>?</p>
-                        <div class="mb-3 d-flex justify-content-center">
-                            <button class="btn btn-danger text-white fw-bold px-5" type="submit">EXCLUIR</button>
+                        <!-- Botão de exclusão (fora do link) -->
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-1 d-flex align-items-center">
+                            <div class="col-1 d-flex justify-content-start">
+                                <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+                    </div>
 
-<?php } ?>
+                    <!-- Modal excluir Curso -->
+                    <div class="modal fade" id="modalExcluirCurso<?= $curso["id_curso"] ?>" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="d-flex justify-content-end mb-3">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="../src/logicos/excluirCurso.php" method="POST">
+                                        <input type="hidden" name="id_curso" value="<?= $curso["id_curso"] ?>">
+                                        <p class="text-center">Tem certeza que deseja excluir o curso <strong><?= $curso["nome_do_curso"] ?></strong>?</p>
+                                        <div class="mb-3 d-flex justify-content-center">
+                                            <button class="btn btn-danger text-white fw-bold px-5" type="submit">EXCLUIR</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php } ?>
 
 
 

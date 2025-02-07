@@ -56,12 +56,13 @@ if ($selectProfessores->execute()) {
                     </div>
                 </div>
                 <div class="row mt-5 d-flex justify-content-center ">
-                    <a href="./gerenciamentoTurmas.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 fw-bold p-0 ">
-                        <button class="btn border-dark-subtle fs-7" type="button">TURMAS</button>
-                    </a>
-                    <a href="./gerenciamentoCursos.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 p-0">
+                <a href="./gerenciamentoCursos.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 p-0">
                         <button class="btn   border-dark-subtle fs-7 fw-bold" type="button">CURSOS</button>
                     </a>
+                    <a href="./gerenciamentoTurmas.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 fw-bold p-0 ">
+                        <button class="btn border-dark-subtle fs-7 fw-bold" type="button">TURMAS</button>
+                    </a>
+                    
                     <a href="./gerenciamentoProfessores.php" class=" d-grid mx-2 col-lg-1 col-sm-2 col-3 p-0">
                         <button class="btn btn-azul-senac text-white border-dark-subtle fs-7 fw-bold" type="button">PROFESSORES</button>
                     </a>
@@ -69,16 +70,17 @@ if ($selectProfessores->execute()) {
 
                 <div class="mt-4">
                     <div class="row mb-3">
-                        <div class=" col-6 d-flex align-items-center ">
+                        <div class=" col-7 d-flex align-items-center ">
                             <input type="text" class="col-10 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" value="PESQUISAR">
                             <?php if($perfil === "admin"){?>
-                            <button type="button" class="ms-2 btn btn-primary rounded btn-plus" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">+</button>
+                                
+                            <button type="button" class="ms-2 btn btn-primary rounded btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Professor</button>
                             <?php }?>
                         </div>
                     </div>
                 </div>
                 <?php foreach ($professores as $professor) { ?>
-                    <a href="" class="row border py-1">
+                    <a href="./infoProfessor.php?id=<?=$professor["id_usuario"]?>" class="row border py-1">
                         <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
                             <img src="../foto/<?= $professor["foto"] ?>" alt="" class="img-perfil-mini">
                         </div>
@@ -102,16 +104,8 @@ if ($selectProfessores->execute()) {
                                 </div>
                                 <form action="../src/logicos/adicionarProfessor.php" method="POST" enctype="multipart/form-data">
                                     <div class="mb-3">
-                                        <label class="form-label fw-bold">Nome do Professor</label>
-                                        <input type="text" class="form-control" name="txtCurso" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold" title="busque a url do curso no site oficial do senac">URL <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="txtURL" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Adicionar Imagem do Curso</label>
-                                        <input type="file" name="imgCurso" class="form-control" accept="image/png, image/jpeg">
+                                        <label class="form-label fw-bold">CPF do Professor</label>
+                                        <input type="text" class="form-control" name="txtCpfProfessor" required>
                                     </div>
 
                                     <div class="mb-3 d-flex justify-content-center">

@@ -20,14 +20,27 @@ $id_usuario = $_SESSION['id_usuario'] ?? "";
 // $perfil = "cliente";
 // border colors of each user role 
 if ($perfil == 'professor') {
-    $estilo = "bg-success";
+    $estilo = "border border-success border-3";
 } elseif ($perfil == 'aluno') {
-    $estilo = "bg-primary";
+    $estilo = "border border-primary border-3";
 } elseif ($perfil == 'cliente') {
-    $estilo = "bg-warning";
+    $estilo = "border border-warning border-3";
 } elseif ($perfil == 'admin') {
-    $estilo = "bg-danger";
+    $estilo = "border border-danger border-3 ";
 }
+
+// coisa dos txt
+
+if ($perfil == 'professor') {
+    $estiloTXT = "text-success";
+} elseif ($perfil == 'aluno') {
+    $estiloTXT = "text-primary";
+} elseif ($perfil == 'cliente') {
+    $estiloTXT = "text-warning";
+} elseif ($perfil == 'admin') {
+    $estiloTXT = "text-danger";
+}
+
 
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
@@ -69,27 +82,30 @@ unset($conexao);
 
     <main class="container mt-5">
 
-        <div class=" d-flex justify-content-center mt-4 align-content-center mb-5 ">
-            <div class=" card d-flex justify-content-center border-4 shadow-lg col">
-                <div class="headerPerfil d-flex justify-content-center align-items-center">
-                    <div class="profile-background <?= $estilo ?>">
+        <div class=" d-flex justify-content-center mt-4 align-content-center mb-5">
+            <div class=" card d-flex border-4 shadow-lg col motherCard">
+                <div class="headerPerfil ">
+                    <div class="profile-background ">
+                        <img src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
                     </div>
                 </div>
-                <div class="card-body d-flex justify-content-center flex-column flex-md-row mt-5">
-                    <div class="d-flex justify-content-center">
-                        <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa border border-black" name="foto" alt="Imagem de perfil">
-                    </div>
-                    <div class="ms-0 ms-md-5 mt-3 mt-md-0 d-flex flex-column justify-content-center">
-                        <h5 class="d-flex fw-bold justify-content-center m-0"><?= $login["nome"] ?></h5> <br>
-                        <h6 class=" d-flex fw-bold justify-content-center m-0" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
-                        <p class="text-center"><?= $login["biografia"] ?></p>
-                    </div>
+                <!-- antes tinha um card-body antes de d-flex felx-column -->
+                <div class=" d-flex flex-column align-content-center flex-md-row flex-lg-row profileP ">
+                    <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa <?= $estilo ?>" name="foto" alt="Imagem de perfil">
                 </div>
-                <div class="card-body">
-                    <a href="./editarPerfil.php" class="btn border shadow-sm fw-bold azul-senac border-3 rounded-4 d-flex justify-content-center mb-3">Editar Perfil</a>
-                    <a href="./configuracoes.php" class="link-offset-2 link-underline link-underline-opacity-0">
-                        <div class="btn text-light shadow-sm fw-bold btn-azul-senac border-3 rounded-4 d-flex justify-content-center " type="button" href="">Configurações</div>
-                    </a>
+                <div class=" d-flex flex-column justify-content-center align-content-center txtPerfil">
+                    <h5 class="d-flex fw-bold justify-content-center m-0 mt-5"><?= $login["nome"] ?></h5> <br>
+                    <h6 class=" d-flex fw-bold justify-content-center m-0 <?= $estiloTXT ?>" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
+                    <p class="text-center"><?= $login["biografia"] ?></p>
+                </div>
+
+                <div class="card-body d-flex flex-column justify-content-end align-items-center ">
+                    <div class="row w-50 d-flex ">
+                        <a href="./editarPerfil.php" class="btn border shadow-sm fw-bold laranja-senac border-3 rounded-4 mb-3 ">Editar Perfil</a>
+                    </div>
+                    <div class="row w-50 d-flex">
+                        <a href="./configuracoes.php" class="btn border shadow-sm fw-bold laranja-senac border-3 rounded-4  mb-3">Cfg</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -51,9 +51,9 @@ if ($selectAlunos->execute()) {
     $alunos = $selectAlunos->fetchAll(PDO::FETCH_ASSOC);
 }
 $prof = "professor";
-$sqlProfessores = "SELECT * FROM usuario WHERE perfil = :id_curso ORDER BY nome ASC";
+$sqlProfessores = "SELECT * FROM usuario WHERE perfil = :id_perfil ORDER BY nome ASC";
 $selectProfessores = $conexao->prepare("$sqlProfessores");
-$selectProfessores->bindParam(":id_curso", $prof);
+$selectProfessores->bindParam(":id_perfil", $prof);
 if ($selectProfessores->execute()) {
     $professores = $selectProfessores->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -102,13 +102,13 @@ $paginaAnterior = "gerenciamentoCursos.php";
                         <img class="img-130" src="../foto/<?= $curso['imagem'] ?>" alt="">
                     </div>
                 </div>
-                <div class=" shadow-sm border mt-3 pb-2 ">
+                <div class=" shadow-sm border mt-3 pb-2 pt-2 ">
                     <div class="row ">
                         <div class="d-flex align-items-center justify-content-center offset-3 col-6">
                             <h3 class="text-center fs-4">Horários de Atendimento</h3>
                         </div>
                         <div class="col-1">
-                            <button class="btn " data-bs-toggle="modal" data-bs-target="#modalAdicionarHorario"><i class="bi bi-plus-square-fill fs-2 azul-senac"></i></button>
+                            <button class="btn btn-azul-senac fw-bold text-white" data-bs-toggle="modal" data-bs-target="#modalAdicionarHorario">Adicionar Horário</i></button>
                         </div>
                     </div>
                     <?php foreach ($horarios as $horario) { ?>
@@ -130,7 +130,7 @@ $paginaAnterior = "gerenciamentoCursos.php";
 
                         </div>
                         <div class="col-1 offset-sm-0 offset-3 d-flex align-items-end">
-                            <button class="btn " data-bs-toggle="modal" data-bs-target="#modalAdicionarTurma"><i class="bi bi-plus-square-fill fs-2 azul-senac"></i></button>
+                            <button class="btn btn-azul-senac text-white fw-bold " data-bs-toggle="modal" data-bs-target="#modalAdicionarTurma">Adicionar Turma</i></button>
                         </div>
 
                         <div class="col-sm-6 d-grid align-items-center">
@@ -158,8 +158,8 @@ $paginaAnterior = "gerenciamentoCursos.php";
                             $numeroDeAlunos += 1;
                         }
                     }
-                    $dataAtual = date("y-m-d");
-                    if ($turma["data_final"] <= $dataAtual) {
+                    $dataAtual = date("Y-m-d");
+                    if ($turma["data_final"] > $dataAtual) {
                         $andamentoCurso = "bg-azul-senac";
                     } else {
                         $andamentoCurso = "bg-danger";
@@ -170,7 +170,7 @@ $paginaAnterior = "gerenciamentoCursos.php";
                         <div class=" text-center border py-2 text-secondary">
 
                             <div class="row d-flex align-content-center">
-                                <div class=" offset-1 col-9 "> idTurma:<?= $turma["numero_da_turma"] ?> • <?= $curso["nome_do_curso"] ?> • <?= $numeroDeAlunos ?> Alunos </div>
+                                <div class=" offset-1 col-9 "> idTurma:<?= $turma["numero_da_turma"] ?> • <?= $curso["nome_do_curso"] ?> • <?= $numeroDeAlunos ?> Alunos ---- data final<?=$turma["data_final"] ?> ----- data atual <?=$dataAtual?></div>
                                 <div class=" col-1 p-0 <?= $andamentoCurso ?> ponto d-block rounded-circle align-self-center"></div>
 
                             </div>

@@ -32,6 +32,8 @@ if ($selectAlunos->execute()) {
 
   $alunos = $selectAlunos->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
 // echo("<pre>");
 // var_dump(count($alunos));
 //  die;

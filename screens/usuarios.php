@@ -253,6 +253,7 @@ unset($conexao);
 
 
 
+
             <?php foreach ($defaultResults as $result): ?>
                 <?php
 
@@ -317,6 +318,7 @@ unset($conexao);
                                     <form method="POST" action="#" id="alterarPerfilFormReativar">
                                         <input type="hidden" name="id_usuario" value="<?= $result['id_usuario'] ?>">
                                         <select name="novo_perfil" id="perfil" class="form-control" required>
+                                            <option value="" hidden><?= $result['perfil'] ?></option>
                                             <option value="admin">Admin</option>
                                             <option value="professor">Professor</option>
                                             <option value="aluno">Aluno</option>
@@ -327,7 +329,6 @@ unset($conexao);
                                         </div>
 
                                     </form>
-
 
                                 </div>
 
@@ -361,12 +362,8 @@ unset($conexao);
                     </div>
                 </div>
 
-
-
             <?php endforeach; ?>
         </div>
-
-
 
     </main>
 

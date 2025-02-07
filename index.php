@@ -15,15 +15,17 @@ $nome = $_SESSION['nome'] ?? NULL;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Maxwel/malinski/joao">
     <title>Salão de Beleza Senac</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
+    
     <link rel="stylesheet" href="./src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body class="container-fluid d-flex flex-column">
     <div>
         <?php include_once("./screens/header.php"); ?>
+        <div class="linha-vermelha"></div>
 
         <main>
             <!-- Imagem Parallax -->
@@ -39,48 +41,29 @@ $nome = $_SESSION['nome'] ?? NULL;
                     <h2 class="animate__animated animate__backInLeft">Conheça nossos Serviços </h2>
                 </div>
             </div>
+            <div class="linha-vermelha"></div>
             <!-- terminar o css amanha -->
-            <div id="carouselExample" class="carousel slide" style="height: 450px;">
-                <div class="carousel-inner h-100">
-                    <!-- Slide 1 -->
-                    <a href="verTodosServicos.php">
-                        <div class="carousel-item active h-100">
-                            <img src="./assets/img/side-view-man-getting-haircut.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Cabeleireiro">
-                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white fs-2 fw-bold" style="background-color: rgba(0, 0, 0, 0.6);">
-                                Cabeleleiro
-                            </div>
-                        </div>
-                    </a>
-                    <!-- Slide 2 -->
-                    <a href="verTodosServicos.php">
-                        <div class="carousel-item h-100">
-                            <img src="./assets/img/female-bare-feet-hands-manicure-pedicure-concept.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Manicure e Pedicure">
-                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white fs-2 fw-bold" style="background-color: rgba(0, 0, 0, 0.6);">
-                                Pedicure
-                            </div>
-                        </div>
-                    </a>
-                    <!-- Slide 3 -->
-                    <a href="verTodosServicos.php">
-                        <div class="carousel-item h-100">
-                            <img src="./assets/img/close-up-man-hairstylist-indoors.jpg" class="d-block w-100 h-100 object-fit-cover" alt="Barbeiro">
-                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-white fs-2 fw-bold" style="background-color: rgba(0, 0, 0, 0.6);">
-                                Barbeiro
-                            </div>
-                        </div>
-                </div></a>
+            <section class="products">
+                <div class="product">
+                    <h1>Cortes</h1>
+                    <small>lorem ipsu dolor</small>
+                    <p>lorem ipsum dolor</p>
+                </div>
 
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Anterior</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Próximo</span>
-                </button>
-            </div>
+                <div class="product">
+                    <h1>Unhas</h1>
+                    <small>lorem ipsu dolor</small>
+                    <p>lorem ipsum dolor</p>
+                </div>
 
-            <div class="bg-warning py-5 px-3 d-flex">
+                <div class="product">
+                    <h1>Depilação</h1>
+                    <small>lorem ipsu dolor</small>
+                    <p>lorem ipsum dolor</p>
+                </div>
+            </section>
+
+            <div class="bg-warning py-5 px-6 d-flex">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-12 justify-content-center d-flex">
@@ -98,7 +81,7 @@ $nome = $_SESSION['nome'] ?? NULL;
             </div> -->
         </main>
     </div>
-
+    <div class="linha-vermelha"></div>
     <?php include("./screens/footer.php"); ?>
     <script src="./src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="./src/js/script.js"></script>

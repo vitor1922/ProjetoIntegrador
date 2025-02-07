@@ -22,18 +22,19 @@
   padding: 0;
   margin: 0;
 }
-a{
+a {
   text-decoration: none;
   color: auto;
 }
 
 body {
-  padding: 0 !important; 
+  height: 100vh;
+  padding: 0 !important;
 }
 :root {
   --laranja_senac: #f7941d;
   --laranja_claro_senac: #fdc180;
-  --laranja_escuro_senac:#EA6230;
+  --laranja_escuro_senac: #ea6230;
   --azul_senac: #004a8d;
   --azul_medio_senac: #4c7cab;
   --azul_claro_senac: #a5bdd5;
@@ -48,27 +49,25 @@ body {
 }
 
 .img-curso {
-    object-fit: cover;
-  
-    height: 6.25rem;
-    width: 6.25rem;
-  }
+  object-fit: cover;
 
+  height: 6.25rem;
+  width: 6.25rem;
+}
 
-
-.img-210{
+.img-210 {
   object-fit: cover;
   height: 13.125rem;
   width: 13.125rem;
 }
-.img-130{
+.img-130 {
   object-fit: cover;
   height: 8.125rem;
   width: 8.125rem;
 }
 
 .img-logo-senac {
-  height:  5rem;
+  height: 5rem;
 }
 
 .img-perfil-grande {
@@ -89,11 +88,10 @@ body {
   width: 20rem;
 }
 
-
-.card-imagem img{
+.card-imagem img {
   height: 200px;
   object-fit: cover;
-} 
+}
 
 .w-23rem {
   width: 23rem;
@@ -111,8 +109,8 @@ body {
   text-shadow: 0 1px 1px red;
 }
 
-.fs-7{
-    font-size: 0.75rem;
+.fs-7 {
+  font-size: 0.75rem;
 }
 
 /*cores*/
@@ -191,8 +189,6 @@ body {
   background-image: linear-gradient(white 70%, var(--azul_claro_senac) 100%);
 }
 
-
-
 .btn-plus {
   width: 2.5rem;
   height: 2.5rem;
@@ -226,23 +222,30 @@ body {
   width: 30rem;
 }
 
-.h-1rem{
+.h-1rem {
   max-height: 1rem;
 }
-.ponto{
+.ponto {
   min-height: 1rem;
   min-width: 1rem;
   max-height: 1rem;
   max-width: 1rem;
-
 }
 .header-senac {
-  background-color: var(--laranja_senac);
+  background-color: var(--laranja_escuro_senac);
+}
+
+.header-senac-text {
+  color: #fff;
 }
 
 @media (max-width: 991px) {
   .header-senac {
     background-color: white;
+  }
+
+  .header-senac-text {
+    color: var(--azul_medio_senac);
   }
 
   .img-index {
@@ -268,7 +271,6 @@ body {
     background-color: white;
   } */
 
-
 .header-vi {
   visibility: visible;
 }
@@ -292,12 +294,32 @@ body {
     width: 0;
   }
 
+  .profileP img {
+    width: 50%;
+    height: 50%;
+    top: -50px;
+    left: 0%;
+    position: absolute;
+    transform: translate(50%, 0%);
+  }
+
+  .txtPerfil {
+    margin-top: 70px;
+  }
+
   .nav-cor {
     background-image: linear-gradient(white, var(--azul_claro_senac));
   }
 }
 
-
+@media (max-width: 526px) {
+  .profileP img {
+  top: -50px;
+  left: calc(50% - 150px);
+  position: absolute;
+  transform: translate(50%, 0%);
+  }
+}
 .star {
   font-size: 35px;
   color: #808080;
@@ -314,25 +336,23 @@ body {
 
 .profile-background {
   width: 100%;
-  height: 100px;
-  border-radius: 5px;
-  display: flex;
-  align-items: start;
-  justify-content: start;
+  height: 100%; /* Ajuste a altura conforme necessário */
+  background-image: url("../bannerP"); /* Substitua pelo caminho real */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
 }
 
-.profile-background {
-  display: flex;
-}
-
-.img-perfil-mini{
+.img-perfil-mini {
   width: 3rem;
   height: 3rem;
   border-radius: 100%;
 }
 
 .imgPerfil {
-  width: 12rem;
+  width: 15rem;
   height: 1rem;
   border-radius: 100%;
 }
@@ -389,29 +409,6 @@ textarea {
   border: solid #fff;
 }
 
-.bordaa {
-  width: 10rem;
-  height: 8rem;
-}
-
-.bordaa-blue {
-  border-color: blue !important;
-  border: solid;
-}
-
-.bordaa-yellow {
-  border-color: yellow !important;
-}
-
-.bordaa-red {
-  border-color: red !important;
-}
-
-.bordaa-green {
-  border-color: green !important;
-  border: solid 3px;
-}
-
 .indisponivel {
   background-color: #e9ecef !important; /* Fundo cinza claro */
   border: 1px solid #ced4da; /* Borda cinza */
@@ -434,29 +431,158 @@ textarea {
 }
 
 .headerPerfil {
-  width: auto;
+  width: 100%;
+  height: 150px;
 }
 
-.paralax1{
-background-image: url('../img/woman-using-dryer-beard-man.jpg'); 
-background-size: cover; 
-background-attachment: fixed; 
-background-position: center;
-height: 600px;
-
+.paralax1 {
+  background-image: url("../img/salão1.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 600px;
 }
 
 .matte {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .matte2 {
   background-color: rgba(0, 0, 0, 0.6);
 }
 .paralax2 {
-background-image: url('../img/woman-using-dryer-beard-man.jpg'); 
-background-size: cover;
-background-attachment:
-fixed; background-position: center;
-height: 350px;
+  background-image: url("../img/salão1.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 350px;
 }
+
+.linha-vermelha {
+  width: 100%;
+  height: 3px; /* Espessura da linha */
+  background-color: #ff7b00; /* Cor vermelha */
+}
+
+/* carrosel index.html */
+.products {
+  height: 500px;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  border-radius: 12px;
+  margin: auto;
+
+  /* Se estiver utilizando pré-processador (ex: Sass), o aninhamento pode ser mantido.
+     Caso contrário, mova o código de .product para fora */
+}
+
+.product {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: 1s all ease-in-out;
+  color: white;
+}
+
+.product p,
+.product small {
+  margin-top: 15px;
+  opacity: 0;
+}
+
+/* Imagens de fundo para cada .product */
+.product:nth-child(1) {
+  background-image: url(https://cdn.manualdohomem.com.br/?w=1233&h=772&key=aHR0cHM6Ly9tYW51YWxkb2hvbWVtbW9kZXJuby5jb20uYnI=&u=%2Ffiles%2F2020%2F09%2Fcortes-de-cabelos-masculinos-para-2021-cortes-de-cabelos-masculinos-para-2021-11.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.product:nth-child(2) {
+  background-image: url(https://unhadecoradasimples.com.br/wp-content/uploads/2024/09/unhas-francesinhas-2024-novas-ideias.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.product:nth-child(3) {
+  background-image: url(https://icosmetologia.com.br/Arquivos/Noticia/noticia-114615.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Hover para expandir */
+.product:hover {
+  flex: 2;
+}
+
+.product:hover p,
+.product:hover small {
+  text-align: center;
+  animation: show 1.5s 1s forwards;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsividade para dispositivos móveis */
+@media only screen and (max-width: 768px) {
+  .products {
+    /* Alteramos para layout vertical */
+    flex-direction: column;
+    height: auto; /* Remove a altura fixa */
+  }
+
+  .product {
+    /* Para garantir que cada item ocupe 100% da largura */
+    width: 100%;
+    /* Definindo uma altura menor ou automática, conforme sua preferência */
+    height: 300px;
+    /* Opcional: para manter o efeito de transição, pode-se remover ou ajustar o hover */
+  }
+
+  /* Se preferir manter o layout horizontal com scroll, utilize: */
+  /*
+  .products {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .product {
+    flex: 0 0 80%;  // Exemplo: cada item ocupará 80% da largura, ajustável conforme necessário
+    margin-right: 10px;
+  }
+  */
+}
+
+.profileP {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+}
+
+.profileP img {
+  width: 100%;
+  height: 100%;
+}
+
+.motherCard {
+  height: 700px;
+}
+
+/* .bannerP {
+  width: 100%;
+  background-size: cover;
+} */
