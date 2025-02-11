@@ -308,6 +308,13 @@ body {
     transform: translate(50%, 0%);
   }
 
+  .profilePP {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    transform: translate(50%, 0%);
+  }
+
   .txtPerfil {
     margin-top: 70px;
   }

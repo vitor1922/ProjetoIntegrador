@@ -68,7 +68,7 @@ unset($conexao);
     <main>
         <div class="container-fluid text-center">
             <!-- Perfil -->
-            <div class="profileP ">
+            <div class="profilePP ">
                     <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa <?= $estilo ?>" name="foto" alt="Imagem de perfil">
                 </div>
             <h5 class="d-flex fw-bold justify-content-center m-0 mt-5 mb-3"><?= $login["nome"] ?></h5>

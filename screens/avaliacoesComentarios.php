@@ -232,12 +232,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <p class="text-center">Não há avaliações disponíveis.</p>
+            <p class="text-center">Nenhuma avaliação encontrada.</p>
         <?php endif; ?>
     </div>
 </div>
 
-<!-- Modal de Edição -->
+<!-- Modal de exclusão -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    <p>Tem certeza de que deseja excluir esta avaliação?</p>
+                    <input type="hidden" name="id_avaliacao" id="deleteIdAvaliacao">
+                    <input type="hidden" name="id_usuario_comentario" id="deleteIdUsuario">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="excluir" class="btn btn-danger">Excluir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de edição -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -247,58 +270,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <form method="POST">
                 <div class="modal-body">
-                    <div class="stars">
-                        <input type="radio" name="nivel_de_avaliacao" id="edit-star5" value="5">
-                        <label for="edit-star5">★</label>
-                        <input type="radio" name="nivel_de_avaliacao" id="edit-star4" value="4">
-                        <label for="edit-star4">★</label>
-                        <input type="radio" name="nivel_de_avaliacao" id="edit-star3" value="3">
-                        <label for="edit-star3">★</label>
-                        <input type="radio" name="nivel_de_avaliacao" id="edit-star2" value="2">
-                        <label for="edit-star2">★</label>
-                        <input type="radio" name="nivel_de_avaliacao" id="edit-star1" value="1">
-                        <label for="edit-star1">★</label>
-                    </div>
-                    <input type="hidden" id="editIdAvaliacao" name="id_avaliacao">
                     <div class="mb-3">
-                        <label for="comentario" class="form-label">Comentário</label>
-                        <textarea class="form-control" id="comentario" name="comentario" rows="3"></textarea>
+                        <label for="editComentario" class="form-label">Comentário</label>
+                        <textarea class="form-control" id="editComentario" name="comentario" rows="3" required></textarea>
                     </div>
+                    <div class="mb-3">
+                        <label for="editNivel" class="form-label">Nível de Avaliação</label>
+                        <select class="form-control" id="editNivel" name="nivel_de_avaliacao" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="id_avaliacao" id="editIdAvaliacao">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" name="editar" class="btn btn-primary">Salvar alterações</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="editar" class="btn btn-primary">Salvar Alterações</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Modal de Confirmação de Exclusão -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Excluir Avaliação</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Você tem certeza de que deseja excluir esta avaliação?
-            </div>
-            <div class="modal-footer">
-                <form method="POST">
-                    <input type="hidden" id="deleteIdAvaliacao" name="id_avaliacao">
-                    <input type="hidden" id="deleteIdUsuario" name="id_usuario_comentario">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" name="excluir" class="btn btn-danger">Excluir</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script>
+    var confirmDeleteModal = document.getElementById('confirmDeleteModal');
+    confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var idAvaliacao = button.getAttribute('data-id');
+        var idUsuarioComentario = button.getAttribute('data-usuario');
+        
+        var modalIdAvaliacao = confirmDeleteModal.querySelector('#deleteIdAvaliacao');
+        var modalIdUsuario = confirmDeleteModal.querySelector('#deleteIdUsuario');
+        
+        modalIdAvaliacao.value = idAvaliacao;
+        modalIdUsuario.value = idUsuarioComentario;
+    });
+
     var editModal = document.getElementById('editModal');
     editModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
@@ -306,23 +317,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         var comentario = button.getAttribute('data-comentario');
         var nivel = button.getAttribute('data-nivel');
         
-        var modalComentario = editModal.querySelector('#comentario');
+        var modalComentario = editModal.querySelector('#editComentario');
+        var modalNivel = editModal.querySelector('#editNivel');
         var modalIdAvaliacao = editModal.querySelector('#editIdAvaliacao');
         
         modalComentario.value = comentario;
+        modalNivel.value = nivel;
         modalIdAvaliacao.value = idAvaliacao;
-
-        // Resetar todas as estrelas
-        var stars = editModal.querySelectorAll('input[name="nivel_de_avaliacao"]');
-        stars.forEach(function(star) {
-            star.checked = false;
-        });
-
-        // Marcar a estrela correspondente
-        var selectedStar = editModal.querySelector('input[name="nivel_de_avaliacao"][value="' + nivel + '"]');
-        if (selectedStar) {
-            selectedStar.checked = true;
-        }
     });
 </script>
 </body>
