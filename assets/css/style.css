@@ -30,6 +30,7 @@ a {
 body {
   height: 100vh;
   padding: 0 !important;
+  
 }
 :root {
   --laranja_senac: #f7941d;
@@ -91,6 +92,10 @@ body {
 .card-imagem img {
   height: 200px;
   object-fit: cover;
+}
+
+.card-post{
+  width: 100%;
 }
 
 .w-23rem {
@@ -463,7 +468,9 @@ textarea {
   height: 3px; /* Espessura da linha */
   background-color: #ff7b00; /* Cor vermelha */
 }
-
+.slide-blog{
+  width: 100%;
+}
 /* carrosel index.html */
 .products {
   height: 500px;
@@ -586,3 +593,11 @@ textarea {
   width: 100%;
   background-size: cover;
 } */
+
+.headerPerfil2 {
+  height: 150px;
+  
+}
+
+/* botão index.html  */
+

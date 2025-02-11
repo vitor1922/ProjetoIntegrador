@@ -3,13 +3,53 @@
 session_start();
 include_once("../constantes.php");
 include_once('../data/conexao.php');
-$perfil = $_SESSION['perfil'] ?? NULL;
-$logado = $_SESSION['logado'] ?? FALSE;
 
+
+$perfil = $_SESSION['perfil'] ?? "cliente";
+$logado = $_SESSION['logado'] ?? NULL;
+$mensagem = $_SESSION['mensagem'] ?? NULL;
+$perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
+$_SESSION['mensagem'] = NULL;
+
+$logado =  $_SESSION['logado'] ?? FALSE;
+$nome = $_SESSION['nome'] ?? "";
+$id_usuario = $_SESSION['id_usuario'] ?? "";
+
+if ($perfil == 'professor') {
+    $estiloTXT = "text-success";
+} elseif ($perfil == 'aluno') {
+    $estiloTXT = "text-primary";
+} elseif ($perfil == 'cliente') {
+    $estiloTXT = "text-warning";
+} elseif ($perfil == 'admin') {
+    $estiloTXT = "text-danger";
+}
+
+if (!$logado) {
+    header("Location: " . BASE_URL . "screens/signUp.php");
+    exit;
+}
+// Mostrar dados do usuario logado
+$sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
+$select = $conexao->prepare($sql);
+$select->bindParam(':id_usuario', $id_usuario);
+if ($select->execute()) {
+    $login = $select->fetch(PDO::FETCH_ASSOC);
+}
+
+//  echo("<pre>");
+//  var_dump($login);
+//  die;
+
+
+unset($conexao);
 ?>
+
+<?php include_once("../constantes.php"); ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,28 +59,22 @@ $logado = $_SESSION['logado'] ?? FALSE;
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
+
 <body class="container-fluid flex-column justify-content-between">
     <!-- Header -->
     <?php
     include_once("./header.php");
     ?>
     <main>
-        <div class="container text-center">
+        <div class="container-fluid text-center">
             <!-- Perfil -->
-            <div class="position-relative mt-3">
-                <img src="https://th.bing.com/th/id/OIP._eCIljHRA15vp38zaPRE4QHaHR?rs=1&pid=ImgDetMain" alt="Foto de perfil" class="rounded-circle img-fluid mb-3" style="width: 120px; height: 120px;">
-                <button class="btn btn-edit-profile position-absolute top-0 end-0 me-2" style="border-color: gray;">Editar Perfil</button>
-            </div>
-            <h4>APELIDO</h4>
-            <p class="text-muted">Nome Real</p>
+            <div class="profileP ">
+                    <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa <?= $estilo ?>" name="foto" alt="Imagem de perfil">
+                </div>
+            <h5 class="d-flex fw-bold justify-content-center m-0 mt-5 mb-3"><?= $login["nome"] ?></h5>
             <div class="bio mb-3">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+                <p class="text-center"><?= $login["biografia"] ?></p>
             </div>
-
-            <!-- Botão Configurações -->
-            <button class="btn btn-primary mb-4 w-100" style="max-width: 200px;">Configurações</button>
 
             <hr style="border: none; border-top: 1px solid black; width: 100%; margin: 30px 0;">
 
@@ -57,21 +91,6 @@ $logado = $_SESSION['logado'] ?? FALSE;
                 <div class="col-4 col-md-2">
                     <a href=""><img src="https://th.bing.com/th/id/OIP.s12OIiziuNadhVOj2qWlRgAAAA?rs=1&pid=ImgDetMain" class="img-fluid rounded" alt="Foto 1"></a>
                 </div>
-                <div class="col-4 col-md-2">
-                <a href=""><img src="https://th.bing.com/th/id/OIP.CoeNYRYF8JXtPPwO_K_kTwAAAA?rs=1&pid=ImgDetMain" class="img-fluid rounded" alt="Foto 2"></a>
-                </div>
-                <div class="col-4 col-md-2">
-                <a href=""><img src="https://th.bing.com/th/id/OIP.Nf1sMOBxzCN3bzvrOsDO0AAAAA?rs=1&pid=ImgDetMain" class="img-fluid rounded" alt="Foto 3"></a>
-                </div>
-                <div class="col-4 col-md-2">
-                <a href=""><img src="https://homensquesecuidam.com/wp-content/uploads/2017/10/cortes-de-cabelo-masculino-curto-homens-que-se-cuidam-a.jpg" class="img-fluid rounded" alt="Foto 4"></a>
-                </div>
-                <div class="col-4 col-md-2">
-                <a href=""><img src="https://th.bing.com/th/id/OIP.tBrXgx6vUU6ZxO9kyCPmrQAAAA?rs=1&pid=ImgDetMain" class="img-fluid rounded" alt="Foto 5"></a>
-                </div>
-                <div class="col-4 col-md-2">
-                <a href=""><img src="https://homensquesecuidam.com/wp-content/uploads/2017/10/cortes-de-cabelo-masculino-curto-homens-que-se-cuidam-b.jpg" class="img-fluid rounded" alt="Foto 6"></a>
-                </div>
             </div>
             <main>
         </div>
@@ -79,4 +98,5 @@ $logado = $_SESSION['logado'] ?? FALSE;
         <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
         <?php include_once("./footer.php"); ?>
 </body>
+
 </html>

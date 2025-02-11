@@ -15,11 +15,12 @@ $nome = $_SESSION['nome'] ?? NULL;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Maxwel/malinski/joao">
     <title>Salão de Beleza Senac</title>
-    
+
     <link rel="stylesheet" href="./src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/elementosIndex.css">
 </head>
 
 <body class="container-fluid d-flex flex-column">
@@ -63,12 +64,19 @@ $nome = $_SESSION['nome'] ?? NULL;
                 </div>
             </section>
 
-            <div class="bg-warning py-5 px-6 d-flex">
+            <div class="custom-bg py-5 px-6 d-flex">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-lg-12 justify-content-center d-flex">
-                            <h1 class="fw-bold">Agende Seu Horário</h1>
-                            <a href="<?= BASE_URL ?>screens/agendamento.php" class="btn btn-light text-primary fw-bold">Agendar um Horário</a>
+                        <div class="col-lg-12 d-flex flex-column align-items-center">
+                            <!-- Título separado com margem inferior -->
+                            <h1 class="fw-bold mb-3">Agende Seu Horário</h1>
+                            <!-- Botão -->
+                            <a class="fancy btn btn-primary" href="#">
+                                <span class="top-key"></span>
+                                <span class="text">Agendar</span>
+                                <span class="bottom-key-1"></span>
+                                <span class="bottom-key-2"></span>
+                            </a>
                         </div>
                     </div>
                 </div>

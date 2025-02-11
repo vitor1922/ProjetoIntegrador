@@ -80,37 +80,36 @@ unset($conexao);
                         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
                     </svg></button></a>
         </div>
-
         <div class="container d-flex justify-content-center align-content-center">
             <div class=" card d-flex justify-content-center border-4 shadow-lg col-lg-12 w-100">
                 <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php" enctype="multipart/form-data">
                     <div class="headerPerfil d-flex">
-                        <div class="">
-                                <div class="profile-background">
-                                    <img src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
-                                </div>
-                                    <div class="d-flex justify-content-center">
-                                        <label class="btn btn-primary">
-                                        Selecionar Banner<input type="file" name="banner" accept="image/jpg, image/png, image/jpeg" hidden onchange="updateLabel(this, 'fileLabelBanner')">
-                                    </label>
-                                <input type="text" name="imgBanner" value="<?= $login["banner"] ?>" hidden>
+                        <div class="d-flex position-relative justify-content-end">
+                            <div class="profile-background">
+                                <img id="bannerPreview" src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
                             </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-start mx-3 align-items-start col-5">
-                        <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa border border-black" name="foto" alt="Imagem de perfil">
-                    </div>
-                    <div class="d-flex justify-content-center">
+                            <div class="position-absolute top-50 translate-middle">
                         <label class="btn btn-primary">
-                            Selecionar foto de perfil<input type="file" name="foto" accept="image/jpg, image/png, image/jpeg" hidden onchange="updateLabel(this)">
+                            Selecionar Banner
+                            <input type="file" name="banner" accept="image/jpg, image/png, image/jpeg" hidden onchange="previewImage(this, 'bannerPreview')">
                         </label>
-                            <input type="text" name="imgName" value="<?= $login["foto"] ?>" hidden>
                     </div>
-
+                <input type="text" name="imgBanner" value="<?= $login['banner'] ?>" hidden>
+            </div>
+            </div>
+                <div class="d-flex profileP">
+                    <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa <?= $estilo ?>" name="foto" alt="Imagem de perfil">
+                </div>
+            <div class="d-flex justify-content-center mt-5">
+            <label class="btn btn-primary mt-5">
+                Selecionar foto de perfil
+            <input type="file" name="foto" accept="image/jpg, image/png, image/jpeg" hidden onchange="previewImage(this, 'fotoPreview')">
+            </label>
+            <input type="text" name="imgName" value="<?= $login['foto'] ?>" hidden>
+        </div>
                         <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
                             value="<?= $login['id_usuario'] ?? '' ?>" hidden>
-                        <h6 class="card-text d-flex justify-content-center fw-bold mt-1" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
-
+                        <h6 class="card-text d-flex justify-content-center fw-bold mt-3" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
                     <div class="col mb-3">
                         <div class="nomePerfil p-3">
                             <h6 class="fw-bold laranja-senac mx-2">Nome Atual:</h6>
@@ -118,10 +117,8 @@ unset($conexao);
                             <label for="nome" class="form-label fw-bold azul-senac mx-2">Novo Nome</label>
                             <input type="text" name="txtNome" class="form-control mb-2" value="<?= $login['nome'] ?? '' ?>">
                         </div>
-
                     <h6 class="fw-bold laranja-senac mx-2">Bio Atual:</h6>
                     <p class="list-group-item mx-4"><?= $login["biografia"] ?></p>
-
                         <div class="nomePerfil">
                             <div class="mx-3 mb-3 fw-bold">
                                 <label for="bio" class="form-label fw-bold azul-senac">Nova Bio</label>

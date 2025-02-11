@@ -21,44 +21,16 @@ function filtrarPalavras($comentario, $palavrasProibidas) {
     return $comentario;
 }
 
-// Processando o filtro de ordenação
 $filtro = $_POST['filtro'] ?? 'mais_recente';
 
 try {
-    // Modificando a consulta SQL com base no filtro selecionado
-    switch ($filtro) {
-        case 'por_turma':
-            $sqlAvaliacoes = "SELECT a.nivel_de_avaliacao, a.comentario, a.id_usuario, 
-                                    u.nome, u.foto, t.numero_da_turma, t.data_inicio, t.data_final, 
-                                    a.id_avaliacao
-                            FROM avaliacao a
-                            JOIN usuario u ON a.id_usuario = u.id_usuario
-                            LEFT JOIN turma t ON a.id_turma = t.id_turma
-                            LEFT JOIN post p ON a.id_usuario = p.id_usuario
-                            ORDER BY t.numero_da_turma";
-            break;
-        case 'mais_antigo':
-            $sqlAvaliacoes = "SELECT a.nivel_de_avaliacao, a.comentario, a.id_usuario, 
-                                    u.nome, u.foto, t.numero_da_turma, t.data_inicio, t.data_final, 
-                                    a.id_avaliacao
-                            FROM avaliacao a
-                            JOIN usuario u ON a.id_usuario = u.id_usuario
-                            LEFT JOIN turma t ON a.id_turma = t.id_turma
-                            LEFT JOIN post p ON a.id_usuario = p.id_usuario
-                            ORDER BY a.id_avaliacao ASC";
-            break;
-        case 'mais_recente':
-        default:
-            $sqlAvaliacoes = "SELECT a.nivel_de_avaliacao, a.comentario, a.id_usuario, 
-                                    u.nome, u.foto, t.numero_da_turma, t.data_inicio, t.data_final, 
-                                    a.id_avaliacao
-                            FROM avaliacao a
-                            JOIN usuario u ON a.id_usuario = u.id_usuario
-                            LEFT JOIN turma t ON a.id_turma = t.id_turma
-                            LEFT JOIN post p ON a.id_usuario = p.id_usuario
-                            ORDER BY a.id_avaliacao DESC";
-            break;
-    }
+    $sqlAvaliacoes = "SELECT a.nivel_de_avaliacao, a.comentario, a.id_usuario, 
+                              u.nome, u.foto, t.numero_da_turma, 
+                              a.id_avaliacao
+                      FROM avaliacao a
+                      JOIN usuario u ON a.id_usuario = u.id_usuario
+                      LEFT JOIN turma t ON a.id_turma = t.id_turma
+                      ORDER BY " . ($filtro === 'mais_antigo' ? 'a.id_avaliacao ASC' : 'a.id_avaliacao DESC');
 
     $stmtAvaliacoes = $conexao->prepare($sqlAvaliacoes);
     $stmtAvaliacoes->execute();
@@ -67,71 +39,78 @@ try {
     die("Erro ao recuperar avaliações: " . $e->getMessage());
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['avaliacao'])) {
-    $nivelAvaliacao = $_POST['nivel_de_avaliacao'];
-    $comentario = $_POST['comentario'];
-    $idUsuario = $_SESSION['id_usuario'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['avaliacao'])) {
+        $nivelAvaliacao = $_POST['nivel_de_avaliacao'];
+        $comentario = $_POST['comentario'];
+        $idUsuario = $_SESSION['id_usuario'];
 
-    $comentarioFiltrado = filtrarPalavras($comentario, $palavrasProibidas);
+        $comentarioFiltrado = filtrarPalavras($comentario, $palavrasProibidas);
 
-    try {
-        $sqlInserirAvaliacao = "INSERT INTO avaliacao (nivel_de_avaliacao, comentario, id_usuario)
-                                VALUES (:nivel_de_avaliacao, :comentario, :id_usuario)";
-        $stmt = $conexao->prepare($sqlInserirAvaliacao);
-        $stmt->bindParam(':nivel_de_avaliacao', $nivelAvaliacao);
-        $stmt->bindParam(':comentario', $comentarioFiltrado);
-        $stmt->bindParam(':id_usuario', $idUsuario);
-        $stmt->execute();
-
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
-    } catch (PDOException $e) {
-        die("Erro ao salvar avaliação: " . $e->getMessage());
-    }
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['excluir'])) {
-    $idAvaliacao = $_POST['id_avaliacao'];
-    $idUsuarioComentario = $_POST['id_usuario_comentario'];
-
-    // Verifica se o usuário logado é o autor do comentário ou um administrador/professor
-    if ($idUsuarioLogado === $idUsuarioComentario || $perfil === 'admin' || $perfil === 'professor') {
         try {
-            $sqlExcluir = "DELETE FROM avaliacao WHERE id_avaliacao = :id_avaliacao";
-            $stmt = $conexao->prepare($sqlExcluir);
-            $stmt->bindParam(':id_avaliacao', $idAvaliacao);
+            $sqlInserirAvaliacao = "INSERT INTO avaliacao (nivel_de_avaliacao, comentario, id_usuario) VALUES (:nivel, :comentario, :id_usuario)";
+            $stmt = $conexao->prepare($sqlInserirAvaliacao);
+            $stmt->bindParam(':nivel', $nivelAvaliacao);
+            $stmt->bindParam(':comentario', $comentarioFiltrado);
+            $stmt->bindParam(':id_usuario', $idUsuario);
             $stmt->execute();
-            
+
             header("Location: " . $_SERVER['PHP_SELF']);
             exit;
         } catch (PDOException $e) {
-            die("Erro ao excluir avaliação: " . $e->getMessage());
+            die("Erro ao salvar avaliação: " . $e->getMessage());
         }
-    } else {
-        echo "<script>alert('Você não tem permissão para excluir este comentário.');</script>";
+    }
+
+    if (isset($_POST['excluir'])) {
+        $idAvaliacao = $_POST['id_avaliacao'];
+        $idUsuarioComentario = $_POST['id_usuario_comentario'];
+
+        // Verifica se o usuário logado é o dono da avaliação ou tem permissões de admin/professor
+        if ($idUsuarioLogado == $idUsuarioComentario || in_array($perfil, ['admin', 'professor'])) {
+            try {
+                $sqlExcluir = "DELETE FROM avaliacao WHERE id_avaliacao = :id";
+                $stmt = $conexao->prepare($sqlExcluir);
+                $stmt->bindParam(':id', $idAvaliacao);
+                $stmt->execute();
+                
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit;
+            } catch (PDOException $e) {
+                die("Erro ao excluir avaliação: " . $e->getMessage());
+            }
+        }
+    }
+
+    if (isset($_POST['editar'])) {
+        $idAvaliacao = $_POST['id_avaliacao'];
+        $novoComentario = $_POST['comentario'];
+        $novoNivelAvaliacao = $_POST['nivel_de_avaliacao'];
+
+        try {
+            $sqlVerificar = "SELECT id_usuario FROM avaliacao WHERE id_avaliacao = :id";
+            $stmt = $conexao->prepare($sqlVerificar);
+            $stmt->bindParam(':id', $idAvaliacao);
+            $stmt->execute();
+            $avaliacao = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($avaliacao && $avaliacao['id_usuario'] == $idUsuarioLogado) {
+                $sqlEditar = "UPDATE avaliacao SET comentario = :comentario, nivel_de_avaliacao = :nivel WHERE id_avaliacao = :id";
+                $stmt = $conexao->prepare($sqlEditar);
+                $stmt->bindParam(':comentario', $novoComentario);
+                $stmt->bindParam(':nivel', $novoNivelAvaliacao);
+                $stmt->bindParam(':id', $idAvaliacao);
+                $stmt->execute();
+                
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit;
+            } 
+        } catch (PDOException $e) {
+            die("Erro ao editar avaliação: " . $e->getMessage());
+        }
     }
 }
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editar'])) {
-    $idAvaliacao = $_POST['id_avaliacao'];
-    $novoComentario = $_POST['comentario'];
-    
-    try {
-        $sqlEditar = "UPDATE avaliacao SET comentario = :comentario WHERE id_avaliacao = :id_avaliacao";
-        $stmt = $conexao->prepare($sqlEditar);
-        $stmt->bindParam(':comentario', $novoComentario);
-        $stmt->bindParam(':id_avaliacao', $idAvaliacao);
-        $stmt->execute();
-
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit;
-    } catch (PDOException $e) {
-        die("Erro ao editar avaliação: " . $e->getMessage());
-    }
-}
-
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -173,12 +152,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editar'])) {
 
         .dropdown-menu {
             min-width: 150px;
-        }
-
-        .delete-btn {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
         }
     </style>
 </head>
@@ -229,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editar'])) {
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
                             <img src="../foto/<?= !empty($avaliacao['foto']) ? htmlspecialchars($avaliacao['foto']) : 'default-avatar.png' ?>" 
-                                 class="rounded-circle me-3" width="50" height="50" alt="Imagem de perfil">
+                                class="rounded-circle me-3" width="50" height="50" alt="Imagem de perfil">
                             <div>
                                 <p class="mb-0 fw-bold"><?= htmlspecialchars($avaliacao['nome']) ?></p>
                                 <p class="mb-0 text-muted small">Turma: <?= htmlspecialchars($avaliacao['numero_da_turma']) ?></p>
@@ -243,17 +216,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editar'])) {
                     </div>
                     <p class="mt-3"><?= htmlspecialchars($avaliacao['comentario']) ?></p>
                     <!-- Menu de 3 pontos no canto inferior -->
-                    <div class="dropdown">
-                        <button class="btn p-0 border-0 text-black" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-three-dots-vertical"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <!-- Editar -->
-                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="<?= $avaliacao['id_avaliacao'] ?>" data-comentario="<?= htmlspecialchars($avaliacao['comentario']) ?>">Editar</a></li>
-                            <!-- Excluir -->
-                            <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="<?= $avaliacao['id_avaliacao'] ?>">Excluir</a></li>
-                        </ul>
-                    </div>
+                    <?php if ($idUsuarioLogado == $avaliacao['id_usuario']): ?>
+                        <div class="dropdown">
+                            <button class="btn p-0 border-0 text-black" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <!-- Editar -->
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="<?= $avaliacao['id_avaliacao'] ?>" data-comentario="<?= htmlspecialchars($avaliacao['comentario']) ?>" data-nivel="<?= $avaliacao['nivel_de_avaliacao'] ?>">Editar</a></li>
+                                <!-- Excluir -->
+                                <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="<?= $avaliacao['id_avaliacao'] ?>" data-usuario="<?= $avaliacao['id_usuario'] ?>">Excluir</a></li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
@@ -270,35 +245,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editar'])) {
                 <h5 class="modal-title" id="editModalLabel">Editar Avaliação</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form method="POST">
-                    <input type="hidden" name="id_avaliacao" id="editIdAvaliacao">
-                    <div class="mb-3">
-                        <textarea class="form-control" id="editComentario" name="comentario" rows="3" required></textarea>
+            <form method="POST">
+                <div class="modal-body">
+                    <div class="stars">
+                        <input type="radio" name="nivel_de_avaliacao" id="edit-star5" value="5">
+                        <label for="edit-star5">★</label>
+                        <input type="radio" name="nivel_de_avaliacao" id="edit-star4" value="4">
+                        <label for="edit-star4">★</label>
+                        <input type="radio" name="nivel_de_avaliacao" id="edit-star3" value="3">
+                        <label for="edit-star3">★</label>
+                        <input type="radio" name="nivel_de_avaliacao" id="edit-star2" value="2">
+                        <label for="edit-star2">★</label>
+                        <input type="radio" name="nivel_de_avaliacao" id="edit-star1" value="1">
+                        <label for="edit-star1">★</label>
                     </div>
-                    <button type="submit" name="editar" class="btn btn-primary">Salvar Alterações</button>
-                </form>
-            </div>
+                    <input type="hidden" id="editIdAvaliacao" name="id_avaliacao">
+                    <div class="mb-3">
+                        <label for="comentario" class="form-label">Comentário</label>
+                        <textarea class="form-control" id="comentario" name="comentario" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" name="editar" class="btn btn-primary">Salvar alterações</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<!-- Modal de Confirmação -->
+<!-- Modal de Confirmação de Exclusão -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Excluir Avaliação</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Tem certeza que deseja excluir esta avaliação?
+                Você tem certeza de que deseja excluir esta avaliação?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form method="POST" id="deleteForm" style="display:inline;">
-                    <input type="hidden" name="id_avaliacao" id="deleteId">
-                    <input type="hidden" name="id_usuario_comentario" value="<?= $idUsuarioLogado ?>">
+                <form method="POST">
+                    <input type="hidden" id="deleteIdAvaliacao" name="id_avaliacao">
+                    <input type="hidden" id="deleteIdUsuario" name="id_usuario_comentario">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" name="excluir" class="btn btn-danger">Excluir</button>
                 </form>
             </div>
@@ -306,33 +297,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editar'])) {
     </div>
 </div>
 
-<footer>
-    <?php include_once("./footer.php") ?>
-</footer>
-
 <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Editar avaliação
-    var editButtons = document.querySelectorAll('.dropdown-item[data-bs-target="#editModal"]');
-    editButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var idAvaliacao = this.getAttribute('data-id');
-            var comentario = this.getAttribute('data-comentario');
+    var editModal = document.getElementById('editModal');
+    editModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var idAvaliacao = button.getAttribute('data-id');
+        var comentario = button.getAttribute('data-comentario');
+        var nivel = button.getAttribute('data-nivel');
+        
+        var modalComentario = editModal.querySelector('#comentario');
+        var modalIdAvaliacao = editModal.querySelector('#editIdAvaliacao');
+        
+        modalComentario.value = comentario;
+        modalIdAvaliacao.value = idAvaliacao;
 
-            document.getElementById('editIdAvaliacao').value = idAvaliacao;
-            document.getElementById('editComentario').value = comentario;
+        // Resetar todas as estrelas
+        var stars = editModal.querySelectorAll('input[name="nivel_de_avaliacao"]');
+        stars.forEach(function(star) {
+            star.checked = false;
         });
-    });
 
-    // Excluir avaliação
-    var deleteButtons = document.querySelectorAll('.dropdown-item[data-bs-target="#confirmDeleteModal"]');
-    deleteButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var idAvaliacao = this.getAttribute('data-id');
-            document.getElementById('deleteId').value = idAvaliacao;
-        });
+        // Marcar a estrela correspondente
+        var selectedStar = editModal.querySelector('input[name="nivel_de_avaliacao"][value="' + nivel + '"]');
+        if (selectedStar) {
+            selectedStar.checked = true;
+        }
     });
 </script>
-
 </body>
 </html>

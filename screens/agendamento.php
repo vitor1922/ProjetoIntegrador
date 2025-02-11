@@ -69,10 +69,10 @@ unset($conexao);
                                     </p>
                                 </div>
                             </div>
-                            <form action="#" method="post">
+                            <form action="processar_agendamento" method="post">
                                 <div class="collapse" id="collapseExample1">
                                     <div class="card card-body start-0 position-absolute w-100">
-                                        <select class="form-select bg-warning-subtle" aria-label="Default select example">
+                                        <select class="form-select bg-warning-subtle" aria-label="Default select example" name="horario>
                                             <option selected>Selecionar Horario</option>
                                             <?php foreach ($agenda as $hora) { 
                                                 $dataFormatada = (new DateTime($hora['data']))->format('d/m/Y');?>

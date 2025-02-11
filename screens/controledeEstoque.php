@@ -21,11 +21,11 @@ $logado = $_SESSION['logado'] ?? NULL;
 </head>
 
 <body class="container-fluid">
-    <main>
-        <div class="container">
-            <?php
+    <?php
             include_once("./header.php");
             ?>
+    <main>
+        <div class="container">
             <div class="row text-center mt-5 mb-3">
                 <h3 class="display-6 fw-bolder">Área do Instrutor</h3>
             </div>

@@ -36,90 +36,154 @@ $logado = $_SESSION['logado'] ?? FALSE;
         <i class="bi bi-arrow-left"></i>
       </div>
       <div class="row text- mt-5 mb-3">
-        <h3 class="display-6 text-warning fw-bold">Corte de Cabelo</h3>
+        <h3 class="display-6 laranja-senac fw-bold">Blog</h3>
       </div>
-      <div class="d-flex mt-5"></div>
-      <hr>
-      <div class="row d-flex align-items-center mb-3 w-100 w-md-50 w-lg-25 mx-auto">
-        <div class="col text-">
-          <h4 class="mt-3 fw-bolder text-primary">Turma 1</h4>
+
+
+
+<div class="flex-wrap">
+<!-- card -->
+      <div class="card card-post border">
+        <div class=" row ">
+          <div class="col-6">
+            <div class="row">
+              <div class="">
+                <img src="https://th.bing.com/th/id/OIP._eCIljHRA15vp38zaPRE4QHaHR?rs=1&pid=ImgDetMain" alt="Foto de perfil" class="img-perfil-mini">
+                <label class="">Nome do aluno</label>
+              </div>
+            </div>
+            <div class="row ms-1"> data da postagem</div>
+            <div class="row fs-5 ms-1">Título do Post</div>
+
+            
+          </div>
+          <div class="col-6">
+            <div class="row">nome do curso</div>
+            <div class="row">nome do curso</div>
+            <div class="row">nome do curso</div>
+
+          </div>
         </div>
-      </div>
-      <hr>
-      <div class="d-flex justify-content-lg-start">
-      <img src="https://th.bing.com/th/id/OIP._eCIljHRA15vp38zaPRE4QHaHR?rs=1&pid=ImgDetMain" alt="Foto de perfil" class="rounded-circle img-fluid mb-3" style="width: 50px; height: 50px;">
-      <div class="d-flex mt-3 p-3 small">
-      <p>Nome do aluno - dd/mm/aaaa</p>
-      </div>
-      </div>
-      <h4 name="txtTituloPost">Titulo do Post</h4>
-      <hr>
-      <div class="carrosel d-flex justify-content-center  ">
         <!-- Carrossel de imagens -->
-      <div id="carouselExampleIndicators" class="carousel slide w-75">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
-            img
+        <div class=" d-flex justify-content-center align-items-center">
+          <div id="carouselExampleInterval" class="row slide-blog carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="10000">
+                <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
-          <div class="carousel-item">
-            <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Voltar</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Proximo</span>
-        </button>
-      </div>
-      </div>
-      <hr>
-      <div class="row d-flex align-items-center mb-3 w-100 w-md-50 w-lg-25 mx-auto">
-        <div class="col text d-flex mb-3">
-          <h4 class="mt-3 fw-bolder text-primary">Turma 2</h4>
         </div>
       </div>
-      <div class="d-flex justify-content-lg-start">
-      <img src="https://th.bing.com/th/id/OIP._eCIljHRA15vp38zaPRE4QHaHR?rs=1&pid=ImgDetMain" alt="Foto de perfil" class="rounded-circle img-fluid mb-3" style="width: 50px; height: 50px;">
-      <div class="d-flex mt-3 p-3 small">
-      <p>Nome do aluno - dd/mm/aaaa</p>
+      <!-- card -->
+      <div class="card card-post border">
+        <div class=" row ">
+          <div class="col-6">
+            <div class="row">
+              <div class="">
+                <img src="https://th.bing.com/th/id/OIP._eCIljHRA15vp38zaPRE4QHaHR?rs=1&pid=ImgDetMain" alt="Foto de perfil" class="img-perfil-mini">
+                <label class="">Nome do aluno</label>
+              </div>
+            </div>
+            <div class="row ms-1"> data da postagem</div>
+            <div class="row fs-5 ms-1">Título do Post</div>
+
+            
+          </div>
+          <div class="col-6">
+            <div class="row">nome do curso</div>
+            <div class="row">nome do curso</div>
+            <div class="row">nome do curso</div>
+
+          </div>
+        </div>
+        <!-- Carrossel de imagens -->
+        <div class=" d-flex justify-content-center align-items-center">
+          <div id="carouselExampleInterval" class="row slide-blog carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="10000">
+                <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
       </div>
+      <!-- card -->
+      <div class="card card-post border">
+        <div class=" row ">
+          <div class="col-6">
+            <div class="row">
+              <div class="">
+                <img src="https://th.bing.com/th/id/OIP._eCIljHRA15vp38zaPRE4QHaHR?rs=1&pid=ImgDetMain" alt="Foto de perfil" class="img-perfil-mini">
+                <label class="">Nome do aluno</label>
+              </div>
+            </div>
+            <div class="row ms-1"> data da postagem</div>
+            <div class="row fs-5 ms-1">Título do Post</div>
+
+            
+          </div>
+          <div class="col-6">
+            <div class="row">nome do curso</div>
+            <div class="row">nome do curso</div>
+            <div class="row">nome do curso</div>
+
+          </div>
+        </div>
+        <!-- Carrossel de imagens -->
+        <div class=" d-flex justify-content-center align-items-center">
+          <div id="carouselExampleInterval" class="row slide-blog carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="10000">
+                <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
       </div>
-      <h4>Titulo do Post</h4>
-      <hr>
-      <div class="carrosel d-flex justify-content-center  ">
-      <div id="carouselExample" class="carousel slide w-75">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://img.freepik.com/fotos-gratis/close-homem-cortando-cabelo_23-2149220543.jpg" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+
       </div>
 
     </div>
@@ -127,8 +191,8 @@ $logado = $_SESSION['logado'] ?? FALSE;
 
 
   <!-- JavaScript do Bootstrap -->
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <?php include_once("./footer.php"); ?>
+  <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <?php include_once("./footer.php"); ?>
 </body>
 
 </html>

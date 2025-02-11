@@ -40,11 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-
 </head>
 
 <body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0">
@@ -156,6 +152,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <label for="cidade">Cidade</label>
                                             <input type="text" class="form-control bg-light" id="cidade" placeholder="Digite sua cidade" name="txtCidade" required>
                                         </div>
+
+                                        
+
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="endereco">Endereço</label>
                                             <input type="text" class="form-control bg-light" id="endereco" placeholder="Digite seu endereço" name="txtEndereco" required>
