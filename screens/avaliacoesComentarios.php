@@ -276,19 +276,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <div class="mb-3">
                         <label for="editNivel" class="form-label">Nível de Avaliação</label>
-                        <select class="form-control" id="editNivel" name="nivel_de_avaliacao" required>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                        <div class="stars">
+                            <input type="radio" name="nivel_de_avaliacao" id="editStar5" value="5" required>
+                            <label for="editStar5">★</label>
+                            <input type="radio" name="nivel_de_avaliacao" id="editStar4" value="4">
+                            <label for="editStar4">★</label>
+                            <input type="radio" name="nivel_de_avaliacao" id="editStar3" value="3">
+                            <label for="editStar3">★</label>
+                            <input type="radio" name="nivel_de_avaliacao" id="editStar2" value="2">
+                            <label for="editStar2">★</label>
+                            <input type="radio" name="nivel_de_avaliacao" id="editStar1" value="1">
+                            <label for="editStar1">★</label>
+                        </div>
                     </div>
                     <input type="hidden" name="id_avaliacao" id="editIdAvaliacao">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" name="editar" class="btn btn-primary">Salvar Alterações</button>
+                    <button type="submit" name="editar" class="btn btn-primary">Salvar</button>
                 </div>
             </form>
         </div>
@@ -297,34 +302,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script>
-    var confirmDeleteModal = document.getElementById('confirmDeleteModal');
-    confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        var idAvaliacao = button.getAttribute('data-id');
-        var idUsuarioComentario = button.getAttribute('data-usuario');
-        
-        var modalIdAvaliacao = confirmDeleteModal.querySelector('#deleteIdAvaliacao');
-        var modalIdUsuario = confirmDeleteModal.querySelector('#deleteIdUsuario');
-        
-        modalIdAvaliacao.value = idAvaliacao;
-        modalIdUsuario.value = idUsuarioComentario;
-    });
-
+    // Preencher modal de edição
     var editModal = document.getElementById('editModal');
     editModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
         var idAvaliacao = button.getAttribute('data-id');
         var comentario = button.getAttribute('data-comentario');
         var nivel = button.getAttribute('data-nivel');
-        
-        var modalComentario = editModal.querySelector('#editComentario');
-        var modalNivel = editModal.querySelector('#editNivel');
-        var modalIdAvaliacao = editModal.querySelector('#editIdAvaliacao');
-        
-        modalComentario.value = comentario;
-        modalNivel.value = nivel;
-        modalIdAvaliacao.value = idAvaliacao;
+
+        document.getElementById('editIdAvaliacao').value = idAvaliacao;
+        document.getElementById('editComentario').value = comentario;
+
+        // Marcar o nível de avaliação
+        document.getElementById('editStar' + nivel).checked = true;
+    });
+
+    // Preencher modal de exclusão
+    var deleteModal = document.getElementById('confirmDeleteModal');
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var idAvaliacao = button.getAttribute('data-id');
+        var idUsuario = button.getAttribute('data-usuario');
+
+        document.getElementById('deleteIdAvaliacao').value = idAvaliacao;
+        document.getElementById('deleteIdUsuario').value = idUsuario;
     });
 </script>
+
 </body>
 </html>
