@@ -50,9 +50,10 @@ if ($select->execute()) {
 
 $sql = "SELECT * FROM img_post WHERE id_post = :id_post";
 $select = $conexao->prepare($sql);
-
+$select->bindParam(':id_post', $id_post);
 if ($select->execute()) {
-    $postagens = $select->fetchAll(PDO::FETCH_ASSOC);
+    $img_post = $select->fetchAll(PDO::FETCH_ASSOC);
+    
 }
 
 

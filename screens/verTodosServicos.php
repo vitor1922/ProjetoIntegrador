@@ -33,9 +33,10 @@ if ($result > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serviços Disponíveis</title>
-    <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 
 <body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0">
