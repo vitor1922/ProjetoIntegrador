@@ -25,6 +25,17 @@ if ($perfil == 'professor') {
     $estiloTXT = "text-danger";
 }
 
+if ($perfil == 'professor') {
+    $estiloTXT = "text-success";
+} elseif ($perfil == 'aluno') {
+    $estiloTXT = "text-primary";
+} elseif ($perfil == 'cliente') {
+    $estiloTXT = "text-warning";
+} elseif ($perfil == 'admin') {
+    $estiloTXT = "text-danger";
+}
+
+
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
     exit;
@@ -37,9 +48,12 @@ if ($select->execute()) {
     $login = $select->fetch(PDO::FETCH_ASSOC);
 }
 
-//  echo("<pre>");
-//  var_dump($login);
-//  die;
+$sql = "SELECT * FROM img_post WHERE id_post = :id_post";
+$select = $conexao->prepare($sql);
+
+if ($select->execute()) {
+    $postagens = $select->fetchAll(PDO::FETCH_ASSOC);
+}
 
 
 unset($conexao);
@@ -68,30 +82,59 @@ unset($conexao);
     <main>
         <div class="container-fluid text-center">
             <!-- Perfil -->
-            <div class="profilePP ">
+            <!-- <div class="profilePP ">
                     <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa <?= $estilo ?>" name="foto" alt="Imagem de perfil">
-                </div>
+                </div> -->
             <h5 class="d-flex fw-bold justify-content-center m-0 mt-5 mb-3"><?= $login["nome"] ?></h5>
+            <h6 class=" d-flex fw-bold justify-content-center m-0 <?= $estiloTXT ?>" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
             <div class="bio mb-3">
                 <p class="text-center"><?= $login["biografia"] ?></p>
             </div>
 
             <hr style="border: none; border-top: 1px solid black; width: 100%; margin: 30px 0;">
 
+
+
+
             <!-- Botão para adicionar foto -->
             <div class="d-flex justify-content-center">
+                <a href="<?= BASE_URL ?>screens/criarPost.php">
                 <button class="btn btn-outline-secondary w-38 h-100 d-flex align-items-center justify-content-center border border-dark">
                     <i class="bi bi-plus" style="font-size: 2rem; color: black;"></i>
                 </button>
+                </a>
             </div>
+
+
+
+
+
 
             <!-- Galeria de fotos -->
             <div class="row d-flex justify-content-center g-2 mt-3 mb-3">
 
-                <div class="col-4 col-md-2">
-                    <a href=""><img src="https://th.bing.com/th/id/OIP.s12OIiziuNadhVOj2qWlRgAAAA?rs=1&pid=ImgDetMain" class="img-fluid rounded" alt="Foto 1"></a>
+            <div class="row">
+            <?php foreach ($img_post as $id_post) { ?>
+                <div class="col">
+                        <div class="col">
+                            <div class="card">
+                                <div class="row">
+                                    <div class="col">
+                                        <img src="./imgPosts/<?= $id_post ? $id_post["url_img"] : "" ?>" class="img-fluid rounded-start" style="object-fit: cover; width: 500px; height 500;">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?= $id_post['nomeCorte'] ?></h5>
+                                            <!-- <p class="card-text"><small class="text-body-secondary"><?= date('d/m/Y, H:i', strtotime($id_post['data_criacao'])) ?></small></p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
+            <?php } ?>
+        </div>
             <main>
         </div>
         <!-- Bootstrap JS -->

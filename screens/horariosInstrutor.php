@@ -65,8 +65,8 @@ if (isset($filter)) {
 }
 
 if (!empty($searchUser)) {
-    $whereClauses[] = "u.nome LIKE :searchUser";
-    $params[':searchUser'] = '%' . $searchUser . '%';
+    $whereClauses[] = "(u.nome REGEXP :searchUser OR c.nome_do_curso REGEXP :searchUser OR aluno.nome REGEXP :searchUser OR t.numero_da_turma REGEXP :searchUser)";
+    $params[':searchUser'] = $searchUser;
 }
 
 if (!empty($whereClauses)) {
@@ -85,7 +85,8 @@ if ($stmt->execute()) {
     $defaultResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function formatDate($date) {
+function formatDate($date)
+{
     return date('d/m/Y', strtotime($date));
 }
 
@@ -130,7 +131,7 @@ function formatDate($date) {
                         <form method="POST" action="">
                             <div class="d-flex flex-column align-items-center">
                                 <input type="text" name="searchUser" class="text-center rounded mb-2"
-                                    placeholder="Pesquisar por Usuário" value="<?= htmlspecialchars($searchUser) ?>">
+                                    placeholder="Pesquisar" value="<?= htmlspecialchars($searchUser) ?>">
                                 <a href="?" class="text-decoration-none mt-2">Limpar Filtros</a>
                             </div>
                         </form>
@@ -154,11 +155,6 @@ function formatDate($date) {
                     <p class="text-center">Nenhum agendamento encontrado.</p>
                 <?php else: ?>
                     <?php foreach ($defaultResults as $result): ?>
-                        <?php
-                        $badgeClass = $result['status'] === '1'
-                            ? "badge rounded-circle bg-success"
-                            : "";
-                        ?>
 
                         <div class="card p-3 mb-3 text-center">
                             <div class="row mb-2">
@@ -169,7 +165,7 @@ function formatDate($date) {
                                     <p><strong>Aluno:</strong><br><?= $result["nomeAluno"] ?></p>
                                 </div>
                                 <div class="col d-flex justify-content-end align-items-center">
-                                <p><strong>Data:</strong><br><?= htmlspecialchars(formatDate($result["data"])) ?></p>
+                                    <p><strong>Data:</strong><br><?= htmlspecialchars(formatDate($result["data"])) ?></p>
                                 </div>
                             </div>
 
@@ -182,7 +178,7 @@ function formatDate($date) {
                                 </div>
                                 <div class="col d-flex justify-content-center justify-content-md-end align-items-center">
                                     <?php if ($result['status'] === '1'): ?>
-                                        <span class="<?= $badgeClass ?>">&nbsp;</span>
+                                        <button type="button" class="btn btn-success btn-concluir">Concluído</button>
                                     <?php else: ?>
                                         <form method="POST" action="" class="d-flex align-items-center">
                                             <input type="hidden" name="id_agendamento" value="<?= $result['idAgendamento'] ?>">
@@ -200,7 +196,7 @@ function formatDate($date) {
         </div>
     </main>
 
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -216,7 +212,69 @@ function formatDate($date) {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <!-- <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Conclusão de Agendamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Data de Execução</label>
+                            <input type="date" class="form-control" name="txtData" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Horário de Execução</label>
+                            <input type="time" class="form-control" name="txtHorario" required>
+                        </div>
+
+                        <div class="mb-3 d-flex justify-content-center">
+                            <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Concluir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Revisão de Agendamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                    <label class="form-label fw-bold">Turma</label>
+                    <span><br>2005477</span>
+                    </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Data de Execução</label>
+                            <span><br>23/02/25</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Horário de Execução</label>
+                            <span><br>23H</span>                        
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Usuário da Conclusão</label>
+                            <span><br>Jair Messias</span>
+                        </div>
+
+                        <div class="mb-3 d-flex justify-content-center">
+                            <button class="btn  btn-danger  text-white fw-bold px-5" type="submit">Reabrir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
 
 
     <?php include_once("./footer.php"); ?>

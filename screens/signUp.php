@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,58 +119,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <option value="Outro">Outro</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="firstName">Nome</label>
-                                            <input type="text" class="form-control bg-light " id="firstName" placeholder="Digite seu nome" name="txtNome" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="dataNasc">Data de Nascimento</label>
-                                            <input type="date" class="form-control bg-light" id="dataNasc" max="9999-12-31" name="txtDataNasc" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="cpf">CPF</label>
-                                            <input type="text" class="form-control bg-light" id="cpf" placeholder="Digite seu CPF"  name="txtCpf" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="email">E-mail</label>
-                                            <input type="email" class="form-control bg-light" id="email" placeholder="Digite seu e-mail" name="txtEmail" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="phone">Telefone</label>
-                                            <input type="text" class="form-control bg-light" id="phone"minlength="9"  maxlength="15" placeholder="Digite seu telefone" name="txtTelefone" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="cep">CEP</label>
-                                            <div class="input-group col-md-3 ">
-                                                <input type="text" class="form-control bg-light rounded " id="cep" placeholder="Digite seu CEP" minlength="9" maxlength="9" name="txtCep" required>
+                                            <div class="col-md-6 form-group mt-2">
+                                                <label for="firstName">Nome</label>
+                                                <input type="text" class="form-control bg-light " id="firstName" placeholder="Digite seu nome" name="txtNome" required>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="uf">UF</label>
-                                            <input type="text" class="form-control bg-light" id="uf" placeholder="Digite seu estado (UF)" minlength="2" maxlength="2" name="txtUf" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="cidade">Cidade</label>
-                                            <input type="text" class="form-control bg-light" id="cidade" placeholder="Digite sua cidade" name="txtCidade" required>
-                                        </div>
-
-                                        
-
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="endereco">Endereço</label>
-                                            <input type="text" class="form-control bg-light" id="endereco" placeholder="Digite seu endereço" name="txtEndereco" required>
-                                        </div>
-                                        <div class=" d-flex justify-content-center col-12 col-lg-12 col-md-12 form-group mt-2 mb-3">
-                                            <div class=" col-12 col-lg-7 col-md-10">
-                                                <label for="password">Senha</label>
-                                                <div class="input-group col-md-3">
-                                                    <input type="password" class="form-control bg-warning-subtle" id="inputConfirmPass" placeholder="Insira a senha" name="txtSenha" required>
-                                                    <div class="input-group-text">
-                                                        <i class="bi-eye-fill" id="icontogleConfirmPass" onclick="viewSenhaCad()" style="cursor: pointer;"></i>
+                                            <div class="col-md-6 form-group mt-2">
+                                                <label for="dataNasc">Data de Nascimento</label>
+                                                <input type="date" class="form-control bg-light" id="dataNasc" max="9999-12-31" name="txtDataNasc" required>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-2">
+                                                <label for="cpf">CPF</label>
+                                                <input type="text" class="form-control bg-light" id="cpf" placeholder="Digite seu CPF" name="txtCpf" required>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-2">
+                                                <label for="email">E-mail</label>
+                                                <input type="email" class="form-control bg-light" id="email" placeholder="Digite seu e-mail" name="txtEmail" required>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-2">
+                                                <label for="phone">Telefone</label>
+                                                <input type="text" class="form-control bg-light" id="phone" minlength="9" maxlength="15" placeholder="Digite seu telefone" name="txtTelefone" required>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-2">
+                                                <label for="cep">CEP</label>
+                                                <div class="input-group col-md-3 ">
+                                                    <input type="text" class="form-control bg-light rounded " id="cep" placeholder="Digite seu CEP" minlength="9" maxlength="9" name="txtCep" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-2">
+                                                <label for="uf">UF</label>
+                                                <input type="text" class="form-control bg-light" id="uf" placeholder="Digite seu estado (UF)" minlength="2" maxlength="2" name="txtUf" required>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-2">
+                                                <label for="cidade">Cidade</label>
+                                                <input type="text" class="form-control bg-light" id="cidade" placeholder="Digite sua cidade" name="txtCidade" required>
+                                            </div>
+                                            <div class="col-md-6 form-group mt-2">
+                                                <label for="endereco">Endereço</label>
+                                                <input type="text" class="form-control bg-light" id="endereco" placeholder="Digite seu endereço" name="txtEndereco" required>
+                                            </div>
+                                            <div class=" d-flex justify-content-center col-12 col-lg-12 col-md-12 form-group mt-2 mb-3">
+                                                <div class=" col-12 col-lg-7 col-md-10">
+                                                    <label for="password">Senha</label>
+                                                    <div class="input-group col-md-3">
+                                                        <input type="password" class="form-control bg-warning-subtle" id="inputConfirmPass" placeholder="Insira a senha" name="txtSenha" required>
+                                                        <div class="input-group-text">
+                                                            <i class="bi-eye-fill" id="icontogleConfirmPass" onclick="viewSenhaCad()" style="cursor: pointer;"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button id="cadastro" type="submit" class="btn btn-primary">Cadastrar</button>
@@ -191,4 +189,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../src/js/script.js"></script>
     <script src="../src/js/cep.js"></script>
 </body>
+
 </html>

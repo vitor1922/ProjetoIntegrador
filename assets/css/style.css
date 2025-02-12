@@ -15,7 +15,6 @@
   src: url("../fonts/Roboto-Light.ttf") format("truetype");
   font-weight: lighter;
 }
-
 * {
   font-family: "Roboto", Helvetica, sans-serif;
   box-sizing: border-box;
@@ -95,7 +94,7 @@ body {
 }
 
 .card-post{
-  width: 100%;
+  width: 25rem;
 }
 
 .w-23rem {
@@ -244,6 +243,10 @@ body {
   color: #fff;
 }
 
+.apagar{
+  background-color: #004a8d;
+}
+
 @media (max-width: 991px) {
   .header-senac {
     background-color: white;
@@ -256,6 +259,10 @@ body {
   .img-index {
     height: calc(10rem + 10vw);
   }
+
+  /* .card-post{
+    width: 100%;
+  } */
 }
 
 .footer-senac {
@@ -477,6 +484,7 @@ textarea {
 }
 .slide-blog{
   width: 100%;
+  background-size: contain;
 }
 /* carrosel index.html */
 .products {

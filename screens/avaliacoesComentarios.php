@@ -25,12 +25,12 @@ $filtro = $_POST['filtro'] ?? 'mais_recente';
 
 try {
     $sqlAvaliacoes = "SELECT a.nivel_de_avaliacao, a.comentario, a.id_usuario, 
-                              u.nome, u.foto, t.numero_da_turma, 
-                              a.id_avaliacao
-                      FROM avaliacao a
-                      JOIN usuario u ON a.id_usuario = u.id_usuario
-                      LEFT JOIN turma t ON a.id_turma = t.id_turma
-                      ORDER BY " . ($filtro === 'mais_antigo' ? 'a.id_avaliacao ASC' : 'a.id_avaliacao DESC');
+                            u.nome, u.foto, t.numero_da_turma, 
+                            a.id_avaliacao
+                    FROM avaliacao a
+                    JOIN usuario u ON a.id_usuario = u.id_usuario
+                    LEFT JOIN turma t ON a.id_turma = t.id_turma
+                    ORDER BY " . ($filtro === 'mais_antigo' ? 'a.id_avaliacao ASC' : 'a.id_avaliacao DESC');
 
     $stmtAvaliacoes = $conexao->prepare($sqlAvaliacoes);
     $stmtAvaliacoes->execute();
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $idAvaliacao = $_POST['id_avaliacao'];
         $idUsuarioComentario = $_POST['id_usuario_comentario'];
 
-        // Verifica se o usuário logado é o dono da avaliação ou tem permissões de admin/professor
+        
         if ($idUsuarioLogado == $idUsuarioComentario || in_array($perfil, ['admin', 'professor'])) {
             try {
                 $sqlExcluir = "DELETE FROM avaliacao WHERE id_avaliacao = :id";
@@ -215,16 +215,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </div>
                     <p class="mt-3"><?= htmlspecialchars($avaliacao['comentario']) ?></p>
-                    <!-- Menu de 3 pontos no canto inferior -->
+                    
                     <?php if ($idUsuarioLogado == $avaliacao['id_usuario']): ?>
                         <div class="dropdown">
                             <button class="btn p-0 border-0 text-black" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-three-dots-vertical"></i>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <!-- Editar -->
                                 <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="<?= $avaliacao['id_avaliacao'] ?>" data-comentario="<?= htmlspecialchars($avaliacao['comentario']) ?>" data-nivel="<?= $avaliacao['nivel_de_avaliacao'] ?>">Editar</a></li>
-                                <!-- Excluir -->
                                 <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="<?= $avaliacao['id_avaliacao'] ?>" data-usuario="<?= $avaliacao['id_usuario'] ?>">Excluir</a></li>
                             </ul>
                         </div>
@@ -235,6 +233,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p class="text-center">Nenhuma avaliação encontrada.</p>
         <?php endif; ?>
     </div>
+    <?php 
+    include_once("./footer.php")
+    ?>
 </div>
 
 <!-- Modal de exclusão -->

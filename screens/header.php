@@ -29,7 +29,7 @@ $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-bold pe-3">
 
                             <li class="nav-item">
-                                <a class="nav-link header-senac-text" aria-current="page" href="<?= BASE_URL ?>index.php">Home</a>
+                                <a class="nav-link header-senac-text" aria-current="page" href="<?= BASE_URL ?>index.php">Início</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link header-senac-text" href="<?= BASE_URL ?>screens/verTodosServicos.php">Serviços</a>
@@ -50,7 +50,7 @@ $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";
                     </div>
                 </div>
             </div>
-            <div class="header-vi offset-1 offset-lg-0">
+            <div class="header-vi justify-content-center">
                 <img src="<?= BASE_URL ?>assets/img/logoSenac.png" alt="logo senac" class="img-logo-senac header-vi my-1">
             </div>
             <div class="nav-item dropdown header-senac-text">
