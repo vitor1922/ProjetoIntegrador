@@ -83,26 +83,24 @@ unset($conexao);
         <div class="container d-flex justify-content-center align-content-center">
             <div class=" card d-flex justify-content-center border-4 shadow-lg col-lg-12 w-100">
                 <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php" enctype="multipart/form-data">
-                    <div class="headerPerfil d-flex">
-                        <div class="d-flex position-relative justify-content-end">
+                    <div class="headerPerfil d-flex position-relative justify-content-center">
                             <div class="profile-background">
                                 <img id="bannerPreview" src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
                             </div>
-                            <div class="position-absolute top-50 translate-middle">
-                        <label class="btn btn-primary">
-                            Selecionar Banner
+                            <div class="position-absolute top-100 mt-5">
+                        <label class="btn fw-bold btn-dark rounded-pill px-4 py-2 mt-2">
+                            <i class="bi bi-image-fill"></i>Alterar Banner
                             <input type="file" name="banner" accept="image/jpg, image/png, image/jpeg" hidden onchange="previewImage(this, 'bannerPreview')">
                         </label>
                     </div>
                 <input type="text" name="imgBanner" value="<?= $login['banner'] ?>" hidden>
             </div>
-            </div>
                 <div class="d-flex profileP">
                     <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa <?= $estilo ?>" name="foto" alt="Imagem de perfil">
                 </div>
             <div class="d-flex justify-content-center mt-5">
-            <label class="btn btn-primary mt-5">
-                Selecionar foto de perfil
+            <label class="btn btn-dark fw-bold rounded-pill px-4 py-2 mt-5">
+                <i class="bi bi-image-fill"></i> Alterar foto de perfil
             <input type="file" name="foto" accept="image/jpg, image/png, image/jpeg" hidden onchange="previewImage(this, 'fotoPreview')">
             </label>
             <input type="text" name="imgName" value="<?= $login['foto'] ?>" hidden>
@@ -115,14 +113,14 @@ unset($conexao);
                             <h6 class="fw-bold laranja-senac mx-2">Nome Atual:</h6>
                             <h5 class="card-title d-flex mx-1"><?= $login['nome'] ?? '' ?></h5> <br>
                             <label for="nome" class="form-label fw-bold azul-senac mx-2">Novo Nome</label>
-                            <input type="text" name="txtNome" class="form-control mb-2" value="<?= $login['nome'] ?? '' ?>">
+                            <input type="text" name="txtNome" class="form-control mb-2">
                         </div>
                     <h6 class="fw-bold laranja-senac mx-2">Bio Atual:</h6>
                     <p class="list-group-item mx-4"><?= $login["biografia"] ?></p>
                         <div class="nomePerfil">
                             <div class="mx-3 mb-3 fw-bold">
                                 <label for="bio" class="form-label fw-bold azul-senac">Nova Bio</label>
-                                <textarea class="form-control p-2" name="txtBiografia" rows="2"><?= $login['biografia'] ?? '' ?></textarea>
+                                <textarea class="form-control p-2" name="txtBiografia" rows="2"></textarea>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">

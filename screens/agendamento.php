@@ -69,7 +69,7 @@ unset($conexao);
                                     </p>
                                 </div>
                             </div>
-                            <form action="processar_agendamento" method="post">
+                            <form action="processar_agendamento.php" method="post">
                                 <div class="collapse" id="collapseExample1">
                                     <div class="card card-body start-0 position-absolute w-100">
                                         <select class="form-select bg-warning-subtle" aria-label="Default select example" name="horario>
@@ -114,9 +114,11 @@ unset($conexao);
                                     <select class="form-select bg-warning-subtle" aria-label="Default select example">
                                         <option selected>Selecionar Horario</option>
                                         <option value="1"><?= $hora ? $hora["data"] : "" ?></option>
-                                        <option value="2">18/07/24 - 17:00 até 18:30</option>
-                                        <option value="3">18/07/24 - 17:00 até 18:30</option>
-                                        <option value="4">18/07/24 - 17:00 até 18:30</option>
+                                        <option value="2"></option>
+                                        <option value="3"></option>
+                                        <option value="4">
+                                            
+                                        </option>
                                     </select>
                                     <div class="position-relative mt-5">
                                         <div class="position-absolute bottom-0 end-0">

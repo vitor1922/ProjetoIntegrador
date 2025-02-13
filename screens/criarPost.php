@@ -51,7 +51,7 @@ if ($select->execute()) {
 
     <main class="container-fluid mt-5">
 
-        <form action="<?= BASE_URL ?>./screens/perfildoAluno.php" method="POST" enctype="multipart/form-data">
+        <form action="<?= BASE_URL ?>src/logicos/PostAluno.php" method="POST" enctype="multipart/form-data">
             <div class="row offset-md-2">
                 <div class="mb-3">
                     <label for="txtTituloPost" class="form-label">Nome do Corte</label>
@@ -66,7 +66,7 @@ if ($select->execute()) {
 
                 <div class="mb-3">
                     <label for="poster_path" class="col-sm-8 col-form-label">Carregar Imagem</label>
-                    <input type="file" name="imgPosts" class="form-control" accept="image/png, image/jpeg, image/jpg" onchange="previewImage(event)">
+                    <input type="file" name="postAluno" class="form-control" accept="image/png, image/jpeg, image/jpg" onchange="previewImage(event)">
                 </div>
 
             
