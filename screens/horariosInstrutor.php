@@ -214,33 +214,33 @@ function formatDate($date)
         </div>
     </div> -->
 
-    <!-- <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Conclusão de Agendamento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Conclusão de Agendamento</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
-                    <form action="" method="POST">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Data de Execução</label>
-                            <input type="date" class="form-control" name="txtData" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Horário de Execução</label>
-                            <input type="time" class="form-control" name="txtHorario" required>
-                        </div>
+                        <form action="" method="POST">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Data de Execução</label>
+                                <input type="date" class="form-control" name="txtData" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Horário de Execução</label>
+                                <input type="time" class="form-control" name="txtHorario" required>
+                            </div>
 
-                        <div class="mb-3 d-flex justify-content-center">
-                            <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Concluir</button>
-                        </div>
-                    </form>
+                            <div class="mb-3 d-flex justify-content-center">
+                                <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Concluir</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div> -->
 
     <!-- <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog">

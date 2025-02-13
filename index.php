@@ -69,6 +69,9 @@ $nome = $_SESSION['nome'] ?? NULL;
 		<div class="container text-center">
 			<div class="row">
 				<div class="col-sm-offset-2 col-sm-8">
+					<div>
+						<h2 class="section-title">What Clients Say</h2>
+					</div>
 				</div><!-- /End col -->
 			</div><!-- /End row -->
 
@@ -142,6 +145,7 @@ $nome = $_SESSION['nome'] ?? NULL;
 		</div><!-- /End container -->
 	</div><!-- /End customer-feedback -->
 </section>
+
 
 
       <style>

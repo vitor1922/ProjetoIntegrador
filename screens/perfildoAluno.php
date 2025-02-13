@@ -74,10 +74,18 @@ unset($conexao);
                 <?php foreach ($posts as $post) : ?>
                     <div class="col-md-4">
                         <div class="card">
-                            <img src="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>" class="card-img-top" style="object-fit: cover; width: 100%; height: 300px;">
+                            <img src="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
+                                class="card-img-top" style="object-fit: cover; width: 100%; height: 300px;">
                             <div class="card-body">
                                 <h5 class="card-title"><?= htmlspecialchars($post["nomeCorte"]) ?></h5>
-                                <p class="card-text"><small class="text-muted"><?= date('d/m/Y, H:i', strtotime($post['data_criacao'])) ?></small></p>
+                                <p class="card-text"><small class="text-muted">
+                                        <?= date('d/m/Y, H:i', strtotime($post['data_criacao'])) ?>
+                                    </small></p>
+                                <!-- Botão para excluir post -->
+                                <a href="<?= BASE_URL ?>src/logicos/deletePost.php?id=<?= $post['id_post'] ?>"
+                                    onclick="return confirm('Tem certeza que deseja excluir este post?')">
+                                    <i class="bi bi-trash text-danger"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -87,6 +95,7 @@ unset($conexao);
             <?php endif; ?>
         </div>
 
+
     </main>
 
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -95,4 +104,3 @@ unset($conexao);
 </body>
 
 </html>
- 
