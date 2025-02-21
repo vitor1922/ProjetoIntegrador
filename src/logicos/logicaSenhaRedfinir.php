@@ -1,75 +1,39 @@
 <?php
-include_once("./data/conexao.php");
-include_once("./constantes.php");
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//     $email = $_POST['email'];
-
-//     // Verifica se o e-mail existe
-//     $stmt = $pdo->prepare("SELECT id FROM usuarios WHERE email = :email");
-//     $stmt->bindParam(':email', $email);
-//     $stmt->execute();
-
-//     if ($stmt->rowCount() > 0) {
-//         // Gera um token único e salva no banco
-//         $token = bin2hex(random_bytes(32)); // Token seguro
-//         $validade = date('Y-m-d H:i:s', strtotime('+1 hour'));
-
-//         $stmt = $pdo->prepare("INSERT INTO tokens_recuperacao (email, token, validade) VALUES (:email, :token, :validade)");
-//         $stmt->bindParam(':email', $email);
-//         $stmt->bindParam(':token', $token);
-//         $stmt->bindParam(':validade', $validade);
-//         $stmt->execute();
-
-//         // Envia o e-mail com o link
-//         $link = "https://seusite.com/resetar-senha.php?token=$token";
-//         mail($email, "Redefinição de Senha", "Clique no link para redefinir sua senha: $link");
-
-//         echo "Um e-mail foi enviado para redefinição de senha.";
-//     } else {
-//         echo "E-mail não encontrado.";
-//     }
-// }
-
-
+include ("../autoload.php");
+include ("./src/logicos/configSMTP.php");
 
 use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-require './/vendor/phpmailer/phpmailer/src/Exception.php';
-require './/vendor/phpmailer/phpmailer/src/PHPMailer.php';
-require './/vendor/phpmailer/phpmailer/src/SMTP.php';
 
-// Instância da classe
+
+
 $mail = new PHPMailer(true);
-try
-{
-    // Configurações do servidor
-    $mail->isSMTP();        //Devine o uso de SMTP no envio
-    $mail->SMTPAuth = true; //Habilita a autenticação SMTP
-    $mail->Username   = 'salaodebelezasenac@gmail.com';
-    $mail->Password   = 'salaoblzpi@2024';
-    // Criptografia do envio SSL também é aceito
-    $mail->SMTPSecure = 'tls';
-    // Informações específicadas pelo Google
-    $mail->Host = 'smtp.email.com';
-    $mail->Port = 587;
-    // Define o remetente
-    $mail->setFrom('salaodebelezasenac@gmail.com', 'Senac');
-    // Define o destinatário
-    $mail->addAddress('emaildestinatario@gmail.com', 'Nome Destinatario');
-    // Conteúdo da mensagem
-    $mail->isHTML(true);  // Seta o formato do e-mail para aceitar conteúdo HTML
-    $mail->Subject = 'Teste Envio de Email';
-    $mail->Body    = 'Este é o corpo da mensagem <b>Olá!</b>';
-    $mail->AltBody = 'Este é o cortpo da mensagem para clientes de e-mail que não reconhecem HTML';
-    // Enviar
+
+try {
+    //Server settings                   //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = SMTP_HOST;                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = SMTP_USER;                     //SMTP username
+    $mail->Password   = SMTP_PASS;                               //SMTP password           //Enable implicit TLS encryption
+    $mail->Port       = SMTP_PORT;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+
+    //Recipients
+    $mail->setFrom('jvictorgow3@gmail.com', 'Joao gomes');
+    $mail->addAddress('bruno.wuo@docente.pr.senac.br', 'Bruno Wuo');    
+
+
+    //Content
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'contato do site';
+    $mail->Body    = 'seu pau e gigante <b>in bold!</b>';
+
+
     $mail->send();
-    echo 'A mensagem foi enviada!';
-}
-catch (Exception $e)
-{
+    echo 'Message has been sent';
+} catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
-
-
-
 ?>

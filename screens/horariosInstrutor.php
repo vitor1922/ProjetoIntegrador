@@ -20,11 +20,34 @@ if (!$logado) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_agendamento'])) {
     $idAgendamento = $_POST['id_agendamento'];
-    $sql_update = "UPDATE agendamento SET status = 1 WHERE id_agendamento = :id_agendamento";
+    $sql_update = "UPDATE agendamento
+SET status = CASE 
+               WHEN status = 0 THEN 1
+               WHEN status = 1 THEN 0
+             END
+WHERE id_agendamento = :id_agendamento AND (status = 0 OR status = 1);
+";
     $stmt = $conexao->prepare($sql_update);
     $stmt->bindValue(':id_agendamento', $idAgendamento, PDO::PARAM_INT);
     $stmt->execute();
 }
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+//     if (isset($_POST['concluir_agendamento'])) {
+//         $id_agendamento = $_POST['id_agendamento'];
+//         $stmt = $conexao->prepare("UPDATE agendamento SET status = 1 WHERE id_agendamento = :id_agendamento");
+//         $stmt->bindParam(':id_agendamento', $id_agendamento);
+//         $stmt->execute();
+//     }
+
+//     if (isset($_POST['reabrir_agendamento'])) {
+//         $id_agendamento = $_POST['id_agendamento'];
+//         $stmt = $conexao->prepare("UPDATE agendamento SET status = 0 WHERE id_agendamento = :id_agendamento");
+//         $stmt->bindParam(':id_agendamento', $id_agendamento);
+//         $stmt->execute();
+//     }
+// }
 
 $searchUser = $_POST['searchUser'] ?? "";
 $filter = $_GET['filter'] ?? null;
@@ -34,14 +57,15 @@ $defaultResults = [];
 
 $sql_default = "
 SELECT
-    a.id_agendamento AS idAgendamento,
+    a.id_agendamento AS id_agendamento,
     t.numero_da_turma AS numeroTurma,
     u.nome AS nomeUsuario,
     u.cpf AS cpf,
     c.nome_do_curso AS nomeCurso,
     aluno.nome AS nomeAluno,
     a.status,
-    a.data
+    a.data,
+    a.hora
 FROM 
     agendamento a
 INNER JOIN 
@@ -165,7 +189,7 @@ function formatDate($date)
                                     <p><strong>Aluno:</strong><br><?= $result["nomeAluno"] ?></p>
                                 </div>
                                 <div class="col d-flex justify-content-end align-items-center">
-                                    <p><strong>Data:</strong><br><?= htmlspecialchars(formatDate($result["data"])) ?></p>
+                                    <p><strong>Data/Hora:</strong><br><?= htmlspecialchars(formatDate($result["data"])) ?> <?= htmlspecialchars($result["hora"]) ?></p>
                                 </div>
                             </div>
 
@@ -177,14 +201,44 @@ function formatDate($date)
                                     <p><strong>Usuário:</strong><br><?= $result["nomeUsuario"] ?></p>
                                 </div>
                                 <div class="col d-flex justify-content-center justify-content-md-end align-items-center">
-                                    <?php if ($result['status'] === '1'): ?>
-                                        <button type="button" class="btn btn-success btn-concluir">Concluído</button>
-                                    <?php else: ?>
-                                        <form method="POST" action="" class="d-flex align-items-center">
-                                            <input type="hidden" name="id_agendamento" value="<?= $result['idAgendamento'] ?>">
-                                            <button type="submit" class="btn btn-danger btn-concluir">Concluir</button>
-                                        </form>
-                                    <?php endif; ?>
+                                    <form method="POST" action="" class="d-flex align-items-center">
+                                        <input type="hidden" name="status" value="<?= $result['id_agendamento'] ?>">
+                                        <?php if ($result['status'] === '1'): ?>
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_agendamento'] ?>" data-id_agendamento="<?= $result['id_agendamento'] ?>">Reabrir</button>
+                                        <?php else: ?>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_agendamento'] ?>" data-id_agendamento="<?= $result['id_agendamento'] ?>">Concluir</button>
+                                        <?php endif; ?>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="reativarModal-<?= $result['id_agendamento'] ?>" tabindex="-1" aria-labelledby="reativarModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reativarModalLabel">
+                                            Agendamento
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="d-flex modal-body justify-content-center align-items-center">
+                                        <?php if ($result['status'] === '1'): ?>
+                                            <form method="POST" action="#">
+                                                <input type="hidden" name="id_agendamento" value="<?= $result['id_agendamento'] ?>">
+                                                <button type="submit" name="concluir_agendamento" class="btn btn-success">Reabrir</button>
+                                            </form>
+
+                                        <?php else: ?>
+
+                                            <form method="POST" action="#">
+                                                <input type="hidden" name="id_agendamento" value="<?= $result['id_agendamento'] ?>">
+                                                <button type="submit" name="reabrir_agendamento" class="btn btn-danger">Concluir</button>
+                                            </form>
+
+                                        <?php endif; ?>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -194,87 +248,9 @@ function formatDate($date)
             </div>
 
         </div>
+
     </main>
 
-    <!-- <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">Conclusão de Agendamento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Você Deseja Concluir?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Não</button>
-                    <button type="button" class="btn btn-success" id="confirmYes">Sim</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true" data-bs-backdrop="static">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Conclusão de Agendamento</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form action="" method="POST">
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Data de Execução</label>
-                                <input type="date" class="form-control" name="txtData" required>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Horário de Execução</label>
-                                <input type="time" class="form-control" name="txtHorario" required>
-                            </div>
-
-                            <div class="mb-3 d-flex justify-content-center">
-                                <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Concluir</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    <!-- <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Revisão de Agendamento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                    <label class="form-label fw-bold">Turma</label>
-                    <span><br>2005477</span>
-                    </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Data de Execução</label>
-                            <span><br>23/02/25</span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Horário de Execução</label>
-                            <span><br>23H</span>                        
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Usuário da Conclusão</label>
-                            <span><br>Jair Messias</span>
-                        </div>
-
-                        <div class="mb-3 d-flex justify-content-center">
-                            <button class="btn  btn-danger  text-white fw-bold px-5" type="submit">Reabrir</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
 
     <?php include_once("./footer.php"); ?>

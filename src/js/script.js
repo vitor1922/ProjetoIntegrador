@@ -157,3 +157,53 @@ function previewImage(input, imgId) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+let cropper;
+let currentImageTarget;
+let currentInputFile;
+
+function openCropModal(input, imgId) {
+    if (input.files && input.files[0]) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById("cropImage").src = e.target.result;
+            currentImageTarget = imgId; // Guarda qual imagem será alterada
+            currentInputFile = input; // Guarda o input original
+            let modal = new bootstrap.Modal(document.getElementById("cropModal"));
+            modal.show();
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+document.getElementById('cropModal').addEventListener('shown.bs.modal', function () {
+    let image = document.getElementById("cropImage");
+    cropper = new Cropper(image, {
+        aspectRatio: currentImageTarget === 'bannerPreview' ? 3 : 1,
+        viewMode: 2,
+        autoCropArea: 1
+    });
+});
+
+document.getElementById('cropModal').addEventListener('hidden.bs.modal', function () {
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+});
+
+document.getElementById("cropButton").addEventListener("click", function () {
+    let canvas = cropper.getCroppedCanvas();
+    if (canvas) {
+        document.getElementById(currentImageTarget).src = canvas.toDataURL();
+
+        canvas.toBlob(function (blob) {
+            let file = new File([blob], "cropped_image.jpg", { type: "image/jpeg" });
+            let dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            currentInputFile.files = dataTransfer.files;
+        }, "image/jpeg");
+    }
+
+    let modal = bootstrap.Modal.getInstance(document.getElementById("cropModal"));
+    modal.hide();
+});

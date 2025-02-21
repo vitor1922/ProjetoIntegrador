@@ -27,7 +27,7 @@ $logado = $_SESSION['logado'] ?? FALSE;
   include_once("./header.php");
   ?>
   <main>
-    <div class="row">
+    <div class="row mb-5">
       <div class="col-12">
         <div class="button fs-1 mx-3">
           <a href="#" role="button pb-5">

@@ -30,15 +30,17 @@ try {
     // 1. Criar um novo post na tabela 'post' e obter o id gerado
     $titulo = $_POST['txtTituloPost'] ?? null;
     $id_usuario = $_SESSION['id_usuario'] ?? null;
+    $texto = $_POST['txtConteudoPost'] ?? null;
 
     if (!$titulo || !$id_usuario) {
         throw new Exception("Erro: Dados do post incompletos.");
     }
 
-    $sql = "INSERT INTO post (titulo, id_usuario) VALUES (:titulo, :id_usuario)";
+    $sql = "INSERT INTO post (titulo, id_usuario, texto) VALUES (:titulo, :id_usuario, :texto)";
     $stmt = $conexao->prepare($sql);
     $stmt->bindParam(":titulo", $titulo);
     $stmt->bindParam(":id_usuario", $id_usuario);
+    $stmt->bindParam(":texto", $texto);
     $stmt->execute();
 
     // 2. Obter o ID do post recém-criado
@@ -52,7 +54,7 @@ try {
 
     if ($update->execute()) {
         $_SESSION['mensagem'] = "Post criado com sucesso!";
-        header("Location: " . BASE_URL . "screens/criarPost.php");
+        header("Location: " . BASE_URL . "screens/Perfil.php");
         exit;
     } else {
         throw new Exception("Erro ao salvar a imagem do post.");
@@ -62,6 +64,5 @@ try {
     header("Location: " . BASE_URL . "screens/criarPost.php");
     exit;
 }
-
 unset($conexao);
 ?>

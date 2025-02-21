@@ -1,109 +1,152 @@
-<?php
-# Inicia as variáveis de sessão
-include('../constantes.php');
-include_once("../data/conexao.php");
+    <?php
+    include('../constantes.php');
+    include_once("../data/conexao.php");
+    $perfil = $_SESSION['perfil'] ?? "cliente";
+    $logado = $_SESSION['logado'] ?? NULL;
+    $mensagem = $_SESSION['mensagem'] ?? NULL;
+    $perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
+    $_SESSION['mensagem'] = NULL;
+    $nome = $_SESSION['nome'] ?? "";
+    $id_usuario = $_SESSION['id_usuario'] ?? "";
+    session_start();
 
-session_start();
+    // Obtém o ID do usuário a ser visualizado na URL (exemplo: perfilPublico.php?id=3)
+    $id_usuario = $_GET['id'] ?? "";
 
-$perfil = $_SESSION['perfil'] ?? "cliente";
-$logado = $_SESSION['logado'] ?? NULL;
-$mensagem = $_SESSION['mensagem'] ?? NULL;
-$perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
-$_SESSION['mensagem'] = NULL;
 
-$nome = $_SESSION['nome'] ?? "";
-$id_usuario_logado = $_SESSION['id_usuario'] ?? "";
+    if (!$id_usuario) {
+        die("Usuário não encontrado.");
+    }
 
-// Redireciona para a página de login se não estiver logado
-if (!$logado) {
-    header("Location: " . BASE_URL . "screens/signUp.php");
-    exit;
-}
+    // Buscar dados do usuário
+    $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
+    $select = $conexao->prepare($sql);
+    $select->bindParam(':id_usuario', $id_usuario);
+    $select->execute();
+    $login = $select->fetch(PDO::FETCH_ASSOC);
 
-// Verifica se um ID foi passado pela URL
-$id_usuario = $_GET['id'] ?? null;
+    if (!$login) {
+        echo "Usuário não encontrado.";
+        exit;
+    }
 
-// Se não houver um ID na URL, exibe erro
-if (!$id_usuario) {
-    echo "Usuário não especificado.";
-    exit;
-}
+    // Buscar posts do usuário
+    $sql = "SELECT p.id_post, p.titulo AS nomeCorte, i.url_img, p.data_criacao
+            FROM post p
+            LEFT JOIN img_post i ON p.id_post = i.id_post
+            WHERE p.id_usuario = :id_usuario
+            ORDER BY p.data_criacao DESC";
 
-// Busca os dados do usuário com base no ID passado na URL
-$sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
-$select = $conexao->prepare($sql);
-$select->bindParam(':id_usuario', $id_usuario);
+    $select = $conexao->prepare($sql);
+    $select->bindParam(':id_usuario', $id_usuario);
+    $select->execute();
+    $posts = $select->fetchAll(PDO::FETCH_ASSOC);
+    $num_posts = count($posts);
 
-if ($select->execute()) {
-    $usuario = $select->fetch(PDO::FETCH_ASSOC);
-} else {
-    $usuario = null;
-}
+    // Estilos por perfil
+    $estilos = [
+        'professor' => ['border-success border-4', 'text-success'],
+        'aluno' => ['border-primary border-4', 'text-primary'],
+        'cliente' => ['border-warning border-4', 'text-warning'],
+        'admin' => ['border-danger border-4', 'text-danger']
+    ];
 
-// Verifica se o usuário foi encontrado
-if (!$usuario) {
-    echo "Usuário não encontrado.";
-    exit;
-}
+    $estilo = $estilos[$login['perfil']][0] ?? 'border-secondary';
+    $estiloTXT = $estilos[$login['perfil']][1] ?? 'text-secondary';
 
-// Define a borda do perfil com base no tipo de usuário visualizado
-if ($usuario['perfil'] == 'professor') {
-    $estilo = "bg-success";
-} elseif ($usuario['perfil'] == 'aluno') {
-    $estilo = " bg-primary";
-} elseif ($usuario['perfil'] == 'cliente') {
-    $estilo = " bg-warning";
-} elseif ($usuario['perfil'] == 'admin') {
-    $estilo = " bg-danger";
-}
+    unset($conexao);
+    ?>
 
-unset($conexao);
-?>
+    <!DOCTYPE html>
+    <html lang="pt-br">
 
-<!DOCTYPE html>
-<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="../assets/css/style.css">
+        <title>Perfil de <?= htmlspecialchars($login["nome"]) ?></title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <title>Perfil</title>
-</head>
+    <body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0">
+        <?php include_once("./header.php"); ?>
 
-<body class="container-fluid">
-
-    <?php include_once("./header.php"); ?>
-
-    <main class="h-75 mt-5">
-        <div class="container d-flex justify-content-center mt-5 align-content-center">
-            <div class="card d-flex justify-content-center border-3 shadow-lg col-lg-12">
-                <div class="headerPerfil d-flex justify-content-center align-items-center">
-                    <div class="profile-background <?= $estilo ?>">
-                        <div class="d-flex justify-content-start mt-5">
-                            <img src="../foto/<?= $usuario['foto'] ?>" class="imgPerfil mt-4 bordaa" name="foto" alt="Imagem de perfil">
+        <main class="container mt-5 mb-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card p-0 shadow-sm">
+                        <div class="position-relative mb-4">
+                            <img src="../bannerP/<?= $login['banner'] ?>" class="w-100" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-100 start-50 translate-middle">
+                                <img src="../foto/<?= $login['foto'] ?>" class="rounded-circle border <?= $estilo ?>" width="120" height="120">
+                            </div>
                         </div>
+
+                        <div class="text-center mt-5">
+                            <h4 class="fw-bold">
+                                <span class="text-dark"><?= htmlspecialchars($login["nome"]) ?></span>
+                                <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span>
+                            </h4>
+                            <p class="text-muted"><?= htmlspecialchars($login["biografia"]) ?></p>
+                            <span><strong><?= $num_posts ?></strong> publicações</span>
+                        </div>
+
+                        <div class="row mt-4 p-3">
+                            <?php if (!empty($posts)) : ?>
+                                <?php foreach ($posts as $post) : ?>
+                                    <div class="col-4 mb-3">
+                                        <div class="position-relative border border-2 border-black rounded">
+                                            <img src="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
+                                                class="w-100 rounded post-img" style="aspect-ratio: 1/1; object-fit: cover; cursor: pointer;"
+                                                data-bs-toggle="modal" data-bs-target="#postModal"
+                                                data-img="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
+                                                data-title="<?= htmlspecialchars($post["nomeCorte"]) ?>"
+                                                data-date="<?= date('d/m/Y, H:i', strtotime($post['data_criacao'])) ?>">
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <p class="text-center text-muted">Nenhuma postagem encontrada.</p>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="postModalLabel"></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <img id="postModalImg" class="img-fluid rounded">
+                                        <p class="text-muted mt-2" id="postModalDate"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var postImages = document.querySelectorAll(".post-img");
+                                postImages.forEach(img => {
+                                    img.addEventListener("click", function() {
+                                        document.getElementById("postModalLabel").textContent = this.getAttribute("data-title");
+                                        document.getElementById("postModalImg").src = this.getAttribute("data-img");
+                                        document.getElementById("postModalDate").textContent = this.getAttribute("data-date");
+                                    });
+                                });
+                            });
+                        </script>
+
                     </div>
                 </div>
-
-                <div class="card-body d-flex justify-content-center flex-column mt-5">
-                    <h5 class="card-title d-flex justify-content-center fw-bold "><?= $usuario["nome"] ?></h5> <br>
-                    <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"><?= $usuario["perfil"] ?></h6> <br>
-                </div>
-
-                <ul class="list-group list-group-flush">
-                    <p class="list-group-item"><?= $usuario["biografia"] ?></p>
-                </ul>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <?php include "./footer.php"; ?>
+        <?php include "./footer.php"; ?>
+        <script src="../src/js/script.js"></script>
+        <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    </body>
 
-    <script src="../src/js/script.js"></script>
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css"></script>
-</body>
-
-</html>
+    </html>

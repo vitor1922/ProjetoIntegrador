@@ -4,14 +4,13 @@ include('../constantes.php');
 
 session_start();
 $perfil = $_SESSION['perfil'] ?? "cliente";
-$logado = $_SESSION['logado'] ?? NULL;
+$logado = $_SESSION['logado'] ?? FALSE;
 $mensagem = $_SESSION['mensagem'] ?? NULL;
-$perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
 $_SESSION['mensagem'] = NULL;
 
-$logado =  $_SESSION['logado'] ?? FALSE;
 $nome = $_SESSION['nome'] ?? "";
 $id_usuario = $_SESSION['id_usuario'] ?? "";
+
 
 if ($perfil == 'professor') {
     $estilo = "border border-success rounded-circle border border-3 m-2";
@@ -23,31 +22,25 @@ if ($perfil == 'professor') {
     $estilo = "border border-danger rounded-circle border border-3 m-2";
 }
 
-
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
     exit;
 }
-// Mostrar dados do usuario logado
+
 $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
 $select = $conexao->prepare($sql);
-$select->bindParam(':id_usuario', $id_usuario);
+$select->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+$select->execute();
+$login = $select->fetch(PDO::FETCH_ASSOC) ?? [];
 
-if ($select->execute()) {
-    $login = $select->fetch(PDO::FETCH_ASSOC);
-}
-
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-    $id_post = $_GET['id_post'] ?? NULL;
+$id_post = $_GET['id_post'] ?? NULL;
+$post = [];
+if ($id_post) {
     $sql = "SELECT * FROM post WHERE id_post = :id_post";
     $select = $conexao->prepare($sql);
-    $select->bindParam(':id_post', $id_post);
-    if ($select->execute()) {
-        $post = $select->fetch(PDO::FETCH_ASSOC);
-    }
+    $select->bindParam(':id_post', $id_post, PDO::PARAM_INT);
+    $select->execute();
+    $post = $select->fetch(PDO::FETCH_ASSOC) ?? [];
 }
 
 unset($conexao);
@@ -62,6 +55,7 @@ unset($conexao);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil</title>
     <meta name="author" content="Jose">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
@@ -79,31 +73,50 @@ unset($conexao);
                         fill="currentColor" class="bi bi-arrow-left-short fs-1 azul-senac" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
                     </svg></button></a>
+            </div>
+        <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="cropModalLabel">Ajustar Imagem</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
         </div>
+        <div class="modal-body">
+        <div class="img-container">
+            <img id="cropImage" src="" class="img-fluid">
+        </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="cropButton">Cortar e Salvar</button>
+        </div>
+    </div>
+    </div>
+</div>
         <div class="container d-flex justify-content-center align-content-center">
             <div class=" card d-flex justify-content-center border-4 shadow-lg col-lg-12 w-100">
                 <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php" enctype="multipart/form-data">
                     <div class="headerPerfil d-flex position-relative justify-content-center">
                             <div class="profile-background">
+                            <button type="button" class="btn btn-danger position-absolute top-0 end-0 m-2" onclick="removerImagem('banner')">Remover Banner</button>
                                 <img id="bannerPreview" src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
                             </div>
-                            <div class="position-absolute top-100 mt-5">
-                        <label class="btn fw-bold btn-dark rounded-pill px-4 py-2 mt-2">
-                            <i class="bi bi-image-fill"></i>Alterar Banner
-                            <input type="file" name="banner" accept="image/jpg, image/png, image/jpeg" hidden onchange="previewImage(this, 'bannerPreview')">
-                        </label>
-                    </div>
                 <input type="text" name="imgBanner" value="<?= $login['banner'] ?>" hidden>
             </div>
                 <div class="d-flex profileP">
+                <button type="button" class="btn btn-danger position-absolute top-100" onclick="removerImagem('perfil')">Remover Foto de Perfil</button>
                     <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa <?= $estilo ?>" name="foto" alt="Imagem de perfil">
                 </div>
             <div class="d-flex justify-content-center mt-5">
             <label class="btn btn-dark fw-bold rounded-pill px-4 py-2 mt-5">
                 <i class="bi bi-image-fill"></i> Alterar foto de perfil
-            <input type="file" name="foto" accept="image/jpg, image/png, image/jpeg" hidden onchange="previewImage(this, 'fotoPreview')">
+                <input type="file" name="foto" accept="image/jpg, image/png, image/jpeg" hidden onchange="openCropModal(this, 'fotoPreview')">
             </label>
             <input type="text" name="imgName" value="<?= $login['foto'] ?>" hidden>
+                <label class="btn fw-bold btn-dark rounded-pill px-4 py-2 mt-5">
+                    <i class="bi bi-image-fill"></i> Alterar Banner
+                    <input type="file" name="banner" accept="image/jpg, image/png, image/jpeg" hidden onchange="openCropModal(this, 'bannerPreview')">
+            </label>
         </div>
                         <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
                             value="<?= $login['id_usuario'] ?? '' ?>" hidden>
@@ -113,14 +126,14 @@ unset($conexao);
                             <h6 class="fw-bold laranja-senac mx-2">Nome Atual:</h6>
                             <h5 class="card-title d-flex mx-1"><?= $login['nome'] ?? '' ?></h5> <br>
                             <label for="nome" class="form-label fw-bold azul-senac mx-2">Novo Nome</label>
-                            <input type="text" name="txtNome" class="form-control mb-2">
+                            <input type="text" name="txtNome" class="form-control mb-2" value="<?= $login['nome'] ?? '' ?>">
                         </div>
                     <h6 class="fw-bold laranja-senac mx-2">Bio Atual:</h6>
                     <p class="list-group-item mx-4"><?= $login["biografia"] ?></p>
                         <div class="nomePerfil">
                             <div class="mx-3 mb-3 fw-bold">
                                 <label for="bio" class="form-label fw-bold azul-senac">Nova Bio</label>
-                                <textarea class="form-control p-2" name="txtBiografia" rows="2"></textarea>
+                                <textarea class="form-control p-2" name="txtBiografia" rows="2"><?= $login['biografia'] ?? '' ?></textarea>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
@@ -137,9 +150,34 @@ unset($conexao);
     include("./footer.php");
     ?>
 
+<script>
+    function removerImagem(tipo) {
+    if (!confirm("Tem certeza que deseja remover esta imagem?")) return;
 
+    fetch('../src/logicos/removerImagem.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `tipo=${tipo}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.trim() === 'sucesso') {
+            if (tipo === 'banner') {
+                document.getElementById('bannerPreview').src = '../assets/img/sem-banner.png';
+                document.querySelector('input[name="imgBanner"]').value = '';
+            } else if (tipo === 'perfil') {
+                document.getElementById('fotoPreview').src = '../assets/img/sem-perfil.png';
+                document.querySelector('input[name="imgName"]').value = '';
+            }
+        } else {
+            alert('Erro ao remover a imagem.');
+        }
+    })
+    .catch(error => console.error('Erro na requisição:', error));
+}
+</script>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <script src="../src/js/script.js"></script>
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css"></script>

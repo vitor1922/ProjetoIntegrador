@@ -10,7 +10,7 @@ $logado = $_SESSION['logado'] ?? false;
 $idUsuarioLogado = $_SESSION['id_usuario'] ?? null;
 
 if (!$logado) {
-    header("Location: ../login.php");
+    header("Location: " . BASE_URL . "screens/signUp.php");
     exit;
 }
 
@@ -25,12 +25,13 @@ $filtro = $_POST['filtro'] ?? 'mais_recente';
 
 try {
     $sqlAvaliacoes = "SELECT a.nivel_de_avaliacao, a.comentario, a.id_usuario, 
-                            u.nome, u.foto, t.numero_da_turma, 
-                            a.id_avaliacao
-                    FROM avaliacao a
-                    JOIN usuario u ON a.id_usuario = u.id_usuario
-                    LEFT JOIN turma t ON a.id_turma = t.id_turma
-                    ORDER BY " . ($filtro === 'mais_antigo' ? 'a.id_avaliacao ASC' : 'a.id_avaliacao DESC');
+                        u.nome, u.foto, t.numero_da_turma, 
+                        a.id_avaliacao
+                FROM avaliacao a
+                JOIN usuario u ON a.id_usuario = u.id_usuario
+                LEFT JOIN turma t ON a.id_turma = t.id_turma
+                ORDER BY " . ($filtro === 'mais_antigo' ? 'a.id_avaliacao ASC' : 'a.id_avaliacao DESC');
+
 
     $stmtAvaliacoes = $conexao->prepare($sqlAvaliacoes);
     $stmtAvaliacoes->execute();
@@ -81,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
-
     if (isset($_POST['editar'])) {
         $idAvaliacao = $_POST['id_avaliacao'];
         $novoComentario = $_POST['comentario'];
@@ -126,32 +126,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             flex-direction: row-reverse;
             justify-content: flex-end;
         }
-
         .stars input {
             display: none;
         }
-
         .stars label {
             font-size: 30px;
             color: #ccc;
             cursor: pointer;
             transition: color 0.2s;
         }
-
         .stars label:hover,
         .stars label:hover ~ label,
         .stars input:checked ~ label {
             color: #FFD700; 
-        }
-
-        .dropdown {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-        }
-
-        .dropdown-menu {
-            min-width: 150px;
         }
     </style>
 </head>
@@ -217,15 +204,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <p class="mt-3"><?= htmlspecialchars($avaliacao['comentario']) ?></p>
                     
                     <?php if ($idUsuarioLogado == $avaliacao['id_usuario']): ?>
-                        <div class="dropdown">
-                            <button class="btn p-0 border-0 text-black" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-three-dots-vertical"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="<?= $avaliacao['id_avaliacao'] ?>" data-comentario="<?= htmlspecialchars($avaliacao['comentario']) ?>" data-nivel="<?= $avaliacao['nivel_de_avaliacao'] ?>">Editar</a></li>
-                                <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="<?= $avaliacao['id_avaliacao'] ?>" data-usuario="<?= $avaliacao['id_usuario'] ?>">Excluir</a></li>
-                            </ul>
-                        </div>
+                        <div class="dropdown position-absolute bottom-0 end-0 mb-2 me-2">
+    <button class="btn p-0 border-0 text-black" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-three-dots-vertical"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="min-width: 150px;">
+        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editModal" data-id="<?= $avaliacao['id_avaliacao'] ?>" data-comentario="<?= htmlspecialchars($avaliacao['comentario']) ?>" data-nivel="<?= $avaliacao['nivel_de_avaliacao'] ?>">Editar</a></li>
+        <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="<?= $avaliacao['id_avaliacao'] ?>" data-usuario="<?= $avaliacao['id_usuario'] ?>">Excluir</a></li>
+    </ul>
+</div>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
@@ -237,7 +224,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include_once("./footer.php")
     ?>
 </div>
-
 <!-- Modal de exclusão -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -260,7 +246,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </div>
-
 <!-- Modal de edição -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -300,7 +285,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </div>
-
 <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script>
     // Preencher modal de edição
@@ -310,25 +294,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         var idAvaliacao = button.getAttribute('data-id');
         var comentario = button.getAttribute('data-comentario');
         var nivel = button.getAttribute('data-nivel');
-
         document.getElementById('editIdAvaliacao').value = idAvaliacao;
         document.getElementById('editComentario').value = comentario;
-
         // Marcar o nível de avaliação
         document.getElementById('editStar' + nivel).checked = true;
     });
-
     // Preencher modal de exclusão
     var deleteModal = document.getElementById('confirmDeleteModal');
     deleteModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
         var idAvaliacao = button.getAttribute('data-id');
         var idUsuario = button.getAttribute('data-usuario');
-
         document.getElementById('deleteIdAvaliacao').value = idAvaliacao;
         document.getElementById('deleteIdUsuario').value = idUsuario;
     });
 </script>
-
 </body>
 </html>

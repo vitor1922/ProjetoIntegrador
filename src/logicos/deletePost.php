@@ -43,17 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] === "GET" && isset($_GET['id'])) {
             $_SESSION['mensagem'] = "Erro ao excluir a postagem: " . $e->getMessage();
         } finally {
             // Redireciona para a página de perfil após a exclusão
-            header("Location: " . BASE_URL . "screens/perfildoAluno.php");
+            header("Location: " . BASE_URL . "screens/Perfil.php");
             unset($conexao);
             exit;
         }
     } else {
         $_SESSION['mensagem'] = "ID de postagem inválido.";
-        header("Location: " . BASE_URL . "screens/perfildoAluno.php");
+        header("Location: " . BASE_URL . "screens/Perfil.php");
         exit;
     }
 } else {
     $_SESSION['mensagem'] = "Requisição inválida.";
-    header("Location: " . BASE_URL . "screens/perfildoAluno.php");
+    header("Location: " . BASE_URL . "screens/Perfil.php");
     exit;
 }

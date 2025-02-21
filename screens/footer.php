@@ -20,7 +20,7 @@
                             <p>(41) 3452-8050</p>
                         </div>
                         <div class="col-12 col-lg-4 d-flex flex-wrap justify-content-center align-items-center">
-                            <a href="#" class="d-flex justify-content-center col-5 col-lg-3"><i class="bi bi-whatsapp text-light p-1 fs-3"></i></a>
+                            <a href="https://api.whatsapp.com/send?1=pt_BR&phone=554134528050" class="d-flex justify-content-center col-5 col-lg-3"><i class="bi bi-whatsapp text-light p-1 fs-3"></i></a>
                             <a href="https://www.facebook.com/SenacParana/" class="d-flex justify-content-center col-5 col-lg-3"><i class="bi bi-facebook text-light p-1 fs-3"></i></a>
                             <a href="https://www.instagram.com/senacparana?igsh=dHcxNzlsbXQ1dm84" class="d-flex justify-content-center col-5 col-lg-3"><i class="bi bi-instagram text-light p-1 fs-3"></i></a>
                             <a href="https://www.youtube.com/@senacpr" class="d-flex justify-content-center col-5 col-lg-3"><i class="bi bi-youtube text-light p-1 fs-3"></i></a>

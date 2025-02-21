@@ -211,7 +211,7 @@ unset($conexao);
 
                             <div class="col d-flex justify-content-end align-items-center">
                                 <form method="POST" action="" class="d-flex align-items-center">
-                                    <input type="hidden" name="perfil_usuario" value="<?= $result['id_usuario'] ?>">
+                                    <input type="hidden" name="perfil_usuario" value="<?= $result['id_usuario'] ?>">    
                                     <?php if ($result['status'] === '1'): ?>
                                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_usuario'] ?>" data-id_usuario="<?= $result['id_usuario'] ?>">Reativar</button>
                                     <?php else: ?>

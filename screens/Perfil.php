@@ -12,8 +12,6 @@ $logado = $_SESSION['logado'] ?? NULL;
 $mensagem = $_SESSION['mensagem'] ?? NULL;
 $perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
 $_SESSION['mensagem'] = NULL;
-
-$logado =  $_SESSION['logado'] ?? FALSE;
 $nome = $_SESSION['nome'] ?? "";
 $id_usuario = $_SESSION['id_usuario'] ?? "";
 
@@ -50,14 +48,28 @@ if (!$logado) {
 $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
 $select = $conexao->prepare($sql);
 $select->bindParam(':id_usuario', $id_usuario);
-if ($select->execute()) {
-    $login = $select->fetch(PDO::FETCH_ASSOC);
-}
+$select->execute();
+$login = $select->fetch(PDO::FETCH_ASSOC);
+
+// Buscar os posts criados pelo usuário
+$sql = "SELECT p.id_post, p.titulo AS nomeCorte, i.url_img, p.data_criacao
+        FROM post p
+        LEFT JOIN img_post i ON p.id_post = i.id_post
+        WHERE p.id_usuario = :id_usuario
+        ORDER BY p.data_criacao DESC";
+
+$select = $conexao->prepare($sql);
+$select->bindParam(':id_usuario', $id_usuario);
+$select->execute();
+$posts = $select->fetchAll(PDO::FETCH_ASSOC);
+
+// Contar a quantidade de posts
+$num_posts = count($posts);
+
 
 //  echo("<pre>");
 //  var_dump($login);
 //  die;
-
 
 unset($conexao);
 ?>
@@ -76,40 +88,110 @@ unset($conexao);
     <title>Perfil</title>
 </head>
 
-<body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0">
+<body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0 ">
 
     <?php include_once("./header.php"); ?>
 
-    <main class="container mt-5">
+    <main class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card p-0 shadow-sm">
+                    <div class="position-relative mb-4 ">
+                        <!-- banner e foto -->
+                        <img src="../bannerP/<?= $login['banner'] ?>" class="w-100" style="height: 200px; object-fit: cover;">
+                        <div class="position-absolute top-100 start-50 translate-middle">
+                            <img src="../foto/<?= $login['foto'] ?>" class="rounded-circle border <?= $estilo ?>" width="120" height="120">
+                        </div>
+                    </div>
 
-        <div class=" d-flex justify-content-center mt-4 align-content-center mb-5">
-            <div class=" card d-flex border-4 shadow-lg col motherCard">
-                <div class="headerPerfil ">
-                    <div class="profile-background ">
-                        <img src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
-                    </div>
-                </div>
-                <!-- antes tinha um card-body antes de d-flex felx-column -->
-                <div class=" d-flex flex-column align-content-center flex-md-row flex-lg-row profileP ">
-                    <img src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa <?= $estilo ?>" name="foto" alt="Imagem de perfil">
-                </div>
-                <div class=" d-flex flex-column justify-content-center align-content-center txtPerfil">
-                    <h5 class="d-flex fw-bold justify-content-center m-0 mt-5"><?= $login["nome"] ?></h5> <br>
-                    <h6 class=" d-flex fw-bold justify-content-center m-0 <?= $estiloTXT ?>" id="cargoProfile"><?= $login["perfil"] ?></h6> <br>
-                    <p class="text-center"><?= $login["biografia"] ?></p>
-                </div>
+                    <!-- nome, perfil, bio, editar perifl -->
+                    <div class="text-center mt-5">
+                        <h4 class="fw-bold">
+                            <span class="text-dark"><?= htmlspecialchars($login["nome"]) ?></span>
+                            <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span>
+                        </h4>
 
-                <div class="card-body d-flex flex-column justify-content-end align-items-center ">
-                    <div class="row w-50 d-flex ">
-                        <a href="./editarPerfil.php" class="btn border shadow-sm fw-bold laranja-senac border-3 rounded-4 mb-3 ">Editar Perfil</a>
+                        <h6 class="fw-bolder </h6>
+                        <p class=" text-muted"><?= htmlspecialchars($login["biografia"] ?? '') ?></p>
+
+                            <div class="d-flex justify-content-center gap-3">
+
+                                <span><strong><?= $num_posts ?></strong> publicações</span>
+                            </div>
+                            <div class="mt-3">
+                                <div class="d-flex justify-content-center mb-3">
+                                    <a href="<?= BASE_URL ?>screens/criarPost.php">
+                                        <button class="btn btn-success border border-dark">
+                                            <i class="bi bi-plus" style="font-size: 2rem; color: white;"></i>
+                                        </button>
+                                    </a>
+                                </div>
+                                <a href="./editarPerfil.php" class="btn btn-outline-dark btn-sm">Editar Perfil</a>
+                                <a href="./configuracoes.php" class="btn btn-outline-secondary btn-sm">Configurações</a>
+                            </div>
                     </div>
-                    <div class="row w-50 d-flex">
-                        <a href="./configuracoes.php" class="btn border shadow-sm fw-bold laranja-senac border-3 rounded-4  mb-3">Cfg</a>
+                    <!-- Grid dos posts -->
+                    <div class="row mt-4 p-3 ">
+                        <?php if (!empty($posts)) : ?>
+                            <?php foreach ($posts as $post) : ?>
+                                <div class="col-4 mb-3">
+                                    <div class="position-relative border border-2 border-black rounded">
+                                        <!-- Imagem do post com evento para abrir o modal -->
+                                        <img src="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
+                                            class="w-100 rounded post-img" style="aspect-ratio: 1/1; object-fit: cover; cursor: pointer;"
+                                            data-bs-toggle="modal" data-bs-target="#postModal"
+                                            data-img="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
+                                            data-title="<?= htmlspecialchars($post["nomeCorte"]) ?>"
+                                            data-date="<?= date('d/m/Y, H:i', strtotime($post['data_criacao'])) ?>">
+
+
+                                        <!-- Botão para excluir post -->
+                                        <a href="<?= BASE_URL ?>src/logicos/deletePost.php?id=<?= $post['id_post'] ?>"
+                                            class="position-absolute top-0 end-0 p-2 bg-white rounded-circle shadow"
+                                            onclick="return confirm('Tem certeza que deseja excluir este post?')">
+                                            <i class="bi bi-trash text-danger"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <p class="text-center text-muted">Nenhuma postagem encontrada.</p>
+                        <?php endif; ?>
                     </div>
+
+                    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="postModalLabel"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img id="postModalImg" class="img-fluid rounded">
+                                    <p class="text-muted mt-2" id="postModalDate"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            var postImages = document.querySelectorAll(".post-img");
+                            postImages.forEach(img => {
+                                img.addEventListener("click", function() {
+                                    document.getElementById("postModalLabel").textContent = this.getAttribute("data-title");
+                                    document.getElementById("postModalImg").src = this.getAttribute("data-img");
+                                    document.getElementById("postModalDate").textContent = this.getAttribute("data-date");
+                                });
+                            });
+                        });
+                    </script>
+
                 </div>
             </div>
         </div>
     </main>
+
+
     <?php
     include "./footer.php";
     ?>

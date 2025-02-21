@@ -54,22 +54,20 @@ if ($select->execute()) {
         <form action="<?= BASE_URL ?>src/logicos/PostAluno.php" method="POST" enctype="multipart/form-data">
             <div class="row offset-md-2">
                 <div class="mb-3">
-                    <label for="txtTituloPost" class="form-label">Nome do Corte</label>
-                    <input type="text" id="txtTituloPost" class="form-control" name="txtTituloPost" autofocus="true" required>
+                    <label for="txtTituloPost" class="form-label">Título do Post</label>
+                    <input type="text" id="txtTituloPost" class="form-control" name="txtTituloPost" required>
                 </div>
 
-                <!-- talvez possa ser usado depois!! -->
-                <!-- <div class="mb-3">
-                    <label for="txtConteudoPost" class="form-label">Conteúdo Post</label>
-                    <textarea type="text" id="txtConteudoPost" class="form-control" rows="10" name="txtConteudoPost" required></textarea>
-                </div> -->
+                <div class="mb-3">
+                    <label for="txtDescricaoPost" class="form-label">Descrição do Post</label>
+                    <textarea id="txtDescricaoPost" class="form-control" rows="5" name="txtDescricaoPost" required></textarea>
+                </div>
 
                 <div class="mb-3">
-                    <label for="poster_path" class="col-sm-8 col-form-label">Carregar Imagem</label>
+                    <label for="postAluno" class="col-sm-8 col-form-label">Carregar Imagem</label>
                     <input type="file" name="postAluno" class="form-control" accept="image/png, image/jpeg, image/jpg" onchange="previewImage(event)">
                 </div>
 
-            
                 <img id="fotoPreview" src="" alt="Prévia da imagem" style="display: none; max-width: 200px; margin-top: 10px;">
 
                 <script>
@@ -91,11 +89,10 @@ if ($select->execute()) {
                 </script>
 
                 <div class="mb-3">
-                    <button onclick="window.history.back();">Voltar</button>
-                    <button type="submit" class="btn btn-success mb-3 ">Criar Post</button>
+                    <button onclick="window.history.back();" class="btn btn-secondary">Voltar</button>
+                    <button type="submit" class="btn btn-success">Criar Post</button>
                 </div>
             </div>
-
         </form>
         <div>
             <?php if (isset($mensagem)) { ?>
