@@ -235,11 +235,11 @@ body {
   max-width: 1rem;
 }
 .header-senac {
-  background-color: var(--laranja_escuro_senac);
+  background-color: var(--cinza);
 }
 
 .header-senac-text {
-  color: #fff;
+  color: #000;
 }
 
 .apagar {
@@ -253,6 +253,11 @@ body {
 
   .header-senac-text {
     color: var(--azul_medio_senac);
+  }
+
+  .border-hearder{
+    border-bottom: #f7941d;
+    height: 3px;
   }
 
   .img-index {

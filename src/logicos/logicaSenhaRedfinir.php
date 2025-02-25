@@ -1,39 +1,47 @@
 <?php
-include ("../autoload.php");
-include ("./src/logicos/configSMTP.php");
+session_start();
+require '../vendor/autoload.php'; // Certifique-se que está no caminho certo
 
 use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
 
+//     if (empty($email)) {
+//         $_SESSION['mensagem'] = "Preencha o e-mail!";
+//         header("Location: " . BASE_URL . "screens/signUp.php"); // Redireciona para a página com o modal
+//         exit;
+//     }
 
-$mail = new PHPMailer(true);
+    $mail = new PHPMailer(true);
 
-try {
-    //Server settings                   //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = SMTP_HOST;                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = SMTP_USER;                     //SMTP username
-    $mail->Password   = SMTP_PASS;                               //SMTP password           //Enable implicit TLS encryption
-    $mail->Port       = SMTP_PORT;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    try {
+        // Configurações do servidor SMTP
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com'; // Servidor SMTP do Gmail
+        $mail->SMTPAuth = true;
+        $mail->Username = 'jvictorgow3@gmail.com'; // Seu e-mail
+        $mail->Password = 'pbdlnlxtsmkrhlwa'; // Sua senha ou senha de aplicativo
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = 465;
 
+        // Remetente e destinatário
+        $mail->setFrom('jvictorgow3@gmail.com', 'Seu Nome'); // E-mail do remetente
+        $mail->addAddress('ursamaior532@gmail.com', 'Victor'); // E-mail do destinatário
 
-    //Recipients
-    $mail->setFrom('jvictorgow3@gmail.com', 'Joao gomes');
-    $mail->addAddress('bruno.wuo@docente.pr.senac.br', 'Bruno Wuo');    
+        // Conteúdo do e-mail
+        $mail->isHTML(true);
+        $mail->Subject = 'Assunto do E-mail';
+        $mail->Body = '<h1>Olá Victor!</h1><p>Esta é uma mensagem enviada via PHPMailer.</p>';
+        $mail->AltBody = 'Olá Victor! Esta é uma mensagem enviada via PHPMailer.'; // Caso o cliente de e-mail não suporte HTML
 
-
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'contato do site';
-    $mail->Body    = 'seu pau e gigante <b>in bold!</b>';
-
-
-    $mail->send();
-    echo 'Message has been sent';
-} catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-}
-?>
+        // Enviar o e-mail
+        $mail->send();
+        echo 'E-mail enviado com sucesso!';
+    } catch (Exception $e) {
+        echo "Erro ao enviar o e-mail: {$mail->ErrorInfo}";
+    }
+    header("Location: " . BASE_URL . "screens/signUp.php"); // Redireciona para a página com o modal
+    exit;
+// }

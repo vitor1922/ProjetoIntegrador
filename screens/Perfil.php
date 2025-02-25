@@ -15,6 +15,7 @@ $_SESSION['mensagem'] = NULL;
 $nome = $_SESSION['nome'] ?? "";
 $id_usuario = $_SESSION['id_usuario'] ?? "";
 
+
 // $perfil = "cliente";
 // border colors of each user role 
 if ($perfil == 'professor') {
@@ -29,13 +30,13 @@ if ($perfil == 'professor') {
 
 // coisa dos txt
 
-if ($perfil == 'professor') {
+if ($perfil === 'professor') {
     $estiloTXT = "text-success";
-} elseif ($perfil == 'aluno') {
+} elseif ($perfil === 'aluno') {
     $estiloTXT = "text-primary";
-} elseif ($perfil == 'cliente') {
+} elseif ($perfil === 'cliente') {
     $estiloTXT = "text-warning";
-} elseif ($perfil == 'admin') {
+} elseif ($perfil === 'admin') {
     $estiloTXT = "text-danger";
 }
 
@@ -52,7 +53,7 @@ $select->execute();
 $login = $select->fetch(PDO::FETCH_ASSOC);
 
 // Buscar os posts criados pelo usuário
-$sql = "SELECT p.id_post, p.titulo AS nomeCorte, i.url_img, p.data_criacao
+$sql = "SELECT p.id_post, p.titulo  AS nomeCorte, i.url_img, p.data_criacao
         FROM post p
         LEFT JOIN img_post i ON p.id_post = i.id_post
         WHERE p.id_usuario = :id_usuario
@@ -63,21 +64,25 @@ $select->bindParam(':id_usuario', $id_usuario);
 $select->execute();
 $posts = $select->fetchAll(PDO::FETCH_ASSOC);
 
+// Consultar o curso associado ao usuário
+$callCourse = "SELECT c.nome_do_curso FROM curso c
+INNER JOIN turma t ON t.id_curso = c.id_curso
+INNER JOIN alunos a ON a.id_turma = t.id_turma
+WHERE a.id_usuario = :id_usuario";
+$select = $conexao->prepare($callCourse);
+$select->bindParam(':id_usuario', $id_usuario);
+$select->execute();
+$callCourse = $select->fetch(PDO::FETCH_ASSOC);
+
 // Contar a quantidade de posts
 $num_posts = count($posts);
-
-
-//  echo("<pre>");
-//  var_dump($login);
-//  die;
-
-unset($conexao);
 ?>
 
 <?php include_once("../constantes.php"); ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 
 <head>
     <meta charset="UTF-8">
@@ -86,21 +91,34 @@ unset($conexao);
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
     <title>Perfil</title>
+    <style>
+        .preloader {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #0A0617;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+    </style>
 </head>
 
 <body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0 ">
-
+    <div class="preloader" id="preloader">
+        <img src="../assets/img/senac_logo_branco.png" class="logo" alt="Logo do Senac"> <!-- Substitua pelo caminho correto da logo -->
+    </div>
     <?php include_once("./header.php"); ?>
-
     <main class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card p-0 shadow-sm">
                     <div class="position-relative mb-4 ">
                         <!-- banner e foto -->
-                        <img src="../bannerP/<?= $login['banner'] ?>" class="w-100" style="height: 200px; object-fit: cover;">
+                        <img src="../bannerP/<?= $login['banner'] ? $login['banner'] : 'SenacLogo.jpg' ?>" class="w-100" style="height: 200px; object-fit: cover;">
                         <div class="position-absolute top-100 start-50 translate-middle">
-                            <img src="../foto/<?= $login['foto'] ?>" class="rounded-circle border <?= $estilo ?>" width="120" height="120">
+                            <img src="../foto/<?= $login['foto'] ? $login['foto'] : 'iconPerfil.jpg' ?> " class="rounded-circle border <?= $estilo ?>" width="120" height="120">
                         </div>
                     </div>
 
@@ -109,6 +127,8 @@ unset($conexao);
                         <h4 class="fw-bold">
                             <span class="text-dark"><?= htmlspecialchars($login["nome"]) ?></span>
                             <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span>
+                            <span class="text-black">
+                                <?= isset($callCourse['nome_do_curso']) && $callCourse['nome_do_curso'] ? $callCourse['nome_do_curso'] : "O usuário não está em um curso" ?></span>
                         </h4>
 
                         <h6 class="fw-bolder </h6>
@@ -174,16 +194,20 @@ unset($conexao);
                         </div>
                     </div>
                     <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            var postImages = document.querySelectorAll(".post-img");
-                            postImages.forEach(img => {
-                                img.addEventListener("click", function() {
-                                    document.getElementById("postModalLabel").textContent = this.getAttribute("data-title");
-                                    document.getElementById("postModalImg").src = this.getAttribute("data-img");
-                                    document.getElementById("postModalDate").textContent = this.getAttribute("data-date");
-                                });
-                            });
-                        });
+                        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById("preloader").style.display = "none";
+            }, 1500); // Tempo do preloader
+            
+            // Animações dos cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = 1;
+                    card.style.transform = 'translateY(0)';
+                }, 1500 + index * 500); // Atraso aumentado para cada card
+            });
+        };
                     </script>
 
                 </div>

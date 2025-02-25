@@ -26,7 +26,7 @@ $nome = $_SESSION['nome'] ?? NULL;
 <body class="container-fluid d-flex flex-column">
   <div>
     <?php include_once("./screens/header.php"); ?>
-    <div class="linha-vermelha"></div>
+
 
     <main>
       <!-- Imagem Parallax -->

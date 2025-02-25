@@ -5,9 +5,6 @@ include_once('../../data/conexao.php');
 
 
 
-
-
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $camposObrigatorios = $_POST;
 

@@ -1,8 +1,8 @@
 <?php
 
 #inicia as variaveis de sessão
-include('../constantes.php');
-include_once('../data/conexao.php');
+include('../../constantes.php');
+include_once('../../data/conexao.php');
 
 session_start();
 $mensagem = $_SESSION['mensagem'] ?? NULL;
@@ -16,12 +16,13 @@ $perfil = $_SESSION['perfil'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (!empty($_POST['txtTituloPost']) && !empty($_POST["txtConteudoPost"])) {
-        $postagemId = filter_input(INPUT_POST, "txtPostId", FILTER_SANITIZE_SPECIAL_CHARS);
-        $tituloPost = filter_input(INPUT_POST, "txtTituloPost", FILTER_SANITIZE_SPECIAL_CHARS);
-        $conteudoPost = filter_input(INPUT_POST, "txtConteudoPost", FILTER_SANITIZE_SPECIAL_CHARS);
-        $imgName = filter_input(INPUT_POST, "imgName", FILTER_SANITIZE_SPECIAL_CHARS);
-
+    if (!empty($_POST['txtTitulo']) && !empty($_POST["txtTexto"])) {
+        $postTitulo = filter_input(INPUT_POST, "txtTitulo", FILTER_SANITIZE_SPECIAL_CHARS);
+        $postTexto = filter_input(INPUT_POST, "txtTexto", FILTER_SANITIZE_SPECIAL_CHARS);
+        $idUsuario = filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_SPECIAL_CHARS);
+        echo("jlksjd");
+        var_dump($_FILES["imgsPost"]);
+        die;
         if (isset($_FILES["imgPosts"]) && !empty($_FILES["imgPosts"]["name"])) {
             $allowedTypes = ["image/png", "image/jpeg"];
             $fileType = mime_content_type($_FILES["imgPosts"]["tmp_name"]);

@@ -92,20 +92,21 @@ unset($conexao);
         </div>
     </div>
     </div>
+
 </div>
         <div class="container d-flex justify-content-center align-content-center">
             <div class=" card d-flex justify-content-center border-4 shadow-lg col-lg-12 w-100">
                 <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php" enctype="multipart/form-data">
                     <div class="headerPerfil d-flex position-relative justify-content-center">
                             <div class="profile-background">
+                            <button type="button" class="btn btn-danger position-absolute top-0 start-0 m-2" onclick="removerImagem('perfil')">Remover Foto de Perfil</button>
                             <button type="button" class="btn btn-danger position-absolute top-0 end-0 m-2" onclick="removerImagem('banner')">Remover Banner</button>
                                 <img id="bannerPreview" src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
                             </div>
                 <input type="text" name="imgBanner" value="<?= $login['banner'] ?>" hidden>
             </div>
                 <div class="d-flex profileP">
-                <button type="button" class="btn btn-danger position-absolute top-100" onclick="removerImagem('perfil')">Remover Foto de Perfil</button>
-                    <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa <?= $estilo ?>" name="foto" alt="Imagem de perfil">
+                    <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa mt-3 <?= $estilo ?>" name="foto" alt="Imagem de perfil">
                 </div>
             <div class="d-flex justify-content-center mt-5">
             <label class="btn btn-dark fw-bold rounded-pill px-4 py-2 mt-5">
@@ -120,7 +121,7 @@ unset($conexao);
         </div>
                         <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
                             value="<?= $login['id_usuario'] ?? '' ?>" hidden>
-                        <h6 class="card-text d-flex justify-content-center fw-bold mt-3" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
+                        <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
                     <div class="col mb-3">
                         <div class="nomePerfil p-3">
                             <h6 class="fw-bold laranja-senac mx-2">Nome Atual:</h6>

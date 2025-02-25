@@ -32,23 +32,6 @@ WHERE id_agendamento = :id_agendamento AND (status = 0 OR status = 1);
     $stmt->execute();
 }
 
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-//     if (isset($_POST['concluir_agendamento'])) {
-//         $id_agendamento = $_POST['id_agendamento'];
-//         $stmt = $conexao->prepare("UPDATE agendamento SET status = 1 WHERE id_agendamento = :id_agendamento");
-//         $stmt->bindParam(':id_agendamento', $id_agendamento);
-//         $stmt->execute();
-//     }
-
-//     if (isset($_POST['reabrir_agendamento'])) {
-//         $id_agendamento = $_POST['id_agendamento'];
-//         $stmt = $conexao->prepare("UPDATE agendamento SET status = 0 WHERE id_agendamento = :id_agendamento");
-//         $stmt->bindParam(':id_agendamento', $id_agendamento);
-//         $stmt->execute();
-//     }
-// }
-
 $searchUser = $_POST['searchUser'] ?? "";
 $filter = $_GET['filter'] ?? null;
 
@@ -127,6 +110,30 @@ function formatDate($date)
     <link rel="stylesheet" href="../assets/css/style.css">
     <title>Horários - Instrutor</title>
     <meta name="author" content="Vitor Baggio">
+
+    <style>
+        .cardVera {
+            transition: all 0.3s ease-in-out;
+            margin-bottom: 10px;
+        }
+
+        .cardVera:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            transition: border 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #0069d9;
+            outline: none;
+        }
+    </style>
+
 </head>
 
 <body class="container-fluid">
@@ -139,13 +146,13 @@ function formatDate($date)
             <h1 class="text-center laranja-senac">Área do Instrutor</h1>
             <div class="row bg-light d-flex align-items-center w-100 w-md-50 w-lg-25 mx-auto">
                 <div class="col text-end">
-                    <a href="#"><i class="bi bi-chevron-left"></i></a>
+                    <a href="./areaInstrutor.php"><i class="bi bi-chevron-left"></i></a>
                 </div>
                 <div class="col text-center">
                     <p class="mt-3 fw-bolder azul-senac">Agendamentos</p>
                 </div>
                 <div class="col text-start">
-                    <a href="#"><i class="bi bi-chevron-right"></i></a>
+                    <a href="./areaInstrutor.php"><i class="bi bi-chevron-right"></i></a>
                 </div>
             </div>
 
@@ -154,7 +161,7 @@ function formatDate($date)
                     <div class="col d-flex justify-content-center align-items-center">
                         <form method="POST" action="">
                             <div class="d-flex flex-column align-items-center">
-                                <input type="text" name="searchUser" class="text-center rounded mb-2"
+                                <input type="text" name="searchUser" class="search-input text-center rounded mb-2"
                                     placeholder="Pesquisar" value="<?= htmlspecialchars($searchUser) ?>">
                                 <a href="?" class="text-decoration-none mt-2">Limpar Filtros</a>
                             </div>
@@ -180,7 +187,7 @@ function formatDate($date)
                 <?php else: ?>
                     <?php foreach ($defaultResults as $result): ?>
 
-                        <div class="card p-3 mb-3 text-center">
+                        <div class="card cardVera p-3 mb-3 text-center">
                             <div class="row mb-2">
                                 <div class="col d-flex justify-content-start align-items-center">
                                     <p><strong>Turma:</strong><br><?= $result["numeroTurma"] ?></p>
@@ -204,9 +211,9 @@ function formatDate($date)
                                     <form method="POST" action="" class="d-flex align-items-center">
                                         <input type="hidden" name="status" value="<?= $result['id_agendamento'] ?>">
                                         <?php if ($result['status'] === '1'): ?>
-                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_agendamento'] ?>" data-id_agendamento="<?= $result['id_agendamento'] ?>">Reabrir</button>
+                                            <button type="button" class="btn btn-success rounded-pill" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_agendamento'] ?>" data-id_agendamento="<?= $result['id_agendamento'] ?>">Reabrir</button>
                                         <?php else: ?>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_agendamento'] ?>" data-id_agendamento="<?= $result['id_agendamento'] ?>">Concluir</button>
+                                            <button type="button" class="btn btn-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_agendamento'] ?>" data-id_agendamento="<?= $result['id_agendamento'] ?>">Concluir</button>
                                         <?php endif; ?>
                                     </form>
                                 </div>
@@ -226,14 +233,14 @@ function formatDate($date)
                                         <?php if ($result['status'] === '1'): ?>
                                             <form method="POST" action="#">
                                                 <input type="hidden" name="id_agendamento" value="<?= $result['id_agendamento'] ?>">
-                                                <button type="submit" name="concluir_agendamento" class="btn btn-success">Reabrir</button>
+                                                <button type="submit" name="concluir_agendamento" class="btn btn-success rounded-pill">Reabrir</button>
                                             </form>
 
                                         <?php else: ?>
 
                                             <form method="POST" action="#">
                                                 <input type="hidden" name="id_agendamento" value="<?= $result['id_agendamento'] ?>">
-                                                <button type="submit" name="reabrir_agendamento" class="btn btn-danger">Concluir</button>
+                                                <button type="submit" name="reabrir_agendamento" class="btn btn-danger rounded-pill">Concluir</button>
                                             </form>
 
                                         <?php endif; ?>

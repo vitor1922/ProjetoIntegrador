@@ -13,7 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
         try {
             // Busca a data, hora e ID da tabela `agenda`
-            $sqlBuscaAgenda = "SELECT id_agenda, data, hora, id_usuario, id_turma, id_aluno  FROM agenda WHERE id_agenda = :id_agenda";
+            $sqlBuscaAgenda = "SELECT a.id_agenda, a.data, a.hora, a.id_usuario, t.id_turma, c.id_aluno  
+            FROM agenda
+            INNER JOIN turma
+            WHERE id_agenda = :id_agenda";
             $stmtBuscaAgenda = $conexao->prepare($sqlBuscaAgenda);
             $stmtBuscaAgenda->bindParam(":id_agenda", $idAgenda, PDO::PARAM_INT);
             $stmtBuscaAgenda->execute();
@@ -25,21 +28,23 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 $dataAgenda = $agenda['data']; // Data da tabela `agenda`
                 $horaAgenda = $agenda['hora']; // Hora da tabela `agenda`
                 $idAgenda = $agenda['id_agenda']; // ID da agenda
-                $alunoAgenda = $agenda[]
+                $clienteAgenda = $agenda['id_usuario'];
 
                 // Insere os dados na tabela `agendamento`
-                $sqlInsert = "INSERT INTO agendamento (data, hora, id_agenda) 
-                              VALUES (:data, :hora, :id_agenda)";
+                $sqlInsert = "INSERT INTO agendamento (data, hora, id_agenda, id_usuario) 
+                              VALUES (:data, :hora, :id_agenda, :id_usuario)";
                 $insert = $conexao->prepare($sqlInsert);
                 $insert->bindParam(":data", $dataAgenda);
                 $insert->bindParam(":hora", $horaAgenda);
                 $insert->bindParam(":id_agenda", $idAgenda, PDO::PARAM_INT);
+                $insert->bindParam("id_usuario", $clienteAgenda, PDO::PARAM_INT);
 
                 if ($insert->execute()) {
                     echo "Agendamento realizado com sucesso!<br>";
                     echo "Data: " . $dataAgenda . "<br>";
                     echo "Hora: " . $horaAgenda . "<br>";
                     echo "ID da Agenda: " . $idAgenda . "<br>";
+                    echo "ID do Cliente: " . $clienteAgenda . "<br>";
                 } else {
                     throw new Exception("Erro ao realizar o agendamento.");
                 }

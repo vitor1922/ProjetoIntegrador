@@ -75,6 +75,7 @@ $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";
             </div>
         </div>
     </nav>
+    <div class="linha-vermelha"></div>
 
 </header>
 <!-- </div>

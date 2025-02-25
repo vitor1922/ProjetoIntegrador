@@ -111,6 +111,30 @@ unset($conexao);
     <link rel="stylesheet" href="../assets/css/style.css">
     <title>Usuários</title>
     <meta name="author" content="Vitor Baggio">
+
+    <style>
+        .card {
+            transition: all 0.3s ease-in-out;
+            margin-bottom: 10px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            transition: border 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #0069d9;
+            outline: none;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -137,11 +161,11 @@ unset($conexao);
                     <div class="col d-flex justify-content-center align-items-center">
                         <form method="POST" action="">
                             <div class="d-flex flex-column align-items-center">
-                                <input type="text" name="searchUser" class="text-center rounded mb-2"
+                                <input type="text" name="searchUser" class="search-input text-center rounded mb-2"
                                     placeholder="Nome/CPF">
                                 <div class="d-flex flex-row align-items-center">
                                     <a href="?" class="text-decoration-none margin-right-3 me-2">Limpar</a>
-                                    <button type="submit" class="btn btn-primary">Buscar</button>
+                                    <button type="submit" class="btn btn-primary rounded-pill">Buscar</button>
                                 </div>
                             </div>
                         </form>
@@ -199,11 +223,13 @@ unset($conexao);
                     <div class="card p-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
-                                <?php if (!empty($result['foto']) && file_exists("../foto/" . $result['foto'])): ?>
-                                    <img src="../foto/<?= htmlspecialchars($result['foto']) ?>" alt="Foto de <?= htmlspecialchars($result['nome']) ?>" class="<?= $badgeClass ?>" width="50" height="50">
-                                <?php else: ?>
-                                    <i class="bi bi-person-circle <?= $badgeClass ?>" style="font-size: 40px; padding: 8px; width: 50px; height: 50px; display: inline-flex; justify-content: center; align-items: center;" aria-hidden="true"></i>
-                                <?php endif; ?>
+                                <a href="./perfilVer.php">
+                                    <?php if (!empty($result['foto']) && file_exists("../foto/" . $result['foto'])): ?>
+                                        <img src="../foto/<?= htmlspecialchars($result['foto']) ?>" alt="Foto de <?= htmlspecialchars($result['nome']) ?>" class="<?= $badgeClass ?>" width="50" height="50">
+                                    <?php else: ?>
+                                        <i class="bi bi-person-circle <?= $badgeClass ?>" style="font-size: 40px; padding: 8px; width: 50px; height: 50px; display: inline-flex; justify-content: center; align-items: center;" aria-hidden="true"></i>
+                                    <?php endif; ?>
+                                </a>
                                 <p class="mb-0 ms-3">
                                     <?= htmlspecialchars($result["nome"]) . " • " . htmlspecialchars(formatCPF($result["cpf"])) ?>
                                 </p>
@@ -211,11 +237,11 @@ unset($conexao);
 
                             <div class="col d-flex justify-content-end align-items-center">
                                 <form method="POST" action="" class="d-flex align-items-center">
-                                    <input type="hidden" name="perfil_usuario" value="<?= $result['id_usuario'] ?>">    
+                                    <input type="hidden" name="perfil_usuario" value="<?= $result['id_usuario'] ?>">
                                     <?php if ($result['status'] === '1'): ?>
-                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_usuario'] ?>" data-id_usuario="<?= $result['id_usuario'] ?>">Reativar</button>
+                                        <button type="button" class="btn btn-success rounded-pill" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_usuario'] ?>" data-id_usuario="<?= $result['id_usuario'] ?>">Reativar</button>
                                     <?php else: ?>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_usuario'] ?>" data-id_usuario="<?= $result['id_usuario'] ?>">Alterar</button>
+                                        <button type="button" class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_usuario'] ?>" data-id_usuario="<?= $result['id_usuario'] ?>">Alterar</button>
                                     <?php endif; ?>
                                 </form>
                             </div>
@@ -245,14 +271,7 @@ unset($conexao);
                     </p>
                 </div>
 
-
             </div>
-
-
-
-
-
-
 
             <?php foreach ($defaultResults as $result): ?>
                 <?php
@@ -268,11 +287,13 @@ unset($conexao);
                 <div class="card p-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex justify-content-between align-items-center">
-                            <?php if (!empty($result['foto']) && file_exists("../foto/" . $result['foto'])): ?>
-                                <img src="../foto/<?= htmlspecialchars($result['foto']) ?>" alt="Foto de <?= htmlspecialchars($result['nome']) ?>" class="<?= $badgeClass ?>" width="50" height="50">
-                            <?php else: ?>
-                                <i class="bi bi-person-circle <?= $badgeClass ?>" style="font-size: 40px; padding: 8px; width: 50px; height: 50px; display: inline-flex; justify-content: center; align-items: center;" aria-hidden="true"></i>
-                            <?php endif; ?>
+                            <a href="./perfilVer.php">
+                                <?php if (!empty($result['foto']) && file_exists("../foto/" . $result['foto'])): ?>
+                                    <img src="../foto/<?= htmlspecialchars($result['foto']) ?>" alt="Foto de <?= htmlspecialchars($result['nome']) ?>" class="<?= $badgeClass ?>" width="50" height="50">
+                                <?php else: ?>
+                                    <i class="bi bi-person-circle <?= $badgeClass ?>" style="font-size: 40px; padding: 8px; width: 50px; height: 50px; display: inline-flex; justify-content: center; align-items: center;" aria-hidden="true"></i>
+                                <?php endif; ?>
+                            </a>
 
 
                             <div class="d-flex flex-column flex-md-row">
@@ -292,9 +313,9 @@ unset($conexao);
                             <form method="POST" action="" class="d-flex align-items-center">
                                 <input type="hidden" name="perfil_usuario" value="<?= $result['id_usuario'] ?>">
                                 <?php if ($result['status'] === '1'): ?>
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_usuario'] ?>" data-id_usuario="<?= $result['id_usuario'] ?>">Reativar</button>
+                                    <button type="button" class="btn btn-success rounded-pill" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_usuario'] ?>" data-id_usuario="<?= $result['id_usuario'] ?>">Reativar</button>
                                 <?php else: ?>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_usuario'] ?>" data-id_usuario="<?= $result['id_usuario'] ?>">Alterar</button>
+                                    <button type="button" class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#reativarModal-<?= $result['id_usuario'] ?>" data-id_usuario="<?= $result['id_usuario'] ?>">Alterar</button>
                                 <?php endif; ?>
                             </form>
                         </div>
@@ -325,7 +346,7 @@ unset($conexao);
                                             <option value="cliente">Cliente</option>
                                         </select>
                                         <div class="d-flex justify-content-end mt-2 ">
-                                            <button type="submit" name="alterar_perfil" class="btn btn-success">Alterar</button>
+                                            <button type="submit" name="alterar_perfil" class="btn btn-success rounded-pill">Alterar</button>
                                         </div>
 
                                     </form>
@@ -335,21 +356,21 @@ unset($conexao);
                             </div>
                             <div class="modal-footer">
 
-                                <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Cancelar</button>
+                                <button type="button" data-bs-dismiss="modal" class="btn btn-secondary rounded-pill">Cancelar</button>
 
 
                                 <?php if ($result['status'] === '1'): ?>
 
                                     <form method="POST" action="#">
                                         <input type="hidden" name="id_usuario" value="<?= $result['id_usuario'] ?>">
-                                        <button type="submit" name="reativar_usuario" class="btn btn-success">Reativar</button>
+                                        <button type="submit" name="reativar_usuario" class="btn btn-success rounded-pill">Reativar</button>
                                     </form>
 
                                 <?php else: ?>
 
                                     <form method="POST" action="#">
                                         <input type="hidden" name="id_usuario" value="<?= $result['id_usuario'] ?>">
-                                        <button type="submit" name="desativar_usuario" class="btn btn-danger">Desativar</button>
+                                        <button type="submit" name="desativar_usuario" class="btn btn-danger rounded-pill">Desativar</button>
                                     </form>
 
                                 <?php endif; ?>

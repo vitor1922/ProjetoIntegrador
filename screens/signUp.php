@@ -87,9 +87,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <button type="submit" class="btn btn-primary btn-block mt-3">Fazer Login</button>
                 </form>
                 <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#fazerCadastro"> Criar conta </button>
-                <?php
-                include(".//recuperarSenha.php");
-                ?>
+
+                <!-- Modal de Recuperação de Senha -->
+
+                <!-- Botão para abrir o modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#recuperarSenhaModal">
+                    Esqueceu a senha?
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="recuperarSenhaModal" tabindex="-1" aria-labelledby="recuperarSenhaModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="recuperarSenhaModalLabel">Recuperar Senha</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="logicaSenhaRedfinir.php" method="POST">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Digite seu e-mail:</label>
+                                        <input type="email" class="form-control" name="email" id="email" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Enviar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="modal fade" id="modalRecuperacao" tabindex="-1" aria-labelledby="modalRecuperacaoLabel" aria-hidden="true">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalRecuperacaoLabel"> Recuperação de Senha </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Digite seu e-mail para recuperar sua senha.</p>
+                                <form action="logicaSenhaRedfinir.php" method="POST">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">E-mail:</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Enviar Link de Recuperação</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
             </div>
             <?php if (isset($mensagem)) { ?>
                 <p class="alert alert-warning mt-2">
@@ -119,55 +166,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <option value="Outro">Outro</option>
                                             </select>
                                         </div>
-                                            <div class="col-md-6 form-group mt-2">
-                                                <label for="firstName">Nome</label>
-                                                <input type="text" class="form-control bg-light " id="firstName" placeholder="Digite seu nome" name="txtNome" required>
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="firstName">Nome</label>
+                                            <input type="text" class="form-control bg-light " id="firstName" placeholder="Digite seu nome" name="txtNome" required>
+                                        </div>
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="dataNasc">Data de Nascimento</label>
+                                            <input type="date" class="form-control bg-light" id="dataNasc" max="9999-12-31" name="txtDataNasc" required>
+                                        </div>
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="cpf">CPF</label>
+                                            <input type="text" class="form-control bg-light" id="cpf" placeholder="Digite seu CPF" name="txtCpf" required>
+                                        </div>
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="email">E-mail</label>
+                                            <input type="email" class="form-control bg-light" id="email" placeholder="Digite seu e-mail" name="txtEmail" required>
+                                        </div>
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="phone">Telefone</label>
+                                            <input type="text" class="form-control bg-light" id="phone" minlength="9" maxlength="15" placeholder="Digite seu telefone" name="txtTelefone" required>
+                                        </div>
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="cep">CEP</label>
+                                            <div class="input-group col-md-3 ">
+                                                <input type="text" class="form-control bg-light rounded " id="cep" placeholder="Digite seu CEP" minlength="9" maxlength="9" name="txtCep" required>
                                             </div>
-                                            <div class="col-md-6 form-group mt-2">
-                                                <label for="dataNasc">Data de Nascimento</label>
-                                                <input type="date" class="form-control bg-light" id="dataNasc" max="9999-12-31" name="txtDataNasc" required>
-                                            </div>
-                                            <div class="col-md-6 form-group mt-2">
-                                                <label for="cpf">CPF</label>
-                                                <input type="text" class="form-control bg-light" id="cpf" placeholder="Digite seu CPF" name="txtCpf" required>
-                                            </div>
-                                            <div class="col-md-6 form-group mt-2">
-                                                <label for="email">E-mail</label>
-                                                <input type="email" class="form-control bg-light" id="email" placeholder="Digite seu e-mail" name="txtEmail" required>
-                                            </div>
-                                            <div class="col-md-6 form-group mt-2">
-                                                <label for="phone">Telefone</label>
-                                                <input type="text" class="form-control bg-light" id="phone" minlength="9" maxlength="15" placeholder="Digite seu telefone" name="txtTelefone" required>
-                                            </div>
-                                            <div class="col-md-6 form-group mt-2">
-                                                <label for="cep">CEP</label>
-                                                <div class="input-group col-md-3 ">
-                                                    <input type="text" class="form-control bg-light rounded " id="cep" placeholder="Digite seu CEP" minlength="9" maxlength="9" name="txtCep" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 form-group mt-2">
-                                                <label for="uf">UF</label>
-                                                <input type="text" class="form-control bg-light" id="uf" placeholder="Digite seu estado (UF)" minlength="2" maxlength="2" name="txtUf" required>
-                                            </div>
-                                            <div class="col-md-6 form-group mt-2">
-                                                <label for="cidade">Cidade</label>
-                                                <input type="text" class="form-control bg-light" id="cidade" placeholder="Digite sua cidade" name="txtCidade" required>
-                                            </div>
-                                            <div class="col-md-6 form-group mt-2">
-                                                <label for="endereco">Endereço</label>
-                                                <input type="text" class="form-control bg-light" id="endereco" placeholder="Digite seu endereço" name="txtEndereco" required>
-                                            </div>
-                                            <div class=" d-flex justify-content-center col-12 col-lg-12 col-md-12 form-group mt-2 mb-3">
-                                                <div class=" col-12 col-lg-7 col-md-10">
-                                                    <label for="password">Senha</label>
-                                                    <div class="input-group col-md-3">
-                                                        <input type="password" class="form-control bg-warning-subtle" id="inputConfirmPass" placeholder="Insira a senha" name="txtSenha" required>
-                                                        <div class="input-group-text">
-                                                            <i class="bi-eye-fill" id="icontogleConfirmPass" onclick="viewSenhaCad()" style="cursor: pointer;"></i>
-                                                        </div>
+                                        </div>
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="uf">UF</label>
+                                            <input type="text" class="form-control bg-light" id="uf" placeholder="Digite seu estado (UF)" minlength="2" maxlength="2" name="txtUf" required>
+                                        </div>
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="cidade">Cidade</label>
+                                            <input type="text" class="form-control bg-light" id="cidade" placeholder="Digite sua cidade" name="txtCidade" required>
+                                        </div>
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="endereco">Endereço</label>
+                                            <input type="text" class="form-control bg-light" id="endereco" placeholder="Digite seu endereço" name="txtEndereco" required>
+                                        </div>
+                                        <div class=" d-flex justify-content-center col-12 col-lg-12 col-md-12 form-group mt-2 mb-3">
+                                            <div class=" col-12 col-lg-7 col-md-10">
+                                                <label for="password">Senha</label>
+                                                <div class="input-group col-md-3">
+                                                    <input type="password" class="form-control bg-warning-subtle" id="inputConfirmPass" placeholder="Insira a senha" name="txtSenha" required>
+                                                    <div class="input-group-text">
+                                                        <i class="bi-eye-fill" id="icontogleConfirmPass" onclick="viewSenhaCad()" style="cursor: pointer;"></i>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button id="cadastro" type="submit" class="btn btn-primary">Cadastrar</button>

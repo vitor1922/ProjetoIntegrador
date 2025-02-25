@@ -71,12 +71,17 @@ unset($conexao);
   include_once("./header.php");
   ?>
   <main>
-    <?php echo(date("Y-m-d"))?>
+
+    <?php 
+    
+    echo(date("Y-m-d"))?>
+    <div class="container-fluid">
+    <a href="../index.php" class="m-3">
+        <i class="bi bi-arrow-left-short fs-1 azul-senac"></i>
+      </a>
     <div class="container">
       <!-- Flecha de retorno -->
-      <div class="m-3">
-        <i class="bi bi-arrow-left"></i>
-      </div>
+      
       <div class="mt-4">
         <div class="row mb-3">
           <div class=" col-6 d-flex align-items-center ">
@@ -192,7 +197,7 @@ unset($conexao);
                  
                   <div class="mb-3">
                     <label class="form-label fw-bold">Adicionar Imagem do Curso</label>
-                    <input type="file" multiple name="imgCurso" class="form-control" accept="image/png, image/jpeg">
+                    <input type="file" multiple="multiple" name="imgsPost[]" class="form-control" accept="image/png, image/jpeg" required>
                   </div>
 
                   <div class="mb-3 d-flex justify-content-center">
@@ -205,6 +210,7 @@ unset($conexao);
         </div>
 
       </div>
+    </div>
     </div>
   </main>
 
