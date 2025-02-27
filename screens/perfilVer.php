@@ -53,7 +53,6 @@ $select->execute();
 $callCourse = $select->fetch(PDO::FETCH_ASSOC);
 $num_posts = count($posts);
 
-// Estilos por perfil
 if ($perfil == 'professor') {
     $estilo = "border border-success border-3";
 } elseif ($perfil == 'aluno') {
@@ -75,6 +74,8 @@ if ($perfil === 'professor') {
 } elseif ($perfil === 'admin') {
     $estiloTXT = "text-danger";
 }
+// Estilos por perfil
+
 // $estilos = [
 //     'professor' => ['border-success border-4', 'text-success'],
 //     'aluno' => ['border-primary border-4', 'text-primary'],
@@ -84,6 +85,8 @@ if ($perfil === 'professor') {
 
 // $estilo = $estilos[$login['perfil']][0] ?? 'border-secondary';
 // $estiloTXT = $estilos[$login['perfil']][1] ?? 'text-secondary';
+
+// var_dump($id_usuario);
 
 unset($conexao);
 ?>
@@ -102,6 +105,7 @@ unset($conexao);
 
 <body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0">
     <?php include_once("./header.php"); ?>
+    <?php include_once("./preloader.php"); ?>
 
     <main class="container mt-5 mb-5">
         <div class="row justify-content-center">

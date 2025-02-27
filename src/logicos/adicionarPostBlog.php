@@ -20,23 +20,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $postTitulo = filter_input(INPUT_POST, "txtTitulo", FILTER_SANITIZE_SPECIAL_CHARS);
         $postTexto = filter_input(INPUT_POST, "txtTexto", FILTER_SANITIZE_SPECIAL_CHARS);
         $idUsuario = filter_input(INPUT_POST, "txtUsuario", FILTER_SANITIZE_SPECIAL_CHARS);
-        echo("jlksjd");
-        var_dump($_FILES["imgsPost"]);
-        die;
-        if (isset($_FILES["imgPosts"]) && !empty($_FILES["imgPosts"]["name"])) {
-            $allowedTypes = ["image/png", "image/jpeg"];
-            $fileType = mime_content_type($_FILES["imgPosts"]["tmp_name"]);
-            $ext = strtolower(pathinfo($_FILES["imgPosts"]["name"], PATHINFO_EXTENSION));
+        $localizador = hash("md5", $postTitulo);
+        $data = filter_input(INPUT_POST, "txtData", FILTER_SANITIZE_SPECIAL_CHARS);
 
-            if (in_array($fileType, $allowedTypes) && ($ext == "jpg" || $ext == "jpeg" || $ext == "png")) {
-                $nameFile = pathinfo($_FILES["imgPost"]["name"], PATHINFO_FILENAME);
-                $imagem_url = hash("md5", $nameFile) . "." . $ext;
-                $dir = "../imgPosts/";
-                move_uploaded_file($_FILES["imgPosts"]["tmp_name"], $dir . $imagem_url);
-            } else {
-                $_SESSION['mensagem'] =  "Erro: Apenas arquivos JPG ou PNG são permitidos.";
-                header("Location: " . BASE_URL . "screens/UpdatePost.php");
-                exit;
+
+        if (isset($_FILES["imgPosts"]) && !empty($_FILES["imgPosts"]["name"])) {
+            foreach ($_FILES["imgPosts"] as $imagem) {
+                $allowedTypes = ["image/png", "image/jpeg"];
+                $fileType = mime_content_type($imagem["tmp_name"]);
+                $ext = strtolower(pathinfo($imagem["name"], PATHINFO_EXTENSION));
+
+                if (in_array($fileType, $allowedTypes) && ($ext == "jpg" || $ext == "jpeg" || $ext == "png")) {
+                    $nameFile = pathinfo($imagem["name"], PATHINFO_FILENAME);
+                    $imagem_url = hash("md5", $nameFile) . "." . $ext;
+                    $dir = "../postAluno/";
+                    move_uploaded_file($imagem["tmp_name"], $dir . $imagem_url);
+                } else {
+                    $_SESSION['mensagem'] =  "Erro: Apenas arquivos JPG ou PNG são permitidos.";
+                    header("Location: " . BASE_URL . "screens/blog.php");
+                    exit;
+                }
+
+                $sqlImg = "INSERT INTO img_post (data, hora, vagas, id_curso, id_usuario, id_turma) values (:data, :hora, :vagas, :curso, :usuario, :id_turma)";
+                $insertImg = $conexao->prepare($sql);
+                $insertImg->bindParam(":data", $data);
+                $insertImg->bindParam(":hora", $hora);
+                $insertImg->bindParam(":vagas", $vagas);
+                $insertImg->bindParam(":curso", $curso);
+                $insertImg->bindParam(":usuario", $usuario);
+                $insertImg->bindParam(":id_turma", $turma);
+
+                $insert->execute();
             }
         } else {
 
@@ -44,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         try {
-            $sql = "UPDATE postagens SET titulo=:titulo, conteudo=:conteudo, imagem_url=:imgName WHERE postagem_id = :postagemId";
+            $sql = "INSERT INTO post (titulo, texto, localizador, data_criacao) VALUES (:titulo, :texto, :localizador, :data_criacao) ";
             $update = $conexao->prepare($sql);
             $update->bindParam(':titulo', $tituloPost);
             $update->bindParam(':conteudo', $conteudoPost);

@@ -239,7 +239,7 @@ body {
 }
 
 .header-senac-text {
-  color: #000;
+  color:#000;
 }
 
 .apagar {
@@ -511,7 +511,7 @@ textarea {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  transition: 1s all ease-in-out;
+  transition: 0.3s all ease-in-out;
   color: white;
 }
 
@@ -620,3 +620,5 @@ textarea {
 }
 
 /* botão index.html  */
+
+

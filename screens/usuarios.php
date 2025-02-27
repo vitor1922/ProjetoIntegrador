@@ -138,8 +138,7 @@ unset($conexao);
 </head>
 
 <body>
-
-    <?php include_once("./header.php"); ?>
+<?php include_once("./header.php"); ?>
 
     <main>
         <div class="container mt-3">
@@ -223,7 +222,7 @@ unset($conexao);
                     <div class="card p-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
-                                <a href="./perfilVer.php">
+                                <a href="./perfilVer.php?id=<?= htmlspecialchars($result["id_usuario"]) ?>">
                                     <?php if (!empty($result['foto']) && file_exists("../foto/" . $result['foto'])): ?>
                                         <img src="../foto/<?= htmlspecialchars($result['foto']) ?>" alt="Foto de <?= htmlspecialchars($result['nome']) ?>" class="<?= $badgeClass ?>" width="50" height="50">
                                     <?php else: ?>
@@ -287,7 +286,7 @@ unset($conexao);
                 <div class="card p-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="./perfilVer.php">
+                            <a href="./perfilVer.php?id=<?= htmlspecialchars($result["id_usuario"]) ?>">
                                 <?php if (!empty($result['foto']) && file_exists("../foto/" . $result['foto'])): ?>
                                     <img src="../foto/<?= htmlspecialchars($result['foto']) ?>" alt="Foto de <?= htmlspecialchars($result['nome']) ?>" class="<?= $badgeClass ?>" width="50" height="50">
                                 <?php else: ?>

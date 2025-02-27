@@ -32,9 +32,6 @@ $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";
                                 <a class="nav-link header-senac-text" aria-current="page" href="<?= BASE_URL ?>index.php">Início</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link header-senac-text" href="<?= BASE_URL ?>screens/verTodosServicos.php">Serviços</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link header-senac-text" href="<?= BASE_URL ?>screens/agendamento.php">Agendar Horário</a>
                             </li>
                             <li class="nav-item">
@@ -42,7 +39,7 @@ $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";
                             </li>
                             <?php if ($perfil === 'admin' || $perfil === "professor") { ?>
                                 <li class="nav-item">
-                                    <a class="nav-link header-senac-text" href="<?= BASE_URL ?>screens/areaInstrutorTeste.php">Área do Instrutor</a>
+                                    <a class="nav-link header-senac-text" href="<?= BASE_URL ?>screens/areaInstrutor.php">Área do Instrutor</a>
                                 </li>
                             <?php } ?>
 

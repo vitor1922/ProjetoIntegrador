@@ -59,8 +59,8 @@ if ($select->execute()) {
                 </div>
 
                 <div class="mb-3">
-                    <label for="txtDescricaoPost" class="form-label">Descrição do Post</label>
-                    <textarea id="txtDescricaoPost" class="form-control" rows="5" name="txtDescricaoPost" required></textarea>
+                    <label for="txtConteudoPost" class="form-label">Descrição do Post</label>
+                    <textarea id="txtConteudoPost" class="form-control" rows="5" name="txtConteudoPost" required></textarea>
                 </div>
 
                 <div class="mb-3">

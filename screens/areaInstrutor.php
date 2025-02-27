@@ -1,199 +1,282 @@
-<?php
+<?php 
+session_start(); // Inicia a sessão para capturar o nome do instrutor
 include('../constantes.php');
 include_once("../data/conexao.php");
 $perfil = $_SESSION['perfil'] ?? NULL;
-$logado = $_SESSION['logado'] ?? FALSE;
+$logado = $_SESSION['logado'] ?? NULL;
+$nome = $_SESSION['nome'] ?? NULL;
+
+// Simulação de nome do instrutor (remova se já estiver implementado na sessão)
+$_SESSION['Instrutor_nome'] = $_SESSION['Instrutor_nome'] ?? 'Instrutor';
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../src/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet"> <!-- Fonte adicionada -->
     <title>Área do Instrutor</title>
     <style>
+        * {
+            font-family: "Roboto", Helvetica, sans-serif;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
         body {
-            background: #333;
-            padding: 70px 0;
-            font: 15px/20px Arial, sans-serif;
-        }
-
-        .carousel-container {
-            position: relative;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8)); /* Degradê de preto sólido para um preto mais claro na parte inferior */
             width: 100%;
-            max-width: 1000px; /* Aumenta a largura máxima do carrossel */
-            margin: auto;
-            overflow: hidden;
-            perspective: 1000px; /* Para o efeito 3D */
-        }
-
-        .carousel {
-            position: relative;
-            width: 100%;
-            height: 350px; /* Aumenta a altura do carrossel */
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center; /* Centraliza os itens */
-        }
-
-        .item {
-            position: absolute;
-            width: 180px; /* Aumenta a largura dos cards */
-            height: 250px; /* Aumenta a altura dos cards */
-            border-radius: 10px;
-            overflow: hidden;
-            background: #fff; /* Fundo dos cards */
-            transition: transform 0.5s ease, opacity 0.5s ease;
-            opacity: 0.5; /* Opacidade inicial dos cards */
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona sombra para efeito de profundidade */
+            justify-content: flex-start;
         }
 
-        .item img {
+        .preloader {
+            position: fixed;
             width: 100%;
-            height: 80%; /* Ajuste a altura da imagem no card */
-            object-fit: cover; /* Para manter a proporção da imagem */
-            border-radius: 10px 10px 0 0; /* Arredondar apenas o topo */
+            height: 100%;
+            background: #0A0617;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
         }
-
-        .item.active {
-            opacity: 1; /* Aumentar a opacidade do card ativo */
-            z-index: 1; /* Colocar o card ativo na frente */
-            transform: scale(1.1); /* Aumentar o card ativo */
+        .logo {
+            width: 150px; /* Ajuste o tamanho conforme necessário */
+            animation: pulse 1s infinite; /* Animação de pulsar */
         }
-
-        /* Ajustes para posicionar os cards em um círculo */
-        .item:nth-child(1) { transform: rotateY(0deg) translateZ(250px); }
-        .item:nth-child(2) { transform: rotateY(90deg) translateZ(250px); }
-        .item:nth-child(3) { transform: rotateY(180deg) translateZ(250px); }
-        .item:nth-child(4) { transform: rotateY(270deg) translateZ(250px); }
-
-        .next,
-        .prev {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #CCC;
-            border-radius: 5px;
-            padding: 1em;
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        .header-container {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .title {
+            font-family: 'Roboto Slab', serif; /* Altera a fonte para Roboto Slab */
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 120px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeIn 1s ease-out forwards;
+        }
+        .welcome-message {
+            color: white;
+            font-size: 20px;
+            margin-top: 10px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out forwards 0.5s;
+        }
+        .content {
+            margin-top: 20px;
+            margin-bottom: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease-out forwards 1s; /* Atraso para a animação da content */
+        }
+        .divider {
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(to right, #0A0617, #FFFFFF);
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .card-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+        .card {
+            width: 225px;
+            height: 400px;
+            border-radius: 20px; /* Bordas arredondadas */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3)); /* Gradiente de fundo */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Sombra */
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s; /* Transição suave */
             cursor: pointer;
-            box-shadow: 0 5px 0 #999;
         }
-
-        .next:hover,
-        .prev:hover {
-            background: #bbb;
+        .card:hover {
+            transform: translateY(-5px); /* Efeito de levantar o card */
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5); /* Aumenta a sombra no hover */
         }
-
-        .next {
-            right: 10px; /* Ajuste para o botão "next" */
-        }
-
-        .prev {
-            left: 10px; /* Ajuste para o botão "prev" */
-        }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .carousel {
-                height: 200px; /* Altura do carrossel em mobile */
+        @keyframes fadeInCard {
+            from {
+                opacity: 0;
+                transform: translateY(40px); /* Mover para baixo inicialmente */
             }
-
-            .item {
-                width: 80px; /* Largura dos cards em mobile */
-                height: 120px; /* Altura dos cards em mobile */
+            to {
+                opacity: 1;
+                transform: translateY(0); /* Mover para a posição original */
             }
         }
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+        .card .layer {
+            background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0,0,0,0));
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 75%;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .card .info {
+            color: white;
+            position: absolute;
+            bottom: -50%;
+            padding: 15px;
+            opacity: 0;
+            transition: 0.5s bottom, 1.75s opacity;
+        }
+        .info p {
+            font-size: 14px;
+            margin-top: 3px;
+        }
+        .info h1 {
+            font-size: 30px;
+            margin-top: 3px;
+        }
+        .info button {
+            background: #490CCC;
+            border: none;
+            padding: 8px 12px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-top: 8px;
+            color: white;
+            cursor: pointer;
+        }
+        .card:hover,
+        .card:hover img,
+        .card:hover .layer {
+            transform: scale(1.1);
+        }
+        .card:hover > .layer {
+            opacity: 1;
+        }
+        .card:hover > .info {
+            bottom: 0;
+            opacity: 1;
+        }
+        .card-group:hover > .card:not(:hover) {
+            filter: blur(5px);
+        }
 
-        @media (min-width: 769px) {
-            .carousel {
-                height: 350px; /* Altura do carrossel em desktop */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-
-            .item {
-                width: 180px; /* Largura dos cards em desktop */
-                height: 250px; /* Altura dos cards em desktop */
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
 </head>
 
-<body class="d-flex flex-column container-fluid">
-    <?php include_once("./header.php"); ?>
-
-    <div class="mt-3">
-        <a href="<?= $paginaAnterior ?>" class="btn btn-link">
-            <i class="bi bi-arrow-left-short azul-senac fw-bold fs-1"></i>
-        </a>
+<body>
+    <div class="preloader" id="preloader">
+        <img src="../assets/img/senac_logo_branco.png" class="logo" alt="Logo do Senac"> <!-- Substitua pelo caminho correto da logo -->
     </div>
 
-    <div class="carousel-container">
-        <div class="carousel">
-            <?php
-            $items = [
-                ["link" => "./usuarios.php", "img" => "../assets/img/img_usuarios.png", "title" => "Usuários"],
-                ["link" => "./gerenciamentoCursos.php", "img" => "../assets/img/img_gerenciamento.png", "title" => "Gerenciamento"],
-                ["link" => "./controleDeEstoque.php", "img" => "../assets/img/img_estoque.png", "title" => "Estoque"],
-                ["link" => "./avaliacoesComentarios.php", "img" => "../assets/img/img_avaliacoes.png", "title" => "Avaliações"],
-            ];
+    <div class="header-container">
+        <?php include_once("./header.php"); ?>
+    </div>
 
-            foreach ($items as $index => $item) {
-                echo "
-                    <div class='item' id='item-$index'>
-                        <a href='{$item['link']}' class='text-decoration-none text-dark'>
-                            <img src='{$item['img']}' alt='imagem de {$item['title']}'>
-                            <h5 class='card-title fs-5 fw-bold laranja-senac'>{$item['title']}</h5>
-                        </a>
-                    </div>
-                ";
-            }
-            ?>
+    <h1 class="title">Área do Instrutor</h1>
+    <p class="welcome-message">Olá, <?php echo $_SESSION['Instrutor_nome']; ?>! Bem-vindo de volta.</p>
+    
+    <div class="divider"></div> <!-- Divisor estilizado -->
+
+    <div class="content">
+        <div class="card-group">
+            <div class="card">
+                <img src="../assets/img/Usuarios.png" class="img-fluid" alt="Gerenciamento de Usuários">
+                <div class="layer"></div>
+                <div class="info">
+                    <h1>Usuários</h1>
+                    <p>Gerencie os usuários da plataforma de forma simples e eficiente.</p>
+                    <a href="./usuarios.php"><button aria-label="Gerenciar usuários">Explore</button></a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/Avalicoes.png" class="img-fluid" alt="Avaliações">
+                <div class="layer"></div>
+                <div class="info">
+                    <h1>Avaliações</h1>
+                    <p>Acompanhe e modere as avaliações e comentários dos clientes.</p>
+                    <a href="./avaliacoesComentarios.php"><button aria-label="Gerenciar avaliações">Explore</button></a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/Gerenciamento.png" class="img-fluid" alt="Gerenciamento de Cursos">
+                <div class="layer"></div>
+                <div class="info">
+                    <h1>Gerenciamento</h1>
+                    <p>Controle cursos, horários e outros aspectos administrativos.</p>
+                    <a href="./gerenciamentoCursos.php"><button aria-label="Gerenciar cursos">Explore</button></a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="../assets/img/Estoque.png" class="img-fluid" alt="Controle de Estoque">
+                <div class="layer"></div>
+                <div class="info">
+                    <h1>Estoque</h1>
+                    <p>Monitore e organize o estoque de produtos e materiais.</p>
+                    <a href="./estoqueProfessor.php"><button aria-label="Gerenciar estoque">Explore</button></a>
+                </div>
+            </div>
         </div>
-        <div class="next">Next</div>
-        <div class="prev">Prev</div>
     </div>
 
-    <footer class="mt-auto">
-        <?php include_once("./footer.php"); ?>
-    </footer>
-
-    <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
-        const items = document.querySelectorAll(".item");
-        let currIndex = 0;
-
-        // Marcar o card ativo inicialmente
-        items[currIndex].classList.add("active");
-
-        // Funções para navegar no carrossel
-        document.querySelector(".next").addEventListener("click", function () {
-            items[currIndex].classList.remove("active");
-            currIndex = (currIndex + 1) % items.length; // Próximo item
-            items[currIndex].classList.add("active");
-            updateCarousel();
-        });
-
-        document.querySelector(".prev").addEventListener("click", function () {
-            items[currIndex].classList.remove("active");
-            currIndex = (currIndex - 1 + items.length) % items.length; // Item anterior
-            items[currIndex].classList.add("active");
-            updateCarousel();
-        });
-
-        function updateCarousel() {
-            const rotation = (currIndex * -90); // Cada item ocupa 90 graus
-            document.querySelector('.carousel').style.transform = `rotateY(${rotation}deg)`;
-        }
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById("preloader").style.display = "none";
+            }, 1500); // Tempo do preloader
+            
+            // Animações dos cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = 1;
+                    card.style.transform = 'translateY(0)';
+                }, 1500 + index * 500); // Atraso aumentado para cada card
+            });
+        };
     </script>
+    
 </body>
-
 </html>

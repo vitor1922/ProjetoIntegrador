@@ -9,6 +9,7 @@ $_SESSION['logado'] = FALSE;
 $mensagem = $_SESSION['mensagem'] ?? NULL;
 $_SESSION['formulario'] = $_POST ?? NULL;
 $perfil = $_SESSION['perfil'] ?? NULL;
+$_SESSION['mensagem'] = NULL;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cep = preg_replace('/[^0-9]/', '', $_POST['txtCep']); // Limpa o CEP, mantendo apenas números
@@ -38,11 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mensagem = "CEP inválido! Por favor, insira um CEP com 8 dígitos.";
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 </head>
-
 <body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0">
     <?php
     include_once('./header.php');
@@ -79,44 +77,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalRecuperacao">
+                        <a type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalRecuperacao">
                             Esqueceu a senha?
-                        </button>
+                        </a>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary btn-block mt-3">Fazer Login</button>
                 </form>
-                <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#fazerCadastro"> Criar conta </button>
-
-                <!-- Modal de Recuperação de Senha -->
-
-                <!-- Botão para abrir o modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#recuperarSenhaModal">
-                    Esqueceu a senha?
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="recuperarSenhaModal" tabindex="-1" aria-labelledby="recuperarSenhaModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="recuperarSenhaModalLabel">Recuperar Senha</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="logicaSenhaRedfinir.php" method="POST">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Digite seu e-mail:</label>
-                                        <input type="email" class="form-control" name="email" id="email" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-success">Enviar</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <div class="modal fade" id="modalRecuperacao" tabindex="-1" aria-labelledby="modalRecuperacaoLabel" aria-hidden="true">
+                <div class="modal fade" id="modalRecuperacao" tabindex="-1" aria-labelledby="modalRecuperacaoLabel" aria-hidden="true">
                     <div class="modal-dialog ">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -125,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="modal-body">
                                 <p>Digite seu e-mail para recuperar sua senha.</p>
-                                <form action="logicaSenhaRedfinir.php" method="POST">
+                                <form action="../src/logicos/logicaSenhaRedfinir.php" method="POST">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">E-mail:</label>
                                         <input type="email" class="form-control" id="email" name="email" required>
@@ -135,17 +103,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                     </div>
-                </div> -->
-
+                </div>
+                <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#fazerCadastro"> Criar conta </button>
             </div>
             <?php if (isset($mensagem)) { ?>
                 <p class="alert alert-warning mt-2">
                     <?= $mensagem ?>
                 </p>
             <?php } ?>
-
             <!-- Modal -->
-
             <div class="modal fade" id="fazerCadastro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content shadow-lg rounded-3">
@@ -228,7 +194,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </main>
-
     <?php
     include("./footer.php");
     ?>
@@ -236,5 +201,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../src/js/script.js"></script>
     <script src="../src/js/cep.js"></script>
 </body>
-
 </html>

@@ -107,9 +107,6 @@ $paginaAnterior = "gerenciamentoCursos.php";
                         <div class="d-flex align-items-center justify-content-center offset-3 col-6">
                             <h3 class="text-center fs-4">Horários de Atendimento</h3>
                         </div>
-                        <div class="col-1">
-                            <button class="btn btn-azul-senac fw-bold text-white" data-bs-toggle="modal" data-bs-target="#modalAdicionarHorario">Adicionar Horário</i></button>
-                        </div>
                     </div>
                     <?php foreach ($horarios as $horario) { ?>
                         <?php $data = date('d/m/Y', strtotime($horario["data"])) ?>
@@ -223,38 +220,7 @@ $paginaAnterior = "gerenciamentoCursos.php";
                     </div>
                 </div>
 
-                <!-- MODAL ADICIONAR HORARIO -->
-                <div class="modal fade" id="modalAdicionarHorario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="d-flex justify-content-end mb-3">
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <form action="../src/logicos/adicionarHorario.php" method="POST">
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Data</label>
-                                        <input type="date" class="form-control" name="txtData" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Horario</label>
-                                        <input type="time" class="form-control" name="txtHorario" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Vagas</label>
-                                        <input type="number" class="form-control" name="txtVagas" min="0" required>
-                                    </div>
-                                    <input type="text" value="<?= $cursoId ?>" name="txtCurso" hidden>
-
-
-                                    <div class="mb-3 d-flex justify-content-center">
-                                        <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
             </div>
         </main>
