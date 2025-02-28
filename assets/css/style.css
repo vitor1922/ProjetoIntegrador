@@ -255,7 +255,7 @@ body {
     color: var(--azul_medio_senac);
   }
 
-  .border-hearder{
+  .border-header{
     border-bottom: #f7941d;
     height: 3px;
   }

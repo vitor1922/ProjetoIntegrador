@@ -6,6 +6,10 @@ include_once('../../data/conexao.php');
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $_SESSION['formulario'] = $_POST;
+
+
     $camposObrigatorios = $_POST;
 
 
@@ -15,15 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['mensagem'] = "O campo " . ucfirst(str_replace('txt', '', $campo)) . " é obrigatório!";
             header("Location: " . BASE_URL . "/index.php");
             exit;
-        }       
+        }
     }
 
-     // Sanitização dos dados (após verificação de campos vazios)
-     $dados = array_map(function ($valorCampo) {
+    // Sanitização dos dados (após verificação de campos vazios)
+    $dados = array_map(function ($valorCampo) {
         return htmlspecialchars($valorCampo, ENT_QUOTES, 'UTF-8');
     }, $_POST);
-     
-   
+
+
 
 
     // Sanitização específica
@@ -36,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $cpfSemMascara = preg_replace('/\D/', '', $dados['txtCpf']);
     $telefoneSemMascara = preg_replace('/\D/', '', $dados['txtTelefone']);
 
- 
+
 
     // Validações de CPF e Telefone
     if (strlen($cpfSemMascara) < 11) {

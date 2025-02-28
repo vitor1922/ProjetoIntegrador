@@ -101,6 +101,7 @@ unset($conexao);
 <body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0 ">
 
     <?php include_once("./header.php"); ?>
+    <?php include_once("./preloader.php"); ?>
 
     <main class="container mt-5 mb-5">
         <div class="row justify-content-center">
@@ -119,7 +120,8 @@ unset($conexao);
                         <h4 class="fw-bold">
                             <span class="text-dark"><?= htmlspecialchars($login["nome"]) ?></span>
                             <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span>
-                            <span class=" .text-black"> <?= ' de ' . $callCourse['nome_do_curso'] ?></span>
+                            <span class=" .text-black">  <?= $callCourse['nome_do_curso'] ?? 'O usuário nao esta em um curso' ?></span>
+
                         </h4>
 
                         <h6 class="fw-bolder </h6>

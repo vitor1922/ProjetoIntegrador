@@ -9,14 +9,20 @@ $logado = $_SESSION['logado'] ?? NULL;
 
 
 
-$sql = "SELECT * FROM agenda ORDER BY id_agenda DESC";
-$select = $conexao->prepare($sql);
+$sqlAgenda = "SELECT * FROM agenda ORDER BY id_agenda DESC";
+$select = $conexao->prepare($sqlAgenda);
 
 
 if ($select->execute()) {
     $agenda = $select->fetchAll(PDO::FETCH_ASSOC);
 }
 
+$sqlCurso = "SELECT id_curso, nome_do_curso, imagem FROM curso";
+$select = $conexao->prepare($sqlCurso);
+
+if ($select->execute()) {
+    $curso = $select->fetchAll(PDO::FETCH_ASSOC);
+}
 
 unset($conexao);
 ?>
@@ -54,11 +60,11 @@ unset($conexao);
             <div class="row justify-content-center pb-5 mb-5">
                 <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
                     <div class="card card-imagem shadow-sm   w-23rem border-0">
-                        <img class="" src="../assets/img/img_mulher_lavando_cabelo.png" alt="...">
+                        <img src="<?= htmlspecialchars($curso['imagem']) ?>" class="card-img-top" alt="">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6  col-lg-12  col-xxl-7">
-                                    <h5 class="card-title">Lavagem de cabelo</h5>
+                                    <h5 class="card-title"><?= htmlspecialchars($curso['nome_do_curso']) ?></h5>
 
                                 </div>
                                 <div class="offset-2 col-3 offset-xxl-0 ps-xxl-5 p-0">
@@ -74,9 +80,9 @@ unset($conexao);
                                     <div class="card card-body start-0 position-absolute w-100">
                                         <select class="form-select bg-warning-subtle" aria-label="Default select example" name="id_agenda">
                                             <option selected>Selecionar Horario</option>
-                                            <?php foreach ($agenda as $hora) { 
-                                                $dataFormatada = (new DateTime($hora['data']))->format('d/m/Y');?>
-                                                <option value="<?= $hora['id_agenda'] ?>"> <?= $hora['hora'] ?> - <?= $dataFormatada?></option>
+                                            <?php foreach ($agenda as $hora) {
+                                                $dataFormatada = (new DateTime($hora['data']))->format('d/m/Y'); ?>
+                                                <option value="<?= $hora['id_agenda'] ?>"> <?= $hora['hora'] ?> - <?= $dataFormatada ?></option>
                                             <?php } ?>
                                         </select>
                                         <div class="position-relative mt-5">

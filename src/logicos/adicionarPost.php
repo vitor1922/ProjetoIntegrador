@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $imgName = filter_input(INPUT_POST, "imgName", FILTER_SANITIZE_SPECIAL_CHARS);
 
         if (isset($_FILES["imgPosts"]) && !empty($_FILES["imgPosts"]["name"])) {
-            $allowedTypes = ["image/png", "image/jpeg"];
+            $allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
             $fileType = mime_content_type($_FILES["imgPosts"]["tmp_name"]);
             $ext = strtolower(pathinfo($_FILES["imgPosts"]["name"], PATHINFO_EXTENSION));
 

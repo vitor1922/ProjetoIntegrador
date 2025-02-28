@@ -122,7 +122,7 @@ unset($conexao);
                         <h4 class="fw-bold">
                             <span class="text-dark"><?= htmlspecialchars($login["nome"]) ?></span>
                             <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span>
-                            <span class=" .text-black"> <?= ' de ' . $callCourse['nome_do_curso'] ? $callCourse['nome_do_curso'] : "O usuário não está em um curso"?></span>
+                            <span class=" .text-black"> <?= $callCourse['nome_do_curso'] ?? 'O usuário nao esta em um curso' ?></span>
                         </h4>
                         <p class="text-muted"><?= htmlspecialchars($login["biografia"]) ?></p>
                         <span><strong><?= $num_posts ?></strong> publicações</span>

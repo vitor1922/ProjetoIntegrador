@@ -1,3 +1,26 @@
+<!-- <style>
+    footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+@media (min-height: 800px) { /* Ajuste esse valor conforme necessário */
+    footer {
+        position: fixed;
+    }
+}
+</style> -->
+<style>
+  /* Classe para fixar o footer */
+  .footer-fixed {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+  }
+</style>
 <footer>
 
     <div class=" d-flex align-content-end">
@@ -38,3 +61,22 @@
 
 
 </footer>
+
+
+<script>
+  function adjustFooter() {
+    var footer = document.querySelector("footer");
+    // Se o conteúdo total for menor ou igual à altura da janela, fixa o footer
+    if (document.body.scrollHeight <= window.innerHeight) {
+      footer.classList.add("footer-fixed");
+      // Adiciona um espaçamento inferior ao body para evitar sobreposição do conteúdo
+      document.body.style.paddingBottom = footer.offsetHeight + "px";
+    } else {
+      footer.classList.remove("footer-fixed");
+      document.body.style.paddingBottom = "0px";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", adjustFooter);
+  window.addEventListener("resize", adjustFooter);
+</script>

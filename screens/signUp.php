@@ -11,6 +11,12 @@ $_SESSION['formulario'] = $_POST ?? NULL;
 $perfil = $_SESSION['perfil'] ?? NULL;
 $_SESSION['mensagem'] = NULL;
 
+
+// Recupera os valores do formulário da sessão, se existirem
+$formData = $_SESSION['formulario'] ?? [];
+unset($_SESSION['formulario']); // Limpa a sessão após recuperar os dados
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cep = preg_replace('/[^0-9]/', '', $_POST['txtCep']); // Limpa o CEP, mantendo apenas números
 
@@ -42,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,9 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 </head>
-<body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0">
+
+<body class="d-flex justify-content-between flex-column min-vh-100 p-0">
     <?php
-    include_once('./header.php');
+    // include_once('./header.php');
     ?>
     <main class="d-flex justify-content-center align-items-center ">
         <div class=" container form-container d-flex justify-content-center align-items-center">
@@ -121,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="modal-body border-top border-warning">
                             <div class="col rounded">
-                                <form action="../src/logicos/cadUsuario.php" method="POST">
+                                <!-- <form action="../src/logicos/cadUsuario.php" method="POST">
                                     <div class="row">
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="genero">Gênero</label>
@@ -134,11 +142,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="firstName">Nome</label>
-                                            <input type="text" class="form-control bg-light " id="firstName" placeholder="Digite seu nome" name="txtNome" required>
+                                            <input type="text" class="form-control bg-light " id="firstName" placeholder="Digite seu nome" name="txtNome" required value="<?= $_SESSION['formulario']['txtNome'] ?? '' ?>">
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="dataNasc">Data de Nascimento</label>
-                                            <input type="date" class="form-control bg-light" id="dataNasc" max="9999-12-31" name="txtDataNasc" required>
+                                            <input type="date" class="form-control bg-light" id="dataNasc" name="txtDataNasc" required>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="cpf">CPF</label>
@@ -150,12 +158,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="phone">Telefone</label>
-                                            <input type="text" class="form-control bg-light" id="phone" minlength="9" maxlength="15" placeholder="Digite seu telefone" name="txtTelefone" required>
+                                            <input type="text" class="form-control bg-light" id="phone"  placeholder="Digite seu telefone" name="txtTelefone" required>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
                                             <label for="cep">CEP</label>
                                             <div class="input-group col-md-3 ">
-                                                <input type="text" class="form-control bg-light rounded " id="cep" placeholder="Digite seu CEP" minlength="9" maxlength="9" name="txtCep" required>
+                                                <input type="text" class="form-control bg-light rounded" id="cep" placeholder="Digite seu CEP"  name="txtCep" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6 form-group mt-2">
@@ -186,7 +194,83 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <button id="cadastro" type="submit" class="btn btn-primary">Cadastrar</button>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sair</button>
                                     </div>
+                                </form> -->
+
+                                <form action="../src/logicos/cadUsuario.php" method="POST">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="genero">Gênero</label>
+                                            <select class="form-control bg-light" id="genero" name="txtGenero" required>
+                                                <option value="">Selecione</option>
+                                                <option value="Masculino" <?= (isset($formData['txtGenero']) && $formData['txtGenero'] == 'Masculino') ? 'selected' : '' ?>>Masculino</option>
+                                                <option value="Feminino" <?= (isset($formData['txtGenero']) && $formData['txtGenero'] == 'Feminino') ? 'selected' : '' ?>>Feminino</option>
+                                                <option value="Outro" <?= (isset($formData['txtGenero']) && $formData['txtGenero'] == 'Outro') ? 'selected' : '' ?>>Outro</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="firstName">Nome</label>
+                                            <input type="text" class="form-control bg-light" id="firstName" name="txtNome" placeholder="Digite seu nome" required value="<?= $formData['txtNome'] ?? '' ?>">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="dataNasc">Data de Nascimento</label>
+                                            <input type="date" class="form-control bg-light" id="dataNasc" name="txtDataNasc" required value="<?= $formData['txtDataNasc'] ?? '' ?>">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="cpf">CPF</label>
+                                            <input type="text" class="form-control bg-light" id="cpf" name="txtCpf" placeholder="Digite seu CPF" required value="<?= $formData['txtCpf'] ?? '' ?>">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="email">E-mail</label>
+                                            <input type="email" class="form-control bg-light" id="email" name="txtEmail" placeholder="Digite seu e-mail" required value="<?= $formData['txtEmail'] ?? '' ?>">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="phone">Telefone</label>
+                                            <input type="text" class="form-control bg-light" id="phone" name="txtTelefone" placeholder="Digite seu telefone" required value="<?= $formData['txtTelefone'] ?? '' ?>">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="cep">CEP</label>
+                                            <input type="text" class="form-control bg-light" id="cep" name="txtCep" placeholder="Digite seu CEP" required value="<?= $formData['txtCep'] ?? '' ?>">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="uf">UF</label>
+                                            <input type="text" class="form-control bg-light" id="uf" name="txtUf" placeholder="Digite seu estado (UF)" minlength="2" maxlength="2" required value="<?= $formData['txtUf'] ?? '' ?>">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="cidade">Cidade</label>
+                                            <input type="text" class="form-control bg-light" id="cidade" name="txtCidade" placeholder="Digite sua cidade" required value="<?= $formData['txtCidade'] ?? '' ?>">
+                                        </div>
+
+                                        <div class="col-md-6 form-group mt-2">
+                                            <label for="endereco">Endereço</label>
+                                            <input type="text" class="form-control bg-light" id="endereco" name="txtEndereco" placeholder="Digite seu endereço" required value="<?= $formData['txtEndereco'] ?? '' ?>">
+                                        </div>
+
+                                        <div class="col-12 form-group mt-2 mb-3">
+                                            <label for="password">Senha</label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control bg-warning-subtle" id="inputConfirmPass" name="txtSenha" placeholder="Insira a senha" required>
+                                                <div class="input-group-text">
+                                                    <i class="bi-eye-fill" id="icontogleConfirmPass" onclick="viewSenhaCad()" style="cursor: pointer;"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button id="cadastro" type="submit" class="btn btn-primary">Cadastrar</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sair</button>
+                                    </div>
                                 </form>
+
+
                             </div>
                         </div>
                     </div>
@@ -201,4 +285,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../src/js/script.js"></script>
     <script src="../src/js/cep.js"></script>
 </body>
+
 </html>

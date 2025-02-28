@@ -6,13 +6,41 @@ $nome = isset($_SESSION['nome']) && !empty($_SESSION['nome']) ? $_SESSION['nome'
 $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";
 
 ?>
+<style>
+/* Espaço para o header fixo */
+body {
+  padding-top: 100px; /* Ajuste conforme a altura do seu header */
+}
 
+/* Garante que o header fique acima de outros elementos */
+.header-senac {
+  z-index: 1030; /* Bootstrap usa 1030 para elementos fixed */
+}
+
+/* Ajuste para o offcanvas em mobile */
+.offcanvas-start {
+  margin-top: 0.5rem; /* Igual à altura do header */
+  height: calc(100vh - 100px);
+}
+
+/* Ajuste fino para telas pequenas */
+@media (max-width: 991px) {
+  body {
+    padding-top: 88px; /* Reduz o padding para mobile */
+  }
+  
+  .offcanvas-start {
+    margin-top: 88px;
+    height: calc(100vh - 88px);
+  }
+}
+</style>
 
 <header>
     <div class=" header-vii">
 
     </div>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary py-0 my-0">
+    <nav class="navbar navbar-expand-lg fixed-top bg-body-tertiary py-0 my-0 flex-column">
         <div class="container-fluid header-senac">
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -71,8 +99,9 @@ $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";
 
             </div>
         </div>
+            <div class="linha-vermelha"></div>
     </nav>
-    <div class="linha-vermelha"></div>
+
 
 </header>
 <!-- </div>

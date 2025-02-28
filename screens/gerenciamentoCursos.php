@@ -71,7 +71,8 @@ if ($select->execute()) {
                 <div class="mt-4">
                     <div class="row mb-3">
                         <div class=" col-6 d-flex align-items-center ">
-                            <input type="text" class="col-10 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" value="PESQUISAR">
+                            <input type="text" class="col-10 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" value="<?php if(isset($_GET['search'])){echo $_GET['search'];}?>">
+                            <button type="submit" class="ms-3 btn btn-primary btn-azul-senac">PESQUISAR</button>
                             <?php if ($perfil == "admin") { ?>
                                 <button type="button" class="ms-2 btn btn-primary btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Curso</button>
                             <?php } ?>

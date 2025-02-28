@@ -7,6 +7,7 @@ include_once('../../data/conexao.php');
 session_start();
 $mensagem = $_SESSION['mensagem'] ?? NULL;
 $_SESSION['mensagem'] = NULL;
+$_SESSION["perfil_mensagem"] = NULL;
 
 $logado =  $_SESSION['logado'] ?? FALSE;
 $nomeUser = $_SESSION['nome'] ?? "";
@@ -24,57 +25,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $data = filter_input(INPUT_POST, "txtData", FILTER_SANITIZE_SPECIAL_CHARS);
 
 
-        if (isset($_FILES["imgPosts"]) && !empty($_FILES["imgPosts"]["name"])) {
-            foreach ($_FILES["imgPosts"] as $imagem) {
-                $allowedTypes = ["image/png", "image/jpeg"];
-                $fileType = mime_content_type($imagem["tmp_name"]);
-                $ext = strtolower(pathinfo($imagem["name"], PATHINFO_EXTENSION));
-
-                if (in_array($fileType, $allowedTypes) && ($ext == "jpg" || $ext == "jpeg" || $ext == "png")) {
-                    $nameFile = pathinfo($imagem["name"], PATHINFO_FILENAME);
-                    $imagem_url = hash("md5", $nameFile) . "." . $ext;
-                    $dir = "../postAluno/";
-                    move_uploaded_file($imagem["tmp_name"], $dir . $imagem_url);
-                } else {
-                    $_SESSION['mensagem'] =  "Erro: Apenas arquivos JPG ou PNG são permitidos.";
-                    header("Location: " . BASE_URL . "screens/blog.php");
-                    exit;
-                }
-
-                $sqlImg = "INSERT INTO img_post (data, hora, vagas, id_curso, id_usuario, id_turma) values (:data, :hora, :vagas, :curso, :usuario, :id_turma)";
-                $insertImg = $conexao->prepare($sql);
-                $insertImg->bindParam(":data", $data);
-                $insertImg->bindParam(":hora", $hora);
-                $insertImg->bindParam(":vagas", $vagas);
-                $insertImg->bindParam(":curso", $curso);
-                $insertImg->bindParam(":usuario", $usuario);
-                $insertImg->bindParam(":id_turma", $turma);
-
-                $insert->execute();
-            }
-        } else {
-
-            $imagem_url = $imgName;
-        }
 
         try {
-            $sql = "INSERT INTO post (titulo, texto, localizador, data_criacao) VALUES (:titulo, :texto, :localizador, :data_criacao) ";
-            $update = $conexao->prepare($sql);
-            $update->bindParam(':titulo', $tituloPost);
-            $update->bindParam(':conteudo', $conteudoPost);
-            $update->bindParam(':imgName', $imagem_url);
-            $update->bindParam(':postagemId', $postagemId);
+            
+            $sqlPost = "INSERT INTO post (titulo, texto, localizador, data_criacao, id_usuario) VALUES (:titulo, :texto, :localizador, :data_criacao, :id_usuario) ";
+            $post = $conexao->prepare($sqlPost);
+            $post->bindParam(':titulo', $postTitulo);
+            $post->bindParam(':texto', $postTexto);
+            $post->bindParam(':localizador', $localizador);
+            $post->bindParam(':data_criacao', $data);
+            $post->bindParam(":id_usuario", $idUsuario);
+            $post->execute();
+            
+            $sqlPostagem = "SELECT * FROM post WHERE localizador = :localizador";
+            $selectPostagem = $conexao->prepare("$sqlPostagem");
+            $selectPostagem->bindParam(":localizador", $localizador);
+            if ($selectPostagem->execute()) {
+                $postagem = $selectPostagem->fetch(PDO::FETCH_ASSOC);
+            }
+            $postId = $postagem["id_post"];
+            
+            
+            $imagens = $_FILES["imgsPost"];
+            if (true ) {
+                
+                for($cont = 0; $cont < count($imagens["name"]); $cont++ ){
+                    echo($cont);
+                    $allowedTypes = ["image/png", "image/jpeg"];
+                    $fileType = mime_content_type($imagens["tmp_name"][$cont]);
+                    $ext = strtolower(pathinfo($imagens["name"][$cont], PATHINFO_EXTENSION));
 
-            if ($update->execute()) {
-                $_SESSION["mensagem"] = "Atualizado com sucesso!";
-                header("Location: " . BASE_URL . "screens/postar.php");
+                    if (in_array($fileType, $allowedTypes) && ($ext == "jpg" || $ext == "jpeg" || $ext == "png")) {
+                        $nameFile = pathinfo($imagens["name"][$cont], PATHINFO_FILENAME);
+                        $imagem_url = hash("md5", $nameFile) . "." . $ext;
+                        $dir = "../../postAluno/";
+                        move_uploaded_file($imagens["tmp_name"][$cont], $dir . $imagem_url);
+                    } else {
+                        $_SESSION['mensagem'] =  "Erro: Apenas arquivos JPG ou PNG são permitidos.";
+                        $_SESSION['perfil_mensagem'] = "text-danger bg-danger-subtle";
+                        header("Location: " . BASE_URL . "screens/blog.php");
+                        exit;
+                    }
+
+                    $sqlImg = "INSERT INTO img_post (id_post, url_img) values (:id_post, :url_img)";
+                    $insertImg = $conexao->prepare($sqlImg);
+                    $insertImg->bindParam(":id_post", $postId);
+                    $insertImg->bindParam(":url_img", $imagem_url);
+                    $insertImg->execute();
+                }
+                die;
+                header("Location: " . BASE_URL . "screens/blog.php");
                 exit;
             } else {
-                throw new Exception("Ocorreu um erro ao atualizar");
+                throw new Exception("Ocorreu um erro ao adicionar as imagem");
             }
         } catch (Exception $e) {
-            $_SESSION["mensagem"] = "ocorreu um erro ao atualizar!" . $e;
-            header("Location: " . BASE_URL . "screens/adicionarPost.php");
+            $_SESSION["mensagem"] = "ocorreu um erro ao adicionar o post!" . $e;
+            $_SESSION['perfil_mensagem'] = "text-danger bg-danger-subtle";
+            header("Location: " . BASE_URL . "screens/blog.php");
             exit;
         } finally {
             unset($conexao);

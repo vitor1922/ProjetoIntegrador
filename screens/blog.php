@@ -8,6 +8,11 @@ $logado = $_SESSION['logado'] ?? FALSE;
 $idUsuario = $_SESSION['id_usuario'] ?? NULL;
 $usuario = $_SESSION['nome'] ?? NULL;
 
+$perfilMensagem = $_SESSION['perfil_mensagem'] ?? "";
+$mensagem = $_SESSION["mensagem"] ?? "";
+$_SESSION['perfil_mensagem'] = NULL;
+$_SESSION["mensagem"] = NULL;
+
 
 $sql =  "SELECT
     p.id_post AS id_post,
@@ -72,152 +77,167 @@ unset($conexao);
   ?>
   <main>
 
-    <?php 
-    
-    echo(date("Y-m-d"))?>
+    <?php
+
+    echo (date("Y-m-d")) ?>
     <div class="container-fluid">
-    <a href="../index.php" class="m-3">
+      <a href="../index.php" class="m-3">
         <i class="bi bi-arrow-left-short fs-1 azul-senac"></i>
       </a>
-    <div class="container">
-      <!-- Flecha de retorno -->
-      
-      <div class="mt-4">
-        <div class="row mb-3">
-          <div class=" col-6 d-flex align-items-center ">
-            <h3 type="text" class="text-start fs-1 fw-bold laranja-senac">Blog</h3>
-            <?php if ($perfil == "admin" || $perfil == "professor" || $perfil == "aluno") { ?>
-              <button type="button" class="ms-2 btn btn-primary btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalAdicionarPost">Adicionar Post</button>
-            <?php } ?>
+      <div class="container">
+        <!-- Flecha de retorno -->
+
+        <div class="mt-4">
+          <div class="row mb-3">
+            <div class=" col-6 d-flex align-items-center ">
+              <h3 type="text" class="text-start fs-1 fw-bold laranja-senac">Blog</h3>
+              <?php if ($perfil == "admin" || $perfil == "professor" || $perfil == "aluno") { ?>
+                <button type="button" class="ms-2 btn btn-primary btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalAdicionarPost">Adicionar Post</button>
+              <?php } ?>
+            </div>
           </div>
         </div>
-      </div>
 
 
 
-      <div class=" row d-flex justify-content-center">
-        <?php foreach($posts as $post){?>
-          <?php 
+        <div class=" row d-flex justify-content-center">
+          <?php foreach ($posts as $post) { ?>
+            <?php
             $imagens = explode(",", $post["imagens"]);
             $contagem = 0;
             ?>
-        <!-- card -->
-        <div class="card card-post border col-lg-3 m-1">
-        <div class="col-1 d-flex justify-content-start position-absolute z-1 end-0">
-                                <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </div>
+            <!-- card -->
+            <div class="card card-post border col-lg-3 m-1">
+              <div class="col-1 d-flex justify-content-start position-absolute z-1 end-0">
+                <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </div>
 
-          <!-- Carrossel de imagens -->
-          <div class=" d-flex justify-content-center align-items-center">
-            <div id="carouselExampleInterval<?=$post["id_post"]?>" class="row slide-blog carousel slide">
-              <div class="carousel-inner">
-                <?php foreach($imagens as $imagem){?>
-                <div class="carousel-item active">
-                  <img src="../postAluno/<?=$imagem?>" class="d-block w-100 slide-blog" alt="...">
+              <!-- Carrossel de imagens -->
+              <div class=" d-flex justify-content-center align-items-center">
+                <div id="carouselExampleInterval<?= $post["id_post"] ?>" class="row slide-blog carousel slide">
+                  <div class="carousel-inner">
+                    <?php foreach ($imagens as $imagem) { ?>
+                      <div class="carousel-item active">
+                        <img src="../postAluno/<?= $imagem ?>" class="d-block w-100 slide-blog" alt="...">
+                      </div>
+                      <?php
+                      $contagem += 1;
+
+                      ?>
+                    <?php } ?>
+                  </div>
+                  <?php if ($contagem > 1) { ?>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval<?= $post["id_post"] ?>" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval<?= $post["id_post"] ?>" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  <?php } ?>
                 </div>
-                <?php 
-                $contagem += 1;
-
-                ?>
-                <?php }?>
               </div>
-              <?php if($contagem > 1){?>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval<?=$post["id_post"]?>" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval<?=$post["id_post"]?>" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-              <?php }?>
-            </div>
-          </div>
-          <!--info-->
-          <div class=" row ">
-            <div class="col-6">
-              <div class="row">
-                <a href="./perfilVer.php?id=<?=$post["id_usuario"]?>" class=" text-black">
-                  <img src="../foto/<?=$post["foto_usuario"]?>" alt="Foto de perfil" class="img-perfil-mini">
+              <!--info-->
+              <div class=" row ">
+                <div class="col-6">
+                  <div class="row">
+                    <a href="./perfilVer.php?id=<?= $post["id_usuario"] ?>" class=" text-black">
+                      <img src="../foto/<?= $post["foto_usuario"] ?>" alt="Foto de perfil" class="img-perfil-mini">
 
-                  <?php $nomeEx = explode(" ",$post["nome_usuario"]);
-                        $primeiroNome = $nomeEx[0];
-                  ?>
-                  <label class="fs-7"><?=$primeiroNome?> </label>
-                </a>
-              </div>
+                      <?php $nomeEx = explode(" ", $post["nome_usuario"]);
+                      $primeiroNome = $nomeEx[0];
+                      ?>
+                      <label class="fs-7"><?= $primeiroNome ?> </label>
+                    </a>
+                  </div>
 
-              <div class="row fs-5 ms-1"><?=$post["titulo_post"]?></div>
+                  <div class="row fs-5 ms-1"><?= $post["titulo_post"] ?></div>
 
 
-            </div>
-            <div class="col-6 pt-3 ">
-              <div class="row d-flex justify-content-end pe-3 fs-5"><?=$post["nome_curso"]?></div>
-              <div class="row d-flex justify-content-end pe-3">turma <?=$post["numero_da_turma"]?></div>
-              <div class="row d-flex justify-content-end pe-3 fs-7"><?=$post["data_criacao_post"]?></div>
-
-
-            </div>
-            <div class="row  ps-4 pt-4 text-secondary"><?=$post["texto_post"]?></div>
-          </div>
-        </div>
-
-
-        <!-- fim card -->
-        <?php }?>
-
-
-
-
-
-
-        <!-- MODAL ADICIONAR POST -->
-        <div class="modal fade" id="modalAdicionarPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-body">
-                <div class="d-flex justify-content-end mb-3">
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="../src/logicos/adicionarPostBlog.php" method="POST" enctype="multipart/form-data">
-                  <div class="mb-3">
-                    <label class="form-label fw-bold">Título do Post</label>
-                    <input type="text" class="form-control" name="txtTitulo" required>
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-bold">Texto</label>
-                    <input type="text" class="form-control" name="txtTexto" required>
-                  </div>
+                <div class="col-6 pt-3 ">
+                  <div class="row d-flex justify-content-end pe-3 fs-5"><?= $post["nome_curso"] ?></div>
+                  <div class="row d-flex justify-content-end pe-3">turma <?= $post["numero_da_turma"] ?></div>
+                  <div class="row d-flex justify-content-end pe-3 fs-7"><?= $post["data_criacao_post"] ?></div>
 
-                  <div class="mb-3">
-                    <input type="text" class="form-control" name="txtUsuario" value="<?=$idUsuario?>" required hidden>
-                    <input type="text" class="form-control" name="txtData" value="<?=date("Y-m-d",)?>" required hidden>
-                  </div>
-                 
-                  <div class="mb-3">
-                    <label class="form-label fw-bold">Adicionar Imagem do Curso</label>
-                    <input type="file" multiple="multiple" name="imgsPost[]" class="form-control" accept="image/png, image/jpeg" required>
-                  </div>
 
-                  <div class="mb-3 d-flex justify-content-center">
-                    <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
+                </div>
+                <div class="row  ps-4 pt-4 text-secondary"><?= $post["texto_post"] ?></div>
+              </div>
+            </div>
+
+
+            <!-- fim card -->
+          <?php } ?>
+
+
+
+
+
+
+          <!-- MODAL ADICIONAR POST -->
+          <div class="modal fade" id="modalAdicionarPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="d-flex justify-content-end mb-3">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                </form>
+                  <form action="../src/logicos/adicionarPostBlog.php" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Título do Post</label>
+                      <input type="text" class="form-control" name="txtTitulo" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Texto</label>
+                      <input type="text" class="form-control" name="txtTexto" required>
+                    </div>
+
+                    <div class="mb-3">
+                      <input type="text" class="form-control" name="txtUsuario" value="<?= $idUsuario ?>" required hidden>
+                      <input type="text" class="form-control" name="txtData" value="<?= date("Y-m-d",) ?>" required hidden>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Adicionar Imagem do Curso</label>
+                      <input type="file" multiple="multiple" name="imgsPost[]" class="form-control" accept="image/png, image/jpeg" required>
+                    </div>
+
+                    <div class="mb-3 d-flex justify-content-center">
+                      <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
+          <!-- modal alerta mensagem -->
+
+          <div class="modal fade " id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog  ">
+              <div class="modal-content <?= $perfilMensagem ?>">
+                <div class="modal-body ">
+                  <?= $mensagem ?>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
     </div>
   </main>
 
 
   <!-- JavaScript do Bootstrap -->
   <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <?php if ($mensagem != "") { ?>
+    <script src="../src/js/alert.js"></script>
+  <?php } ?>
   <?php include_once("./footer.php"); ?>
 </body>
 
