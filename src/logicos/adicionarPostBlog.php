@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $insertImg->bindParam(":url_img", $imagem_url);
                     $insertImg->execute();
                 }
-                die;
+              
                 header("Location: " . BASE_URL . "screens/blog.php");
                 exit;
             } else {

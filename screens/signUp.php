@@ -7,14 +7,13 @@ include_once('../data/conexao.php');
 
 $_SESSION['logado'] = FALSE;
 $mensagem = $_SESSION['mensagem'] ?? NULL;
-$_SESSION['formulario'] = $_POST ?? NULL;
 $perfil = $_SESSION['perfil'] ?? NULL;
 $_SESSION['mensagem'] = NULL;
 
 
 // Recupera os valores do formulário da sessão, se existirem
-$formData = $_SESSION['formulario'] ?? [];
-unset($_SESSION['formulario']); // Limpa a sessão após recuperar os dados
+$formData = $_SESSION['formulario'] ?? []; // Limpa a sessão após recuperar os dados
+unset($_SESSION['formulario']);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -63,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body class="d-flex justify-content-between flex-column min-vh-100 p-0">
     <?php
-    // include_once('./header.php');
+    include_once('./header.php');
     ?>
     <main class="d-flex justify-content-center align-items-center ">
         <div class=" container form-container d-flex justify-content-center align-items-center">
@@ -73,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form action="../src/logicos/autenticar.php" method="POST">
                     <div class="form-group mt-4">
                         <label for="email">E-mail</label>
-                        <input type="email" class="form-control bg-light" id="email" name="txtEmail" aria-describedby="emailHelp" placeholder="Digite seu e-mail" required>
+                        <input type="email" class="form-control bg-light" id="email" name="txtEmail" aria-describedby="emailHelp" placeholder="Digite seu e-mail" required <?= $formData['txtEmail'] ?? '' ?> >
                     </div>
                     <div class="form-group mb-3 mt-4">
                         <label for="password">Senha</label>
@@ -119,83 +118,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?= $mensagem ?>
                 </p>
             <?php } ?>
+
             <!-- Modal -->
             <div class="modal fade" id="fazerCadastro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content shadow-lg rounded-3">
                         <div class="modal-header d-flex justify-content-center">
-                            <h1 class="text-center modal-title text-warning fs-5" id="staticBackdropLabel">Fazer Cadastro</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body border-top border-warning">
                             <div class="col rounded">
-                                <!-- <form action="../src/logicos/cadUsuario.php" method="POST">
-                                    <div class="row">
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="genero">Gênero</label>
-                                            <select class="form-control bg-light" id="genero" name="txtGenero" required>
-                                                <option value="">Selecione</option>
-                                                <option value="Masculino">Masculino</option>
-                                                <option value="Feminino">Feminino</option>
-                                                <option value="Outro">Outro</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="firstName">Nome</label>
-                                            <input type="text" class="form-control bg-light " id="firstName" placeholder="Digite seu nome" name="txtNome" required value="<?= $_SESSION['formulario']['txtNome'] ?? '' ?>">
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="dataNasc">Data de Nascimento</label>
-                                            <input type="date" class="form-control bg-light" id="dataNasc" name="txtDataNasc" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="cpf">CPF</label>
-                                            <input type="text" class="form-control bg-light" id="cpf" placeholder="Digite seu CPF" name="txtCpf" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="email">E-mail</label>
-                                            <input type="email" class="form-control bg-light" id="email" placeholder="Digite seu e-mail" name="txtEmail" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="phone">Telefone</label>
-                                            <input type="text" class="form-control bg-light" id="phone"  placeholder="Digite seu telefone" name="txtTelefone" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="cep">CEP</label>
-                                            <div class="input-group col-md-3 ">
-                                                <input type="text" class="form-control bg-light rounded" id="cep" placeholder="Digite seu CEP"  name="txtCep" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="uf">UF</label>
-                                            <input type="text" class="form-control bg-light" id="uf" placeholder="Digite seu estado (UF)" minlength="2" maxlength="2" name="txtUf" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="cidade">Cidade</label>
-                                            <input type="text" class="form-control bg-light" id="cidade" placeholder="Digite sua cidade" name="txtCidade" required>
-                                        </div>
-                                        <div class="col-md-6 form-group mt-2">
-                                            <label for="endereco">Endereço</label>
-                                            <input type="text" class="form-control bg-light" id="endereco" placeholder="Digite seu endereço" name="txtEndereco" required>
-                                        </div>
-                                        <div class=" d-flex justify-content-center col-12 col-lg-12 col-md-12 form-group mt-2 mb-3">
-                                            <div class=" col-12 col-lg-7 col-md-10">
-                                                <label for="password">Senha</label>
-                                                <div class="input-group col-md-3">
-                                                    <input type="password" class="form-control bg-warning-subtle" id="inputConfirmPass" placeholder="Insira a senha" name="txtSenha" required>
-                                                    <div class="input-group-text">
-                                                        <i class="bi-eye-fill" id="icontogleConfirmPass" onclick="viewSenhaCad()" style="cursor: pointer;"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button id="cadastro" type="submit" class="btn btn-primary">Cadastrar</button>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sair</button>
-                                    </div>
-                                </form> -->
-
+                                <h5 class="text-center mb-3 mt-2 text-warning">Fazer Cadastro</h5>
                                 <form action="../src/logicos/cadUsuario.php" method="POST">
                                     <div class="row">
                                         <div class="col-md-6 form-group mt-2">

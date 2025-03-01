@@ -6,35 +6,6 @@ $nome = isset($_SESSION['nome']) && !empty($_SESSION['nome']) ? $_SESSION['nome'
 $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";
 
 ?>
-<style>
-/* Espaço para o header fixo */
-body {
-  padding-top: 100px; /* Ajuste conforme a altura do seu header */
-}
-
-/* Garante que o header fique acima de outros elementos */
-.header-senac {
-  z-index: 1030; /* Bootstrap usa 1030 para elementos fixed */
-}
-
-/* Ajuste para o offcanvas em mobile */
-.offcanvas-start {
-  margin-top: 0.5rem; /* Igual à altura do header */
-  height: calc(100vh - 100px);
-}
-
-/* Ajuste fino para telas pequenas */
-@media (max-width: 991px) {
-  body {
-    padding-top: 88px; /* Reduz o padding para mobile */
-  }
-  
-  .offcanvas-start {
-    margin-top: 88px;
-    height: calc(100vh - 88px);
-  }
-}
-</style>
 
 <header>
     <div class=" header-vii">

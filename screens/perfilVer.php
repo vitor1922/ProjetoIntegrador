@@ -9,7 +9,7 @@ $mensagem = $_SESSION['mensagem'] ?? NULL;
 $perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
 $_SESSION['mensagem'] = NULL;
 $nome = $_SESSION['nome'] ?? "";
-$id_usuario = $_GET['id'] ?? "";
+$id_usuario = $_SESSION['id_usuario'] ?? "";
 
 
 
@@ -112,7 +112,7 @@ unset($conexao);
             <div class="col-md-8">
                 <div class="card p-0 shadow-sm">
                     <div class="position-relative mb-4">
-                    <img src="../bannerP/<?= $login['banner'] ? $login['banner'] : 'SenacLogo.jpg' ?>" class="w-100" style="height: 200px; object-fit: cover;">
+                        <img src="../bannerP/<?= $login['banner'] ? $login['banner'] : 'SenacLogo.jpg' ?>" class="w-100" style="height: 200px; object-fit: cover;">
                         <div class="position-absolute top-100 start-50 translate-middle">
                             <img src="../foto/<?= $login['foto'] ? $login['foto'] : 'iconPerfil.jpg' ?> " class="rounded-circle border <?= $estilo ?>" width="120" height="120">
                         </div>

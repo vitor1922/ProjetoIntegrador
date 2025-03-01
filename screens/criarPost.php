@@ -51,22 +51,28 @@ if ($select->execute()) {
 
     <main class="container-fluid mt-5">
 
-        <form action="<?= BASE_URL ?>src/logicos/PostAluno.php" method="POST" enctype="multipart/form-data">
+        <form action="<?= BASE_URL ?>src/logicos/adicionarPostPerfil.php" method="POST" enctype="multipart/form-data">
             <div class="row offset-md-2">
                 <div class="mb-3">
-                    <label for="txtTituloPost" class="form-label">Título do Post</label>
-                    <input type="text" id="txtTituloPost" class="form-control" name="txtTituloPost" required>
+                    <label for="txtTitulo" class="form-label">Título do Post</label>
+                    <input type="text" id="txtTitulo" class="form-control" name="txtTitulo" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="txtConteudoPost" class="form-label">Descrição do Post</label>
-                    <textarea id="txtConteudoPost" class="form-control" rows="5" name="txtConteudoPost" required></textarea>
+                    <label for="txtTexto" class="form-label">Descrição do Post</label>
+                    <textarea id="txtTexto" class="form-control" rows="5" name="txtTexto"></textarea>
                 </div>
 
+                <input type="text" hidden name="txtUsuario" value="<?= $id_usuario ?>">
                 <div class="mb-3">
-                    <label for="postAluno" class="col-sm-8 col-form-label">Carregar Imagem</label>
-                    <input type="file" name="postAluno" class="form-control" accept="image/png, image/jpeg, image/jpg" onchange="previewImage(event)">
+                    <label class="form-label fw-bold">Adicionar Imagens</label>
+                    <input type="file" multiple="multiple" name="imgsPost[]" class="form-control" accept="image/png, image/jpeg" required>
                 </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="txtUsuario" value="<?= $idUsuario ?>" required hidden>
+                    <input type="text" class="form-control" name="txtData" value="<?= date("Y-m-d",) ?>" required hidden>
+                </div>
+
 
                 <img id="fotoPreview" src="" alt="Prévia da imagem" style="display: none; max-width: 200px; margin-top: 10px;">
 

@@ -37,6 +37,6 @@
         // Tempo do preloader de 3 segundos
         setTimeout(function() {
             document.getElementById("preloader").style.display = "none"; // Esconde o preloader após 3 segundos
-        }, 3000); // Ajuste o tempo aqui se necessário
+        }, 1000); // Ajuste o tempo aqui se necessário
     });
 </script>

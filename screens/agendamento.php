@@ -64,6 +64,7 @@ unset($conexao);
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-6  col-lg-12  col-xxl-7">
+                                    var_dump($curso); 
                                     <h5 class="card-title"><?= htmlspecialchars($curso['nome_do_curso']) ?></h5>
 
                                 </div>

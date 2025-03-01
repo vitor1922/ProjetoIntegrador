@@ -62,7 +62,7 @@ if (!$logado) {
 
 
 
-    <div>
+    
         <?php include("./header.php") ?>
 
         <main>
@@ -374,7 +374,7 @@ if (!$logado) {
 
             </div>
         </main>
-    </div>
+    
 
     <?php include_once("./footer.php") ?>
 

@@ -15,12 +15,14 @@
   src: url("../fonts/Roboto-Light.ttf") format("truetype");
   font-weight: lighter;
 }
+
 * {
   font-family: "Roboto", Helvetica, sans-serif;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
+
 a {
   text-decoration: none;
   color: auto;
@@ -30,6 +32,7 @@ body {
   height: 100vh;
   padding: 0 !important;
 }
+
 :root {
   --laranja_senac: #f7941d;
   --laranja_claro_senac: #fdc180;
@@ -59,6 +62,7 @@ body {
   height: 13.125rem;
   width: 13.125rem;
 }
+
 .img-130 {
   object-fit: cover;
   height: 8.125rem;
@@ -74,11 +78,13 @@ body {
   height: 11rem;
   width: 11rem;
 }
+
 .img-perfil-mini {
   object-fit: cover;
   height: 2.8rem;
   width: 2.8rem;
 }
+
 .img-index {
   height: calc(13rem + 5vw);
 }
@@ -124,6 +130,7 @@ body {
 .laranja-claro-senac {
   color: var(--laranja_claro_senac);
 }
+
 .laranja-escuro-senac {
   color: var(--laranja_escuro_senac);
 }
@@ -200,6 +207,7 @@ body {
   min-width: 2.5rem;
   min-height: 2.5rem;
 }
+
 /* .btn-edit-profile {
     background-color: #fff;
     color: #007bff;
@@ -228,18 +236,21 @@ body {
 .h-1rem {
   max-height: 1rem;
 }
+
 .ponto {
   min-height: 1rem;
   min-width: 1rem;
   max-height: 1rem;
   max-width: 1rem;
 }
+
 .header-senac {
   background-color: var(--cinza);
+  z-index: 1030;
 }
 
 .header-senac-text {
-  color:#000;
+  color: #000;
 }
 
 .apagar {
@@ -255,10 +266,33 @@ body {
     color: var(--azul_medio_senac);
   }
 
-  .border-header{
+  .border-header {
     border-bottom: #f7941d;
     height: 3px;
   }
+
+  .offcanvas-start {
+    margin-top: 100px;
+    height: calc(100vh - 100px);
+  }
+
+
+  @media (max-width: 991px) {
+    body {
+      padding-top: 88px;
+    }
+
+    .offcanvas-start {
+      margin-top: 88px;
+      height: calc(100vh - 88px);
+    }
+  }
+
+  main {
+    padding-top: 100px;
+  }
+
+
 
   .img-index {
     height: calc(10rem + 10vw);
@@ -343,6 +377,7 @@ body {
     transform: translate(50%, 0%);
   }
 }
+
 .star {
   font-size: 35px;
   color: #808080;
@@ -359,8 +394,10 @@ body {
 
 .profile-background {
   width: 100%;
-  height: 100%; /* Ajuste a altura conforme necessário */
-  background-image: url("../bannerP"); /* Substitua pelo caminho real */
+  height: 100%;
+  /* Ajuste a altura conforme necessário */
+  background-image: url("../bannerP");
+  /* Substitua pelo caminho real */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -411,6 +448,7 @@ textarea {
   width: 100px;
   height: 100px;
 }
+
 .card-image {
   width: 100%;
   height: 100%;
@@ -433,14 +471,18 @@ textarea {
 }
 
 .indisponivel {
-  background-color: #e9ecef !important; /* Fundo cinza claro */
-  border: 1px solid #ced4da; /* Borda cinza */
-  opacity: 0.7; /* Transparência */
+  background-color: #e9ecef !important;
+  /* Fundo cinza claro */
+  border: 1px solid #ced4da;
+  /* Borda cinza */
+  opacity: 0.7;
+  /* Transparência */
 }
 
 .indisponivel a {
   text-decoration: none;
-  color: #6c757d !important; /* Texto cinza */
+  color: #6c757d !important;
+  /* Texto cinza */
 }
 
 .cavera {
@@ -458,14 +500,6 @@ textarea {
   height: 150px;
 }
 
-.paralax1 {
-  background-image: url("../img/salão1.png");
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-  height: 600px;
-}
-
 .matte {
   background-color: rgba(0, 0, 0, 0.2);
 }
@@ -473,19 +507,15 @@ textarea {
 .matte2 {
   background-color: rgba(0, 0, 0, 0.6);
 }
-.paralax2 {
-  background-image: url("../img/salão1.png");
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-  height: 350px;
-}
 
 .linha-vermelha {
   width: 100%;
-  height: 3px; /* Espessura da linha */
-  background-color: #ff7b00; /* Cor vermelha */
+  height: 3px;
+  /* Espessura da linha */
+  background-color: #ff7b00;
+  /* Cor vermelha */
 }
+
 .slide-blog {
   width: 100%;
   height: 300px;
@@ -523,21 +553,21 @@ textarea {
 
 /* Imagens de fundo para cada .product */
 .product:nth-child(1) {
-  background-image: url(https://cdn.manualdohomem.com.br/?w=1233&h=772&key=aHR0cHM6Ly9tYW51YWxkb2hvbWVtbW9kZXJuby5jb20uYnI=&u=%2Ffiles%2F2020%2F09%2Fcortes-de-cabelos-masculinos-para-2021-cortes-de-cabelos-masculinos-para-2021-11.jpg);
+  background-image: url(../img/index_cortes.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .product:nth-child(2) {
-  background-image: url(https://unhadecoradasimples.com.br/wp-content/uploads/2024/09/unhas-francesinhas-2024-novas-ideias.png);
+  background-image: url(../img/index_unhas.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .product:nth-child(3) {
-  background-image: url(https://icosmetologia.com.br/Arquivos/Noticia/noticia-114615.jpg);
+  background-image: url(../img/index_depilacao.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -558,29 +588,62 @@ textarea {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
+
+/* Definições para as telas maiores */
+.paralax1 {
+  background-image: url("../img/salão1.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 600px; /* Altura definida para desktop e tablets */
+}
+
+.paralax2 {
+  background-image: url("../img/salão1.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 350px; /* Altura definida para desktop e tablets */
+}
+
+/* Reduz a altura para telas móveis */
+@media (max-width: 576px) {
+  .paralax1 {
+      height: 250px;  /* Altura ajustada para mobile */
+  }
+
+  .paralax2 {
+      height: 150px;  /* Altura ajustada para mobile */
+  }
+}
+
 
 /* Responsividade para dispositivos móveis */
 @media only screen and (max-width: 768px) {
   .products {
     /* Alteramos para layout vertical */
     flex-direction: column;
-    height: auto; /* Remove a altura fixa */
+    height: auto;
+    /* Remove a altura fixa */
   }
+}
 
+/* Aumenta a altura das divs no mobile, mas não ocupa toda a altura */
+@media (max-width: 576px) {
   .product {
-    /* Para garantir que cada item ocupe 100% da largura */
-    width: 100%;
-    /* Definindo uma altura menor ou automática, conforme sua preferência */
-    height: 300px;
-    /* Opcional: para manter o efeito de transição, pode-se remover ou ajustar o hover */
+    min-height: 200px;
+    /* Ajuste conforme necessário */
   }
+}
 
-  /* Se preferir manter o layout horizontal com scroll, utilize: */
-  /*
+
+/* Se preferir manter o layout horizontal com scroll, utilize: */
+/*
   .products {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -591,7 +654,7 @@ textarea {
     margin-right: 10px;
   }
   */
-}
+
 
 .profileP {
   width: 200px;
@@ -622,3 +685,346 @@ textarea {
 /* botão index.html  */
 
 
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  font-family: "Roboto Slab", serif;
+  font-size: 15px;
+  line-height: 1.67;
+  color: #444;
+  padding: 60px 0;
+}
+
+.section-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  font-weight: 400;
+  display: inline-block;
+  position: relative;
+}
+
+.section-title:after,
+.section-title:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+}
+
+.section-title:after {
+  height: 2px;
+  background-color: rgba(252, 92, 15, 0.46);
+  left: 25%;
+  right: 25%;
+}
+
+.section-title:before {
+  width: 15px;
+  height: 15px;
+  border: 3px solid #fff;
+  background-color: #fc5c0f;
+  left: 50%;
+  transform: translatex(-50%);
+  bottom: -6px;
+  z-index: 9;
+  border-radius: 50%;
+}
+
+/* CAROUSEL STARTS */
+.customer-feedback .owl-item img {
+  width: 85px;
+  height: 85px;
+}
+
+.feedback-slider-item {
+  position: relative;
+  padding: 60px;
+  margin-top: -40px;
+}
+
+.customer-name {
+  margin-top: 15px;
+  margin-bottom: 25px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.feedback-slider-item p {
+  line-height: 1.875;
+}
+
+.customer-rating {
+  background-color: #eee;
+  border: 3px solid #fff;
+  color: rgba(1, 1, 1, 0.702);
+  font-weight: 700;
+  border-radius: 50%;
+  position: absolute;
+  width: 47px;
+  height: 47px;
+  line-height: 44px;
+  font-size: 15px;
+  right: 0;
+  top: 77px;
+  text-indent: -3px;
+}
+
+.thumb-prev .customer-rating {
+  top: -20px;
+  left: 0;
+  right: auto;
+}
+
+.thumb-next .customer-rating {
+  top: -20px;
+  right: 0;
+}
+
+.customer-rating i {
+  color: rgb(251, 90, 13);
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+/* GREY BACKGROUND COLOR OF THE ACTIVE SLIDER */
+.feedback-slider-item:after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 0;
+  top: 103px;
+  background-color: #f6f6f6;
+  border: 1px solid rgba(251, 90, 13, 0.1);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.thumb-prev,
+.thumb-next {
+  position: absolute;
+  z-index: 99;
+  top: 45%;
+  width: 98px;
+  height: 98px;
+  left: -90px;
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.thumb-next {
+  left: auto;
+  right: -90px;
+}
+
+.feedback-slider-thumb img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.feedback-slider-thumb:hover {
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+}
+
+.customer-feedback .owl-nav [class*="owl-"] {
+  position: relative;
+  display: inline-block;
+  bottom: 45px;
+  transition: all 0.2s ease-in;
+}
+
+.customer-feedback .owl-nav i {
+  background-color: transparent;
+  color: rgb(251, 90, 13);
+  font-size: 25px;
+}
+
+.customer-feedback .owl-prev {
+  left: -15px;
+}
+
+.customer-feedback .owl-prev:hover {
+  left: -20px;
+}
+
+.customer-feedback .owl-next {
+  right: -15px;
+}
+
+.customer-feedback .owl-next:hover {
+  right: -20px;
+}
+
+/* DOTS */
+.customer-feedback .owl-dots {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 35px;
+}
+
+.customer-feedback .owl-dot {
+  display: inline-block;
+}
+
+.customer-feedback .owl-dots .owl-dot span {
+  width: 11px;
+  height: 11px;
+  margin: 0 5px;
+  background: #fff;
+  border: 1px solid rgb(251, 90, 13);
+  display: block;
+  -webkit-backface-visibility: visible;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+  border-radius: 50%;
+}
+
+.customer-feedback .owl-dots .owl-dot.active span {
+  background-color: rgb(251, 90, 13);
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 767px) {
+  .feedback-slider-item:after {
+    left: 30px;
+    right: 30px;
+  }
+
+  .customer-feedback .owl-nav [class*="owl-"] {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: 45px;
+    bottom: auto;
+  }
+
+  .customer-feedback .owl-prev {
+    left: 0;
+  }
+
+  .customer-feedback .owl-next {
+    right: 0;
+  }
+}
+
+
+.copyright {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 1.6rem;
+  background-color: #ededed;
+}
+
+.copyright a {
+  display: inline-block;
+  padding: 15px 2px;
+}
+
+.copyright a:not(:last-child):after {
+  content: "/";
+  margin-left: 10px;
+}
+
+.toptal {
+  color: #204ecf;
+}
+
+.upstack {
+  color: #008bf7;
+}
+
+.upwork {
+  color: #37a000;
+}
+
+.fiverr {
+  color: #1dbf73;
+}
+
+.jobs {
+  color: magenta;
+  text-decoration: underline;
+  margin-top: -15px;
+}
+
+
+.product {
+  position: relative;
+  overflow: hidden;
+}
+
+.product:hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  filter: blur(5px);
+  z-index: 1;
+  transition: filter 0.3s ease;
+}
+
+.product h1,
+.product .fancy {
+  position: relative;
+  z-index: 2;
+}
+
+.fancy {
+  display: none;
+  background-color: transparent;
+  border: 2px solid #000;
+  border-radius: 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin: 0;
+  outline: none;
+  padding: 1.25em 2em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  font-size: 13px;
+}
+
+.product:hover .fancy {
+  display: inline-block;
+}
+
+.fancy:hover {
+  color: white;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.fancy:hover::before {
+  width: 0.9375rem;
+  background: white;
+}
+
+.fancy:hover .text {
+  font-size: 20px;
+}

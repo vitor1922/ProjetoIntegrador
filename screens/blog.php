@@ -202,7 +202,7 @@ unset($conexao);
                     </div>
 
                     <div class="mb-3">
-                      <label class="form-label fw-bold">Adicionar Imagem do Curso</label>
+                      <label class="form-label fw-bold">Adicionar Imagens</label>
                       <input type="file" multiple="multiple" name="imgsPost[]" class="form-control" accept="image/png, image/jpeg" required>
                     </div>
 

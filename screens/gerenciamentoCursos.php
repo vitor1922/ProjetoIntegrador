@@ -19,7 +19,6 @@ $sql = "SELECT * FROM curso ORDER BY nome_do_curso";
 $select = $conexao->prepare($sql);
 if ($select->execute()) {
     $cursos = $select->fetchAll(PDO::FETCH_ASSOC);
-    unset($conexao);
 }
 ?>
 
@@ -79,29 +78,40 @@ if ($select->execute()) {
                         </div>
                     </div>
                 </div>
-                <?php foreach ($cursos as $curso) { ?>
-                    <div class="row border border-1 py-3">
-                        <!-- Link na imagem -->
-                        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
-                            <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="img-curso">
-                        </a>
-
-                        <!-- Link no nome do curso -->
-                        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="col-lg-4 col-md-4 col-sm-2 col-4 d-flex align-items-center text-decoration-none">
-                            <p class="fs-5 text-secondary text-start"><?= $curso["nome_do_curso"] ?></p>
-                        </a>
-
-                        <!-- Botão de exclusão (fora do link) -->
-                        <div class="col-lg-1 col-md-1 col-sm-1 col-1 d-flex align-items-center">
-                            <div class="col-1 d-flex justify-content-start">
-                                <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
-                                    <i class="bi bi-trash-fill"></i>
-                                </button>
-                            </div>
-                        </div>
+                <?php
+    if (isset($_GET['search'])) {
+        $filtervalues = $_GET['search'];
+        $query = "SELECT * FROM curso WHERE nome_do_curso LIKE 'BARBEIRO'";
+        $stmt = $conexao->prepare($query);
+        $stmt->bindValue(':filtervalues', '%' . $filtervalues . '%');
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            while ($curso = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                var_dump($curso)
+                ?>
+                <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
+                    <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="img-curso">
+                </a>
+                <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="col-lg-4 col-md-4 col-sm-2 col-4 d-flex align-items-center text-decoration-none">
+                    <p class="fs-5 text-secondary text-start"><?= $curso["nome_do_curso"] ?></p>
+                </a>
+                <div class="col-lg-1 col-md-1 col-sm-1 col-1 d-flex align-items-center">
+                    <div class="col-1 d-flex justify-content-start">
+                        <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
                     </div>
+                </div>
+                <?php
+            }
+        } else {
+            ?>
+            <a href="">Não encontrado</a>
+            <?php
+        }
+    }
+?>
 
-                    <!-- Modal excluir Curso -->
                     <div class="modal fade" id="modalExcluirCurso<?= $curso["id_curso"] ?>" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">
@@ -121,12 +131,10 @@ if ($select->execute()) {
                         </div>
                     </div>
 
-                <?php } ?>
 
 
 
 
-                <!-- MODAL ADICIONAR CURSO -->
                 <div class="modal fade" id="modalCadastrarCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                         <div class="modal-content">
