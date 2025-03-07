@@ -14,6 +14,8 @@ $nomeUser = $_SESSION['nome'] ?? "";
 $idUser = $_SESSION['id_usuario'] ?? "";
 $perfil = $_SESSION['perfil'];
 
+// var_dump($_POST);
+// die;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

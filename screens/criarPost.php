@@ -67,7 +67,7 @@ if ($select->execute()) {
                     <input type="file" multiple="multiple" name="imgsPost[]" class="form-control" accept="image/png, image/jpeg" required>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" name="txtUsuario" value="<?= $idUsuario ?>" required hidden>
+                    <input type="text" class="form-control" name="txtUsuario" value="<?= $id_usuario ?>" required hidden>
                     <input type="text" class="form-control" name="txtData" value="<?= date("Y-m-d",) ?>" required hidden>
                 </div>
 

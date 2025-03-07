@@ -248,6 +248,12 @@ body {
   background-color: #004a8d;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .header-senac {
   background-color: var(--cinza);
   z-index: 1030;
@@ -259,6 +265,8 @@ body {
 
 main {
   padding-top: 92px;
+  flex-grow: 1;
+
 }
 
 @media (max-width: 991px) {

@@ -14,6 +14,7 @@ $idUser = $_SESSION['id_usuario'] ?? "";
 $perfil = $_SESSION['perfil'];
 $login = NULL;
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($_POST['txtTituloPost']) && !empty($_POST["txtConteudoPost"])) {

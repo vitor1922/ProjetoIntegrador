@@ -7,16 +7,23 @@ $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
 
 
-var_dump($_GET);
+var_dump($_GET['idCurso']));
 
-$sqlAgenda = "SELECT * FROM agenda";
-$select = $conexao->prepare($sqlAgenda);
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if (!empty($_GET['id_curso'])) {
+        $idCurso = $_GET['id_curso'];
 
+        $sqlAgenda = "SELECT * FROM agenda WHERE id_curso = :idCurso ORDER BY id_agenda DESC";
+        $select = $conexao->prepare($sqlAgenda);
+        $select->bindParam(':idCurso', $idCurso, PDO::PARAM_INT);
 
-if ($select->execute()) {
-    $todosHorarios = $selectAgenda->fetchAll(PDO::FETCH_ASSOC);
-    $agenda = $select->fetchAll(PDO::FETCH_ASSOC);
+        if ($select->execute()) {
+            $agenda = $select->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
 }
+
+
 
 $sqlCurso = "SELECT id_curso, nome_do_curso, imagem FROM curso";
 $select = $conexao->prepare($sqlCurso);
@@ -25,11 +32,10 @@ if ($select->execute()) {
     $cursos = $select->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$horariosPorCurso = [];
-foreach ($todosHorarios as $hora) {
-    $idCurso = $hora['id_curso']; // Garanta que a coluna id_curso existe na tabela agenda!
-    $horariosPorCurso[$idCurso][] = $hora;
-}
+// $horariosPorCurso = [];
+// foreach ($todosHorarios as $hora) {
+//     $horariosPorCurso[$hora['id_curso']][] = $hora;
+// }
 
 unset($conexao);
 ?>
@@ -62,13 +68,14 @@ unset($conexao);
             <div class="row">
                 <div class="col-md-12 col-14 text-center">
                     <h2 class="laranja-senac fw-bold pb-5">Serviços disponíveis</h2>
+                    
                 </div>
             </div>
             <div class="row justify-content-center pb-5 mb-5">
                 <?php foreach ($cursos as $curso): ?>
                     <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
                         <div class="card card-imagem shadow-sm w-23rem border-0">
-                        <img src="../foto/<?=htmlspecialchars($curso['imagem']) ?>" class="card-img-top" alt="">
+                            <img src="../foto/<?= htmlspecialchars($curso['imagem']) ?>" class="card-img-top" alt="">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-6 col-lg-12 col-xxl-7">
@@ -77,18 +84,17 @@ unset($conexao);
                                     <div class="offset-2 col-3 offset-xxl-0 ps-xxl-5 p-0">
                                         <p class="d-inline-flex gap-1">
                                             <!-- Botão com data-bs-target dinâmico -->
-                                            <button
+                                        <form action="#" method="GET">
+                                            <input type="hidden" name="idCurso" value="<?= $curso['id_curso'] ?>">
+                                            <input
                                                 class="btn btn-azul-senac text-light"
                                                 type="submit"
                                                 data-bs-toggle="collapse"
                                                 data-bs-target="#collapseCurso<?= $curso['id_curso'] ?>"
                                                 aria-expanded="false"
                                                 aria-controls="collapseCurso<?= $curso['id_curso'] ?>"
-                                                value="<?= $curso['id_curso'] ?>"
-                                                >
-                                              
-                                                Selecionar
-                                            </button>
+                                                value="Selecionar">
+                                        </form>
                                         </p>
                                     </div>
                                 </div>
@@ -100,17 +106,12 @@ unset($conexao);
                                         <div class="card card-body start-0 position-absolute w-100">
                                             <select class="form-select bg-warning-subtle" aria-label="Default select example" name="id_agenda">
                                                 <option selected>Selecionar Horario</option>
-                                                <?php 
-                        // Horários filtrados para este curso
-                        $idCursoAtual = $curso['id_curso'];
-                        $horariosDoCurso = $horariosPorCurso[$idCursoAtual] ?? [];
-                        ?>
-                        <?php foreach ($horariosDoCurso as $hora): ?>
-                            <?php $dataFormatada = (new DateTime($hora['data']))->format('d/m/Y'); ?>
-                            <option value="<?= $hora['id_agenda'] ?>">
-                                <?= $hora['hora'] ?> - <?= $dataFormatada ?>
-                            </option>
-                        <?php endforeach; ?>
+                                                <?php foreach ($agenda as $hora): ?>
+                                                    <?php $dataFormatada = (new DateTime($hora['data']))->format('d/m/Y'); ?>
+                                                    <option value="<?= $hora['id_agenda'] ?>">
+                                                        <?= $hora['hora'] ?> - <?= $dataFormatada ?>
+                                                    </option>
+                                                <?php endforeach; ?>
                                             </select>
                                             <div class="position-relative mt-5">
                                                 <div class="position-absolute bottom-0 end-0 mt-5">
@@ -137,4 +138,4 @@ unset($conexao);
 
 </body>
 
-</html>
+</html

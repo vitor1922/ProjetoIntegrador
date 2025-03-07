@@ -73,40 +73,57 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <button class="btn border-dark-subtle fs-7 fw-bold" type="button">PROFESSORES</button>
                     </a>
                 </div>
-
                 <?php include_once("./header.php"); ?>
                 <form method="GET" class="mb-4">
-                    <div class="row">
-                        <div class="col-md-4">
+                    <div class="row mb-2">
+                        <div class="col-4 d-flex align-items-center">
                             <input type="text" name="search" class="form-control" placeholder="Pesquisar..." value="<?= htmlspecialchars($search) ?>">
                         </div>
-                        <div class="col-md-2">
                         <?php if($perfil === "admin"){?>
-                                
-                                <button type="button" class="ms-2 btn btn-primary rounded btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Professor</button>
-                                <?php }?>
-                        </div>
+                            <div class="col-md-2">
+                                <button type="button" class="ms-1 btn btn-primary btn-azul-sena" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Professor</button>
+                            </div>
+                        <?php }?>
+                        
                     </div>
                 </form>
-                <div class="d-flex flex-wrap justify-content-center">
-                    <?php foreach ($cursos as $curso): ?>
-                        <div class="card m-2" style="width: 18rem;">
-                            <img src="../foto/<?= htmlspecialchars($curso['imagem']) ?>" class="card-img-top" alt="Imagem do Curso">
-                            <div class="card-body text-center">
 
-                                <?php if ($perfil == "admin"): ?>
-                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso['id_curso'] ?>">Excluir</button>
-                                <?php endif; ?>
+<?php foreach ($cursos as $curso): ?>
+                        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
+                            <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="img-curso">
+                        </a>
+                        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="col-lg-4 col-md-4 col-sm-2 col-4 d-flex align-items-center text-decoration-none">
+                            <p class="fs-5 text-secondary text-start"><?= $curso["nome_do_curso"] ?></p>
+                        </a>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-1 d-flex align-items-center">
+                            <div class="col-1 d-flex justify-content-start">
+                                <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                </div>
+                        <div class="modal fade" id="modalExcluirCurso<?= $curso["id_curso"] ?>" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="d-flex justify-content-end mb-3">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="../src/logicos/excluirCurso.php" method="POST">
+                                            <input type="hidden" name="id_curso" value="<?= $curso["id_curso"] ?>">
+                                            <p class="text-center">Tem certeza que deseja excluir o curso <strong><?= $curso["nome_do_curso"] ?></strong>?</p>
+                                            <div class="mb-3 d-flex justify-content-center">
+                                                <button class="btn btn-danger text-white fw-bold px-5" type="submit">EXCLUIR</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<?php endforeach; ?>
     </div>
+    
     <?php include_once("./footer.php"); ?>
-
-
-
-
 
                 <div class="modal fade" id="modalCadastrarCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
