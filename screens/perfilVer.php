@@ -9,9 +9,8 @@ $mensagem = $_SESSION['mensagem'] ?? NULL;
 $perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
 $_SESSION['mensagem'] = NULL;
 $nome = $_SESSION['nome'] ?? "";
-$id_usuario = $_SESSION['id_usuario'] ?? "";
-
-
+// NÃO MEXER NA REQUISIÇÃO GET, ELA ESTÁ LINKADA A TELA USUARIOS
+$id_usuario = $_GET['id'] ?? "";
 
 // Buscar dados do usuário
 $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
@@ -107,78 +106,78 @@ unset($conexao);
     <?php include_once("./header.php"); ?>
     <?php include_once("./preloader.php"); ?>
 
-    <main class="container mt-5 mb-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card p-0 shadow-sm">
-                    <div class="position-relative mb-4">
-                        <img src="../bannerP/<?= $login['banner'] ? $login['banner'] : 'SenacLogo.jpg' ?>" class="w-100" style="height: 200px; object-fit: cover;">
-                        <div class="position-absolute top-100 start-50 translate-middle">
-                            <img src="../foto/<?= $login['foto'] ? $login['foto'] : 'iconPerfil.jpg' ?> " class="rounded-circle border <?= $estilo ?>" width="120" height="120">
+        <main class="container mt-5 mb-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card p-0 shadow-sm">
+                        <div class="position-relative mb-4">
+                            <img src="../bannerP/<?= $login['banner'] ? $login['banner'] : 'SenacLogo.jpg' ?>" class="w-100" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-100 start-50 translate-middle">
+                                <img src="../foto/<?= $login['foto'] ? $login['foto'] : 'iconPerfil.jpg' ?> " class="rounded-circle border <?= $estilo ?>" width="120" height="120">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="text-center mt-5">
-                        <h4 class="fw-bold">
-                            <span class="text-dark"><?= htmlspecialchars($login["nome"]) ?></span>
-                            <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span>
-                            <span class=" .text-black"> <?= $callCourse['nome_do_curso'] ?? 'O usuário nao esta em um curso' ?></span>
-                        </h4>
-                        <p class="text-muted"><?= htmlspecialchars($login["biografia"]) ?></p>
-                        <span><strong><?= $num_posts ?></strong> publicações</span>
-                    </div>
+                        <div class="text-center mt-5">
+                            <h4 class="fw-bold">
+                                <span class="text-dark"><?= htmlspecialchars($login["nome"]) ?></span>
+                                <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span>
+                                <span class=" .text-black"> <?= $callCourse['nome_do_curso'] ?? 'O usuário nao esta em um curso' ?></span>
+                            </h4>
+                            <p class="text-muted"><?= htmlspecialchars($login["biografia"]) ?></p>
+                            <span><strong><?= $num_posts ?></strong> publicações</span>
+                        </div>
 
-                    <div class="row mt-4 p-3">
-                        <?php if (!empty($posts)) : ?>
-                            <?php foreach ($posts as $post) : ?>
-                                <div class="col-4 mb-3">
-                                    <div class="position-relative border border-2 border-black rounded">
-                                        <img src="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
-                                            class="w-100 rounded post-img" style="aspect-ratio: 1/1; object-fit: cover; cursor: pointer;"
-                                            data-bs-toggle="modal" data-bs-target="#postModal"
-                                            data-img="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
-                                            data-title="<?= htmlspecialchars($post["nomeCorte"]) ?>"
-                                            data-date="<?= date('d/m/Y, H:i', strtotime($post['data_criacao'])) ?>">
+                        <div class="row mt-4 p-3">
+                            <?php if (!empty($posts)) : ?>
+                                <?php foreach ($posts as $post) : ?>
+                                    <div class="col-4 mb-3">
+                                        <div class="position-relative border border-2 border-black rounded">
+                                            <img src="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
+                                                class="w-100 rounded post-img" style="aspect-ratio: 1/1; object-fit: cover; cursor: pointer;"
+                                                data-bs-toggle="modal" data-bs-target="#postModal"
+                                                data-img="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
+                                                data-title="<?= htmlspecialchars($post["nomeCorte"]) ?>"
+                                                data-date="<?= date('d/m/Y, H:i', strtotime($post['data_criacao'])) ?>">
+                                        </div>
                                     </div>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <p class="text-center text-muted">Nenhuma postagem encontrada.</p>
-                        <?php endif; ?>
-                    </div>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <p class="text-center text-muted">Nenhuma postagem encontrada.</p>
+                            <?php endif; ?>
+                        </div>
 
-                    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="postModalLabel"></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-center">
-                                    <img id="postModalImg" class="img-fluid rounded">
-                                    <p class="text-muted mt-2" id="postModalDate"></p>
+                        <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="postModalLabel"></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <img id="postModalImg" class="img-fluid rounded">
+                                        <p class="text-muted mt-2" id="postModalDate"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            var postImages = document.querySelectorAll(".post-img");
-                            postImages.forEach(img => {
-                                img.addEventListener("click", function() {
-                                    document.getElementById("postModalLabel").textContent = this.getAttribute("data-title");
-                                    document.getElementById("postModalImg").src = this.getAttribute("data-img");
-                                    document.getElementById("postModalDate").textContent = this.getAttribute("data-date");
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var postImages = document.querySelectorAll(".post-img");
+                                postImages.forEach(img => {
+                                    img.addEventListener("click", function() {
+                                        document.getElementById("postModalLabel").textContent = this.getAttribute("data-title");
+                                        document.getElementById("postModalImg").src = this.getAttribute("data-img");
+                                        document.getElementById("postModalDate").textContent = this.getAttribute("data-date");
+                                    });
                                 });
                             });
-                        });
-                    </script>
+                        </script>
 
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
 
     <?php include "./footer.php"; ?>
     <script src="../src/js/script.js"></script>

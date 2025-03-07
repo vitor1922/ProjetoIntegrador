@@ -7,9 +7,9 @@ $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
 
 
+var_dump($_GET);
 
-
-$sqlAgenda = "SELECT * FROM agenda ORDER BY id_agenda DESC";
+$sqlAgenda = "SELECT * FROM agenda where id_curso= x ORDER BY id_agenda DESC";
 $select = $conexao->prepare($sqlAgenda);
 
 
@@ -21,8 +21,13 @@ $sqlCurso = "SELECT id_curso, nome_do_curso, imagem FROM curso";
 $select = $conexao->prepare($sqlCurso);
 
 if ($select->execute()) {
-    $curso = $select->fetchAll(PDO::FETCH_ASSOC);
+    $cursos = $select->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// $horariosPorCurso = [];
+// foreach ($todosHorarios as $hora) {
+//     $horariosPorCurso[$hora['id_curso']][] = $hora;
+// }
 
 unset($conexao);
 ?>
@@ -58,125 +63,65 @@ unset($conexao);
                 </div>
             </div>
             <div class="row justify-content-center pb-5 mb-5">
-                <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card card-imagem shadow-sm   w-23rem border-0">
-                        <img src="<?= htmlspecialchars($curso['imagem']) ?>" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6  col-lg-12  col-xxl-7">
-                                    var_dump($curso); 
-                                    <h5 class="card-title"><?= htmlspecialchars($curso['nome_do_curso']) ?></h5>
-
+                <?php foreach ($cursos as $curso): ?>
+                    <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
+                        <div class="card card-imagem shadow-sm w-23rem border-0">
+                        <img src="../foto/<?=htmlspecialchars($curso['imagem']) ?>" class="card-img-top" alt="">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6 col-lg-12 col-xxl-7">
+                                        <h5 class="card-title"><?= htmlspecialchars($curso['nome_do_curso']) ?></h5>
+                                    </div>
+                                    <div class="offset-2 col-3 offset-xxl-0 ps-xxl-5 p-0">
+                                        <p class="d-inline-flex gap-1">
+                                            <!-- Botão com data-bs-target dinâmico -->
+                                            <button
+                                                class="btn btn-azul-senac text-light"
+                                                type="submit"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapseCurso<?= $curso['id_curso'] ?>"
+                                                aria-expanded="false"
+                                                aria-controls="collapseCurso<?= $curso['id_curso'] ?>"
+                                                value="<?= $curso['id_curso'] ?>"
+                                                >
+                                              
+                                                Selecionar
+                                            </button>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="offset-2 col-3 offset-xxl-0 ps-xxl-5 p-0">
-                                    <p class="d-inline-flex gap-1">
-                                        <button class="btn btn-azul-senac text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
-                                            Selecionar
-                                        </button>
-                                    </p>
-                                </div>
-                            </div>
-                            <form action="../src/logicos/processar_agendamento.php" method="POST">
-                                <div class="collapse" id="collapseExample1">
-                                    <div class="card card-body start-0 position-absolute w-100">
-                                        <select class="form-select bg-warning-subtle" aria-label="Default select example" name="id_agenda">
-                                            <option selected>Selecionar Horario</option>
-                                            <?php foreach ($agenda as $hora) {
-                                                $dataFormatada = (new DateTime($hora['data']))->format('d/m/Y'); ?>
-                                                <option value="<?= $hora['id_agenda'] ?>"> <?= $hora['hora'] ?> - <?= $dataFormatada ?></option>
-                                            <?php } ?>
-                                        </select>
-                                        <div class="position-relative mt-5">
-                                            <div class="position-absolute bottom-0 end-0 mt-5">
-                                                <button type="submit" class="btn btn-azul-senac text-light">
-                                                    Agendar
-                                                </button>
+                                <form action="../src/logicos/processar_agendamento.php" method="POST">
+                                    <!-- Colapso com ID dinâmico -->
+                                    <div
+                                        class="collapse"
+                                        id="collapseCurso<?= $curso['id_curso'] ?>">
+                                        <div class="card card-body start-0 position-absolute w-100">
+                                            <select class="form-select bg-warning-subtle" aria-label="Default select example" name="id_agenda">
+                                                <option selected>Selecionar Horario</option>
+                                                <?php foreach ($agenda as $hora): ?>
+                                                    <?php $dataFormatada = (new DateTime($hora['data']))->format('d/m/Y'); ?>
+                                                    <option value="<?= $hora['id_agenda'] ?>">
+                                                        <?= $hora['hora'] ?> - <?= $dataFormatada ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                            <div class="position-relative mt-5">
+                                                <div class="position-absolute bottom-0 end-0 mt-5">
+                                                    <button type="submit" class="btn btn-azul-senac text-light">
+                                                        Agendar
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card card-imagem border-0">
-                        <img src="../assets/img/img_salao_de_beleza.png" alt="...">
-                        <div class="card-body shadow-sm w-23rem">
-                            <div class="row">
-                                <div class="col-6 col-lg-12 col-xxl-7">
-                                    <h5 class="card-title">Corte de cabelo</h5>
-
-                                </div>
-                                <div class="offset-2 col-3 offset-xxl-0 ps-xxl-5 p-0">
-                                    <p class="d-inline-flex gap-1">
-                                        <button class="btn btn-azul-senac text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2">
-                                            Selecionar
-                                        </button>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="collapse" id="collapseExample2">
-                                <div class="card card-body   start-0 position-absolute w-100">
-                                    <select class="form-select bg-warning-subtle" aria-label="Default select example">
-                                        <option selected>Selecionar Horario</option>
-                                        <option value="1"><?= $hora ? $hora["data"] : "" ?></option>
-                                        <option value="2"></option>
-                                        <option value="3"></option>
-                                        <option value="4">
-
-                                        </option>
-                                    </select>
-                                    <div class="position-relative mt-5">
-                                        <div class="position-absolute bottom-0 end-0">
-                                            <button type="submit" class="btn btn-azul-senac text-light">
-                                                Agendar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
-                    <div class="card card-imagem border-0">
-                        <img class="" src="../assets/img/img_mulher_lavando_cabelo.png" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body shadow-sm w-23rem">
-                            <div class="row">
-                                <div class="col-6 col-lg-12 col-xxl-7 w-md-50">
-                                    <h5 class="card-title">Lavagem de cabelo</h5>
-                                </div>
-                                <div class="offset-2 col-3 offset-xxl-0 col-xxl-5 ps-xxl-5 p-0">
-                                    <p class="d-inline-flex gap-1">
-                                        <button class="btn btn-azul-senac text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3">
-                                            Selecionar
-                                        </button>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="collapse" id="collapseExample3">
-                                <div class="card card-body  start-0 position-absolute w-100">
-                                    <select class="form-select bg-warning-subtle" aria-label="Default select example">
-                                        <option selected>Selecionar Horario</option>
-                                        <option value="1"><?= $hora ? $hora["data"] : "" ?></option>
-                                        <option value="2">18/07/24 - 17:00 até 18:30</option>
-                                        <option value="3">18/07/24 - 17:00 até 18:30</option>
-                                        <option value="4">18/07/24 - 17:00 até 18:30</option>
-                                    </select>
-                                    <div class="position-relative mt-5">
-                                        <div class="position-absolute bottom-0 end-0">
-                                            <button type="submit" class="btn btn-azul-senac text-light">
-                                                Agendar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; // Fim do loop dos cursos 
+                ?>
             </div>
+        </div>
     </main>
 
     <?php include_once("./footer.php"); ?>

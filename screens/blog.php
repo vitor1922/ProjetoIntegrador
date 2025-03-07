@@ -143,7 +143,7 @@ unset($conexao);
               <!--info-->
               <div class=" row ">
                 <div class="col-6">
-                  <div class="row">
+                  <div class="row mt-2">
                     <a href="./perfilVer.php?id=<?= $post["id_usuario"] ?>" class=" text-black">
                       <img src="../foto/<?= $post["foto_usuario"] ?>" alt="Foto de perfil" class="img-perfil-mini">
 

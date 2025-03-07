@@ -26,8 +26,6 @@ $select->bindParam(':id_usuario', $id_usuario);
 if ($select->execute()) {
     $login = $select->fetch(PDO::FETCH_ASSOC);
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +43,7 @@ if ($select->execute()) {
 
 </head>
 
-<body>
+<body class="d-flex justify-content-between flex-column min-vh-100 p-0" >
 
     <?php include_once("./header.php"); ?>
 

@@ -207,3 +207,28 @@ document.getElementById("cropButton").addEventListener("click", function () {
     let modal = bootstrap.Modal.getInstance(document.getElementById("cropModal"));
     modal.hide();
 });
+
+function removerImagem(tipo) {
+  if (!confirm("Tem certeza que deseja remover esta imagem?")) return;
+
+  fetch('../src/logicos/removerImagem.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `tipo=${tipo}`
+  })
+  .then(response => response.text())
+  .then(data => {
+      if (data.trim() === 'sucesso') {
+          if (tipo === 'banner') {
+              document.getElementById('bannerPreview').src = '../assets/img/sem-banner.png';
+              document.querySelector('input[name="imgBanner"]').value = '';
+          } else if (tipo === 'perfil') {
+              document.getElementById('fotoPreview').src = '../assets/img/sem-perfil.png';
+              document.querySelector('input[name="imgName"]').value = '';
+          }
+      } else {
+          alert('Erro ao remover a imagem.');
+      }
+  })
+  .catch(error => console.error('Erro na requisição:', error));
+}

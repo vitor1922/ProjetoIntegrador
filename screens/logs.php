@@ -8,8 +8,8 @@ session_start();
 // Verificar se o usuário está logado (se necessário)
 
 // Buscar todos os logs do banco de dados
-$sql = "SELECT l.id, l.tipo, l.mensagem, l.ip, l.data_criacao, u.nome AS nomeUser
-        FROM logs l 
+$sql = "SELECT l.id, l.tipo, l.mensagem, l.data_criacao, u.nome AS nomeUser
+        FROM logs l
         INNER JOIN usuario u ON l.id_usuario = u.id 
         ORDER BY l.data_criacao DESC";  // Ordernar os logs pela data de criação
 

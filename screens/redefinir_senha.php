@@ -1,8 +1,9 @@
 <?php
+include("../constantes.php");
 session_start();
 
 
-if (!isset($_SESSION['email_recuperacao']) || !isset($_SESSION['token_recuperacao'])) {
+if (!isset($_SESSION['token_recuperacao'])) {
     $_SESSION['mensagem'] = "Acesso inválido!";
     header("Location: " . BASE_URL . "screens/signUp.php");
     exit;

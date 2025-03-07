@@ -53,42 +53,16 @@ $select->execute();
 $login = $select->fetch(PDO::FETCH_ASSOC);
 
 // Buscar os posts criados pelo usuário
-$sql =  "SELECT
-    p.id_post AS id_post,
-    p.titulo AS nomeCorte,
-    GROUP_CONCAT(i.url_img) AS imagens,
-    c.descricao AS descricao_curso,
-    p.data_criacao AS data_criacao,
-    p.texto AS texto_post,
-    c.nome_do_curso AS nome_curso,
-    t.numero_da_turma AS numero_da_turma,
-    u.nome AS nome_usuario,
-    u.foto AS foto_usuario,
-    u.id_usuario AS id_usuario
+$sql = "SELECT p.id_post, p.titulo  AS nomeCorte, i.url_img, p.data_criacao
+        FROM post p
+        LEFT JOIN img_post i ON p.id_post = i.id_post
+        WHERE p.id_usuario = :id_usuario
+        ORDER BY p.data_criacao DESC";
 
-FROM
-    post p
-LEFT JOIN 
-    usuario u ON u.id_usuario = p.id_usuario
-LEFT JOIN
-    img_post i ON p.id_post = i.id_post
-LEFT JOIN
-    alunos a ON p.id_usuario = a.id_usuario
-LEFT JOIN
-    turma t ON a.id_turma = t.id_turma
-LEFT JOIN
-    curso c ON t.id_curso = c.id_curso
-WHERE u.id_usuario = :id_usuario
-GROUP BY
-    p.id_post, p.titulo, c.descricao, p.data_criacao, p.texto, c.nome_do_curso, t.numero_da_turma
-    
-ORDER BY
-    p.data_criacao DESC";
-$stmt = $conexao->prepare($sql);
-$stmt->bindParam(':id_usuario', $id_usuario);
-$stmt->execute();
-$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+$select = $conexao->prepare($sql);
+$select->bindParam(':id_usuario', $id_usuario);
+$select->execute();
+$posts = $select->fetchAll(PDO::FETCH_ASSOC);
 
 $callCourse = "SELECT c.nome_do_curso FROM curso c
 INNER JOIN turma t ON t.id_curso = c.id_curso
@@ -129,7 +103,6 @@ unset($conexao);
     <?php include_once("./header.php"); ?>
     <?php include_once("./preloader.php"); ?>
 
-
     <main class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -147,7 +120,7 @@ unset($conexao);
                         <h4 class="fw-bold">
                             <span class="text-dark"><?= htmlspecialchars($login["nome"]) ?></span>
                             <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span>
-                            <span class=" .text-black"> <?= $callCourse['nome_do_curso'] ?? 'O usuário nao esta em um curso' ?></span>
+                            <span class=" .text-black">  <?= $callCourse['nome_do_curso'] ?? 'O usuário nao esta em um curso' ?></span>
 
                         </h4>
 
@@ -172,90 +145,63 @@ unset($conexao);
                     </div>
                     <!-- Grid dos posts -->
                     <div class="row mt-4 p-3 ">
-
                         <?php if (!empty($posts)) : ?>
                             <?php foreach ($posts as $post) : ?>
-                                <?php
-                                $imagens = explode(",", $post["imagens"]);
-                                $contagem = 0;
-                                ?>
-                                <div class="post-container mb-4">
-                                    <!-- Carousel de imagens do post -->
-                                    <div id="carouselExampleInterval<?= $post["id_post"] ?>" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <?php foreach ($imagens as $index => $imagem) { ?>
-                                                <div class="carousel-item <?= $index == 0 ? 'active' : '' ?>">
-                                                    <img src="../postAluno/<?= $imagem ?>" class="d-block w-100" alt="Imagem do post"
-                                                        data-bs-toggle="modal" data-bs-target="#postModal"
-                                                        data-img="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
-                                                        data-title="<?= htmlspecialchars($post["nomeCorte"]) ?>"
-                                                        data-date="<?= date('d/m/Y, H:i', strtotime($post['data_criacao'])) ?>">
-                                                </div>
-                                                <?php
-                                                $contagem += 1;
-                                                ?>
-                                            <?php } ?>
-                                        </div>
+                                <div class="col-4 mb-3">
+                                    <div class="position-relative border border-2 border-black rounded">
+                                        <!-- Imagem do post com evento para abrir o modal -->
+                                        <img src="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
+                                            class="w-100 rounded post-img" style="aspect-ratio: 1/1; object-fit: cover; cursor: pointer;"
+                                            data-bs-toggle="modal" data-bs-target="#postModal"
+                                            data-img="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
+                                            data-title="<?= htmlspecialchars($post["nomeCorte"]) ?>"
+                                            data-date="<?= date('d/m/Y, H:i', strtotime($post['data_criacao'])) ?>">
 
-                                        <!-- Controles do carrossel -->
-                                        <?php if ($contagem > 1) { ?>
-                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval<?= $post["id_post"] ?>" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Anterior</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval<?= $post["id_post"] ?>" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Próximo</span>
-                                            </button>
-                                        <?php } ?>
-                                    </div>
 
-                                    <!-- Informação do post -->
-                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                        <div class="post-title">
-                                            <h5><?= htmlspecialchars($post["nomeCorte"]) ?></h5>
-                                            <span class="text-muted"><?= date('d/m/Y, H:i', strtotime($post['data_criacao'])) ?></span>
-                                        </div>
-                                        <a href="<?= BASE_URL ?>src/logicos/deletePost.php?id=<?= $post['id_post'] ?>" class="btn btn-sm btn-danger"
+                                        <!-- Botão para excluir post -->
+                                        <a href="<?= BASE_URL ?>src/logicos/deletePost.php?id=<?= $post['id_post'] ?>"
+                                            class="position-absolute top-0 end-0 p-2 bg-white rounded-circle shadow"
                                             onclick="return confirm('Tem certeza que deseja excluir este post?')">
-                                            <i class="bi bi-trash"></i> Excluir
+                                            <i class="bi bi-trash text-danger"></i>
                                         </a>
                                     </div>
-
                                 </div>
                             <?php endforeach; ?>
+                        <?php else : ?>
+                            <p class="text-center text-muted">Nenhuma postagem encontrada.</p>
                         <?php endif; ?>
+                    </div>
 
-                        <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="postModalLabel"></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body text-center">
-                                        <img id="postModalImg" class="img-fluid rounded">
-                                        <p class="text-muted mt-2" id="postModalDate"></p>
-                                    </div>
+                    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="postModalLabel"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img id="postModalImg" class="img-fluid rounded">
+                                    <p class="text-muted mt-2" id="postModalDate"></p>
                                 </div>
                             </div>
                         </div>
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function() {
-                                var postImages = document.querySelectorAll(".post-img");
-                                postImages.forEach(img => {
-                                    img.addEventListener("click", function() {
-                                        document.getElementById("postModalLabel").textContent = this.getAttribute("data-title");
-                                        document.getElementById("postModalImg").src = this.getAttribute("data-img");
-                                        document.getElementById("postModalDate").textContent = this.getAttribute("data-date");
-                                    });
+                    </div>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            var postImages = document.querySelectorAll(".post-img");
+                            postImages.forEach(img => {
+                                img.addEventListener("click", function() {
+                                    document.getElementById("postModalLabel").textContent = this.getAttribute("data-title");
+                                    document.getElementById("postModalImg").src = this.getAttribute("data-img");
+                                    document.getElementById("postModalDate").textContent = this.getAttribute("data-date");
                                 });
                             });
-                        </script>
+                        });
+                    </script>
 
-                    </div>
                 </div>
             </div>
+        </div>
     </main>
 
 

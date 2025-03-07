@@ -9,17 +9,24 @@ $logado = $_SESSION['logado'] ?? NULL;
 if (!$logado) {
     header("Location: " . BASE_URL . "screens/signUp.php");
     exit;
-} elseif ($perfil !== "professor") {
-    if ($perfil !== "admin") {
-        header("Location: " . BASE_URL . "index.php");
-    }
+} elseif ($perfil !== "professor" && $perfil !== "admin") {
+    header("Location: " . BASE_URL . "index.php");
 }
 
-$sql = "SELECT * FROM curso ORDER BY nome_do_curso";
-$select = $conexao->prepare($sql);
-if ($select->execute()) {
-    $cursos = $select->fetchAll(PDO::FETCH_ASSOC);
+$search = $_GET['search'] ?? '';
+
+$query = "SELECT * FROM curso WHERE 1=1";
+$params = [];
+
+if ($search) {
+    $query .= " AND nome_do_curso LIKE :search";
+    $params['search'] = "%$search%";
 }
+
+$query .= " ORDER BY nome_do_curso";
+$stmt = $conexao->prepare($query);
+$stmt->execute($params);
+$cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -67,69 +74,35 @@ if ($select->execute()) {
                     </a>
                 </div>
 
-                <div class="mt-4">
-                    <div class="row mb-3">
-                        <div class=" col-6 d-flex align-items-center ">
-                            <input type="text" class="col-10 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" value="<?php if(isset($_GET['search'])){echo $_GET['search'];}?>">
-                            <button type="submit" class="ms-3 btn btn-primary btn-azul-senac">PESQUISAR</button>
-                            <?php if ($perfil == "admin") { ?>
-                                <button type="button" class="ms-2 btn btn-primary btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Curso</button>
-                            <?php } ?>
+                <?php include_once("./header.php"); ?>
+                <form method="GET" class="mb-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" name="search" class="form-control" placeholder="Pesquisar..." value="<?= htmlspecialchars($search) ?>">
+                        </div>
+                        <div class="col-md-2">
+                        <?php if($perfil === "admin"){?>
+                                
+                                <button type="button" class="ms-2 btn btn-primary rounded btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Professor</button>
+                                <?php }?>
                         </div>
                     </div>
-                </div>
-                <?php
-    if (isset($_GET['search'])) {
-        $filtervalues = $_GET['search'];
-        $query = "SELECT * FROM curso WHERE nome_do_curso LIKE 'BARBEIRO'";
-        $stmt = $conexao->prepare($query);
-        $stmt->bindValue(':filtervalues', '%' . $filtervalues . '%');
-        $stmt->execute();
-        if ($stmt->rowCount() > 0) {
-            while ($curso = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                var_dump($curso)
-                ?>
-                <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
-                    <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="img-curso">
-                </a>
-                <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="col-lg-4 col-md-4 col-sm-2 col-4 d-flex align-items-center text-decoration-none">
-                    <p class="fs-5 text-secondary text-start"><?= $curso["nome_do_curso"] ?></p>
-                </a>
-                <div class="col-lg-1 col-md-1 col-sm-1 col-1 d-flex align-items-center">
-                    <div class="col-1 d-flex justify-content-start">
-                        <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                    </div>
-                </div>
-                <?php
-            }
-        } else {
-            ?>
-            <a href="">Não encontrado</a>
-            <?php
-        }
-    }
-?>
+                </form>
+                <div class="d-flex flex-wrap justify-content-center">
+                    <?php foreach ($cursos as $curso): ?>
+                        <div class="card m-2" style="width: 18rem;">
+                            <img src="../foto/<?= htmlspecialchars($curso['imagem']) ?>" class="card-img-top" alt="Imagem do Curso">
+                            <div class="card-body text-center">
 
-                    <div class="modal fade" id="modalExcluirCurso<?= $curso["id_curso"] ?>" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <div class="d-flex justify-content-end mb-3">
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <form action="../src/logicos/excluirCurso.php" method="POST">
-                                        <input type="hidden" name="id_curso" value="<?= $curso["id_curso"] ?>">
-                                        <p class="text-center">Tem certeza que deseja excluir o curso <strong><?= $curso["nome_do_curso"] ?></strong>?</p>
-                                        <div class="mb-3 d-flex justify-content-center">
-                                            <button class="btn btn-danger text-white fw-bold px-5" type="submit">EXCLUIR</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                <?php if ($perfil == "admin"): ?>
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso['id_curso'] ?>">Excluir</button>
+                                <?php endif; ?>
                             </div>
                         </div>
-                    </div>
+                    <?php endforeach; ?>
+                </div>
+    </div>
+    <?php include_once("./footer.php"); ?>
 
 
 

@@ -61,67 +61,65 @@ unset($conexao);
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
-<body class="container-fluid">
+<body class="d-flex justify-content-between flex-column min-vh-100 p-0">
     <?php
-    include_once("./header.php");
+    include("./header.php");
     ?>
 
-    <main class="h-100">
-
+    <main>
         <div class="d-flex justify-content-between align-items-center">
             <a href="./Perfil.php"><button class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
                         fill="currentColor" class="bi bi-arrow-left-short fs-1 azul-senac" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
                     </svg></button></a>
-            </div>
+        </div>
         <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="cropModalLabel">Ajustar Imagem</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cropModalLabel">Ajustar Imagem</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="img-container">
+                            <img id="cropImage" src="" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="cropButton">Cortar e Salvar</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-        <div class="img-container">
-            <img id="cropImage" src="" class="img-fluid">
-        </div>
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" id="cropButton">Cortar e Salvar</button>
-        </div>
-    </div>
-    </div>
-
-</div>
-        <div class="container d-flex justify-content-center align-content-center">
-            <div class=" card d-flex justify-content-center border-4 shadow-lg col-lg-12 w-100">
+        <div class="container d-flex justify-content-center align-content-center mb-2">
+            <div class="card d-flex justify-content-center border-4 shadow-lg col-lg-12">
                 <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php" enctype="multipart/form-data">
                     <div class="headerPerfil d-flex position-relative justify-content-center">
-                            <div class="profile-background">
-                            <button type="button" class="btn btn-danger position-absolute top-0 start-0 m-2" onclick="removerImagem('perfil')">Remover Foto de Perfil</button>
-                            <button type="button" class="btn btn-danger position-absolute top-0 end-0 m-2" onclick="removerImagem('banner')">Remover Banner</button>
-                                <img id="bannerPreview" src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
-                            </div>
-                <input type="text" name="imgBanner" value="<?= $login['banner'] ?>" hidden>
-            </div>
-                <div class="d-flex profileP">
-                    <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa mt-3 <?= $estilo ?>" name="foto" alt="Imagem de perfil">
-                </div>
-            <div class="d-flex justify-content-center mt-5">
-            <label class="btn btn-dark fw-bold rounded-pill px-4 py-2 mt-5">
-                <i class="bi bi-image-fill"></i> Alterar foto de perfil
-                <input type="file" name="foto" accept="image/jpg, image/png, image/jpeg" hidden onchange="openCropModal(this, 'fotoPreview')">
-            </label>
-            <input type="text" name="imgName" value="<?= $login['foto'] ?>" hidden>
-                <label class="btn fw-bold btn-dark rounded-pill px-4 py-2 mt-5">
-                    <i class="bi bi-image-fill"></i> Alterar Banner
-                    <input type="file" name="banner" accept="image/jpg, image/png, image/jpeg" hidden onchange="openCropModal(this, 'bannerPreview')">
-            </label>
-        </div>
-                        <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
-                            value="<?= $login['id_usuario'] ?? '' ?>" hidden>
-                        <h6 class="card-text d-flex justify-content-center fw-bold" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
+                        <div class="profile-background">
+                            <button type="button" class="btn btn-danger position-absolute start-0 m-2 w-25" onclick="removerImagem('perfil')">remover foto de perfil</button>
+                            <button type="button" class="btn btn-danger position-absolute end-0 m-2 w-25" onclick="removerImagem('banner')">remover banner</button>
+                            <img id="bannerPreview" src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
+                        </div>
+                        <input type="text" name="imgBanner" value="<?= $login['banner'] ?>" hidden>
+                    </div>
+                    <div class="d-flex profileP">
+                        <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa mt-3 <?= $estilo ?>" name="foto" alt="Imagem de perfil">
+                    </div>
+                    <div class="d-flex justify-content-center mt-5">
+                        <label class="btn btn-dark fw-bold rounded-pill px-4 py-2 mt-5">
+                            <i class="bi bi-image-fill"></i> Alterar foto de perfil
+                            <input type="file" name="foto" accept="image/jpg, image/png, image/jpeg" hidden onchange="openCropModal(this, 'fotoPreview')">
+                        </label>
+                        <input type="text" name="imgName" value="<?= $login['foto'] ?>" hidden>
+                        <label class="btn fw-bold btn-dark rounded-pill px-4 py-2 mt-5">
+                            <i class="bi bi-image-fill"></i> Alterar Banner
+                            <input type="file" name="banner" accept="image/jpg, image/png, image/jpeg" hidden onchange="openCropModal(this, 'bannerPreview')">
+                        </label>
+                    </div>
+                    <input type="text" id="nomeTextInput" class="form-control" name="txtUserId"
+                        value="<?= $login['id_usuario'] ?? '' ?>" hidden>
+                    <h6 class="card-text d-flex justify-content-center fw-bold mt-4" id="cargoProfile"> <?= $login['perfil'] ?? '' ?></h6>
                     <div class="col mb-3">
                         <div class="nomePerfil p-3">
                             <h6 class="fw-bold laranja-senac mx-2">Nome Atual:</h6>
@@ -129,8 +127,8 @@ unset($conexao);
                             <label for="nome" class="form-label fw-bold azul-senac mx-2">Novo Nome</label>
                             <input type="text" name="txtNome" class="form-control mb-2" value="<?= $login['nome'] ?? '' ?>">
                         </div>
-                    <h6 class="fw-bold laranja-senac mx-2">Bio Atual:</h6>
-                    <p class="list-group-item mx-4"><?= $login["biografia"] ?></p>
+                        <h6 class="fw-bold laranja-senac mx-2">Bio Atual:</h6>
+                        <p class="list-group-item mx-4"><?= $login["biografia"] ?></p>
                         <div class="nomePerfil">
                             <div class="mx-3 mb-3 fw-bold">
                                 <label for="bio" class="form-label fw-bold azul-senac">Nova Bio</label>
@@ -150,39 +148,10 @@ unset($conexao);
     <?php
     include("./footer.php");
     ?>
-
-<script>
-    function removerImagem(tipo) {
-    if (!confirm("Tem certeza que deseja remover esta imagem?")) return;
-
-    fetch('../src/logicos/removerImagem.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `tipo=${tipo}`
-    })
-    .then(response => response.text())
-    .then(data => {
-        if (data.trim() === 'sucesso') {
-            if (tipo === 'banner') {
-                document.getElementById('bannerPreview').src = '../assets/img/sem-banner.png';
-                document.querySelector('input[name="imgBanner"]').value = '';
-            } else if (tipo === 'perfil') {
-                document.getElementById('fotoPreview').src = '../assets/img/sem-perfil.png';
-                document.querySelector('input[name="imgName"]').value = '';
-            }
-        } else {
-            alert('Erro ao remover a imagem.');
-        }
-    })
-    .catch(error => console.error('Erro na requisição:', error));
-}
-</script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <script src="../src/js/script.js"></script>
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css"></script>
 
 </body>
-
 </html>

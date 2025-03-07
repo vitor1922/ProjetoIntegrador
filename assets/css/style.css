@@ -244,6 +244,10 @@ body {
   max-width: 1rem;
 }
 
+.apagar {
+  background-color: #004a8d;
+}
+
 .header-senac {
   background-color: var(--cinza);
   z-index: 1030;
@@ -253,8 +257,8 @@ body {
   color: #000;
 }
 
-.apagar {
-  background-color: #004a8d;
+main {
+  padding-top: 92px;
 }
 
 @media (max-width: 991px) {
@@ -276,9 +280,10 @@ body {
     height: calc(100vh - 100px);
   }
 
+  
 
   @media (max-width: 991px) {
-    body {
+    main {
       padding-top: 88px;
     }
 
@@ -286,11 +291,12 @@ body {
       margin-top: 88px;
       height: calc(100vh - 88px);
     }
+    
   }
 
-  main {
-    padding-top: 100px;
+    
   }
+
 
 
 
@@ -301,7 +307,7 @@ body {
   /* .card-post{
     width: 100%;
   } */
-}
+
 
 .footer-senac {
   background-color: var(--laranja_senac);

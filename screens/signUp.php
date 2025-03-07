@@ -15,6 +15,8 @@ $_SESSION['mensagem'] = NULL;
 $formData = $_SESSION['formulario'] ?? []; // Limpa a sessão após recuperar os dados
 unset($_SESSION['formulario']);
 
+$emailCadastrado = $_SESSION['email_cadastrado'] ?? '';
+unset($_SESSION['email_cadastrado']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cep = preg_replace('/[^0-9]/', '', $_POST['txtCep']); // Limpa o CEP, mantendo apenas números
@@ -72,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form action="../src/logicos/autenticar.php" method="POST">
                     <div class="form-group mt-4">
                         <label for="email">E-mail</label>
-                        <input type="email" class="form-control bg-light" id="email" name="txtEmail" aria-describedby="emailHelp" placeholder="Digite seu e-mail" required <?= $formData['txtEmail'] ?? '' ?> >
+                        <input type="email" class="form-control bg-light" id="email" name="txtEmail" aria-describedby="emailHelp" placeholder="Digite seu e-mail" required value="<?= htmlspecialchars($emailCadastrado ?? '') ?>">
                     </div>
                     <div class="form-group mb-3 mt-4">
                         <label for="password">Senha</label>

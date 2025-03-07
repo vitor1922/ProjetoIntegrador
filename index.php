@@ -17,6 +17,8 @@
 		<title>Salão de Beleza Senac</title>
 
 		<link rel="stylesheet" href="./src/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+		
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 		<link rel="stylesheet" href="./assets/css/style.css">
 	</head>
@@ -64,7 +66,6 @@
 					</div>
 		</div>
 		</section>
-
 		</main>
 		</div>
 		<?php include("./screens/footer.php"); ?>
