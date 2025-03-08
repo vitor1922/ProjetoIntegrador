@@ -111,29 +111,6 @@ function formatDate($date)
     <title>Horários - Instrutor</title>
     <meta name="author" content="Vitor Baggio">
 
-    <style>
-        .cardVera {
-            transition: all 0.3s ease-in-out;
-            margin-bottom: 10px;
-        }
-
-        .cardVera:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-input {
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-            transition: border 0.3s ease;
-        }
-
-        .search-input:focus {
-            border-color: #0069d9;
-            outline: none;
-        }
-    </style>
-
 </head>
 
 <body class="container-fluid">
@@ -161,7 +138,7 @@ function formatDate($date)
                     <div class="col d-flex justify-content-center align-items-center">
                         <form method="POST" action="">
                             <div class="d-flex flex-column align-items-center">
-                                <input type="text" name="searchUser" class="search-input text-center rounded mb-2"
+                                <input type="text" name="searchUser" class="search-input search-inputCavera text-center rounded mb-2"
                                     placeholder="Pesquisar" value="<?= htmlspecialchars($searchUser) ?>">
                                 <a href="?" class="text-decoration-none mt-2">Limpar Filtros</a>
                             </div>

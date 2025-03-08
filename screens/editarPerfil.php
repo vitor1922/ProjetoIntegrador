@@ -97,14 +97,18 @@ unset($conexao);
                 <form method="POST" action="<?= BASE_URL ?>src/logicos/updatePerfil.php" enctype="multipart/form-data">
                     <div class="headerPerfil d-flex position-relative justify-content-center">
                         <div class="profile-background">
-                            <button type="button" class="btn btn-danger position-absolute start-0 m-2 w-25" onclick="removerImagem('perfil')">remover foto de perfil</button>
-                            <button type="button" class="btn btn-danger position-absolute end-0 m-2 w-25" onclick="removerImagem('banner')">remover banner</button>
+                            <button type="button" class="btn position-absolute top-0 end-0 m-2" onclick="removerImagem('banner')">
+                                <i class="bi bi-trash text-danger"></i>
+                            </button>
                             <img id="bannerPreview" src="../bannerP/<?= $login['banner'] ?>" class="img-fluid" name="banner" alt="Imagem de perfil">
                         </div>
                         <input type="text" name="imgBanner" value="<?= $login['banner'] ?>" hidden>
                     </div>
-                    <div class="d-flex profileP">
-                        <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa mt-3 <?= $estilo ?>" name="foto" alt="Imagem de perfil">
+                    <div class="profileP">
+                        <button type="button" class="btn position-absolute top-50 mx-3 m-2" onclick="removerImagem('perfil')">
+                            <i class="bi bi-trash text-danger"></i>
+                        </button>
+                        <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa mt-3 <?= $estilo ?>" name="foto" alt="Imagem de perfil" width="120" height="120">
                     </div>
                     <div class="d-flex justify-content-center mt-5">
                         <label class="btn btn-dark fw-bold rounded-pill px-4 py-2 mt-5">

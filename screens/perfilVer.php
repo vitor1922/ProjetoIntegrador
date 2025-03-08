@@ -3,14 +3,13 @@ include('../constantes.php');
 include_once("../data/conexao.php");
 
 session_start();
-$perfil = $_SESSION['perfil'] ?? "cliente";
+$id_usuario = $_GET['id'] ?? "";
 $logado = $_SESSION['logado'] ?? NULL;
 $mensagem = $_SESSION['mensagem'] ?? NULL;
 $perfil_mensagem = $_SESSION['perfil_mensagem'] ?? NULL;
 $_SESSION['mensagem'] = NULL;
 $nome = $_SESSION['nome'] ?? "";
 // NÃO MEXER NA REQUISIÇÃO GET, ELA ESTÁ LINKADA A TELA USUARIOS
-$id_usuario = $_GET['id'] ?? "";
 
 // Buscar dados do usuário
 $sql = "SELECT * FROM usuario WHERE id_usuario = :id_usuario";
@@ -19,6 +18,7 @@ $select->bindParam(':id_usuario', $id_usuario);
 $select->execute();
 $login = $select->fetch(PDO::FETCH_ASSOC);
 
+$perfil = $login['perfil'] ?? "";
 
 // Buscar posts do usuário
 $sql = "SELECT p.id_post, p.titulo AS nomeCorte, i.url_img, p.data_criacao
@@ -52,6 +52,8 @@ $select->execute();
 $callCourse = $select->fetch(PDO::FETCH_ASSOC);
 $num_posts = count($posts);
 
+
+
 if ($perfil == 'professor') {
     $estilo = "border border-success border-3";
 } elseif ($perfil == 'aluno') {
@@ -64,13 +66,13 @@ if ($perfil == 'professor') {
 
 // coisa dos txt
 
-if ($perfil === 'professor') {
+if ($perfil == 'professor') {
     $estiloTXT = "text-success";
-} elseif ($perfil === 'aluno') {
+} elseif ($perfil == 'aluno') {
     $estiloTXT = "text-primary";
-} elseif ($perfil === 'cliente') {
+} elseif ($perfil == 'cliente') {
     $estiloTXT = "text-warning";
-} elseif ($perfil === 'admin') {
+} elseif ($perfil == 'admin') {
     $estiloTXT = "text-danger";
 }
 // Estilos por perfil
@@ -111,7 +113,7 @@ unset($conexao);
                 <div class="col-md-8">
                     <div class="card p-0 shadow-sm">
                         <div class="position-relative mb-4">
-                            <img src="../bannerP/<?= $login['banner'] ? $login['banner'] : 'SenacLogo.jpg' ?>" class="w-100" style="height: 200px; object-fit: cover;">
+                            <img src="../bannerP/<?= $login['banner'] ? $login['banner'] : 'senac.png' ?>" class="w-100" style="height: 200px; object-fit: cover;">
                             <div class="position-absolute top-100 start-50 translate-middle">
                                 <img src="../foto/<?= $login['foto'] ? $login['foto'] : 'iconPerfil.jpg' ?> " class="rounded-circle border <?= $estilo ?>" width="120" height="120">
                             </div>
@@ -119,11 +121,11 @@ unset($conexao);
 
                         <div class="text-center mt-5">
                             <h4 class="fw-bold">
-                                <span class="text-dark"><?= htmlspecialchars($login["nome"]) ?></span>
+                                <span class="text-dark"><?= htmlspecialchars($login["nome"] ) ?></span>
                                 <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span>
                                 <span class=" .text-black"> <?= $callCourse['nome_do_curso'] ?? 'O usuário nao esta em um curso' ?></span>
                             </h4>
-                            <p class="text-muted"><?= htmlspecialchars($login["biografia"]) ?></p>
+                            <p class="text-muted"><?= htmlspecialchars($login["biografia"] ?? 'Sem biografia') ?></p>
                             <span><strong><?= $num_posts ?></strong> publicações</span>
                         </div>
 

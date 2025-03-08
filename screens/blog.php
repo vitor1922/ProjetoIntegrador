@@ -77,9 +77,6 @@ unset($conexao);
   ?>
   <main>
 
-    <?php
-
-    echo (date("Y-m-d")) ?>
     <div class="container-fluid">
       <a href="../index.php" class="m-3">
         <i class="bi bi-arrow-left-short fs-1 azul-senac"></i>
@@ -108,12 +105,49 @@ unset($conexao);
             ?>
             <!-- card -->
             <div class="card card-post border col-lg-3 m-1">
+              <?php if($perfil == "admin" || $perfil == "professor" || $idUsuario == $post["id_usuario"]){?>
               <div class="col-1 d-flex justify-content-start position-absolute z-1 end-0">
-                <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
+                <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirPost<?= $curso["id_curso"] ?>">
                   <i class="bi bi-trash-fill"></i>
                 </button>
               </div>
+              <?php }?>
+              <!-- Modal excluir Post-->
+              <div class="modal fade" id="modalExcluirPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="d-flex justify-content-end mb-3">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form action="../src/logicos/excluirPostBlog.php" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Título do Post</label>
+                      <input type="text" class="form-control" name="txtTitulo" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Texto</label>
+                      <input type="text" class="form-control" name="txtTexto" required>
+                    </div>
 
+                    <div class="mb-3">
+                      <input type="text" class="form-control" name="txtUsuario" value="<?= $idUsuario ?>" required hidden>
+                      <input type="text" class="form-control" name="txtData" value="<?= date("Y-m-d",) ?>" required hidden>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-bold">Adicionar Imagens</label>
+                      <input type="file" multiple="multiple" name="imgsPost[]" class="form-control" accept="image/png, image/jpeg" required>
+                    </div>
+
+                    <div class="mb-3 d-flex justify-content-center">
+                      <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
               <!-- Carrossel de imagens -->
               <div class=" d-flex justify-content-center align-items-center">
                 <div id="carouselExampleInterval<?= $post["id_post"] ?>" class="row slide-blog carousel slide">
@@ -145,7 +179,7 @@ unset($conexao);
                 <div class="col-6">
                   <div class="row mt-2">
                     <a href="./perfilVer.php?id=<?= $post["id_usuario"] ?>" class=" text-black">
-                      <img src="../foto/<?= $post["foto_usuario"] ?>" alt="Foto de perfil" class="img-perfil-mini">
+                      <img src="../foto/<?= $post['foto_usuario'] ? $post['foto_usuario'] : 'iconPerfil.jpg' ?> " alt="Foto de perfil" class="img-perfil-mini">
 
                       <?php $nomeEx = explode(" ", $post["nome_usuario"]);
                       $primeiroNome = $nomeEx[0];

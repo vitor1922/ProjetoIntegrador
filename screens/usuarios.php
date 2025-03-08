@@ -57,8 +57,6 @@ if ($defaultStmt->execute()) {
     $defaultResults = $defaultStmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
-
 function formatCPF($cpf)
 {
     $cpf = preg_replace('/[^0-9]/', '', $cpf);
@@ -66,7 +64,6 @@ function formatCPF($cpf)
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
 
 
     if (isset($_POST['desativar_usuario'])) {
@@ -112,33 +109,10 @@ unset($conexao);
     <title>Usuários</title>
     <meta name="author" content="Vitor Baggio">
 
-    <style>
-        .card {
-            transition: all 0.3s ease-in-out;
-            margin-bottom: 10px;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .search-input {
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-            transition: border 0.3s ease;
-        }
-
-        .search-input:focus {
-            border-color: #0069d9;
-            outline: none;
-        }
-    </style>
-
 </head>
 
 <body>
-<?php include_once("./header.php"); ?>
+    <?php include_once("./header.php"); ?>
 
     <main>
         <div class="container mt-3">
@@ -160,7 +134,7 @@ unset($conexao);
                     <div class="col d-flex justify-content-center align-items-center">
                         <form method="POST" action="">
                             <div class="d-flex flex-column align-items-center">
-                                <input type="text" name="searchUser" class="search-input text-center rounded mb-2"
+                                <input type="text" name="searchUser" class="search-input search-inputCavera text-center rounded mb-2"
                                     placeholder="Nome/CPF">
                                 <div class="d-flex flex-row align-items-center">
                                     <a href="?" class="text-decoration-none margin-right-3 me-2">Limpar</a>
@@ -219,7 +193,7 @@ unset($conexao);
                         default => "rounded-circle border border-3 border-secondary",
                     };
                     ?>
-                    <div class="card p-3">
+                    <div class="card cardCavera p-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
                                 <a href="./perfilVer.php?id=<?= htmlspecialchars($result["id_usuario"]) ?>">
@@ -283,7 +257,7 @@ unset($conexao);
                     default => "rounded-circle border border-3 border-secondary",
                 };
                 ?>
-                <div class="card p-3">
+                <div class="card cardCavera p-3">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="./perfilVer.php?id=<?= htmlspecialchars($result["id_usuario"]) ?>">

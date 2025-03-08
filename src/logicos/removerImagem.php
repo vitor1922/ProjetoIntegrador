@@ -11,10 +11,8 @@ if (!$id_usuario || !$tipo) {
     exit;
 }
 
-// Define o campo correto no banco
 $campo = ($tipo === 'banner') ? 'banner' : 'foto';
 
-// Atualiza o banco de dados para remover a imagem
 $sql = "UPDATE usuario SET $campo = NULL WHERE id_usuario = :id_usuario";
 $update = $conexao->prepare($sql);
 $update->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);

@@ -81,7 +81,7 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                         <?php if($perfil === "admin"){?>
                             <div class="col-md-2">
-                                <button type="button" class="ms-1 btn btn-primary btn-azul-sena" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Professor</button>
+                                <button type="button" class="ms-1 btn btn-primary btn-azul-sena" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Curso</button>
                             </div>
                         <?php }?>
                         
@@ -89,9 +89,11 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </form>
 
 <?php foreach ($cursos as $curso): ?>
-                        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
-                            <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="img-curso">
-                        </a>
+    <div class="d-flex"> 
+                            <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4 row-4">
+                                <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="img-curso">
+                            </a>
+                        
                         <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="col-lg-4 col-md-4 col-sm-2 col-4 d-flex align-items-center text-decoration-none">
                             <p class="fs-5 text-secondary text-start"><?= $curso["nome_do_curso"] ?></p>
                         </a>
@@ -120,6 +122,7 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                         </div>
+    </div>
 <?php endforeach; ?>
     </div>
     

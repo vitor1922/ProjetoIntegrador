@@ -1,7 +1,9 @@
 	<?php
-	session_start();
+
 	include_once("./constantes.php");
 	include_once('./data/conexao.php');
+
+	session_start();
 	$perfil = $_SESSION['perfil'] ?? NULL;
 	$logado = $_SESSION['logado'] ?? NULL;
 	$nome = $_SESSION['nome'] ?? NULL;
@@ -13,14 +15,14 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="author" content="Maxwel/malinski/joao/Vitor Baggio">
-		<title>Salão de Beleza Senac</title>
-
 		<link rel="stylesheet" href="./src/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-		
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+		<link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
 		<link rel="stylesheet" href="./assets/css/style.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+		<title>Salão de Beleza Senac</title>
+		<meta name="author" content="Maxwel/malinski/joao/Vitor Baggio">
+
 	</head>
 
 	<body class="container-fluid d-flex flex-column">
@@ -69,6 +71,8 @@
 		</main>
 		</div>
 		<?php include("./screens/footer.php"); ?>
+
+		<script src=" https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 	</body>
 

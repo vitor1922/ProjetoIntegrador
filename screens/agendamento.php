@@ -7,16 +7,11 @@ $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
 
 
-var_dump($_GET);
 
 $sqlAgenda = "SELECT * FROM agenda";
-$select = $conexao->prepare($sqlAgenda);
-
-
-if ($select->execute()) {
-    $todosHorarios = $selectAgenda->fetchAll(PDO::FETCH_ASSOC);
-    $agenda = $select->fetchAll(PDO::FETCH_ASSOC);
-}
+$selectAgenda = $conexao->prepare($sqlAgenda); // ⬅️ Use $selectAgenda aqui
+$selectAgenda->execute(); // ⬅️ Execute a consulta
+$todosHorarios = $selectAgenda->fetchAll(PDO::FETCH_ASSOC);
 
 $sqlCurso = "SELECT id_curso, nome_do_curso, imagem FROM curso";
 $select = $conexao->prepare($sqlCurso);
@@ -68,7 +63,7 @@ unset($conexao);
                 <?php foreach ($cursos as $curso): ?>
                     <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
                         <div class="card card-imagem shadow-sm w-23rem border-0">
-                        <img src="../foto/<?=htmlspecialchars($curso['imagem']) ?>" class="card-img-top" alt="">
+                            <img src="../foto/<?= htmlspecialchars($curso['imagem']) ?>" class="card-img-top" alt="">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-6 col-lg-12 col-xxl-7">
@@ -79,14 +74,13 @@ unset($conexao);
                                             <!-- Botão com data-bs-target dinâmico -->
                                             <button
                                                 class="btn btn-azul-senac text-light"
-                                                type="submit"
+                                                type="button"
                                                 data-bs-toggle="collapse"
                                                 data-bs-target="#collapseCurso<?= $curso['id_curso'] ?>"
                                                 aria-expanded="false"
                                                 aria-controls="collapseCurso<?= $curso['id_curso'] ?>"
-                                                value="<?= $curso['id_curso'] ?>"
-                                                >
-                                              
+                                                value="<?= $curso['id_curso'] ?>">
+
                                                 Selecionar
                                             </button>
                                         </p>
@@ -100,17 +94,17 @@ unset($conexao);
                                         <div class="card card-body start-0 position-absolute w-100">
                                             <select class="form-select bg-warning-subtle" aria-label="Default select example" name="id_agenda">
                                                 <option selected>Selecionar Horario</option>
-                                                <?php 
-                        // Horários filtrados para este curso
-                        $idCursoAtual = $curso['id_curso'];
-                        $horariosDoCurso = $horariosPorCurso[$idCursoAtual] ?? [];
-                        ?>
-                        <?php foreach ($horariosDoCurso as $hora): ?>
-                            <?php $dataFormatada = (new DateTime($hora['data']))->format('d/m/Y'); ?>
-                            <option value="<?= $hora['id_agenda'] ?>">
-                                <?= $hora['hora'] ?> - <?= $dataFormatada ?>
-                            </option>
-                        <?php endforeach; ?>
+                                                <?php
+                                                // Horários filtrados para este curso
+                                                $idCursoAtual = $curso['id_curso'];
+                                                $horariosDoCurso = $horariosPorCurso[$idCursoAtual] ?? [];
+                                                ?>
+                                                <?php foreach ($horariosDoCurso as $hora): ?>
+                                                    <?php $dataFormatada = (new DateTime($hora['data']))->format('d/m/Y'); ?>
+                                                    <option value="<?= $hora['id_agenda'] ?>">
+                                                        <?= $hora['hora'] ?> - <?= $dataFormatada ?>
+                                                    </option>
+                                                <?php endforeach; ?>
                                             </select>
                                             <div class="position-relative mt-5">
                                                 <div class="position-absolute bottom-0 end-0 mt-5">

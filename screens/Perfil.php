@@ -153,13 +153,12 @@ unset($conexao);
                                             class="w-100 rounded post-img" style="aspect-ratio: 1/1; object-fit: cover; cursor: pointer;"
                                             data-bs-toggle="modal" data-bs-target="#postModal"
                                             data-img="../postAluno/<?= htmlspecialchars($post["url_img"] ?? 'placeholder.jpg') ?>"
-                                            data-title="<?= htmlspecialchars($post["nomeCorte"]) ?>"
-                                            data-date="<?= date('d/m/Y, H:i', strtotime($post['data_criacao'])) ?>">
+                                            data-title="<?= htmlspecialchars($post["nomeCorte"]) ?>">
 
 
                                         <!-- Botão para excluir post -->
                                         <a href="<?= BASE_URL ?>src/logicos/deletePost.php?id=<?= $post['id_post'] ?>"
-                                            class="position-absolute top-0 end-0 p-2 bg-white rounded-circle shadow"
+                                            class="position-absolute top-0 end-0 p-2"
                                             onclick="return confirm('Tem certeza que deseja excluir este post?')">
                                             <i class="bi bi-trash text-danger"></i>
                                         </a>

@@ -102,6 +102,37 @@ body {
   width: 25rem;
 }
 
+.cardCavera {
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 10px;
+}
+
+.cardCavera:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cardVera {
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 10px;
+}
+
+.cardVera:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.search-inputCavera {
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  transition: border 0.3s ease;
+}
+
+.search-inputCavera:focus {
+  border-color: #0069d9;
+  outline: none;
+}
+
 .w-23rem {
   width: 23rem;
 }
@@ -668,6 +699,12 @@ textarea {
     margin-right: 10px;
   }
   */
+
+  .profile-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 
 .profileP {
