@@ -65,7 +65,6 @@ if ($_SERVER["HTTP_HOST"] == BASE_URL . ("screens/infoTurma?id=") . $turmaId) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Informações da Turma</title>
-  <meta name="author" content="NickTon">
 
   <link href="../src/bootstrap/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.css">
@@ -79,6 +78,7 @@ if ($_SERVER["HTTP_HOST"] == BASE_URL . ("screens/infoTurma?id=") . $turmaId) {
     ?>
     <main>
       <div class="container-fluid">
+        <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
         <div class="row">
           <div class="col-12">
             <div class="button fs-1 mx-3">

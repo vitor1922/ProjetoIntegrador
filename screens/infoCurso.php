@@ -86,8 +86,9 @@ $paginaAnterior = "gerenciamentoCursos.php";
         include_once("./header.php");
         ?>
 
-        <main class=" ">
+        <main class="">
             <div class="container-fluid">
+            <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
                         <a href="<?= $paginaAnterior ?>"><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>

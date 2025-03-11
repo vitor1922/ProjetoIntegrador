@@ -28,17 +28,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $validade = date("Y-m-d H:i:s", strtotime("+30 minutes")); // Token válido por 30 min
 
     // Salvar o token no banco de dados
-    $sql = "INSERT INTO tokens_recuperacao (id, email, token, validade) VALUES (:id, :email, :token, :validade)";
+    $sql = "INSERT INTO tokens_recuperacao (id_usuario, email, token, validade) VALUES (:id_usuario, :email, :token, :validade)";
     $stmt = $conexao->prepare($sql);
     $stmt->execute([
-        ':id' => $usuario['id'],
+        ':id_usuario' => $usuario['id_usuario'],
         ':email' => $email,
         ':token' => $token,
         ':validade' => $validade
     ]);
 
     // Montar o link de recuperação
-    $linkRecuperacao = BASE_URL . "screens/redefinir_senha.php?token=" . $token;
+    $linkRecuperacao = BASE_URL . "src/logicos/verificarToken.php?token=" . $token;
 
 
 // Enviar o e-mail de recuperação
@@ -56,7 +56,7 @@ try {
 
     // Remetente e destinatário
     $mail->setFrom('salaodebelezasenac@gmail.com', 'Suporte'); // Remetente
-    $mail->addAddress($email); // Envia para o e-mail do usuário
+    $mail->addAddress($email); // Envia para o e-mail do usuário'''
 
     // Conteúdo do e-mail
     $mail->isHTML(true);

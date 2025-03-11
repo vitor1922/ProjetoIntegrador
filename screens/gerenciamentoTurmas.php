@@ -38,6 +38,20 @@ $selectProfessores->bindParam(":id_curso", $prof);
 if ($selectProfessores->execute()) {
     $professores = $selectProfessores->fetchAll(PDO::FETCH_ASSOC);
 }
+$search = $_GET['search'] ?? '';
+
+$query = "SELECT * FROM turma WHERE 1=1";
+$params = [];
+
+if ($search) {
+    $query .= " AND numero_da_turma LIKE :search";
+    $params['search'] = "%$search%";
+}
+
+$query .= " ORDER BY numero_da_turma";
+$stmt = $conexao->prepare($query);
+$stmt->execute($params);
+$turmas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 unset($conexao);
 ?>
 
@@ -54,13 +68,14 @@ unset($conexao);
 </head>
 
 <body class="container-fluid d-flex flex-column justify-content-between">
-    <div>
+    
         <?php
         include_once("./header.php");
         ?>
 
         <main>
             <div class="container-fluid mt-3">
+            <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
                 <h1 class="text-center">Área do Serviço</h1>
                 <div class="row bg-light d-flex align-items-center w-100 w-md-50 w-lg-25 mx-auto">
                     <div class="col text-end">
@@ -87,16 +102,20 @@ unset($conexao);
                     </a>
                 </div>
 
-                <div class="mt-4">
-                    <div class="row mb-3">
-                        <div class=" col-6 d-flex align-items-center ">
-                            <input type="text" class="col-9 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" value="PESQUISAR">
-                            <?php if($perfil == "admin"){?>
-                            <button type="button" class=" ms-3 btn btn-primary btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarTurma">Adicionar Turma</button>
-                            <?php }?>
+
+                </div>
+                <form method="GET" class="mb-4">
+                    <div class="row mb-2">
+                        <div class="col-4 d-flex align-items-center">
+                            <input type="text" name="search" class="col-12 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" placeholder="Pesquisar..." value="<?= htmlspecialchars($search) ?>">
                         </div>
-                        <div class="col-sm-6 d-grid align-items-center">
-                            <div class="row">
+                        <?php if($perfil === "admin"){?>
+                            <div class="col-md-2 pt-2">
+                            <button type="button" class=" ms-3 btn btn-primary btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarTurma">Adicionar Turma</button>
+                            </div>
+                        <?php }?>
+                    <div class="col-sm-6 d-grid align-items-center">
+                        <div class="row">
                                 <div class=" offset-1 col-1 p-0 ponto d-block rounded-circle bg-azul-senac align-self-center"></div>
                                 <div class="col-9 azul-senac">Em Andamento</div>
                             </div>
@@ -104,12 +123,10 @@ unset($conexao);
                                 <div class=" offset-1 col-1 p-0 bg-danger ponto d-block rounded-circle align-self-center"></div>
                                 <div class="col-9 text-danger">Concluída</div>
                             </div>
-                        </div>
                     </div>
-
-                </div>
-
-                <?php foreach ($turmas as $turma) { ?>
+                    </div>
+                </form>
+                <?php foreach ($turmas as $turma): ?>
                     <?php $numeroAlunos = 0; ?>
                     <?php foreach ($cursos as $curso) { ?>
                         <?php if ($turma["id_curso"] === $curso["id_curso"]) { ?>
@@ -139,7 +156,7 @@ unset($conexao);
                             </a>
                         <?php } ?>
                     <?php } ?>
-                <?php } ?>
+                    <?php endforeach; ?>
 
 
                 <!-- MODAL ADICIONAR CURSO -->
@@ -195,7 +212,7 @@ unset($conexao);
 
             </div>
         </main>
-    </div>
+    
     <?php
     include_once("./footer.php");
     ?>

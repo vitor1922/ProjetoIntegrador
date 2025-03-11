@@ -1,16 +1,32 @@
 <?php
 
 session_start();
+
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
+    header("Location: ./signUp.php");
+    exit();
+}
+
+
 include_once("../constantes.php");
 include_once('../data/conexao.php');
 $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
 
+if (isset($_SESSION['mensagem'])) {
+    $mensagem = $_SESSION['mensagem'];
+    unset($_SESSION['mensagem']);
+}
+
+
+
+
+
 
 
 $sqlAgenda = "SELECT * FROM agenda";
-$selectAgenda = $conexao->prepare($sqlAgenda); // ⬅️ Use $selectAgenda aqui
-$selectAgenda->execute(); // ⬅️ Execute a consulta
+$selectAgenda = $conexao->prepare($sqlAgenda);
+$selectAgenda->execute();
 $todosHorarios = $selectAgenda->fetchAll(PDO::FETCH_ASSOC);
 
 $sqlCurso = "SELECT id_curso, nome_do_curso, imagem FROM curso";
@@ -22,9 +38,11 @@ if ($select->execute()) {
 
 $horariosPorCurso = [];
 foreach ($todosHorarios as $hora) {
-    $idCurso = $hora['id_curso']; // Garanta que a coluna id_curso existe na tabela agenda!
+    $idCurso = $hora['id_curso'];
     $horariosPorCurso[$idCurso][] = $hora;
 }
+
+$vagasSobrando = "SELECT COUNT(id_turma) as vagas, id_agenda FROM agendamento GROUP BY id_agenda";
 
 unset($conexao);
 ?>
@@ -48,12 +66,16 @@ unset($conexao);
     ?>
 
     <main class="pb-5 mb-5">
-        <div class="container-fluid-lg">
-            <div class="row">
-                <div class="button fs-1 mx-3 azul-senac">
-                    <a href=""><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
+    <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
+        <?php if (isset($mensagem)): ?>
+            <div class="container">
+                <div class="alert alert-<?= $mensagem['tipo'] ?> alert-dismissible fade show" role="alert">
+                    <?= $mensagem['texto'] ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
+        <?php endif; ?>
+        <div class="container-fluid-lg">
             <div class="row">
                 <div class="col-md-12 col-14 text-center">
                     <h2 class="laranja-senac fw-bold pb-5">Serviços disponíveis</h2>
@@ -61,7 +83,7 @@ unset($conexao);
             </div>
             <div class="row justify-content-center pb-5 mb-5">
                 <?php foreach ($cursos as $curso): ?>
-                    <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center">
+                    <div class="col-lg-3 col-md-6 pb-3 ps-4 d-flex justify-content-center marginAgendamento">
                         <div class="card card-imagem shadow-sm w-23rem border-0">
                             <img src="../foto/<?= htmlspecialchars($curso['imagem']) ?>" class="card-img-top" alt="">
                             <div class="card-body">
@@ -71,7 +93,7 @@ unset($conexao);
                                     </div>
                                     <div class="offset-2 col-3 offset-xxl-0 ps-xxl-5 p-0">
                                         <p class="d-inline-flex gap-1">
-                                            <!-- Botão com data-bs-target dinâmico -->
+
                                             <button
                                                 class="btn btn-azul-senac text-light"
                                                 type="button"
@@ -87,7 +109,7 @@ unset($conexao);
                                     </div>
                                 </div>
                                 <form action="../src/logicos/processar_agendamento.php" method="POST">
-                                    <!-- Colapso com ID dinâmico -->
+
                                     <div
                                         class="collapse"
                                         id="collapseCurso<?= $curso['id_curso'] ?>">

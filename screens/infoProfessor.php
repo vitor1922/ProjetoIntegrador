@@ -45,7 +45,7 @@ $selectAlunos = $conexao->prepare($sqlAlunos);
 $selectAlunos->bindParam(":id_turma", $turma["id_turma"]);
 if ($selectAlunos->execute()) {
 
-  $alunos = $selectAlunos->fetchAll(PDO::FETCH_ASSOC);
+    $alunos = $selectAlunos->fetchAll(PDO::FETCH_ASSOC);
 }
 // echo("<pre>");
 //  var_dump($turmas);
@@ -77,10 +77,11 @@ $paginaAnterior = "gerenciamentoProfessores.php";
 
         <main class=" ">
             <div class="container-fluid">
+                <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
                         <a href="<?= $paginaAnterior ?>"><i class="bi bi-arrow-left-short fs-1 azul-senac"></i></a>
-    
+
                     </div>
                 </div>
                 <div class="row ">
@@ -91,14 +92,14 @@ $paginaAnterior = "gerenciamentoProfessores.php";
                         <img class="img-130" src="../foto/<?= $professor['foto'] ?>" alt="">
                     </div>
                 </div>
-                
+
                 <div class="shadow-sm border py-3 ">
                     <div class="row">
                         <div class=" offset-1 d-grid align-items-center col-4  ">
                             <input class="d-inline rounded-pill text-center py-2" type="text " placeholder="Pesquisar">
 
                         </div>
-                       
+
 
                         <div class="col-sm-6 d-grid align-items-center">
                             <div class="row">
@@ -147,9 +148,9 @@ $paginaAnterior = "gerenciamentoProfessores.php";
 
 
 
-             
 
-                
+
+
 
             </div>
         </main>

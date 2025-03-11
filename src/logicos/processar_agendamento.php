@@ -39,14 +39,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 $insert->bindParam(":id_agenda", $idAgenda, PDO::PARAM_INT);
                 $insert->bindParam(":id_usuario", $clienteAgenda, PDO::PARAM_INT);
                 $insert->bindParam(":id_turma", $turmaAgenda, PDO::PARAM_INT);
+                
 
                 if ($insert->execute()) {
-                    echo "Agendamento realizado com sucesso!<br>";
-                    echo "Data: " . $dataAgenda . "<br>";
-                    echo "Hora: " . $horaAgenda . "<br>";
-                    echo "ID da Agenda: " . $idAgenda . "<br>";
-                    echo "ID do Cliente: " . $clienteAgenda . "<br>";
-                    echo "ID da Turma: " . $turmaAgenda . "<br>";
+                    $_SESSION['mensagem'] = [
+                        'tipo' => 'success',
+                        'texto' => 'Agendamento realizado com sucesso!'
+                    ];
                 } else {
                     throw new Exception("Erro ao realizar o agendamento.");
                 }
@@ -54,15 +53,29 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 throw new Exception("Agenda não encontrada.");
             }
         } catch (Exception $e) {
-            echo "Ocorreu um erro: " . $e->getMessage();
+            $_SESSION['mensagem'] = [
+                'tipo' => 'danger',
+                'texto' => 'Erro: ' . $e->getMessage()
+            ];
         } finally {
-            // Fecha a conexão com o banco de dados
-            unset($conexao);
+            // Redireciona de volta para a página de agendamento
+            header('Location: ../../screens/agendamento.php');
+            exit();
         }
     } else {
-        echo "ID da agenda não foi fornecido.";
+        $_SESSION['mensagem'] = [
+            'tipo' => 'warning',
+            'texto' => 'ID da agenda não foi fornecido.'
+        ];
+        header('Location: ../../screens/agendamento.php');
+        exit();
     }
 } else {
-    echo "Método de requisição inválido.";
+    $_SESSION['mensagem'] = [
+        'tipo' => 'danger',
+        'texto' => 'Método de requisição inválido.'
+    ];
+    header('Location: ../../screens/agendamento.php');
+    exit();
 }
 ?>

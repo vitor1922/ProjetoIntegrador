@@ -36,16 +36,16 @@ $logado = $_SESSION['logado'] ?? NULL;
                 <div class="modal-body">
                     <h4>Como você avaliaria sua experiência do Senac Salão de Beleza?</h4>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                      <label class="form-check-label" for="flexRadioDefault1">Ruim</label>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">Ruim</label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                      <label class="form-check-label" for="flexRadioDefault1">Bom</label>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">Bom</label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                      <label class="form-check-label" for="flexRadioDefault1">Otimo</label>
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">Otimo</label>
                     </div>
                     <h4>Qual nota você daria para o aluno que o atendeu?</h4>
                     <div>

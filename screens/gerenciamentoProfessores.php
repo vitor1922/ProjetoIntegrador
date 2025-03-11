@@ -19,8 +19,21 @@ $sqlProfessores = "SELECT * FROM usuario WHERE perfil = 'professor'";
 $selectProfessores = $conexao->prepare($sqlProfessores);
 if ($selectProfessores->execute()) {
     $professores = $selectProfessores->fetchAll(PDO::FETCH_ASSOC);
-    unset($conexao);
 }
+$search = $_GET['search'] ?? '';
+
+$query = "SELECT * FROM usuario WHERE perfil = 'professor'";
+$params = [];
+
+if ($search) {
+    $query .= " AND perfil = 'professor' LIKE :search";
+    $params['search'] = "%$search%";
+}
+
+$query .= " ORDER BY perfil";
+$stmt = $conexao->prepare($query);
+$stmt->execute($params);
+$professores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +49,7 @@ if ($selectProfessores->execute()) {
 </head>
 
 <body class="container-fluid d-flex flex-column justify-content-between">
-    <div>
+
         <?php
         include_once("./header.php");
         ?>
@@ -67,19 +80,21 @@ if ($selectProfessores->execute()) {
                         <button class="btn btn-azul-senac text-white border-dark-subtle fs-7 fw-bold" type="button">PROFESSORES</button>
                     </a>
                 </div>
-
-                <div class="mt-4">
-                    <div class="row mb-3">
-                        <div class=" col-7 d-flex align-items-center ">
-                            <input type="text" class="col-10 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" value="PESQUISAR">
-                            <?php if($perfil === "admin"){?>
-                                
-                            <button type="button" class="ms-2 btn btn-primary rounded btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Professor</button>
-                            <?php }?>
+                <form method="GET" class="mb-4">
+                    <div class="row mb-2">
+                        <div class="col-4 d-flex align-items-center">
+                            <input type="text" name="search" class="col-12 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" placeholder="Pesquisar..." value="<?= htmlspecialchars($search) ?>">
                         </div>
+                        <?php if($perfil === "admin"){?>
+                            <div class="col-md-2 pt-2">
+                            <button type="button" class="ms-2 btn btn-primary rounded btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Professor</button>
+                            </div>
+                        <?php }?>
+                        
                     </div>
-                </div>
-                <?php foreach ($professores as $professor) { ?>
+                </form>
+                <?php foreach ($professores as $professor): ?>
+                    
                     <a href="./infoProfessor.php?id=<?=$professor["id_usuario"]?>" class="row border py-1">
                         <div class=" offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4">
                             <img src="../foto/<?= $professor["foto"] ?>" alt="" class="img-perfil-mini">
@@ -91,7 +106,7 @@ if ($selectProfessores->execute()) {
                         <div class=" col-1 p-0 bg-success ponto d-block rounded-circle align-self-center"></div>
                     </a>
                     
-                <?php } ?>
+                <?php endforeach; ?>
 
                 
                 <!-- MODAL ADICIONAR CURSO -->
@@ -119,7 +134,7 @@ if ($selectProfessores->execute()) {
 
             </div>
         </main>
-    </div>
+    
     <?php
     include_once("./footer.php");
     ?>

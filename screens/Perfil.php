@@ -103,12 +103,13 @@ unset($conexao);
     <?php include_once("./preloader.php"); ?>
 
     <main class="container mt-5 mb-5">
+    <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card p-0 shadow-sm">
                     <div class="position-relative mb-4 ">
                         <!-- banner e foto -->
-                        <img src="../bannerP/<?= $login['banner'] ? $login['banner'] : 'SenacLogo.jpg' ?>" class="w-100" style="height: 200px; object-fit: cover;">
+                        <img src="../bannerP/<?= $login['banner'] ? $login['banner'] : 'senac.png' ?>" class="w-100" style="height: 200px; object-fit: cover;">
                         <div class="position-absolute top-100 start-50 translate-middle">
                             <img src="../foto/<?= $login['foto'] ? $login['foto'] : 'iconPerfil.jpg' ?> " class="rounded-circle border <?= $estilo ?>" width="120" height="120">
                         </div>
@@ -118,9 +119,9 @@ unset($conexao);
                     <div class="text-center mt-5">
                         <h4 class="fw-bold">
                             <span class="text-dark"><?= htmlspecialchars($login["nome"]) ?></span>
-                            <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span>
-                            <span class=" .text-black">  <?= $callCourse['nome_do_curso'] ?? 'O usuário nao esta em um curso' ?></span>
-
+                            <span class="<?= $estiloTXT ?>">• <?= $login["perfil"] ?></span> <br>
+                            <span class=" .text-black"> <?= $callCourse['nome_do_curso'] ?? 'O usuário nao esta em um curso' ?></span> <br>
+                            <h6 class=".text-black"> Cadastrado em: <?= date('d/m/Y', strtotime($login['data_do_perfil']))?>   </h6>
                         </h4>
 
                         <h6 class="fw-bolder </h6>

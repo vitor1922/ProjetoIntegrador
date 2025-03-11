@@ -5,7 +5,9 @@ session_start();
 include("../constantes.php");
 include_once('../data/conexao.php');
 
-$_SESSION['logado'] = FALSE;
+$logado = $_SESSION['logado'] ?? NULL;
+
+// $_SESSION['logado'] = FALSE;
 $mensagem = $_SESSION['mensagem'] ?? NULL;
 $perfil = $_SESSION['perfil'] ?? NULL;
 $_SESSION['mensagem'] = NULL;

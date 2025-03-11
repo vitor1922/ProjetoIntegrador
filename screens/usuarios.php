@@ -1,9 +1,9 @@
 <?php
-
+session_start();
 include('../constantes.php');
 include_once("../data/conexao.php");
 
-session_start();
+
 $perfil = $_SESSION['perfil'] ?? "cliente";
 $logado = $_SESSION['logado'] ?? NULL;
 $mensagem = $_SESSION['mensagem'] ?? NULL;
@@ -115,6 +115,7 @@ unset($conexao);
     <?php include_once("./header.php"); ?>
 
     <main>
+        <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
         <div class="container mt-3">
             <h1 class="text-center laranja-senac">Área do ADM</h1>
             <div class="row bg-light d-flex align-items-center w-100 w-md-50 w-lg-25 mx-auto">

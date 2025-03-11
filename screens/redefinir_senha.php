@@ -1,7 +1,6 @@
 <?php
-include("../constantes.php");
 session_start();
-
+include("../constantes.php");
 
 if (!isset($_SESSION['token_recuperacao'])) {
     $_SESSION['mensagem'] = "Acesso inválido!";
@@ -10,6 +9,7 @@ if (!isset($_SESSION['token_recuperacao'])) {
 }
 
 $email = $_SESSION['email_recuperacao'];
+
 ?>
 
 <!DOCTYPE html>

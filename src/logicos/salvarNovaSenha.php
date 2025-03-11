@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../../data/conexao.php");
+include("../../constantes.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!isset($_SESSION['email_recuperacao'])) {

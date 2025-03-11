@@ -68,10 +68,7 @@ unset($conexao);
 
     <main>
         <div class="d-flex justify-content-between align-items-center">
-            <a href="./Perfil.php"><button class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
-                        fill="currentColor" class="bi bi-arrow-left-short fs-1 azul-senac" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
-                    </svg></button></a>
+        <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
         </div>
         <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -108,7 +105,7 @@ unset($conexao);
                         <button type="button" class="btn position-absolute top-50 mx-3 m-2" onclick="removerImagem('perfil')">
                             <i class="bi bi-trash text-danger"></i>
                         </button>
-                        <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="imgPerfil bordaa mt-3 <?= $estilo ?>" name="foto" alt="Imagem de perfil" width="120" height="120">
+                        <img id="fotoPreview" src="../foto/<?= $login['foto'] ?>" class="rounded-circle border <?= $estilo ?>" name="foto" alt="Imagem de perfil" width="120" height="120">
                     </div>
                     <div class="d-flex justify-content-center mt-5">
                         <label class="btn btn-dark fw-bold rounded-pill px-4 py-2 mt-5">

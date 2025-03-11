@@ -11,7 +11,7 @@ cepInput.addEventListener('input', () => {
     if (cep.length > 5) {
         cep = cep.slice(0, 5) + '-' + cep.slice(5);
     }
-    cepInput.value = cep;
+    cepInput.value = cep.slice(0,9);;
 
     // Faz a busca quando o CEP tiver 8 caracteres
     if (cep.length === 9) {

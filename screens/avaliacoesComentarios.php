@@ -142,12 +142,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </style>
 </head>
-<body>
+<body class="d-flex justify-content-between flex-column min-vh-100 p-0">
 <?php include_once("./header.php"); ?>
 
 <div class="container mt-5">
     <h2 class="text-center">Avaliações</h2>
-
+    <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
     <form method="POST" class="mb-4">
         <div class="form-group">
             <label for="filtro">Filtrar Avaliações:</label>
@@ -220,9 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p class="text-center">Nenhuma avaliação encontrada.</p>
         <?php endif; ?>
     </div>
-    <?php 
-    include_once("./footer.php")
-    ?>
+    
 </div>
 <!-- Modal de exclusão -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -285,6 +283,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </div>
+
 <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script>
     // Preencher modal de edição
@@ -309,5 +308,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         document.getElementById('deleteIdUsuario').value = idUsuario;
     });
 </script>
+<?php 
+    include_once("./footer.php")
+    ?>
 </body>
 </html>

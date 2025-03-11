@@ -1,9 +1,20 @@
 <?php
+session_start();
 include_once("../constantes.php");
 include_once('../data/conexao.php');
 
+
 $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? NULL;
+
+
+if (!$logado) {
+    header("Location: " . BASE_URL . "screens/signUp.php");
+    exit;
+} elseif ($perfil !== "professor" && $perfil !== "admin") {
+    header("Location: " . BASE_URL . "index.php");
+}
+
 
 // Definindo o número de produtos por página
 $produtos_por_pagina = 5; // Alterado para 5 produtos por página
@@ -26,7 +37,8 @@ $total_produtos = $stmt_total->fetch(PDO::FETCH_ASSOC)['total'];
 $total_paginas = ceil($total_produtos / $produtos_por_pagina);
 
 // Função para obter o saldo atual de um produto
-function obterSaldoProduto($conexao, $id_produto) {
+function obterSaldoProduto($conexao, $id_produto)
+{
     $query = "SELECT qtde_produto FROM produto WHERE id_produto = :id_produto";
     $stmt = $conexao->prepare($query);
     $stmt->bindParam(':id_produto', $id_produto);
@@ -242,22 +254,23 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             border-radius: 10px;
         }
 
-        .table th, .table td {
+        .table th,
+        .table td {
             vertical-align: middle;
         }
 
         .pagination {
             justify-content: center;
         }
-        
     </style>
 </head>
 
 <body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0">
-    <?php include_once("./header.php"); ?>
+    <?php include_once("./header.php") ?>
 
     <main>
         <div class="container my-5">
+            <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
             <h2 class="header-title fw-bold">Controle de Estoque</h2>
 
             <div class="row mb-4">
@@ -478,6 +491,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Função para editar produto e abrir o modal
         function editarProduto(id, nome, descricao, unidade, qtde_min, qtde_max, qtde_produto) {
             document.getElementById('edit_id_produto').value = id;
             document.getElementById('edit_nome').value = nome;

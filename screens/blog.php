@@ -78,9 +78,7 @@ unset($conexao);
   <main>
 
     <div class="container-fluid">
-      <a href="../index.php" class="m-3">
-        <i class="bi bi-arrow-left-short fs-1 azul-senac"></i>
-      </a>
+    <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
       <div class="container">
         <!-- Flecha de retorno -->
 

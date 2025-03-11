@@ -43,12 +43,12 @@ if ($select->execute()) {
 
 </head>
 
-<body class="d-flex justify-content-between flex-column min-vh-100 p-0" >
+<body class="d-flex justify-content-between flex-column min-vh-100 p-0">
 
     <?php include_once("./header.php"); ?>
 
     <main class="container-fluid mt-5">
-
+        <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
         <form action="<?= BASE_URL ?>src/logicos/adicionarPostPerfil.php" method="POST" enctype="multipart/form-data">
             <div class="row offset-md-2">
                 <div class="mb-3">

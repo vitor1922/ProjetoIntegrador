@@ -120,6 +120,7 @@ function formatDate($date)
     <main>
 
         <div class="container mt-3">
+        <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
             <h1 class="text-center laranja-senac">Área do Instrutor</h1>
             <div class="row bg-light d-flex align-items-center w-100 w-md-50 w-lg-25 mx-auto">
                 <div class="col text-end">

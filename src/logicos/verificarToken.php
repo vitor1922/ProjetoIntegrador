@@ -3,8 +3,8 @@ session_start();
 include("../../data/conexao.php");
 include("../../constantes.php");
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $token = $_POST['token'];
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+    $token = $_GET['token'];
 
     // Verifica se o token é válido e se ainda está dentro do tempo de expiração
     $sql = "SELECT * FROM tokens_recuperacao WHERE token = :token AND validade >= NOW()";

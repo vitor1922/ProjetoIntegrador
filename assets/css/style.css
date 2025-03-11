@@ -137,6 +137,10 @@ body {
   width: 23rem;
 }
 
+.marginAgendamento{
+  margin-bottom: 7rem;
+}
+
 .blur {
   filter: blur(2px);
 }
@@ -292,6 +296,10 @@ body {
 
 .header-senac-text {
   color: #000;
+}
+
+.header-senac-text:hover {
+  color: var(--laranja_escuro_senac);
 }
 
 main {

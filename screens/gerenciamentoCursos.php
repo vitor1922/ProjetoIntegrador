@@ -27,6 +27,7 @@ $query .= " ORDER BY nome_do_curso";
 $stmt = $conexao->prepare($query);
 $stmt->execute($params);
 $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+unset($conexao);
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +43,7 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body class="container-fluid d-flex flex-column justify-content-between">
-    <div>
+    
         <?php
         include_once("./header.php");
         ?>
@@ -77,11 +78,11 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <form method="GET" class="mb-4">
                     <div class="row mb-2">
                         <div class="col-4 d-flex align-items-center">
-                            <input type="text" name="search" class="form-control" placeholder="Pesquisar..." value="<?= htmlspecialchars($search) ?>">
+                            <input type="text" name="search" class="col-12 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" placeholder="Pesquisar..." value="<?= htmlspecialchars($search) ?>">
                         </div>
                         <?php if($perfil === "admin"){?>
-                            <div class="col-md-2">
-                                <button type="button" class="ms-1 btn btn-primary btn-azul-sena" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Curso</button>
+                            <div class="col-md-2 pt-2">
+                                <button type="button" class="ms-2 btn btn-primary btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Curso</button>
                             </div>
                         <?php }?>
                         
@@ -89,14 +90,14 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </form>
 
 <?php foreach ($cursos as $curso): ?>
-    <div class="d-flex"> 
-                            <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="offset-sm-3 offset-1 col-lg-2 col-md-2 col-sm-4 col-4 row-4">
-                                <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="img-curso">
-                            </a>
-                        
+    <div class="d-flex pt-4 "> 
+                        <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="soffset-sm-3 offset-1 col-lg-4 col-md-4 col-sm-4 col-4 row-4">
+                            <img src="../foto/<?= $curso["imagem"] ?>" alt="" class="offset-sm-3 offset-1 col-lg-4s col-md-4 col-sm-4 col-4 row-4">
+                        </a>
                         <a href="./infoCurso.php?id=<?= $curso["id_curso"] ?>" class="col-lg-4 col-md-4 col-sm-2 col-4 d-flex align-items-center text-decoration-none">
                             <p class="fs-5 text-secondary text-start"><?= $curso["nome_do_curso"] ?></p>
                         </a>
+                        <?php if($perfil === "admin"){?>
                         <div class="col-lg-1 col-md-1 col-sm-1 col-1 d-flex align-items-center">
                             <div class="col-1 d-flex justify-content-start">
                                 <button class="btn text-danger" type="button" data-bs-toggle="modal" data-bs-target="#modalExcluirCurso<?= $curso["id_curso"] ?>">
@@ -104,6 +105,7 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </button>
                             </div>
                         </div>
+                        <?php }?>
                         <div class="modal fade" id="modalExcluirCurso<?= $curso["id_curso"] ?>" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
@@ -126,7 +128,6 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php endforeach; ?>
     </div>
     
-    <?php include_once("./footer.php"); ?>
 
                 <div class="modal fade" id="modalCadastrarCurso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
@@ -160,7 +161,7 @@ $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             </div>
         </main>
-    </div>
+    
     <?php
     include_once("./footer.php");
     ?>

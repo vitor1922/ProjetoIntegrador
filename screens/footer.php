@@ -26,7 +26,6 @@
                             <a href="https://www.instagram.com/senacparana?igsh=dHcxNzlsbXQ1dm84" class="d-flex justify-content-center col-5 col-lg-3"><i class="bi bi-instagram text-light p-1 fs-3"></i></a>
                             <a href="https://www.youtube.com/@senacpr" class="d-flex justify-content-center col-5 col-lg-3"><i class="bi bi-youtube text-light p-1 fs-3"></i></a>
                         </div>
-          
                         
                     </div>
                 </div>

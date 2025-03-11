@@ -31,6 +31,7 @@ $logado = $_SESSION['logado'] ?? FALSE;
     ?>
     <main>
         <div class="container">
+        <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
             <div class="row text-center mt-5 mb-3">
                 <h3 class="display-6 fw-bolder">Área do Instrutor</h3>
             </div>
