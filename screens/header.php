@@ -1,6 +1,6 @@
 <?php
 
-$nome = isset($_SESSION['nome']) && !empty($_SESSION['nome']) ? $_SESSION['nome'] : "Registra-se";
+$nome = isset($_SESSION['nome']) && !empty($_SESSION['nome']) ? $_SESSION['nome'] : "Entrar";
 
 // Se não for "Visitante", extrai o primeiro nome
 $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";

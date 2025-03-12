@@ -289,11 +289,7 @@ if (!$logado) {
 
                                         </div>
                                     </div>
-                                    <div class="mb-3 d-flex flex-column justify-content-center align-items-center mt-5">
-                                        <label class="form-label fw-bold">PIN</label>
-                                        <input type="text" class="form-control w-50" name="txtPin">
-                                        <a href="">Enviar Código</a>
-                                    </div>
+                                    
                                     <div class="mb-3 d-flex justify-content-center">
                                         <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
                                     </div>

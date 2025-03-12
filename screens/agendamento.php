@@ -21,6 +21,14 @@ if (isset($_SESSION['mensagem'])) {
 
 
 
+$sqlVerificaVagas = "
+    SELECT 
+        (1 - COUNT(ag.id_agendamento)) AS vagas_restantes -- 10 é o número fixo de vagas
+    FROM agenda a
+    LEFT JOIN agendamento ag ON a.id_agenda = ag.id_agenda
+    WHERE a.id_agenda = :id_agenda
+    GROUP BY a.id_agenda
+";
 
 
 
@@ -42,7 +50,6 @@ foreach ($todosHorarios as $hora) {
     $horariosPorCurso[$idCurso][] = $hora;
 }
 
-$vagasSobrando = "SELECT COUNT(id_turma) as vagas, id_agenda FROM agendamento GROUP BY id_agenda";
 
 unset($conexao);
 ?>
@@ -66,6 +73,10 @@ unset($conexao);
     ?>
 
     <main class="pb-5 mb-5">
+
+    
+
+
     <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
         <?php if (isset($mensagem)): ?>
             <div class="container">
@@ -117,7 +128,7 @@ unset($conexao);
                                             <select class="form-select bg-warning-subtle" aria-label="Default select example" name="id_agenda">
                                                 <option selected>Selecionar Horario</option>
                                                 <?php
-                                                // Horários filtrados para este curso
+                                                
                                                 $idCursoAtual = $curso['id_curso'];
                                                 $horariosDoCurso = $horariosPorCurso[$idCursoAtual] ?? [];
                                                 ?>
@@ -141,14 +152,14 @@ unset($conexao);
                             </div>
                         </div>
                     </div>
-                <?php endforeach; // Fim do loop dos cursos 
+                <?php endforeach;  
                 ?>
             </div>
         </div>
     </main>
 
     <?php include_once("./footer.php"); ?>
-    <!-- JavaScript do Bootstrap -->
+    
     <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>

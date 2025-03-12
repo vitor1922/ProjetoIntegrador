@@ -62,8 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-</head>
-
 <body class="d-flex justify-content-between flex-column min-vh-100 p-0">
     <?php
     include_once('./header.php');

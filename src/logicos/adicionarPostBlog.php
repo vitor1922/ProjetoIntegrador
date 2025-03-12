@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         try {
-            
+    
             $sqlPost = "INSERT INTO post (titulo, texto, localizador, data_criacao, id_usuario) VALUES (:titulo, :texto, :localizador, :data_criacao, :id_usuario) ";
             $post = $conexao->prepare($sqlPost);
             $post->bindParam(':titulo', $postTitulo);

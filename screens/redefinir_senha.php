@@ -9,14 +9,14 @@ if (!isset($_SESSION['token_recuperacao'])) {
 }
 
 $email = $_SESSION['email_recuperacao'];
-
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>Redefinir Senha</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
     <h2>Redefinir Senha</h2>
@@ -25,10 +25,17 @@ $email = $_SESSION['email_recuperacao'];
         <p><?php echo $_SESSION['mensagem']; unset($_SESSION['mensagem']); ?></p>
     <?php endif; ?>
 
-    <form action="../src/logicos/salvarNovaSenha.php" method="POST">
-        <label for="senha">Nova Senha:</label>
-        <input type="password" name="senha" required>
-        <button type="submit">Salvar Senha</button>
-    </form>
+    <!-- Modal de redefinir senha -->
+    <div id="modal-redefinir-senha" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal()">&times;</span>
+            <h3>Redefina sua senha</h3>
+            <form action="../src/logicos/salvarNovaSenha.php" method="POST">
+                <label for="senha">Nova Senha:</label>
+                <input type="password" name="senha" required>
+                <button type="submit">Salvar Senha</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
