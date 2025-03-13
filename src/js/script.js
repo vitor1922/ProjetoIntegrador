@@ -78,19 +78,20 @@ function viewSenhaCad() {
   }
 }
 
-// mensagem = document.querySelector(".desabilitarMenssagem")
-// setTimeout(function () {
-//     mensagem.style.visibility = "hidden"
-//     mensagem.style.height = 0
-//     mensagem.style.padding = 0
-//     mensagem.style.margin= 0
-//     mensagem.innerHTML = ""
-// }, 4000)
+function viewSenhaNova() {
+  let inputConfirmPassSenha = document.getElementById("confirmarNovaSenha");
+  let iconConfirmPassSenha = document.getElementById("iconPasswordSenha");
 
-// botao.disabled = true
-// botao.setAttribute("disabled", "disabled")
+  if (inputConfirmPassSenha.type === "password") {
+    inputConfirmPassSenha.setAttribute("type", "text");
+    iconConfirmPassSenha.classList.replace("bi-eye-fill", "bi-eye-slash-fill");
+  } else {
+    inputConfirmPassSenha.setAttribute("type", "password");
+    iconConfirmPassSenha.classList.replace("bi-eye-slash-fill", "bi-eye-fill");
+  }
+}
 
-//questionario hidden text area
+
 function toggleTextarea(id, show) {
   var textarea = document.getElementById(id);
   if (show) {

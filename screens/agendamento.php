@@ -30,7 +30,7 @@ $sqlVerificaVagas = "
     GROUP BY a.id_agenda
 ";
 
-
+    
 
 $sqlAgenda = "SELECT * FROM agenda";
 $selectAgenda = $conexao->prepare($sqlAgenda);

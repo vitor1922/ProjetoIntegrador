@@ -1,5 +1,9 @@
+<!--blog.php-->
+ 
+ 
+ 
 <?php
-
+ 
 session_start();
 include_once("../constantes.php");
 include_once('../data/conexao.php');
@@ -7,13 +11,13 @@ $perfil = $_SESSION['perfil'] ?? NULL;
 $logado = $_SESSION['logado'] ?? FALSE;
 $idUsuario = $_SESSION['id_usuario'] ?? NULL;
 $usuario = $_SESSION['nome'] ?? NULL;
-
+ 
 $perfilMensagem = $_SESSION['perfil_mensagem'] ?? "";
 $mensagem = $_SESSION["mensagem"] ?? "";
 $_SESSION['perfil_mensagem'] = NULL;
 $_SESSION["mensagem"] = NULL;
-
-
+ 
+ 
 $sql =  "SELECT
     p.id_post AS id_post,
     p.titulo AS titulo_post,
@@ -26,10 +30,10 @@ $sql =  "SELECT
     u.nome AS nome_usuario,
     u.foto AS foto_usuario,
     u.id_usuario AS id_usuario
-
+ 
 FROM
     post p
-LEFT JOIN 
+LEFT JOIN
     usuario u ON u.id_usuario = p.id_usuario
 LEFT JOIN
     img_post i ON p.id_post = i.id_post
@@ -44,23 +48,23 @@ GROUP BY
 ORDER BY
     p.data_criacao DESC";
 $stmt = $conexao->prepare($sql);
-
+ 
 $stmt->execute();
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+ 
 // Contar a quantidade de posts
 // $num_posts = count($posts);
 // echo ("<pre>");
 // var_dump($posts["0"]['imagens']);
 // die;
 unset($conexao);
-
-
+ 
+ 
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="pt-br">
-
+ 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,18 +74,18 @@ unset($conexao);
   <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-
+ 
 <body class="container-fluid">
   <?php
   include_once("./header.php");
   ?>
   <main>
-
+ 
     <div class="container-fluid">
     <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
       <div class="container">
         <!-- Flecha de retorno -->
-
+ 
         <div class="mt-4">
           <div class="row mb-3">
             <div class=" col-6 d-flex align-items-center ">
@@ -92,9 +96,9 @@ unset($conexao);
             </div>
           </div>
         </div>
-
-
-
+ 
+ 
+ 
         <div class=" row d-flex justify-content-center">
           <?php foreach ($posts as $post) { ?>
             <?php
@@ -123,7 +127,7 @@ unset($conexao);
                     <p class="text-center">Tem certeza que deseja excluir o post <strong><?= $post["titulo_post"] ?></strong>?</p>
                       <input type="text" class="form-control" name="idPost" value="<?=$post["id_post"]?>" hidden required>
                     </div>
-
+ 
                     <div class="mb-3 d-flex justify-content-center">
                       <button class="btn  btn-danger  text-white fw-bold px-5" type="submit">Deletar</button>
                     </div>
@@ -142,7 +146,7 @@ unset($conexao);
                       </div>
                       <?php
                       $contagem += 1;
-
+ 
                       ?>
                     <?php } ?>
                   </div>
@@ -164,39 +168,39 @@ unset($conexao);
                   <div class="row mt-2">
                     <a href="./perfilVer.php?id=<?= $post["id_usuario"] ?>" class=" text-black">
                       <img src="../foto/<?= $post['foto_usuario'] ? $post['foto_usuario'] : 'iconPerfil.jpg' ?> " alt="Foto de perfil" class="img-perfil-mini">
-
+ 
                       <?php $nomeEx = explode(" ", $post["nome_usuario"]);
                       $primeiroNome = $nomeEx[0];
                       ?>
                       <label class="fs-7"><?= $primeiroNome ?> </label>
                     </a>
                   </div>
-
+ 
                   <div class="row fs-5 ms-1"><?= $post["titulo_post"] ?></div>
-
-
+ 
+ 
                 </div>
                 <div class="col-6 pt-3 ">
                   <div class="row d-flex justify-content-end pe-3 fs-5"><?= $post["nome_curso"] ?></div>
                   <div class="row d-flex justify-content-end pe-3">turma <?= $post["numero_da_turma"] ?></div>
                   <div class="row d-flex justify-content-end pe-3 fs-7"><?= $post["data_criacao_post"] ?></div>
-
-
+ 
+ 
                 </div>
                 <div class="row  ps-4 pt-4 text-secondary"><?= $post["texto_post"] ?></div>
               </div>
             </div>
-
+ 
              
-
+ 
             <!-- fim card -->
           <?php } ?>
-
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
+ 
           <!-- MODAL ADICIONAR POST -->
           <div class="modal fade" id="modalAdicionarPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
             <div class="modal-dialog">
@@ -214,17 +218,17 @@ unset($conexao);
                       <label class="form-label fw-bold">Texto</label>
                       <input type="text" class="form-control" name="txtTexto" required>
                     </div>
-
+ 
                     <div class="mb-3">
                       <input type="text" class="form-control" name="txtUsuario" value="<?= $idUsuario ?>" required hidden>
                       <input type="text" class="form-control" name="txtData" value="<?= date("Y-m-d",) ?>" required hidden>
                     </div>
-
+ 
                     <div class="mb-3">
                       <label class="form-label fw-bold">Adicionar Imagens</label>
                       <input type="file" multiple="multiple" name="imgsPost[]" class="form-control" accept="image/png, image/jpeg" required>
                     </div>
-
+ 
                     <div class="mb-3 d-flex justify-content-center">
                       <button class="btn  btn-azul-senac  text-white fw-bold px-5" type="submit">Confirmar</button>
                     </div>
@@ -233,9 +237,9 @@ unset($conexao);
               </div>
             </div>
           </div>
-
+ 
           <!-- modal alerta mensagem -->
-
+ 
           <div class="modal fade " id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog  ">
               <div class="modal-content <?= $perfilMensagem ?>">
@@ -245,19 +249,19 @@ unset($conexao);
               </div>
             </div>
           </div>
-
+ 
         </div>
       </div>
     </div>
   </main>
-
-
+ 
+ 
   <!-- JavaScript do Bootstrap -->
   <script src="../src/bootstrap/js/bootstrap.bundle.min.js"></script>
   <?php if ($mensagem != "") { ?>
     <script src="../src/js/alert.js"></script>
   <?php } ?>
-  <?php include_once("./footer.php"); ?>
+  
 </body>
-
+ 
 </html>

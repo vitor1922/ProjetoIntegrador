@@ -85,11 +85,7 @@ $professores = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="col-4 d-flex align-items-center">
                             <input type="text" name="search" class="col-12 text-start rounded-4 fs-7 text-black-50 text-center h-50 py-3" placeholder="Pesquisar..." value="<?= htmlspecialchars($search) ?>">
                         </div>
-                        <?php if($perfil === "admin"){?>
-                            <div class="col-md-2 pt-2">
-                            <button type="button" class="ms-2 btn btn-primary rounded btn-azul-senac" data-bs-toggle="modal" data-bs-target="#modalCadastrarCurso">Adicionar Professor</button>
-                            </div>
-                        <?php }?>
+                        
                         
                     </div>
                 </form>

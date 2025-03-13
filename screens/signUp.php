@@ -6,8 +6,6 @@ include("../constantes.php");
 include_once('../data/conexao.php');
 
 $logado = $_SESSION['logado'] ?? NULL;
-
-// $_SESSION['logado'] = FALSE;
 $mensagem = $_SESSION['mensagem'] ?? NULL;
 $perfil = $_SESSION['perfil'] ?? NULL;
 $_SESSION['mensagem'] = NULL;
@@ -62,6 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../src/bootstrap/bootstrap-icons">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
+
+
 <body class="d-flex justify-content-between flex-column min-vh-100 p-0">
     <?php
     include_once('./header.php');

@@ -45,7 +45,6 @@ SELECT
     u.nome AS nomeUsuario,
     u.cpf AS cpf,
     c.nome_do_curso AS nomeCurso,
-    aluno.nome AS nomeAluno,
     a.status,
     a.data,
     a.hora
@@ -57,11 +56,21 @@ INNER JOIN
     usuario u ON a.id_usuario = u.id_usuario
 INNER JOIN
     curso c ON t.id_curso = c.id_curso
-INNER JOIN
-    alunos al ON a.id_aluno = al.id_aluno
-INNER JOIN
-    usuario aluno ON al.id_usuario = aluno.id_usuario
 ";
+
+//QUERY PARA CONSULTAR DADOS DO ALUNO
+
+// a.id_aluno AS idAluno,
+// aluno.nome AS nomeAluno,
+// INNER JOIN
+// alunos al ON a.id_aluno = al.id_aluno
+// INNER JOIN
+// usuario aluno ON al.id_usuario = aluno.id_usuario
+
+$newSql = "SELECT nome FROM usuario WHERE perfil = 'professor' ";
+$select = $conexao->prepare($newSql);
+$select->execute();
+$newSql = $select->fetch(PDO::FETCH_ASSOC);
 
 $whereClauses = [];
 $params = [];
@@ -72,10 +81,9 @@ if (isset($filter)) {
 }
 
 if (!empty($searchUser)) {
-    $whereClauses[] = "(u.nome REGEXP :searchUser OR c.nome_do_curso REGEXP :searchUser OR aluno.nome REGEXP :searchUser OR t.numero_da_turma REGEXP :searchUser)";
+    $whereClauses[] = "(u.nome REGEXP :searchUser OR c.nome_do_curso REGEXP :searchUser OR t.numero_da_turma REGEXP :searchUser)";
     $params[':searchUser'] = $searchUser;
 }
-
 if (!empty($whereClauses)) {
     $sql_default .= " WHERE " . implode(" AND ", $whereClauses);
 }
@@ -120,7 +128,7 @@ function formatDate($date)
     <main>
 
         <div class="container mt-3">
-        <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
+            <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
             <h1 class="text-center laranja-senac">Área do Instrutor</h1>
             <div class="row bg-light d-flex align-items-center w-100 w-md-50 w-lg-25 mx-auto">
                 <div class="col text-end">
@@ -170,11 +178,18 @@ function formatDate($date)
                                 <div class="col d-flex justify-content-start align-items-center">
                                     <p><strong>Turma:</strong><br><?= $result["numeroTurma"] ?></p>
                                 </div>
+                                <!-- DISPLAY O NOME DO ALUNO <div class="col d-flex justify-content-center align-items-center">
+                                    <p><strong>Aluno:</strong><br>
+
+                                        $result["nomeAluno"] ?>
+                                    </p> -->
                                 <div class="col d-flex justify-content-center align-items-center">
-                                    <p><strong>Aluno:</strong><br><?= $result["nomeAluno"] ?></p>
+                                    <p><strong>Data:</strong><br> <?= htmlspecialchars(formatDate($result["data"])) ?>
+                                    </p>
+
                                 </div>
                                 <div class="col d-flex justify-content-end align-items-center">
-                                    <p><strong>Data/Hora:</strong><br><?= htmlspecialchars(formatDate($result["data"])) ?> <?= htmlspecialchars($result["hora"]) ?></p>
+                                    <p><strong>Hora:</strong><br> <?= htmlspecialchars($result["hora"]) ?></p>
                                 </div>
                             </div>
 
@@ -235,6 +250,7 @@ function formatDate($date)
         </div>
 
     </main>
+
 
 
 

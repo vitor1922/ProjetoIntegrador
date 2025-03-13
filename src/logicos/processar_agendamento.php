@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $conexao->beginTransaction();
 
         try {
-            
+
             $sqlVerificaVagas = "
                 SELECT 
                     (1 - COUNT(ag.id_agendamento)) AS vagas_restantes
@@ -18,18 +18,18 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 WHERE a.id_agenda = :id_agenda
                 GROUP BY a.id_agenda
             ";
-        
+
             $stmtVerifica = $conexao->prepare($sqlVerificaVagas);
             $stmtVerifica->bindParam(':id_agenda', $idAgenda, PDO::PARAM_INT);
             $stmtVerifica->execute();
             $resultado = $stmtVerifica->fetch(PDO::FETCH_ASSOC);
-        
+
             if (!$resultado || $resultado['vagas_restantes'] <= 0) {
                 throw new Exception("Não há vagas disponíveis para este horário.");
             }
 
-            
-            $sqlBuscaAgenda = "SELECT id_agenda, data, hora, id_usuario, id_turma 
+
+            $sqlBuscaAgenda = "SELECT id_agenda, data, hora, id_usuario, id_turma
                                FROM agenda 
                                WHERE id_agenda = :id_agenda";
             $stmtBuscaAgenda = $conexao->prepare($sqlBuscaAgenda);
@@ -41,15 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 throw new Exception("Agenda não encontrada.");
             }
 
-            
-            $sqlInsert = "INSERT INTO agendamento (data, hora, id_agenda, id_usuario, id_turma) 
-                          VALUES (:data, :hora, :id_agenda, :id_usuario, :id_turma)";
+
+            $sqlInsert = "INSERT INTO agendamento (data, hora, id_agenda, id_usuario, id_turma, id_aluno) 
+                          VALUES (:data, :hora, :id_agenda, :id_usuario, :id_turma, :id_aluno)";
             $insert = $conexao->prepare($sqlInsert);
             $insert->bindParam(":data", $agenda['data']);
             $insert->bindParam(":hora", $agenda['hora']);
             $insert->bindParam(":id_agenda", $agenda['id_agenda'], PDO::PARAM_INT);
             $insert->bindParam(":id_usuario", $agenda['id_usuario'], PDO::PARAM_INT);
             $insert->bindParam(":id_turma", $agenda['id_turma'], PDO::PARAM_INT);
+            $insert->bindParam(":id_aluno", $sqlAluno['id_aluno'], PDO::PARAM_INT);
 
             if ($insert->execute()) {
                 $conexao->commit();
@@ -60,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             } else {
                 throw new Exception("Erro ao realizar o agendamento.");
             }
-
         } catch (Exception $e) {
             $conexao->rollBack();
             $_SESSION['mensagem'] = [
@@ -71,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             header('Location: ../../screens/agendamento.php');
             exit();
         }
-
     } else {
         $_SESSION['mensagem'] = [
             'tipo' => 'warning',
@@ -88,4 +87,3 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     header('Location: ../../screens/agendamento.php');
     exit();
 }
-?>

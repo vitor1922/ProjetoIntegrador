@@ -35,6 +35,9 @@ $primeiroNome = $nome !== "Visitante" ? explode(" ", $nome)[0] : "Visitante";
                             <li class="nav-item">
                                 <a class="nav-link header-senac-text" href="<?= BASE_URL ?>screens/blog.php">Blog</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link header-senac-text" href="<?= BASE_URL ?>screens/AvaliacoesComentarios.php">Avaliar um Corte</a>
+                            </li>
                             <?php if ($perfil === 'admin' || $perfil === 'professor') { ?>
                                 <li class="nav-item">
                                     <a class="nav-link header-senac-text" href="<?= BASE_URL ?>screens/areaInstrutor.php">Área do Instrutor</a>

@@ -71,21 +71,17 @@ if ($_SERVER["HTTP_HOST"] == BASE_URL . ("screens/infoTurma?id=") . $turmaId) {
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
-<body class=" container-fluid d-flex flex-column justify-content-between">
+<body class=" container-fluid d-flex flex-column justify-content-between p-0">
   <div>
     <?php
     include_once("./header.php");
     ?>
     <main>
       <div class="container-fluid">
-        <a href="<?= $_SERVER['HTTP_REFERER'] ?? 'index.php' ?>" class="bi bi-arrow-left fs-3 m-5"></i></a>
+       
         <div class="row">
           <div class="col-12">
-            <div class="button fs-1 mx-3">
-              <a href="<?= $paginaAnterior ?>" role="button pb-5">
-                <i class="bi bi-arrow-left-short azul-senac fw-bold"></i>
-              </a>
-            </div>
+            
           </div>
           <div class="col-12">
             <h5 class="text-secondary fw-bold d-flex justify-content-center fs-1"><?= $turma["numero_da_turma"] ?></h5>
@@ -105,12 +101,40 @@ if ($_SERVER["HTTP_HOST"] == BASE_URL . ("screens/infoTurma?id=") . $turmaId) {
             <?php $data = date('d/m/Y', strtotime($horario["data"])) ?>
             <div class="row">
               <div class="offset-sm-4 offset-2 col-sm-3 col-7 d-flex justify-content-center align-items-center">
-                <p class="text-center my-0 py-0"><?= $data ?> - <?= date("H:i", strtotime($horario["hora"])) ?> - ?/<?= $horario["vagas"] ?> vagas</p>
+                <p class="text-center my-0 py-0"><?= $data ?> - <?= date("H:i", strtotime($horario["hora"])) ?> - 0/<?= $horario["vagas"] ?> vagas</p>
               </div>
               <div class=" col-1 d-flex justify-content-start">
-                <button class=" btn"><i class="bi bi-ban text-danger"></i></button>
+                <button class=" btn" data-bs-toggle="modal" data-bs-target="#modalExcluirHorario<?=$horario["id_agenda"]?>"><i class="bi bi-ban text-danger"></i></button>
               </div>
             </div>
+
+             <!-- Modal excluir Horario-->
+             <div class="modal fade" id="modalExcluirHorario<?=$horario["id_agenda"]?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="d-flex justify-content-end mb-3">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form action="../src/logicos/deleteHorarioTurma.php" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                    <p class="text-center">Tem certeza que deseja excluir o horário?</strong>?</p>
+                      <input type="text" class="form-control" name="idHorario" value="<?=$horario["id_agenda"]?>" hidden required>
+                      <input type="text" class="form-control" name="idCurso" value="<?=$turma["id_turma"]?>" hidden required>
+                    </div>
+ 
+                    <div class="mb-3 d-flex justify-content-center">
+                      <button class="btn  btn-danger  text-white fw-bold px-5" type="submit">Deletar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
           <?php } ?>
         </div>
         <div class="row bg-cinza shadow d-flex justify-content-center mt-5">
@@ -256,6 +280,8 @@ if ($_SERVER["HTTP_HOST"] == BASE_URL . ("screens/infoTurma?id=") . $turmaId) {
           </div>
         </div>
       <?php } ?>
+    </main>
+  </div>
       <?php
       include_once("./footer.php");
       ?>

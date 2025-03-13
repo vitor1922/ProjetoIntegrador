@@ -126,7 +126,6 @@ $nomeInstrutor = $nome ?? 'Instrutor';
         .divider {
             width: 80%;
             height: 2px;
-            background: linear-gradient(to right, #0A0617, #FFFFFF);
             margin: 20px 0;
             border-radius: 10px;
         }
@@ -143,9 +142,7 @@ $nomeInstrutor = $nome ?? 'Instrutor';
             height: 400px;
             border-radius: 20px;
             /* Bordas arredondadas */
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.3));
             /* Gradiente de fundo */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
             /* Sombra */
             overflow: hidden;
             position: relative;
@@ -157,7 +154,6 @@ $nomeInstrutor = $nome ?? 'Instrutor';
         .card:hover {
             transform: translateY(-5px);
             /* Efeito de levantar o card */
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
             /* Aumenta a sombra no hover */
         }
 
@@ -184,7 +180,6 @@ $nomeInstrutor = $nome ?? 'Instrutor';
         }
 
         .card .layer {
-            background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
             position: absolute;
             bottom: 0;
             width: 100%;
@@ -256,14 +251,11 @@ $nomeInstrutor = $nome ?? 'Instrutor';
     </style>
 </head>
 
-<body>
+<body class="d-flex justify-content-between flex-column container-fluid min-vh-100 p-0 ">
     <?php include_once("./header.php") ?>
     <div class="preloader" id="preloader">
         <img src="../assets/img/senac_logo_branco.png" class="logo" alt="Logo do Senac"> <!-- Substitua pelo caminho correto da logo -->
     </div>
-
-
-
 
     <h1 class="title">Área do Instrutor</h1>
     <p class="welcome-message">Olá, <?= $nomeInstrutor  ?>! Bem-vindo de volta.</p>
@@ -276,35 +268,35 @@ $nomeInstrutor = $nome ?? 'Instrutor';
                 <img src="../assets/img/Usuarios.png" class="img-fluid" alt="Gerenciamento de Usuários">
                 <div class="layer"></div>
                 <div class="info">
-                    <h1>Usuários</h1>
-                    <p>Gerencie os usuários da plataforma de forma simples e eficiente.</p>
-                    <a href="./usuarios.php"><button aria-label="Gerenciar usuários">Explore</button></a>
+                    <h1 class="text-black">Usuários</h1>
+                    <p class="text-black">Gerencie os usuários da plataforma de forma simples e eficiente.</p>
+                    <a href="./usuarios.php"><button aria-label="Gerenciar usuários">Ver Usuários</button></a>
                 </div>
             </div>
             <div class="card">
-                <img src="../assets/img/Avalicoes.png" class="img-fluid" alt="Avaliações">
+                <img src="../assets/img/Avalicoes.png" class="img-fluid" alt="Gerenciamento de Usuários">
                 <div class="layer"></div>
                 <div class="info">
-                    <h1>Avaliações</h1>
-                    <p>Acompanhe e modere as avaliações e comentários dos clientes.</p>
-                    <a href="./avaliacoesComentarios.php"><button aria-label="Gerenciar avaliações">Explore</button></a>
+                    <h1 class="text-black">Agendamentos</h1>
+                    <p class="text-black">Gerencie os agendamentos da plataforma de forma simples e eficiente.</p>
+                    <a href="./horariosInstrutor.php"><button aria-label="Gerenciar agendamentos">Ver Agendamentos</button></a>
                 </div>
             </div>
             <div class="card">
                 <img src="../assets/img/Gerenciamento.png" class="img-fluid" alt="Gerenciamento de Cursos">
                 <div class="layer"></div>
                 <div class="info">
-                    <h1>Gerenciamento</h1>
-                    <p>Controle cursos, horários e outros aspectos administrativos.</p>
-                    <a href="./gerenciamentoCursos.php"><button aria-label="Gerenciar cursos">Explore</button></a>
+                    <h1 class="text-black">Gerenciamento</h1>
+                    <p class="text-black">Controle cursos, horários e outros aspectos administrativos.</p>
+                    <a href="./gerenciamentoCursos.php"><button aria-label="Gerenciar cursos">Gerenciar</button></a>
                 </div>
             </div>
             <div class="card">
                 <img src="../assets/img/Estoque.png" class="img-fluid" alt="Controle de Estoque">
                 <div class="layer"></div>
                 <div class="info">
-                    <h1>Estoque</h1>
-                    <p>Monitore e organize o estoque de produtos e materiais.</p>
+                    <h1 class="text-black">Ver Estoque</h1>
+                    <p class="text-black">Monitore e organize o estoque de produtos e materiais.</p>
                     <a href="./estoqueProfessor.php"><button aria-label="Gerenciar estoque">Explore</button></a>
                 </div>
             </div>
